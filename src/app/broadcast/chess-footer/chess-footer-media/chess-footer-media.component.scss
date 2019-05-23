@@ -1,0 +1,134 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+@import '../html/css/settings.scss';
+
+.media-main {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+
+  &__photo {
+    height: 486px;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    flex: 1;
+    color: white;
+    min-height: 200px;
+    background-color: $gray;
+
+    .text {
+      font: 400 18px/18px $gerbera-font;
+      margin-bottom: 20px;
+      color: #9e9e9e;
+      @include tablets-big() {
+        font: 400 15px/15px $gerbera-font;
+      }
+    }
+
+    .wc-title {
+      font: 300 38px/38px $gerbera-font;
+      color: #000;
+      @include tablets-big() {
+        font: 300 33px/33px $gerbera-font;
+      }
+    }
+  }
+
+  &__info-body {
+    flex: 1;
+    word-break: break-all;
+  }
+
+  &__info-date {
+    color: $light-gray;
+  }
+
+  &--empty {
+    background-color: $black-bg;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+  }
+
+  &__empty-img {
+    width: 40%;
+    height: 40%;
+    margin-top: 10px;
+  }
+
+  &__empty-msg {
+    text-align: center;
+    color: $light-gray;
+    font-size: 22px;
+    margin: 40px 10px 10px;
+  }
+}
+
+.nsm-overlay-open {
+  z-index: z-index(modal);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
+  position: fixed;
+}
+
+.nsm-dialog-btn-close {
+  display: none;
+}
+
+.nsm-body,
+.nsm-content,
+.nsm-dialog {
+  width: 100%;
+  height: 100%;
+}
+
+.media-modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+body.dialog-open {
+  overflow: hidden;
+}
+
+.chess-footer-media__container {
+  overflow: hidden;
+  min-height: 617px;
+  @include phones() {
+    min-height: auto;
+  }
+}
+
+.information-aside {
+  &--portable {
+    display: flex;
+    @include ipad() {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    display: none;
+    @include ipad() {
+      display: flex;
+    }
+  }
+}

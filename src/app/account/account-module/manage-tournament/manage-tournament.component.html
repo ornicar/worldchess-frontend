@@ -1,0 +1,20 @@
+<div class="create-tournament" [class.premium]="(myAccount$ | async)?.premium">
+  <h2 class="create-tournament__title">
+    {{title[mode]}}
+  </h2>
+  <div class="create-tournament__tabs">
+    <div *ngFor="let tab of tabs"
+      class="create-tournament__tab"
+      [class.create-tournament__tab--inactive]="!ableToSelectTab()"
+      [class.create-tournament__tab--selected]="selectedTabValue === tab.value"
+      (click)="onSelectTab(tab.value)">
+      <span>{{tab.title}}</span>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
+
+
+
+

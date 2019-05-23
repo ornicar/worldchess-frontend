@@ -1,0 +1,9 @@
+.mat-checkbox-checked .mat-checkbox-checkmark-path {
+  stroke: #000;
+}
+
+.bg-black {
+  .mat-checkbox-checked .mat-checkbox-checkmark-path {
+    stroke: #FFF;
+  }
+}

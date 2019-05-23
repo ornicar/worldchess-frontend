@@ -1,0 +1,50 @@
+.icon {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 170%;
+  width: 16px;
+  height: 16px;
+  &.wB {
+    background-image:  url(/assets/images/chess/v3/wB.svg);
+  }
+  &.bB {
+    background-image:  url(/assets/images/chess/v3/bB.svg);
+  }
+  &.wK {
+    background-image:  url(/assets/images/chess/v3/wK.svg);
+  }
+  &.bK {
+    background-image:  url(/assets/images/chess/v3/bK.svg);
+  }
+  &.wN {
+    background-image:  url(/assets/images/chess/v3/wN.svg);
+  }
+  &.bN {
+    background-image:  url(/assets/images/chess/v3/bN.svg);
+  }
+  &.wP {
+    background-image:  url(/assets/images/chess/v3/wP.svg);
+  }
+  &.bP {
+    background-image:  url(/assets/images/chess/v3/bP.svg);
+  }
+  &.wQ {
+    background-image:  url(/assets/images/chess/v3/wQ.svg);
+  }
+  &.bQ {
+    background-image:  url(/assets/images/chess/v3/bQ.svg);
+  }
+  &.wR {
+    background-image:  url(/assets/images/chess/v3/wR.svg);
+  }
+  &.bR {
+    background-image:  url(/assets/images/chess/v3/bR.svg);
+  }
+}
+
+:host-context(wc-history-move) {
+  .icon {
+    width: 15px;
+    height: 15px;
+  }
+}

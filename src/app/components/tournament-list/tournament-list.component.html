@@ -1,0 +1,24 @@
+<div class="list">
+  <div class="list__wrap" #list>
+    <div class="list__content">
+        <div *ngFor="let tournament of tournaments; trackBy: trackByFn;" class="tournament-item">
+            <div class="tournament-item__date">
+              <div *ngIf="!tournament.isOnline" class="tournament-item__date-center">
+                {{tournament.datetime_of_tournament | date : 'MMM dd'}} – {{tournament.datetime_of_finish | date : 'MMM dd'}}
+                {{tournament.datetime_of_finish | date : 'y'}}
+              </div>
+            </div>
+            <div class="tournament-item__info" [class.live]="tournament.isLive" (click)="onClickItem(tournament)">
+              <div class="tournament-item__title">{{tournament.title}} {{tournament.additional_title}}</div>
+              <div class="tournament-item__location">
+                <wc-tournament-state *ngIf="!tournament.isOnline" [tournament]="tournament" class="tournament-item__state"></wc-tournament-state>
+              </div>
+            </div>
+            <div class="tournament-item__buttons">
+              <ng-container *ngTemplateOutlet="buttons; context: { $implicit: tournament }"></ng-container>
+            </div>
+          </div>
+    </div>
+  </div>
+  <div class="more" *ngIf="isDisplayShowMoreBtn" (click)="onShowMore()">Show more</div>
+</div>

@@ -1,0 +1,101 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="register">
+  <a class="register__close" (click)="closePopup()"></a>
+  <div class="register__title">
+    Confirmation code was sent to <a class="register__name" href="#">{{ email$ | async }}</a>
+    <div class="register__text">
+      You can
+      <!--a href="#">change email</a> or-->
+      <a [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]">log in</a> if you already have an account.
+    </div>
+  </div>
+  <div class="register__labels">
+    <div class="input-text">
+      <div class="input-text__row">
+        <div class="input-text__col">
+          <div class="confirm" [class.confirm--error]="confirmError$ | async">
+            <ul class="confirm__list">
+              <li class="confirm__elem">
+                <input
+                  #field1
+                  (keyup)="focusField(field1, field2)"
+                  mask="0"
+                  formControlName="field1"
+                  type="text"
+                  class="confirm__input"
+                />
+              </li>
+              <li class="confirm__elem">
+                <input
+                  #field2
+                  (keyup)="focusField(field2, field3)"
+                  mask="0"
+                  formControlName="field2"
+                  type="text"
+                  class="confirm__input"
+                />
+              </li>
+              <li class="confirm__elem">
+                <input
+                  #field3
+                  (keyup)="focusField(field3, field4)"
+                  mask="0"
+                  formControlName="field3"
+                  type="text"
+                  class="confirm__input"
+                />
+              </li>
+              <li class="confirm__elem">
+                <input
+                  #field4
+                  (keyup)="focusField(field4, field5)"
+                  mask="0"
+                  formControlName="field4"
+                  type="text"
+                  class="confirm__input"
+                />
+              </li>
+              <li class="confirm__elem">
+                <input
+                  #field5
+                  (keyup)="focusField(field5, field6)"
+                  mask="0"
+                  formControlName="field5"
+                  type="text"
+                  class="confirm__input"
+                />
+              </li>
+              <li class="confirm__elem">
+                <input #field6 mask="0" formControlName="field6" type="text" class="confirm__input" />
+              </li>
+            </ul>
+            <div class="confirm__error" *ngIf="confirmError$ | async">
+              Confirmation code is not valid. Please check it
+              <span *ngIf="_timerState === TimerState.COMPLETE">, or <a (click)="onResend()">resend</a> it</span>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="register__footer">
+    <div class="register__footer-coll">
+      <div class="navigation">
+        <button class="navigation__btn" (click)="goBack()">
+          <svg class="icon">
+            <use xlink:href="#arrow-left"></use>
+          </svg>
+          back
+        </button>
+        <div *ngIf="_timerState !== TimerState.COMPLETE" class="navigation__text navigation__text--gray">
+          <span *ngIf="countdown$ | async as countdown">resend in {{ countdown }}</span>
+        </div>
+        <div *ngIf="_timerState === TimerState.COMPLETE" class="navigation__text navigation__text--gray">
+          <a (click)="onResend()">resend</a>
+        </div>
+      </div>
+    </div>
+    <div class="register__footer-coll">
+      <button class="register__btn" type="submit">confirm</button>
+    </div>
+  </div>
+</form>

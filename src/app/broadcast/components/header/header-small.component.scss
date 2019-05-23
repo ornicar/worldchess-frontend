@@ -1,0 +1,184 @@
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: stretch;
+  position: relative;
+  background-color: $broadcast-menu-small-bg;
+  border-top: 1px solid $broadcast-menu-small-border;
+  padding: 0 20px;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-bottom: 1px solid $broadcast-menu-small-border;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  @include phones() {
+    flex-flow: column nowrap;
+    align-items: stretch;
+    padding: 0;
+  }
+}
+
+.container-select {
+  min-height: 90px;
+  position: relative;
+  background-color: $broadcast-menu-small-bg;
+  border-right: 1px solid $broadcast-menu-small-border;
+  border-bottom: 1px solid $broadcast-menu-small-border;
+  padding-right: 20px;
+  margin-right: 20px;
+  color: $broadcast-menu-small-color;
+  box-sizing: content-box;
+  user-select: none;
+  display: flex;
+  flex-flow: row nowrap;
+  font: 300 55px/64px $gerbera-font;
+
+  @include tablets-big {
+    font: 300 44px/64px $gerbera-font;
+  }
+
+  @include tablets {
+    font-size: 24px;
+    line-height: 50px;
+  }
+
+  @include phones() {
+    min-height: 45px;
+    border-right: none;
+    margin: 0;
+    padding: 0 20px;
+    font-size: 22px;
+    line-height: 26px;
+  }
+
+  &--logo {
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 1px;
+      z-index: z-index(base, 0);
+
+      @include phones() {
+        display: none;
+      }
+    }
+  }
+
+  &--logo {
+
+    &::after {
+      bottom: -1px;
+      left: -20px;
+      width: calc(100vw - 100px);
+      background-color: $broadcast-menu-small-border;
+      box-shadow: 100px 0 0 0 $broadcast-menu-small-border;
+    }
+  }
+}
+
+.tournament-item {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  min-height: 90px;
+
+  @include phones {
+    flex-flow: row wrap;
+    align-items: center;
+    align-content: center;
+    min-height: 80px;
+
+    &:after {
+      order: 2;
+      content: '';
+      display: block;
+      flex: 1 0 100%;
+    }
+  }
+
+  &__image {
+    position: relative;
+    top: 7px;
+
+    @include phones {
+      display: none;
+    }
+  }
+
+  &__title {
+    flex: 0 0 auto;
+    color: $broadcast-menu-small-color;
+
+    @include phones {
+      order: 1;
+    }
+  }
+
+  &__subtitle {
+    flex: 1 0 auto;
+    color: #5E5E5E;
+
+    @include phones {
+      order: 3;
+      flex: 0 0 auto;
+    }
+  }
+
+  &__state {
+    flex: 0 0 auto;
+    font: 300 22px/30px $gerbera-font;
+    color: $broadcast-menu-small-color;
+    padding-left: 20px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    @include phones {
+      order: 4;
+      font-size: 14px;
+      line-height: 23px;
+      padding-left: 20px;
+    }
+  }
+}
+
+.select-item {
+  min-height: 90px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  @include phones() {
+    min-height: 45px;
+  }
+}
+
+.delimiter-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  margin: 0 10px;
+  width: 29px;
+
+  &:after {
+    content: '';
+    display: inline-block;
+    border-right: 1px solid $broadcast-menu-small-border;
+    transform: rotate(-90deg);
+    height: 29px;
+  }
+}
+

@@ -1,0 +1,103 @@
+@import '../../../../../../html/css/variables';
+@import '../../../../../../html/css/media';
+
+// @todo remove duplicates.
+.history-moves {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  position: relative;
+}
+
+.scroll-element {
+  flex: 1 1 1px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-left: -20px;
+
+  &--hide-line-number {
+    margin-left: 0;
+  }
+}
+
+.scroll-section {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+
+  &:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: calc(100% / 2 + 10px);
+    width: calc(100% / 2 - 10px);
+    height: 100%;
+    background-color: #ebebeb;
+  }
+}
+
+.moves-line {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.moves-line-number {
+  align-self: flex-start;
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  border-top: 1px solid transparent;
+  color: $black-light;
+  padding: 0 10px 0 0;
+  text-align: left;
+  width: 20px;
+  height: 38px;
+  font: 400 10px/15px $gerbera-font;
+
+  .my-game & {
+    color: #fff;
+  }
+}
+
+.moves-line-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  > wc-move-placeholder {
+    flex: 1 1 auto;
+    width: 50%;
+  }
+}
+
+.moves-message {
+  flex: 1 0 auto;
+  width: calc(100% - 20px);
+  margin-left: 20px;
+  padding: 10px 40px 10px 15px;
+  display: flex;
+  align-items: flex-end;
+  z-index: z-index(base);
+}
+
+.moves-message-text {
+  position: relative;
+  color: $black-light;
+  z-index: z-index(base);
+  font: 400 15px/22px $gerbera-font;
+
+  a {
+    color: $blue;
+  }
+}

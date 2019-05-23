@@ -1,0 +1,57 @@
+<div class="d-flex flex-column flex-md-row bg-black">
+  <div class="banner">
+    <div class="d-flex flex-column">
+      <h1><span>Want to watch</span> live video <span>with multi&#8209;camera view?</span></h1>
+      <a routerLink="/paygate" class="btn btn-blue mt-auto ml-auto d-md-none">learn more</a>
+    </div>
+    <!--
+      NOTE!
+      Сжато видео до 1,5 Мб на сайте:
+      https://www.onlinevideoconverter.com/
+      Файлы ogv и webm из преобразованы из сжатого mp4 тут:
+      http://converterpoint.com/
+    -->
+    <!--<iframe src="./assets/html/video.html" frameborder="0"></iframe>-->
+    <video muted autoplay loop playsinline>
+      <source src="./assets/video/banner_lq.mp4" type="video/mp4">
+      <source src="./assets/video/banner_lq.ogv" type="video/ogg">
+      <source src="./assets/video/banner_lq.webm" type="video/webm">
+    </video>
+  </div>
+  <div class="d-flex d-flex--width-50">
+    <div *ngIf="product$ | async as product" class="tariff">
+      <div class="title">One<br>Tournament</div>
+      <div class="description d-none d-md-block">All premium membership features</div>
+      <div class="mt-auto ml-auto d-flex align-items-center align-right">
+        <a class="btn btn-disabled btn-hollow d-md-block" *ngIf="hasProduct$ | async; else buyProduct">
+          Thanks for joining! We love you.
+        </a>
+        <ng-template #buyProduct>
+          <span class="old-price-label" *ngIf="product.old_price">{{ product.old_price / 100 | currency: 'USD' : 'symbol-narrow' }}</span>
+          <a (click)="onBuyProduct(product)" class="btn btn-hollow d-md-block">
+            <span class="text">Buy for</span> {{product.price / 100 | currency:'USD':'symbol-narrow' }}
+          </a>
+        </ng-template>
+      </div>
+    </div>
+    <div *ngIf="plan$ | async as plan" class="tariff">
+      <div class="title">Year<br>Subscription</div>
+      <div class="description d-none d-md-block">
+        <p>All premium membership features;</p>
+        <p>Subscribers’ only backstage instagram channel;</p>
+        <p>10% discount for the official cycle merchendise.</p>
+      </div>
+      <div class="mt-auto ml-auto d-flex align-items-center align-right">
+        <a class="btn btn-disabled btn-hollow d-md-block" *ngIf="hasPlan$ | async; else buyPlan">
+          Thanks for joining! We love you.
+        </a>
+        <ng-template #buyPlan>
+          <span class="old-price-label" *ngIf="plan.old_price">{{ plan.old_price / 100 | currency: 'USD' : 'symbol-narrow' }}</span>
+          <a (click)="onBuyPlan(plan)" class="btn btn-hollow d-md-block">
+            <span class="text">Buy for</span> {{plan.amount / 100 | currency:'USD':'symbol-narrow' }}
+          </a>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

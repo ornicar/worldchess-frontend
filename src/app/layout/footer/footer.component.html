@@ -1,0 +1,92 @@
+<div class="footer">
+  <app-partners-list *ngIf="sponsorsVisible"></app-partners-list>
+  <!--<div class="footer-top">-->
+    <!--<ng-template [ngIf]="!isSent" [ngIfElse]="sent">-->
+      <!--<div class="middle">-->
+        <!--<div class="text">-->
+          <!--<span>Want&nbsp;to&nbsp;be in&nbsp;touch&nbsp;with</span>-->
+          <!--chess&nbsp;world<span>? <br>Subscribe&nbsp;to our</span>&nbsp;newsletters-->
+        <!--</div>-->
+        <!--<div class="field email-box">-->
+          <!--<div class="input-box">-->
+            <!--<input [(ngModel)]="email" class="input" matSuffix placeholder="e-mail">-->
+            <!--<mat-icon class="custom-icon" matSuffix [svgIcon]="isError ? 'input_error' : ''"></mat-icon>-->
+            <!--<div class="btn" (click)="subscription()">send</div>-->
+          <!--</div>-->
+          <!--<div class="email-error">{{errorMsg}}</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</ng-template>-->
+  <!--</div>-->
+  <div class="footer-bottom">
+    <div class="row">
+      <div class="coll-50">
+        <div class="row-fide">
+          <img class="icon" src="assets/images/logo-fide-black.svg" alt="logo--fide">
+          <span class="text-fide">FIDE</span>
+          <img class="logo" src="assets/images/logo.svg" alt="logo--fide">
+          <span class="text-chess">World Chess</span>
+        </div>
+        <div class="row-menu">
+          <a class="item" href="http://business.worldchess.com/contacts/" target="_blank">Contacts</a>
+          <a class="item" href="/assets/docs/terms-of-use.pdf">Terms of Use</a>
+          <a class="item" href="http://sponsorship.worldchess.com/" target="_blank">Sponsorship</a>
+          <a class="item" href="/assets/docs/privacy-policy.pdf">Privacy Policy</a>
+          <a class="item" routerLink="/partnership">Partnership</a>
+          <a class="item" href="http://business.worldchess.com" target="_blank">Business</a>
+        </div>
+      </div>
+      <div class="coll-25">
+        <div class="row-social">
+          <span>Folow us</span>
+          <div class="social-line">
+            <a href="https://twitter.com/theworldchess" target="_blank" class="icon">
+              <img src="assets/images/icon-twitter.svg" alt="twitter">
+            </a>
+            <a href="https://www.facebook.com/theworldchess" target="_blank" class="icon">
+              <img src="assets/images/icon-facebook.svg" alt="facebook">
+            </a>
+            <a href="https://www.instagram.com/theworldchess" target="_blank" class="icon">
+              <img src="assets/images/icon-instagram.svg" alt="instagram">
+            </a>
+          </div>
+        </div>
+        <div class="row-question">
+          <span>Have questions?</span>
+          <a href="mailto:support@worldchess.com">Support</a>
+        </div>
+      </div>
+      <div class="coll-25">
+        <div class="row-club">
+          <div>
+            <img src="assets/images/chess-club.svg" alt="chess-club">
+          </div>
+          <p>
+            <a href="https://club.worldchess.com" target="_blank">World Chess Club</a> is a club in the center of Moscow
+            where you can drink and play chess
+          </p>
+        </div>
+        <div class="row-copyright">
+          <div>
+            <img src="assets/images/usetech-copyright.svg" alt="Usetech">
+          </div>
+          <p>
+            Developed by <a href="https://usetech.ru" target="_blank">Usetech</a>
+          </p>
+        </div>
+        <div class="row-copyright">
+          <div>
+            <img src="assets/images/copyright.svg" alt="Shuka Design">
+          </div>
+          <p>
+            Designed by <a href="https://shuka.design/" target="_blank">Shuka Design</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #sent>
+  <div class="text">Thank you for subscribing to World Chess news!</div>
+</ng-template>

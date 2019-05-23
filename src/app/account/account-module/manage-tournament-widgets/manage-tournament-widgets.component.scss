@@ -1,0 +1,36 @@
+.widgets-form {
+  position: relative;
+
+  &__add {
+    margin-top: 10px;
+  }
+
+  .widget-item {
+    margin-bottom: 20px;
+  }
+
+  .item-btn {
+    cursor: pointer;
+    padding: 0 10px;
+    display: inline-block;
+  }
+
+  .btn{
+    &--remove {
+      cursor: pointer;
+      padding: 0 10px;
+      display: inline-block;
+    }
+
+    &--update {
+    }
+  }
+
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+}

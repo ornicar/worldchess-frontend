@@ -1,0 +1,31 @@
+<div class="partners">
+    <div class="container">
+      <h1 class="block-header">
+          <a routerLink="/partnership">Partners</a>
+      </h1>
+      <div class="partners-wrapper" *ngIf="partners.length > 0">
+         <ngu-carousel #myCarousel [inputs]="carouselTileConfig" [dataSource]="partners">
+            <ngu-item *nguCarouselDef="let partner; let i = index; let ani = animate">
+              <div class="partner-item"><!-- [@slider]="ani" PLease this animation to this tile to see animation. stackblitz have error with animations -->
+                <a class="partner-logo"
+                  [class.partner-logo--additional]="partner.partner_cat === 2"
+                  [class.partner-logo--mass-media]="partner.partner_cat === 3"
+                  [id]="partner.partner.name"
+                  routerLink="/partnership"
+                  [fragment]="lowerCase(partner.partner.name)">
+                  <img class="partner-logo__img" [src]="partner.partner.slider_logo"/>
+                </a>
+              </div>
+            </ngu-item>
+
+            <!-- <button NguCarouselPrev class="leftRs" [style.opacity]="myCarousel.isFirst ? 0.5:1">&lt;</button>
+            <button NguCarouselNext class="rightRs" [style.opacity]="myCarousel.isLast ? 0.5:1">&gt;</button> -->
+
+            <!-- <ul class="myPoint" NguCarouselPoint>
+              <li *ngFor="let i of myCarousel.pointNumbers; let i = index" [class.active]="i==myCarousel.activePoint" (click)="myCarousel.moveTo(i)">
+              </li>
+            </ul> -->
+          </ngu-carousel>
+      </div>
+    </div>
+  </div>

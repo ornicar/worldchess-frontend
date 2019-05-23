@@ -1,0 +1,230 @@
+/* autoprefixer grid: autoplace */
+@import '../../../../../html/css/variables';
+@import '../../../../../html/css/media';
+
+:host {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) minmax(0, auto) 0;
+  grid-template-rows: 40px minmax(0, auto) 40px;
+  grid-template-areas: "black-player black-player black-player-timer black-player-result" "score-line chess chess chess" "white-player white-player white-player-timer white-player-result";
+}
+
+:host-context(.grid-size--normal) {
+  .chess-board {
+    width: 251px;
+    height: 251px;
+
+    &__wrapper {
+      width: 251px;
+      height: 251px;
+    }
+  }
+}
+
+:host-context(.grid-size--medium) {
+  .chess-board {
+    width: 172px;
+    height: 172px;
+
+    &__wrapper {
+      width: 172px;
+      height: 172px;
+    }
+  }
+}
+
+:host-context(.view-mode--multiboard-normal) {
+  .chess-board {
+    width: 251px;
+    height: 251px;
+
+    &__wrapper {
+      width: 251px;
+      height: 251px;
+    }
+  }
+}
+
+.chess-board {
+  grid-area: chess;
+  width: 372px;
+  height: 372px;
+  display: block;
+  background-color: $black-bg;
+  position: relative;
+  @include tablets-big() {
+    width: 320px;
+    height: 320px;
+  }
+  @include phones() {
+    width: 228px;
+    height: 228px;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-bottom: 100%;
+  }
+
+  &__wrapper {
+    position: absolute;
+    width: 372px;
+    height: 372px;
+    padding: 16px;
+    background-color: $brown-bg;
+    @include tablets-big() {
+      width: 320px;
+      height: 320px;
+    }
+    @include phones() {
+      width: 228px;
+      height: 228px;
+      padding: 10px;
+    }
+  }
+
+  &__player {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 7px;
+    transform: translate(-50%, 0);
+    width: 11px;
+    height: 11px;
+
+    &--white {
+      fill: #fff;
+    }
+
+    &--top {
+      top: 7px;
+    }
+
+    &--bottom {
+      bottom: 7px;
+      top: auto;
+    }
+  }
+
+  &__reaction {
+    position: absolute;
+    height: 48px;
+    width: 48px;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: -32px;
+  }
+}
+
+.score-line {
+  grid-area: score-line;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  > * {
+    flex: 1 1 auto;
+  }
+}
+
+.white-player {
+  grid-area: white-player;
+}
+
+.white-player-timer {
+  grid-area: white-player-timer;
+  place-self: stretch end;
+}
+
+.white-player-result {
+  grid-area: white-player-result;
+  place-self: stretch end;
+}
+
+.black-player {
+  grid-area: black-player;
+}
+
+.black-player-timer {
+  grid-area: black-player-timer;
+  place-self: stretch end;
+}
+
+.black-player-result {
+  grid-area: black-player-result;
+  place-self: stretch end;
+}
+
+:host(.players-switched) {
+  grid-template-areas: "white-player white-player white-player-timer white-player-result" "score-line chess chess chess" "black-player black-player black-player-timer black-player-result";
+}
+
+:host(.view-mode--multiboard-normal) {
+  grid-template-columns: 12px minmax(0, 1fr) minmax(0, auto) minmax(0, auto);
+  grid-template-rows: 24px minmax(0, auto) 24px;
+  grid-template-areas: "black-player black-player black-player-timer black-player-result" "score-line chess chess chess" "white-player white-player white-player-timer white-player-result";
+
+  .chess-board {
+    &__wrapper {
+      padding: 12px;
+    }
+  }
+}
+
+:host(.view-mode--multiboard-medium) {
+  grid-template-columns: 10px minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
+  grid-template-rows: 24px minmax(0, auto) 24px;
+  grid-template-areas: "black-player black-player black-player-timer black-player-result" "score-line chess chess chess" "white-player white-player white-player-timer white-player-result";
+
+  .black-player-timer,
+  .white-player-timer {
+    place-self: stretch start;
+  }
+
+  .chess-board {
+    &__wrapper {
+      padding: 8px;
+    }
+
+    &__player {
+      top: 4px;
+      width: 6px;
+      height: 6px;
+
+      &--top {
+        top: 4px;
+      }
+
+      &--bottom {
+        bottom: 4px;
+        top: auto;
+      }
+    }
+  }
+}
+
+:host(.view-mode--only-board) {
+  grid-template-columns: 0 minmax(0, 1fr) minmax(0, auto) minmax(0, auto);
+  grid-template-rows: 0 minmax(0, auto) 0;
+  .chess-board {
+    width: 100%;
+    height: 100%;
+    &__wrapper {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+:host(.view-mode--widget-vertical) {
+  grid-template-columns: 20px minmax(0, calc((100% - 20px) / 2)) minmax(0, calc((100% - 20px) / 2));
+  grid-template-rows: minmax(0, 22px) 22px 34px minmax(0, auto) 34px 22px minmax(0, 22px);
+  grid-template-areas: ". . black-player-result" ". . black-player-timer" ". . black-player" "score-line chess chess" ". white-player ." ". white-player-timer ." ". white-player-result .";
+}
+
+:host(.view-mode--widget-vertical.players-switched) {
+  grid-template-areas: ". . white-player-result" ". . white-player-timer" ". . white-player" "score-line chess chess" ". black-player ." ". black-player-timer ." ". black-player-result .";
+}

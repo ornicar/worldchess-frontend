@@ -1,0 +1,275 @@
+<div class="page">
+  <div class="left-panel">
+    <game-notification [message]="notification$ | async"></game-notification>
+
+    <div class="events" [class.events--active]="isMobilePanelShown$ | async">
+      <!-- <ul class="events__list" *ngIf="false">
+        <li class="events__elem">
+          <div class="events__img">
+            <img src="../../../assets/icons/hamster.png" alt="hamster.png">
+          </div>
+          <div class="events__event">
+          </div>
+        </li>
+        <li class="events__elem events__elem--your-move">
+          <div class="events__img">
+            <svg class="events__progress">
+              <circle cy=26.5 cx=26.5 r=24.5 fill="transparent" stroke="transparent" stroke-width="5"></circle>
+              <circle class="events__progress-cyrcle" cy=26.5 cx=26.5 r=24.5 fill="transparent" stroke-width="5"
+                stroke-dasharray="100" stroke-dashoffset=0></circle>
+            </svg>
+            <img src="../../../assets/icons/hamster.png" alt="hamster.png">
+          </div>
+          <div class="events__event">
+            <div class="events__event-time">15 sec till reject</div>
+            <div class="events__event-text">Alexander joined</div>
+          </div>
+        </li>
+        <li class="events__elem events__elem--alert">
+          <div class="events__img">
+            <svg class="events__progress">
+              <circle cy=26.5 cx=26.5 r=24.5 fill="transparent" stroke="transparent" stroke-width="5"></circle>
+              <circle class="events__progress-cyrcle" cy=26.5 cx=26.5 r=24.5 fill="transparent" stroke-width="5"
+                stroke-dasharray="100" stroke-dashoffset=0></circle>
+            </svg>
+            <img src="../../../assets/icons/hamster.png" alt="hamster.png">
+          </div>
+          <div class="events__event">
+            <div class="events__event-text">You lost!</div>
+          </div>
+        </li>
+
+        <li class="events__elem">
+          <div class="events__img">
+
+          </div>
+          <div class="events__event">
+            <div class="hint">
+              <div class="hint__wrapper">
+                <div class="hint__content">
+                  <div class="hint__text">Alexander offered a draw</div>
+                  <div class="hint__buttons">
+                    <a href="#" class="hint__btn">Accept</a>
+                    <a href="#" class="hint__btn">Decline</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="events__elem">
+          <div class="events__img">
+            <img src="../../../assets/img/avatar.jpg" alt="avatar.jpg">
+          </div>
+          <div class="events__event">
+            <div class="hint">
+              <div class="hint__wrapper">
+                <div class="hint__time">
+                  <span>23</span>sec
+                </div>
+                <div class="hint__content">
+                  <div class="hint__text">Hurry up! Or you will be dropped out of the game!</div>
+                  <div class="hint__buttons">
+                    <a href="#" class="hint__btn">Make a move</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="events__elem events__elem--active">
+          <div class="events__img">
+            <img src="../../../assets/img/avatar.jpg" alt="avatar.jpg">
+          </div>
+          <div class="events__event">
+          </div>
+        </li>
+      </ul> -->
+
+      <div class="events__buttons">
+        <ul class="events__list" *ngIf="(gameReady$ | async) && !(gameResult$ | async)">
+          <li class="events__elem">
+            <a (click)="_showResign.next(true)" class="events__btn">
+              <svg class="icon">
+                <use xlink:href="#resign"></use>
+              </svg>
+              <div class="events__hint">Resign</div>
+            </a>
+            <div class="events__text">Resign</div>
+            <div class="events__event" *ngIf="showResign$ | async">
+              <div class="hint">
+                <div class="hint__wrapper">
+                  <div class="hint__content">
+                    <div class="hint__text">Are you sure you want to resign?</div>
+                    <div class="hint__buttons">
+                      <a (click)="resign()" class="hint__btn">Yes</a>
+                      <a (click)="_showResign.next(false)" class="hint__btn">No</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="events__elem">
+            <a (click)="_showDraw.next(true)" class="events__btn">
+              <svg class="icon icon--desk">
+                <use xlink:href="#draw"></use>
+              </svg>
+              <svg class="icon icon--mobile">
+                <use xlink:href="#draw-mobile"></use>
+              </svg>
+              <div class="events__hint">Offer Draw</div>
+            </a>
+            <div class="events__text">Offer a draw</div>
+            <div class="events__event" *ngIf="showDraw$ | async">
+              <div class="hint">
+                <div class="hint__wrapper">
+                  <div class="hint__content">
+                    <div class="hint__text" *ngIf="!(opponentOfferedDraw$ | async)">
+                      Are you sure you want to offer a draw?
+                    </div>
+                    <div class="hint__text" *ngIf="opponentOfferedDraw$ | async">Opponent offered a draw. Agree?</div>
+                    <div class="hint__buttons">
+                      <a (click)="draw()" class="hint__btn">Yes</a>
+                      <a (click)="_showDraw.next(false)" class="hint__btn">No</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li *ngIf="canAbortGame$ | async" class="events__elem">
+            <a (click)="_abortGame.next(true)" class="events__btn">
+              <svg class="icon">
+                <use xlink:href="#abort"></use>
+              </svg>
+              <div class="events__hint">Abort</div>
+            </a>
+            <div class="events__text">Abort game</div>
+            <div class="events__event" *ngIf="abortGame$ | async">
+              <div class="hint">
+                <div class="hint__wrapper">
+                  <div class="hint__content">
+                    <div class="hint__text">Are you sure you want to abort game?</div>
+                    <div class="hint__buttons">
+                      <a (click)="abortGame()" class="hint__btn">Yes</a>
+                      <a (click)="_abortGame.next(false)" class="hint__btn">No</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="events__list">
+          <li class="events__elem">
+            <a (click)="showBugReportWindow()" class="events__btn">
+              <svg class="icon">
+                <use xlink:href="#bugreport"></use>
+              </svg>
+              <div class="events__hint">Report a bug</div>
+            </a>
+            <div class="events__text">Report a bug</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="left-panel__arrow-down" (click)="toggleMobilePanel()" [class.reverse]="isMobilePanelShown$ | async">
+      <svg class="icon">
+        <use xlink:href="#arrow-down"></use>
+      </svg>
+    </div>
+  </div>
+
+  <div class="center-panel">
+    <game-field></game-field>
+
+    <div class="result result--active" *ngIf="false">
+      <a (click)="_showResign.next(false)" class="result__close"></a>
+
+      <div class="result__title">
+        Are you sure you<br />
+        want to <span>resign</span>?
+      </div>
+      <div class="result__dialog">
+        <a (click)="resign()" class="result__dialog-btn">Yes</a>
+        <a (click)="_showResign.next(false)" class="result__dialog-btn">No</a>
+      </div>
+    </div>
+
+    <div class="result result--active" *ngIf="false">
+      <a (click)="_showDraw.next(false)" class="result__close"></a>
+      <div class="result__title">
+        Are you sure you<br />
+        want to <span>draw</span>?
+      </div>
+      <div class="result__dialog">
+        <a (click)="draw()" class="result__dialog-btn">Yes</a>
+        <a (click)="_showDraw.next(false)" class="result__dialog-btn">No</a>
+      </div>
+    </div>
+  </div>
+  <div class="right-panel">
+    <ul class="aside-list right-panel__aside-list">
+      <li
+        *ngFor="let tab of tabs$ | async"
+        class="aside-list__elem"
+        [class.active]="(activeTab$ | async).id === tab.id"
+        (click)="clickOnTab(tab)"
+      >
+        <div class="aside-list__text">{{ tab.name }}</div>
+        <div class="aside-list__icon">
+          <svg *ngIf="tab.icon" class="icon">
+            <use attr.xlink:href="#{{ tab.icon }}"></use>
+          </svg>
+        </div>
+        <div class="aside-list__stub" *ngIf="tab.comingSoon"><span>Coming soon</span></div>
+      </li>
+    </ul>
+
+    <moves-history
+      *ngIf="(activeTab$ | async).id === 'notations'"
+      [moves]="moves$ | async"
+      [selectedMove]="selectedMove$ | async"
+      (select)="onSelectHistoryMove($event)"
+    ></moves-history>
+
+    <search-opponent
+      *ngIf="(activeTab$ | async).id === 'start'"
+      [timeControls]="timeControls$ | async"
+      [selectedTimeControl]="selectedTimeControl$ | async"
+      (selectTimeControl)="selectTimeControl($event)"
+    ></search-opponent>
+  </div>
+</div>
+
+<wc-paygate-fixed-handler background="#b96cfd" [fixed]="false"></wc-paygate-fixed-handler>
+
+<div class="popup-dalog-mobile" *ngIf="showDraw$ | async">
+  <div class="popup-dalog-mobile__text">Draw?</div>
+  <div class="popup-dalog-mobile__buttons">
+    <a class="popup-dalog-mobile__btn" (click)="draw()">Yes</a>
+    <a class="popup-dalog-mobile__btn" (click)="declineDraw()">No</a>
+  </div>
+  <a (click)="declineDraw()" class="popup-dalog-mobile__close"></a>
+</div>
+
+<div class="popup-dalog-mobile" *ngIf="showResign$ | async">
+  <div class="popup-dalog-mobile__text">Resign?</div>
+  <div class="popup-dalog-mobile__buttons">
+    <a class="popup-dalog-mobile__btn" (click)="resign()">Yes</a>
+    <a class="popup-dalog-mobile__btn" (click)="declineResign()">No</a>
+  </div>
+  <a (click)="declineResign()" class="popup-dalog-mobile__close"></a>
+</div>
+
+<div class="popup-dalog-mobile" *ngIf="abortGame$ | async">
+  <div class="popup-dalog-mobile__text">Abort?</div>
+  <div class="popup-dalog-mobile__buttons">
+    <a class="popup-dalog-mobile__btn" (click)="abortGame()">Yes</a>
+    <a class="popup-dalog-mobile__btn" (click)="declineAbort()">No</a>
+  </div>
+  <a (click)="declineAbort()" class="popup-dalog-mobile__close"></a>
+</div>

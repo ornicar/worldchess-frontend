@@ -1,0 +1,70 @@
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+}
+
+.logo,
+.logo-text,
+.logo-bc,
+.logo-bc-text,
+.logo-bc-text span {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.logo {
+  img {
+    height: 50px;
+    width: auto;
+
+    @include phones() {
+      height: 25px;
+    }
+  }
+}
+
+.logo-text {
+  @include phones {
+    display: none;
+  }
+}
+
+.logo-bc {
+  svg {
+    height: 41px;
+    width: auto;
+
+    @include phones() {
+      height: 18px;
+    }
+  }
+
+  margin-right: 18px;
+}
+
+.logo-bc-text {
+  span {
+    white-space: nowrap;
+  }
+
+  @include phones {
+    span {
+      display: none;
+    }
+
+    .text-mobile {
+      display: inline-block;
+    }
+  }
+}
+
+.logo-bc,
+.logo-text,
+.logo {
+  margin-right: 18px;
+}

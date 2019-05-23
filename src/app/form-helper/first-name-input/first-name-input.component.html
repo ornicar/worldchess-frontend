@@ -1,0 +1,6 @@
+<mat-form-field>
+  <input matInput [formControl]="firstName" [placeholder]="label">
+  <mat-icon class="custom-icon" matSuffix [svgIcon]="firstName.value ? 'input_success' : ''"></mat-icon>
+  <mat-icon *ngIf="original" class="custom-icon" matSuffix
+            [svgIcon]="isEdit() ? 'edit' : 'non_edit'"></mat-icon>
+</mat-form-field>

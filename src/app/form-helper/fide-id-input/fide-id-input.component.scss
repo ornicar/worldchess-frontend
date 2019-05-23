@@ -1,0 +1,18 @@
+@import '../../../html/css/variables.scss';
+
+input::placeholder {
+    color: $black;
+}
+
+/deep/ .mat-form-field {
+    div.mat-form-field-wrapper {
+        div.mat-form-field-underline {
+            background-color: $black !important;
+        }
+    }
+}
+
+mat-hint.mat-hint {
+    color: $orange;
+    margin-top: 10px;
+}

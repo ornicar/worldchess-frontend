@@ -1,0 +1,91 @@
+@import '../html/css/variables';
+@import '../html/css/media';
+
+:host {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+:host-context(.grid-size--normal) {
+  .scale-progress {
+    width: 12px;
+
+    &__divisions-elem {
+      &--zero {
+        width: 17px
+      }
+    }
+  }
+}
+
+:host-context(.grid-size--medium) {
+  .scale-progress {
+    width: 10px;
+
+    &__divisions-elem {
+      &--zero {
+        width: 15px
+      }
+    }
+  }
+}
+
+.scale-progress {
+  position: relative;
+  width: 20px;
+  background-color: $black;
+
+  &__band {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    transition: height 0.18s;
+  }
+
+  &__divisions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  &__divisions-elem {
+    width: 5px;
+    position: relative;
+    left: -5px;
+    border: solid 1px #606060;
+    z-index: z-index(base);
+
+    span {
+      position: absolute;
+      font: 400 13px/13px $gerbera-font;
+      color: #606060;
+      right: calc(100% + 5px);
+      top: 50%;
+      transform: translate(0, -50%);
+
+      @include tablets-big() {
+        font: 400 10px/10px $gerbera-font;
+      }
+    }
+
+    &--zero {
+      border: solid 1px #ff6a6a;
+      width: 25px
+    }
+  }
+
+  &__divisions--my-game &__divisions-elem {
+    border-color: #FFFFFF;
+  }
+
+  &__divisions--my-game &__divisions-elem span {
+    color: #FFFFFF;
+  }
+}

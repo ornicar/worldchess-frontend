@@ -1,0 +1,11 @@
+<mat-form-field>
+  <mat-select
+    class="virtual-scroll"
+    [placeholder]="label"
+    [formControl]="control">
+    <mat-option *ngFor="let option of options" [value]="option[optionValueField]">
+      {{ option[optionLabelField] }}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="getError()">{{ getError() }}</mat-error>
+</mat-form-field>

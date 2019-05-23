@@ -1,0 +1,174 @@
+@import '../../../html/css/variables';
+@import '../../../html/css/media';
+
+:host {
+  width: 555px;
+  max-width: 55vh;
+  @include ipad() {
+    width: 455px;
+  }
+  @include phones-small() {
+    width: 100%;
+  }
+}
+
+.player-panel {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 5px 0 35px;
+
+  &--bottom {
+    padding: 35px 0 5px;
+
+    .player-panel__photo {
+      top: auto;
+      bottom: 100%;
+      transform: translate(-50%, 50%);
+      @include phones-small() {
+        transform: translate(0, 0);
+      }
+    }
+  }
+  @include phones-small() {
+    width: 90vw;
+    padding: 15px 0;
+  }
+}
+
+.player-panel__photo {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 67px;
+  height: 67px;
+  overflow: hidden;
+  border-radius: 50%;
+  z-index: z-index(base-dropdown);
+  flex: 0 0 auto;
+  max-width: 7vh;
+  max-height: 7vh;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  @include phones-small() {
+    position: static;
+    transform: translate(0, 0);
+    width: 38px;
+    height: 38px;
+  }
+}
+
+.player-panel__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+//  padding: 0 20px 0 0;
+  overflow: hidden;
+  height: 40px;
+  width: 100%;
+  padding: 0 95px;
+  position: relative;
+  @include phones-small() {
+    padding: 0 20px;
+    justify-content: flex-start;
+  }
+}
+
+.player-panel__aside {
+  // width: 85px;
+  flex: 0 0 auto;
+  position: absolute;
+  right: 0px;
+  @include phones-small() {
+    width: auto;
+  }
+}
+
+.player-panel__flag {
+  display: none;
+  width: 31px;
+  height: 20px;
+  border: 1px solid #ccc;
+  margin-right: 15px;
+}
+
+.player-panel__name {
+  font: 400 19px/40px $cofo-sans-font;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  //max-width: 180px;
+  white-space: nowrap;
+  height: 100%;
+  position: absolute;
+  width: calc(100% - 340px);
+  @include laptop() {
+    width: calc(100% - 215px);
+    font: 400 14px/40px $cofo-sans-font;
+  }
+  @include tablets() {
+    width: calc(100% - 215px);
+    font: 400 14px/40px $cofo-sans-font;
+  }
+  @include phones-small() {
+    font: 400 14px/40px $cofo-sans-font;
+    width: calc(100% - 140px);
+    position: relative;
+  }
+}
+
+.player-panel__count {
+  position: absolute;
+  //top: 12px;
+  right: 100px;
+  //margin-left: 10px;
+  font: 400 14px/19px $cofo-sans-font;
+  color: #787878;
+  position: absolute;
+  right: 95px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  span {
+    color: #31241b;
+    margin-right: 5px;
+    font: 400 13px/19px $cofo-sans-font;
+  }
+  @include laptop() {
+    font: 400 12px/16px $cofo-sans-font;
+    right: 52px;
+  }
+  @include tablets() {
+    //font: 400 14px/19px $cofo-sans-font;
+    //right: 95px;
+  }
+  @include phones-small() {
+    right: 65px;
+  }
+}
+
+.player-panel__logo {
+  width: 30px;
+  height: 20px;
+  fill: #2597ff;
+  //margin-left: 15px;
+  flex: 0 0 auto;
+  position: absolute;
+  height: 100%;
+  right: 135px;
+  @include laptop() {
+    width: 20px;
+    right: 85px;
+  }
+  @include tablets() {
+  //  width: 30px;
+  //  right: 135px;
+  }
+  @include phones-small() {
+    right: 115px;
+  }
+}

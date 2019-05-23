@@ -1,0 +1,33 @@
+<div class="text">
+  <div class="comment_text_hidden">
+    <div class="textarea_behavior" id="comment_text_hidden" #hiddenTextEl></div>
+  </div>
+  <textarea #textareaEl name="text"
+            [ngClass]="[inputClass]"
+            [attr.cols]="textArea.cols"
+            [attr.rows]="textArea.rows"
+            [attr.maxlength]="textArea.maxLength"
+            (keyup)="onKey($event)"
+            (keypress)="onKeyPress($event)"
+            (ngModelChange)="onChange($event)"
+            [(ngModel)]="input">
+  </textarea>
+</div>
+<div class="emoji-search" #emojiSearch
+     [ngClass]="[popupAnchor, searchClass]"
+     [hidden]="!popupOpen"
+     [style.display]="popupOpen ? 'flex' : 'none'"
+     (click)="$event.stopPropagation()">
+  <div class="search-header">
+    <input type="search" placeholder="Search..."
+           [(ngModel)]="filterEmojis"
+           (ngModelChange)="updateFilteredEmojis()"/>
+  </div>
+  <div class="emojis-container">
+    <span *ngFor="let emoji of filteredEmojis"
+          (click)="onEmojiClick(emoji.emoji)"
+          [title]="emoji.aliases[0]">
+      {{emoji.emoji}}
+    </span>
+  </div>
+</div>

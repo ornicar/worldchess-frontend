@@ -1,0 +1,17 @@
+<div class="chess-layout">
+  <div class="chess-layout__title">
+    <ng-content select="[slot=title]"></ng-content>
+  </div>
+
+  <div class="chess-layout__board">
+    <ng-content select="[slot=main]"></ng-content>
+  </div>
+
+  <div class="chess-layout__livestream">
+    <ng-content select="[slot=livestream]"></ng-content>
+  </div>
+
+  <div class="chess-layout__history">
+    <ng-content select="[slot=history]"></ng-content>
+  </div>
+</div>

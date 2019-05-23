@@ -1,0 +1,8 @@
+<div class="time-info" *ngIf="metrics.length">
+  <ul class="time-info__list">
+    <li class="time-info__elem" *ngFor="let metric of metrics; trackBy:trackByMetric">
+      <div class="time-info__text">{{ metric.title }}</div>
+      <div class="time-info__value">{{ metric.value }}</div>
+    </li>
+  </ul>
+</div>

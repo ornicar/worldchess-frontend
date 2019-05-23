@@ -1,0 +1,84 @@
+<div class="results-info">
+
+  <div class="results-info__players-list">
+    <div class="results-info__section-title">Players</div>
+
+    <div *ngFor="let playerResults of playersResults" class="results-info__player">
+      <div class="results-info__player-name">
+        <wc-country-flag [countryId]="playerResults?.player?.federation"></wc-country-flag>
+        {{ playerResults?.player?.full_name | wcReplace:',':'' }} ({{ getCountryName(playerResults?.player?.federation) }})
+      </div>
+      <div class="results-info__player-name-mobile">FC</div>
+      <div class="results-info__player-rating">
+        {{ playerResults?.player?.rating }}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="results-info__games">
+
+    <div class="results-info__scores-list">
+
+      <div class="results-info__numbers"
+        [style.width.px]="itemWidth * classic.length">
+        <div class="results-info__section-title results-info__section-title--inner">Classic games</div>
+        <div class="results-info__numbers-list">
+          <div *ngFor="let item of classic; let i = index;" class="results-info__number">{{i+1}}</div>
+        </div>
+      </div>
+
+      <div class="results-info__numbers results-info__numbers--rapid"
+        *ngIf="rapid && rapid.length > 0"
+        [style.width.px]="itemWidth * rapid.length"
+        [style.left.px]="itemWidth * classic.length - 1">
+        <div class="results-info__section-title results-info__section-title--inner results-info__section-title--rapid">Rapid games</div>
+        <div class="results-info__numbers-list">
+          <div *ngFor="let item of rapid; let i = index;" class="results-info__number">{{i+1}}</div>
+        </div>
+      </div>
+
+      <div class="results-info__numbers results-info__numbers--blitz"
+        *ngIf="blitz && blitz.length > 0"
+        [style.width.px]="50 * blitz.length"
+        [style.left.px]="50 * (classic.length + rapid.length) - 1">
+        <div class="results-info__section-title results-info__section-title--inner results-info__section-title--blitz">Blitz</div>
+        <div class="results-info__numbers-list">
+          <div *ngFor="let item of blitz; let i = index;" class="results-info__number">{{i+1}}</div>
+        </div>
+      </div>
+
+      <div class="results-info__numbers results-info__numbers--armageddon"
+        *ngIf="armageddon && armageddon.length > 0"
+        [style.width.px]="50 * armageddon.length"
+        [style.left.px]="50 * (classic.length + rapid.length + blitz.length) - 1">
+        <div class="results-info__section-title results-info__section-title--inner results-info__section-title--armageddon">Arm</div>
+        <div class="results-info__numbers-list">
+          <div *ngFor="let item of armageddon; let i = index;" class="results-info__number">{{i+1}}</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngFor="let playerResult of playersResults" class="results-info__scores-list">
+      <div class="results-info__scores-item"
+        *ngFor="let item of wholeScores[playerResult?.player?.fide_id]"
+        [class.results-info__scores-item--black]="item.color === 'black'"
+        [class.results-info__scores-item--gray]="item.score === null"
+        [innerHtml]="getScoreHtml(item.score)">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="results-info__sums-list">
+    <div class="results-info__section-title">Points</div>
+
+    <div *ngFor="let playerResults of playersResults" class="results-info__sum"
+      [class.results-info__sum--ended]="isEnd">
+      {{ playerResults?.total }}
+    </div>
+
+  </div>
+</div>
+

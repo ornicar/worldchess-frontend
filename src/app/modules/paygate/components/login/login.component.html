@@ -1,0 +1,66 @@
+<wc-preloader *ngIf="loading$ | async"></wc-preloader>
+
+<ng-container *ngIf="!(loading$ | async)">
+
+  <form [formGroup]="form" (ngSubmit)="submit()"  class="login">
+  <a class="login__close" [routerLink]="['', {outlets: {p: null}}]"></a>
+  <div class="login__title">
+      Welcome back! Log in using your email.
+      <div class="login__text">
+        <a [routerLink]="['', {outlets: {p: ['paygate', 'register']}}]" fragment="basic">register</a> if you don’t have an account or <a [routerLink]="['', { outlets: { p: ['paygate', 'recover'] } }]">recover</a> the password
+        </div>
+    </div>
+    <div class="login__labels">
+      <div>
+
+        <label class="input-text">
+          <div class="input-text__wparrer">
+              <input
+                class="input-text__elem"
+                [class.input-text__elem--active]="!!form.controls['email'].value"
+                type="email"
+                formControlName="email"
+              />
+              <div class="input-text__placeholder">Email</div>
+          </div>
+          <div *ngIf="form.controls['email'].errors && !form.controls['email'].pristine" class="input-text__error">
+              <div [hidden]="!form.controls['email'].errors['required']">Email is required.</div>
+              <div [hidden]="!form.controls['email'].errors['email']">Email is invalid.</div>
+            </div>
+        </label>
+
+        <label class="input-text__input">
+            <div class="input-text__wparrer">
+                <input
+                  class="input-text__elem"
+                  [class.input-text__elem--active]="!!form.controls['password'].value"
+                  type="password"
+                  formControlName="password"
+                />
+                <div class="input-text__placeholder">Password</div>
+            </div>
+            <div *ngIf="form.controls['password'].errors && !form.controls['password'].pristine" class="input-text__error">
+                <div [hidden]="!form.controls['password'].errors['required']">password is required.</div>
+              </div>
+          </label>
+
+
+
+        <div class="login__incorrect" *ngIf="loginIncorrect$ | async">
+          You’ve entered an incorrect password. You can <a [routerLink]="['../recover']">recover</a> it.
+        </div>
+      </div>
+
+
+
+    </div>
+    <div class="login__footer">
+      <div class="login__footer-coll">
+      </div>
+      <div class="login__footer-coll">
+        <button type="submit" class="login__btn">Log in</button>
+        </div>
+    </div>
+  </form>
+
+</ng-container>

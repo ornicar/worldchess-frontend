@@ -1,0 +1,60 @@
+<div class="profile-avatar-crop">
+  <div class="profile-avatar-crop__header">
+    <button class="profile-avatar-crop--btn" (click)="openFileDialog()">
+      Upload image <svg class="icon"><use xlink:href="#upload"></use></svg>
+    </button>
+    <input type="file" #upload accept="image/*" (change)="fileChangeEvent($event)">
+    <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="rotateLeft()">
+      <svg class="icon">
+        <use xlink:href="#rotate_left"></use>
+      </svg>
+    </button>
+    <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="rotateRight()">
+      <svg class="icon">
+        <use xlink:href="#rotate_right"></use>
+      </svg>
+    </button>
+    <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="flipHorizontal()">
+      <svg class="icon">
+        <use xlink:href="#flip"></use>
+      </svg>
+    </button>
+    <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="flipVertical()">
+      <svg class="icon rotate90">
+        <use xlink:href="#flip"></use>
+      </svg>
+    </button>
+    <button class="profile-avatar-crop--btn flex-end" (click)="close()">
+      <svg class="icon">
+        <use xlink:href="#close"></use>
+      </svg>
+    </button>
+    <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="done()">
+      <svg class="icon">
+        <use xlink:href="#done"></use>
+      </svg>
+    </button>
+  </div>
+  <div class="profile-avatar-crop__body">
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 4"
+      [resizeToWidth]="128"
+      [cropperMinWidth]="128"
+      [onlyScaleDown]="true"
+      [roundCropper]="true"
+      format="png"
+      outputType="base64"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+      [style.display]="showCropper ? null : 'none'"
+    ></image-cropper>
+  </div>
+  <div class="profile-avatar-crop__footer" *ngIf="croppedImage">
+    <h4>Preview:</h4>
+    <img class="profile-avatar-crop--preview" [src]="croppedImage">
+  </div>
+</div>

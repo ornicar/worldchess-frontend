@@ -1,0 +1,197 @@
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+:host {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  position: relative;
+}
+
+:host(.open) {
+  .dropdown {
+    top: calc(100% + 1px);
+    opacity: 1;
+    border-left: 1px solid $broadcast-menu-small-border;
+    border-right: 1px solid $broadcast-menu-small-border;
+    border-bottom: 1px solid $broadcast-menu-small-border;
+
+    @include phones() {
+      top: 0;
+      left: 100%;
+    }
+
+     
+      ::-webkit-scrollbar-track {
+        background-color:transparent;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background-color:$black-light;
+        border-radius: 5px;
+      }
+      
+      ::-webkit-scrollbar{
+      width: 4px;
+      }
+  }
+
+  wc-arrow-down.arrow {
+    align-self: center;
+
+    transform: rotate(180deg);
+
+    @include phones() {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+:host-context(wc-broadcast-page) {
+  .dropdown {
+    border-left: 1px solid #d9d9d9 !important;
+    border-right: 1px solid #d9d9d9 !important;
+    border-bottom: 1px solid #d9d9d9 !important;
+  }
+}
+
+.name {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  color: #656565;
+  font: 400 15px/20px $gerbera-font;
+
+  @include phones() {
+    display: none;
+  }
+}
+
+.select-option {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  white-space: nowrap;
+  z-index: z-index(base, 2);
+  font: inherit;
+
+  @include phones {
+    max-width: calc(100% - 40px);
+  }
+
+  &--can-change {
+    cursor: pointer;
+  }
+
+  &--back {
+    align-items: center;
+    color: #979797;
+
+    span {
+      margin-left: 20px;
+    }
+  }
+}
+
+.search-icon {
+  transform: scaleX(-1);
+}
+
+.search-input {
+  outline: 0;
+  border: 0;
+  background: transparent;
+  font: 300 15px/22px $gerbera-font;
+  min-width: 260px;
+  padding: 0 13px;
+}
+
+wc-arrow-down.arrow {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  align-self: center;
+  z-index: z-index(base, 2);
+
+  @include phones() {
+    transform: rotate(-90deg);
+  }
+}
+
+wc-arrow-down.back {
+  width: 40px;
+  height: 40px;
+  align-self: center;
+  transform: rotate(90deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: -10000px;
+  left: -20px;
+  min-width: calc(100% + 20px);
+  max-width: calc(100vw - 20px);
+  background-color: inherit;
+  z-index: z-index(sticky, 5);
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0 4px 5px 2px rgba(0, 0, 0, 0.1);
+
+  @media screen and (min-width: ($phones + 1)) {
+    &--left {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  @include phones() {
+    position: fixed;
+    top: 0;
+    right: auto;
+    left: 200%;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    min-width: initial;
+    max-width: initial;
+    border: 0;
+    box-shadow: none;
+    overflow-y: auto;
+
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.dropdown-content {
+  overflow-y: auto;
+  max-height: 70vh;
+
+  @include phones() {
+    overflow: initial;
+    max-height: initial;
+  }
+}
+
+.dropdown-link {
+  display: flex;
+  padding: 0 20px;
+  cursor: pointer;
+
+  &--mobile-header {
+    height: 51px;
+  }
+
+  @include phones() {
+    border-bottom: 1px solid $broadcast-menu-border;
+  }
+}
+
+:host-context(wc-header-small) .dropdown-link {
+
+  @include phones() {
+    border-bottom: 1px solid $broadcast-menu-small-border;
+  }
+}

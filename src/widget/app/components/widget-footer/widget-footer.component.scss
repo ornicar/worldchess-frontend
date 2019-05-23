@@ -1,0 +1,13 @@
+:host {
+  width: 100%
+}
+
+.kaspersky {
+  width: 100%;
+  text-align: right;
+  padding: 20px 30px;
+
+  &__logo {
+    height: 30px;
+  }
+}

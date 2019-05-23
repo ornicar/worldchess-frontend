@@ -1,0 +1,13 @@
+<mat-form-field>
+  <input
+    matInput
+    class="number"
+    [placeholder]="label"
+    [formControl]="cardNumber"
+    mask="0000 0000 0000 0000"
+    (focus)="isFocus = true"
+  >
+  <span *ngIf="cardNumber.errors && isFocus" matSuffix class="form-error-text">{{cardNumber.getError('invalidInput')?.message}}</span>
+  <mat-icon *ngIf="cardNumber.value || isFocus" class="custom-icon" matSuffix
+            [svgIcon]="cardNumber.errors ? 'input_error' : 'input_success'"></mat-icon>
+</mat-form-field>

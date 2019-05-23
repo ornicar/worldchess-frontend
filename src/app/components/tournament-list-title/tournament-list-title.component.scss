@@ -1,0 +1,66 @@
+@import "../../../html/css/variables";
+@import "../../../html/css/media";
+
+.other-events {
+  color: $black;
+  position: relative;
+  border-bottom: 1px solid #D8D8D8;
+  background-color: $gray;
+  min-height: 256px;
+  padding: 16px 30px;
+  overflow: hidden;
+
+  @include tablets() {
+    min-height: 340px;
+  }
+  @include phones() {
+    min-height: 195px;
+  }
+
+  &__title {
+    font: 300 38px/48px $gerbera-font;
+
+    @include phones() {
+      font-size: 40px;
+      font: 300 22px/22px $gerbera-font;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    bottom: -12px;
+    right: 5%;
+    width: 840px;
+
+    @include tablets() {
+      right: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      max-height: 285px;
+    }
+
+    @include phones() {
+      max-height: 195px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      align-self: center;
+
+      @include tablets() {
+        margin-left: -125px;
+        min-height: 285px;
+        min-width: 840px;
+      }
+
+      @include phones() {
+        min-height: auto;
+        min-width: auto;
+        width: 560px;
+        margin-left: 0;
+      }
+    }
+  }
+}

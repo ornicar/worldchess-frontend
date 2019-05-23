@@ -1,0 +1,72 @@
+:host {
+  .icon {
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 15px;
+    height: 15px;
+
+    &.blunder {
+      background-image: url('/assets/images/history-move-icons/blunder.svg');
+    }
+
+    &.mistake {
+      background-image: url('/assets/images/history-move-icons/mistake.svg');
+    }
+
+    &.change {
+      background-image: url('/assets/images/history-move-icons/change.svg');
+    }
+
+    &.check {
+      background-image: url('/assets/images/history-move-icons/check.svg');
+    }
+
+    &.long-thinking {
+      background-image: url('/assets/images/history-move-icons/long-thinking.svg');
+    }
+
+    &.mate-long {
+      background-image: url('/assets/images/history-move-icons/mate-long.svg');
+    }
+
+    &.mate-fast {
+      background-image: url('/assets/images/history-move-icons/mate-fast.svg');
+    }
+  }
+}
+
+:host-context(wc-chess-board) {
+  .icon {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+
+    &.blunder {
+      background-image: url('/assets/images/history-move-icons-invert/blunder.svg');
+    }
+  
+    &.mistake {
+      background-image: url('/assets/images/history-move-icons-invert/mistake.svg');
+    }
+  
+    &.change {
+      background-image: url('/assets/images/history-move-icons-invert/change.svg');
+    }
+  
+    &.check {
+      background-image: url('/assets/images/history-move-icons-invert/check.svg');
+    }
+  
+    &.long-thinking {
+      background-image: url('/assets/images/history-move-icons-invert/long-thinking.svg');
+    }
+  
+    &.mate-long {
+      background-image: url('/assets/images/history-move-icons-invert/mate-long.svg');
+    }
+  
+    &.mate-fast {
+      background-image: url('/assets/images/history-move-icons-invert/mate-fast.svg');
+    }
+  }
+}

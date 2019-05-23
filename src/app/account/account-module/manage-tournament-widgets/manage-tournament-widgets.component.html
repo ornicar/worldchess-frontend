@@ -1,0 +1,49 @@
+<div class="widgets-form tournament-form">
+  <form *ngIf="form"
+       [formGroup]="form">
+    <div formArrayName="entities">
+        <div *ngFor="let widgetControl of form.get('entities').controls; let idx = index"
+          [formGroupName]="idx"
+          class="widget-item">
+        <select formControlName="tour">
+            <option [ngValue]="null" disabled selected>Choose tour</option>
+            <option *ngFor="let tour of tours" [ngValue]="tour.id">
+              {{ tour.tour_number }}&nbsp;
+              ({{tour.datetime_of_round | date : 'MMMM d y'}} - {{tour.datetime_of_round_finish | date : 'MMMM d y'}})
+            </option>
+        </select>
+        <span *ngIf="isSaved(idx)"
+          (click)="deleteOne(idx)"
+          class="item-btn">X</span>
+        <span *ngIf="isSaveOneAvailable(idx)"
+          [class.disabled]="widgetControl.invalid || loading"
+          (click)="saveOne(idx)"
+          class="item-btn">Save Updates</span>
+        <div *ngIf="isSaved(idx)">
+          <span>{{mainUrl}}/widget/{{widgetControl.value?.id}}/</span>
+          <!--<span (click)="copyToClipboard(widgetControl.value?.id)">copy URL</span>-->
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn btn-blue widgets-form__add"
+              [disabled]="isAddNewDisabled()"
+              (click)="saveLastAndAddNew()">Add widget
+      </button>
+    </div>
+  </form>
+</div>
+<div class="controls">
+  <button class="btn btn-blue" (click)="onClose()">Close</button>
+  <button class="btn btn-blue"
+          *ngIf="ableToSave()"
+          [disabled]="isSaveDisabled()"
+          (click)="onSave()">Save
+  </button>
+  <!-- @TODO check it we need 'onSave' here -->
+  <button class="btn btn-blue"
+          *ngIf="ableToSend()"
+          (click)="onSendToApprove()">Send to approve
+  </button>
+</div>

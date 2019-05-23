@@ -1,0 +1,165 @@
+<div
+  class="profile"
+  *ngIf="account$ | async as account"
+  [ngClass]="'profile-bg-' + (account?.premium ? 'pro' : 'basic')"
+>
+  <div class="profile__wrapper" *ngIf="rating$ | async as rating">
+    <div class="profile__info">
+      <div class="profile__view">
+        <div class="profile__view-body">
+          <div class="profile__view-row">
+            <p class="profile__view-row__label">Member since</p>
+            <p class="profile__view-row__value">{{ rating.since | date: 'dd.MM.yyyy' }}</p>
+          </div>
+          <div class="profile__view-row">
+            <p class="profile__view-row__label">BETA World Chess Passport</p>
+            <p class="profile__view-row__value">
+              <ng-container *ngIf="rating.fide_id; else nonfide">
+                {{ rating.fide_id }}
+              </ng-container>
+              <ng-template #nonfide>
+                - <a class="profile__view-btn" href="javascript:void(0)" (click)="upgrade()">upgrade now</a>
+              </ng-template>
+            </p>
+          </div>
+          <div class="profile__view-row">
+            <p class="profile__view-row__label">Verification</p>
+            <p class="profile__view-row__value" [ngSwitch]="rating.verification">
+              <ng-container *ngSwitchCase="AccountVerification.ON_CHECK">On Check</ng-container>
+              <ng-container *ngSwitchCase="AccountVerification.VERIFIED">Verified</ng-container>
+              <ng-container *ngSwitchDefault>-</ng-container>
+            </p>
+          </div>
+          <div class="profile__view-row" *ngFor="let plan of rating.subscriptions">
+            <p class="profile__view-row__label">{{ plan.plan }}</p>
+            <ng-container [ngSwitch]="getPurchasePlansStatus(plan)">
+              <ng-container *ngSwitchCase="PurchasePlansStatus.ACTIVE">
+                <p class="profile__view-row__value">
+                  <span class="profile__view-row__value-active">Active</span>
+                </p>
+                <p class="profile__view-row__below">Active till {{ plan.period.upper | date: 'dd.MM.yy' }}</p>
+              </ng-container>
+              <ng-container *ngSwitchCase="PurchasePlansStatus.EXPIRED">
+                <p class="profile__view-row__value">Expired</p>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="profile__view-row" *ngIf="rating.subscriptions.length === 0">
+            <p class="profile__view-row__label">Status</p>
+            <p class="profile__view-row__value">-</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile__aside">
+      <div class="profile__rating">
+        <ng-container [ngSwitch]="hasFideRating$ | async">
+          <div class="profile__block">
+            <svg class="icon">
+              <use xlink:href="#logo"></use>
+            </svg>
+            <ng-container *ngSwitchCase="true">
+              <div class="profile__rating-info">
+                {{ rating.fide_rating }}
+              </div>
+              <div class="profile__rating-desc">
+                The official rating.
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="false">
+              <div class="profile__rating-info">
+                {{ rating.worldchess_rating }}
+              </div>
+              <div class="profile__rating-desc">
+                Worldchess Rating.
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+      <div class="profile__all-ratings-list">
+        <div class="profile__all-rating">
+          <div class="profile__rating-block">
+            <div class="profile__rating-block-label">
+              WC rating
+            </div>
+            <div class="profile__rating-block-info">
+              {{ rating.worldchess_rating }}
+            </div>
+          </div>
+          <div *ngIf="hasFideRating$ | async" class="profile__rating-block">
+            <div class="profile__rating-block-label">
+              WC Passport rating
+            </div>
+            <div class="profile__rating-block-info">
+              {{ rating.fide_rating }}
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="profile__all-rating-btn"
+          [class.profile__all-rating-btn--revert]="showMoreRating"
+          (click)="onShowMoreRating()"
+        ></button>
+
+        <div *ngIf="showMoreRating" class="profile__all-rating-block">
+          <div class="profile__all-rating">
+            <div class="profile__rating-block">
+              <div class="profile__rating-block-label">
+                WC bullet
+              </div>
+              <div class="profile__rating-block-info">
+                {{ rating.worldchess_bullet }}
+              </div>
+            </div>
+            <div *ngIf="hasFideRating$ | async" class="profile__rating-block">
+              <div class="profile__rating-block-label">
+                WC Passport bullet
+              </div>
+              <div class="profile__rating-block-info">
+                {{ rating.fide_bullet }}
+              </div>
+            </div>
+          </div>
+          <div class="profile__all-rating">
+            <div class="profile__rating-block">
+              <div class="profile__rating-block-label">
+                WC blitz
+              </div>
+              <div class="profile__rating-block-info">
+                {{ rating.worldchess_blitz }}
+              </div>
+            </div>
+            <div *ngIf="hasFideRating$ | async" class="profile__rating-block">
+              <div class="profile__rating-block-label">
+                WC Passport blitz
+              </div>
+              <div class="profile__rating-block-info">
+                {{ rating.fide_blitz }}
+              </div>
+            </div>
+          </div>
+          <div class="profile__all-rating">
+            <div class="profile__rating-block">
+              <div class="profile__rating-block-label">
+                WC rapid
+              </div>
+              <div class="profile__rating-block-info">
+                {{ rating.worldchess_rapid }}
+              </div>
+            </div>
+            <div *ngIf="hasFideRating$ | async" class="profile__rating-block">
+              <div class="profile__rating-block-label">
+                WC Passport rapid
+              </div>
+              <div class="profile__rating-block-info">
+                {{ rating.fide_rapid }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

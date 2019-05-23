@@ -1,0 +1,35 @@
+<div class="my-events" [class.premium]="(myAccount$ | async)?.premium">
+  <h2 class="my-events__title"
+    *ngIf="!(myTournaments$ | async).length">
+    You don't have any events. Let's start!
+  </h2>
+  <h2 class="my-events__title"
+    *ngIf="(myTournaments$ | async).length">
+    That's your Events list
+  </h2>
+
+  <button (click)="onCreate()" class="my-events__create btn">Create new event</button>
+
+  <div class="events-list">
+    <div class="events-list__row">
+      <div class="events-list__cell events-list__title events-list__name">Name</div>
+      <div class="events-list__cell events-list__title events-list__dates">Dates</div>
+      <div class="events-list__cell events-list__title events-list__state">State</div>
+      <div class="events-list__cell events-list__title events-list__approve">Approve Status</div>
+      <div class="events-list__cell events-list__title events-list__manage">Manage</div>
+    </div>
+
+    <div class="events-list__row"
+      *ngFor="let tournament of (myTournaments$ | async)">
+      <div class="events-list__cell events-list__name">{{tournament.title}}</div>
+      <div class="events-list__cell events-list__dates">{{tournament.datetime_of_tournament | date: 'd MMM y' }} - {{tournament.datetime_of_finish | date: 'd MMM y' }}</div>
+      <!-- USE TIME PIPE FOR DATES AND ADD FINISH DATE -->
+      <div class="events-list__cell events-list__state">{{tournamentStatuses[tournament.status]}}</div>
+      <div class="events-list__cell events-list__approve">{{approveStatuses[tournament.approve_status]}}</div>
+      <div class="events-list__cell events-list__manage">
+        <button *ngIf="isEditAvailable(tournament)" (click)="onEdit(tournament.id)" class="btn my-events__edit">edit</button>
+        <button (click)="onDelete(tournament.id)" class="btn my-events__delete">delete</button>
+      </div>
+    </div>
+  </div>
+</div>

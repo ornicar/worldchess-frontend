@@ -1,0 +1,89 @@
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  min-height: 212px;
+  background: #000;
+  background-clip: content-box;
+}
+
+:host(.focus) {
+  background: #459BFF;
+  border-top: 1px solid #459BFF;
+}
+
+.info {
+  flex: 1 2 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  padding: 20px;
+  color: #ffffff;
+}
+
+.type {
+  flex: 0 0 auto;
+  font: 400 15px/15px $gerbera-font;
+  margin-bottom: 12px;
+}
+
+.title {
+  flex: 1 0 auto;
+  font: 300 22px/32px $gerbera-font;
+  margin-bottom: 12px;
+
+  b {
+    font-weight: 700;
+    font-family: $gerbera-font;
+  }
+}
+
+.link {
+  flex: 0 0 auto;
+  font: 300 15px/36px $gerbera-font;
+  color: #000000;
+  padding: 0 11px;
+  height: 35px;
+  background: $blue;
+  border-radius: 2px;
+  box-shadow: 0px 0px 10px $var-blue;
+
+  &:hover {
+    background-color: #fff;
+    color: #000;
+  }
+}
+
+:host(.focus) .link {
+  box-shadow: 0 0 15px #B183FF;
+
+  &:hover {
+    box-shadow: 0 0 20px #a16bff;
+  }
+}
+
+:host(.focus) .link {
+    background-color: #000;
+    color: #fff;
+    box-shadow: 0px 0px 10px #656565;
+  &:hover {
+    background-color: #fff;
+    color: #000;
+  }
+}
+
+.image {
+  flex: 0 1 auto;
+  max-width: 66%;
+  margin-left: -95px;
+  overflow: hidden;
+
+  img {
+    display: block;
+    height: 212px;
+    width: auto;
+  }
+}

@@ -1,0 +1,29 @@
+<div class="wc-container container">
+  <div class="section-media">
+    <div class="section-media__header">
+      <div class="text text--small">{{block.datetime | date: 'MMM d — h:mm a'}}</div> <!-- apply date pipe-->
+      <div class="wc-title">{{block.title}}</div>
+    </div>
+    <div class="section-media__body">
+      <ul class="media-card-list">
+        <li class="media-card-list__elem" *ngFor="let img of list?.list trackBy: trackByFn let idx = index">
+          <div class="media-card" (click)="onMediaClick(idx, img.block)">
+            <div class="media-card__img" [ngStyle]="{'background-image': this.getImage(img)}">
+            </div>
+            <span class="media-card__btn" *ngIf="img.video_url">
+              <img class="media-card__play" src="assets/icons/play.svg">
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="wc-container container">
+  <div *ngIf="showButton" (click)="onShowMore()" class="show-more">
+    <span>show more <svg class="icon">
+        <use xlink:href="#arrow-down"></use>
+      </svg>
+    </span>
+  </div>
+</div>

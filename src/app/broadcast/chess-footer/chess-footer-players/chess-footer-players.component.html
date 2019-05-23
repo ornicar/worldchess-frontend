@@ -1,0 +1,59 @@
+<div class="wc-container container container--flex">
+  <wc-chess-footer-info
+    [tournament]="tournament"
+    class="information-aside information-aside--portable"
+    (goToMedia)="changeTab.emit('media')">
+  </wc-chess-footer-info>
+  
+  <div class="players players--desktop" *ngIf="tournament?.players?.length; else noplayers">
+    <div class="players__body">
+      <ul class="players__list">
+        <li class="players__elem" *ngFor="let player of tournament?.players; let k = index">
+          <div class="players__number">{{ k + 1 }}</div>
+          <div class="players__photo" *ngIf="player.avatar">
+            <img [src]="player.player.avatar" alt="photo.jpg">
+          </div>
+          <div class="players__name">{{ player.full_name }}</div>
+          <div class="players__rank" *ngIf="player.rank">{{ player.rank }}</div>
+          <div class="players__year">{{ player.birth_year }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="wc-container container players--tablet">
+  <div class="players" *ngIf="tournament?.players?.length; else noplayers">
+    <div class="players__body">
+      <ul class="players__list">
+        <li class="players__elem" *ngFor="let player of tournament?.players; let k = index">
+          <div class="players__number">{{ k + 1 }}</div>
+          <div class="players__photo" *ngIf="player.avatar">
+            <img [src]="player.player.avatar" alt="photo.jpg">
+          </div>
+          <div class="players__name">{{ player.full_name }}</div>
+          <div class="players__rank" *ngIf="player.rank">{{ player.rank }}</div>
+          <div class="players__year">{{ player.birth_year }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="wc-container container container--flex">
+  <wc-chess-footer-info
+    [tournament]="tournament"
+    class="information-aside information-aside--mobile"
+    (goToMedia)="changeTab.emit('media')">
+  </wc-chess-footer-info>
+</div>
+
+<ng-template #noplayers>
+  <div class="information-main__empty">
+    <img src="assets/img/media-horse.svg" alt="img" class="information-main__empty-img" />
+    <div class="information-main__empty-msg">
+      Sorry! No Players signup yet…<br>
+      Stay tuned for the updates though.
+    </div>
+  </div>
+</ng-template>

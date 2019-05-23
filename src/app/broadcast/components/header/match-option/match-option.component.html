@@ -1,0 +1,4 @@
+<div class="match-flag">
+  <wc-country-flag *ngIf="(team$ | async)?.federation as federation" [countryId]="federation"></wc-country-flag>
+</div>
+<span *ngIf="!showOnlyFlag" class="match-name">{{ (team$ | async)?.name }}</span>

@@ -1,0 +1,49 @@
+@import '../../../../html/css/variables';
+@import '../../../../html/css/media';
+@import '../../../../scss/settings';
+
+wc-chess-page-layout {
+  background-color: $black-bg;
+}
+
+wc-chess-page-layout.my-game {
+  background-color: #A696FF;
+}
+
+.chess-page__history-moves {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  height: auto;
+
+  @include phones() {
+    height: 200px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.field__header {
+  @include phones() {
+    display: none;
+  }
+}
+
+.field__body {
+  justify-content: center;
+
+  @include phones() {
+    flex-direction: column;
+  }
+
+  &--switched {
+    min-height: 512px;
+
+    @include phones() {
+      min-height: 0;
+    }
+  }
+}
+

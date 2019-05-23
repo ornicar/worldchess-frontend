@@ -1,0 +1,143 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="register">
+  <a class="register__close" [routerLink]="['', { outlets: { p: null } }]"></a>
+  <div class="register__title">
+    Fill in your payment information
+  </div>
+  <div class="register__labels">
+    <div class="card">
+      <div class="card__row">
+        <div class="card__col card__col--flex-3">
+          <label class="input-text__input">
+            <div class="input-text__wparrer">
+              <input
+                mask="0000 0000 0000 0000"
+                class="input-text__elem"
+                [class.input-text__elem--active]="!!form.controls['card_number'].value"
+                type="text"
+                formControlName="card_number"
+              />
+              <div class="input-text__placeholder">Card number</div>
+            </div>
+            <div *ngIf="getControlErrors('card_number') | async as errors" class="input-text__error">
+              <div [hidden]="!errors['required']">Invalid card number</div>
+              <div [hidden]="!errors['response']">{{ errors['response'] }}</div>
+            </div>
+          </label>
+        </div>
+        <div class="card__col">
+          <label class="input-text__input">
+            <div class="input-text__wparrer">
+              <input
+                mask="000"
+                class="input-text__elem"
+                [class.input-text__elem--active]="!!form.controls['cvc'].value"
+                type="text"
+                formControlName="cvc"
+              />
+              <div class="input-text__placeholder">CVC</div>
+            </div>
+            <div *ngIf="getControlErrors('cvc') | async as errors" class="input-text__error">
+              <div [hidden]="!errors['required']">Invalid password</div>
+              <div [hidden]="!errors['response']">{{ errors['response'] }}</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="card__row">
+        <div class="card__col">
+          <!--label class="input-text__input">
+            <div class="input-text__wparrer">
+              <input
+                class="input-text__elem"
+                [class.input-text__elem--active]="!!form.controls['exp_month'].value"
+                type="text"
+                formControlName="exp_month"
+              />
+              <div class="input-text__placeholder">Exp. Month</div>
+            </div>
+            <div *ngIf="form.controls['exp_month'].errors && form.controls['exp_month'].dirty" class="input-text__error">
+              <div [hidden]="!form.controls['exp_month'].errors['required']">Invalid Exp. Month</div>
+            </div>
+          </label-->
+          <app-select-input
+            label="Exp. Month"
+            [control]="form.controls['exp_month']"
+            [options]="months"
+          ></app-select-input>
+        </div>
+        <div class="card__col">
+          <!--label class="input-text__input">
+            <div class="input-text__wparrer">
+              <input
+                class="input-text__elem"
+                [class.input-text__elem--active]="!!form.controls['exp_year'].value"
+                type="text"
+                formControlName="exp_year"
+              />
+              <div class="input-text__placeholder">Exp. Year</div>
+            </div>
+            <div *ngIf="form.controls['exp_year'].errors && form.controls['exp_year'].dirty" class="input-text__error">
+              <div [hidden]="!form.controls['exp_year'].errors['required']">Invalid Exp. Year</div>
+            </div>
+          </label-->
+          <app-select-input
+            label="Exp. Year"
+            [control]="form.controls['exp_year']"
+            [options]="years"
+          ></app-select-input>
+        </div>
+        <div class="card__col card__col--flex-2"></div>
+      </div>
+
+      <div class="card__row">
+        <div class="card__col">
+          <label class="input-text__input">
+            <div class="input-text__wparrer">
+              <input
+                class="input-text__elem"
+                [class.input-text__elem--active]="!!form.controls['name'].value"
+                type="text"
+                formControlName="name"
+              />
+              <div class="input-text__placeholder">Name on card</div>
+            </div>
+            <div *ngIf="getControlErrors('name') | async as errors" class="input-text__error">
+              <div [hidden]="!errors['required']">Invalid Name on card</div>
+              <div [hidden]="!errors['response']">{{ errors['response'] }}</div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="register__footer">
+    <div class="register__footer-coll">
+      <div class="input-text-small">
+        Your subscription will be automatically renewed unless you tell us to stop. Before the start of each renewal,
+        you will be sent a reminder notice stating the term and rate then in effect (current rates listed below). If you
+        do nothing, your credit/debit card or payment account will be charged or you will be sent an invoice for your
+        subscription. You may cancel at any time during your subscription by contacting customer service at the infor-
+        mation below, and receive a full refund for all unserved issues.
+      </div>
+    </div>
+
+    <div class="register__footer-coll">
+      <!--      <div class="price" *ngIf="tournament$ | async as tournament">-->
+      <!--        <div class="cost__sum">{{ tournament.price / 100 | currency:'USD':'symbol-narrow' }}</div>-->
+      <!--        <div class="cost__text">-->
+      <!--          one time payment-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <div class="price" *ngIf="tournamentProduct$ | async as product">
+        <div class="cost__sum">{{ product.price / 100 | currency: 'USD':'symbol-narrow' }}</div>
+        <div class="cost__text">
+          one time<br />
+          payment
+        </div>
+      </div>
+      <div class="register__steps">step <span>2 of 3</span></div>
+      <button [disabled]="loading$ | async" class="register__btn" type="submit">checkout</button>
+    </div>
+  </div>
+</form>

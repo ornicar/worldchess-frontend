@@ -1,0 +1,315 @@
+@import "settings";
+@import "mixins";
+@import "../../../html/css/variables";
+
+.block {
+  padding: 0;
+
+  &-100w {
+    min-height: auto;
+
+    @include media-breakpoint-up(sm) {
+      min-height: 100vh;
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+
+
+.comics {
+  overflow: hidden;
+  margin-bottom: -25px;
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+
+  @include media-breakpoint-up(sm) {
+    margin-top: auto;
+    margin-bottom: auto;
+    overflow: visible;
+    min-height: 379px;
+    height: calc(100vh - 246px);
+  }
+
+  @include media-breakpoint-up(lg) {
+    overflow: initial;
+    min-height: 379px;
+    height: calc(100vh - 376px);
+  }
+
+  @include media-breakpoint-up(xl) {
+    min-height: 365px;
+    height: calc(100vh - 398px);
+  }
+
+  .right-dialog {
+    width: 139px;
+    height: 182px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 0;
+    text-align: center;
+    display: block;
+    margin-bottom: 17px;
+    z-index: 3;
+
+    @include media-breakpoint-up(sm) {
+      width: 205px;
+      height: 203px;
+    }
+
+    &:after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-image: url("../../../assets/images/main-page/dialog-right-mobile.svg");
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-size: contain;
+      position: absolute;
+      top: 72px;
+      left: -2px;
+      z-index: 1;
+
+      @include media-breakpoint-up(sm) {
+        top: 0;
+        left: -2px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        left: 8px;
+      }
+
+      @include media-breakpoint-up(xl) {
+        left: 13px;
+      }
+    }
+
+    &:before {
+      content: '';
+      width: 158px;
+      height: 316px;
+      position: absolute;
+      top: 62px;
+      right: -131px;
+      background-image: url("../../../assets/images/main-page/wchess-portarait-white-02.svg");
+      background-position: 0 0;
+      background-repeat: no-repeat;
+      background-size: auto 254px;
+      z-index: 0;
+
+      @include media-breakpoint-up(sm) {
+        width: 206px;
+        height: 316px;
+        top: 51px;
+        right: -205px;
+        background-size: auto 332px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: 208px;
+        height: 293px;
+        top: 87px;
+        right: -217px;
+        background-size: auto 298px;
+      }
+
+      @include media-breakpoint-up(xl) {
+        width: 222px;
+        height: 359px;
+        background-size: auto 357px;
+        top: 100px;
+        right: -263px;
+      }
+    }
+
+    .london-button {
+      width: 25px;
+      height: 25px;
+      font-size: 0;
+      border: none;
+      background-image: url("../../../assets/images/main-page/london-button.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      background-size: contain;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      top: 28px;
+      z-index: 2;
+      color: $blue;
+      font-family: $gerbera-font;
+      font-weight: 300;
+
+      @include media-breakpoint-up(sm) {
+        width: 34px;
+        height: 34px;
+        top: 0px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        background: $black;
+        width: 100px;
+        font-size: 14px;
+        border: 1px solid $blue;
+        border-radius: 3px;
+        text-align: center;
+        display: inline-block;
+        height: 30px;
+        padding-bottom: 3px;
+        letter-spacing: 0.4px;
+        padding-left: 5px;
+      }
+
+      @include media-breakpoint-up(xl) {
+        height: 34px;
+        width: 121px;
+        padding-bottom: 0;
+      }
+
+      &__padding {
+        width: 100%;
+
+        @include media-breakpoint-max(sm) {
+          min-height: 118px;
+        }
+
+        @include media-breakpoint-up(sm) {
+          min-height: 122px;
+        }
+
+        @include media-breakpoint-up(lg) {
+          min-height: 150px;
+        }
+
+        @include media-breakpoint-up(xl) {
+          min-height: 152px;
+          height: 58%;
+        }
+
+
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: 266px;
+      height: 263px;
+      left: 0;
+      margin-top: -57px;
+      margin-bottom: 0;
+      margin-right: 247px;
+    }
+
+    @include media-breakpoint-up(xl) {
+      width: 317px;
+      height: 314px;
+      margin-right: auto;
+      left: 159px;
+      margin-top: -104px;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      margin-right: 369px;
+      left: 0;
+    }
+  }
+
+  .left-dialog {
+    width: 152px;
+    height: 173px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+
+    @include media-breakpoint-up(sm) {
+      width: 222px;
+    }
+
+    &:after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-image: url("../../../assets/images/main-page/magnus_bubble.svg");
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-size: contain;
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: all;
+      cursor: pointer;
+    }
+
+    &:before {
+      content: '';
+      width: 169px;
+      height: 309px;
+      position: absolute;
+      top: -134px;
+      left: -155px;
+      background-image: url("../../../assets/images/main-page/wchess-portarait-white-01.svg");
+      background-position: 0 0;
+      background-repeat: no-repeat;
+      background-size: auto 248px;
+      z-index: 0;
+
+      @include media-breakpoint-up(sm) {
+        width: 206px;
+        top: -162px;
+        left: -201px;
+        background-size: auto 317px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: 238px;
+        height: 299px;
+        top: -40px;
+        left: -222px;
+        background-size: auto 299px;
+      }
+
+      @include media-breakpoint-up(xl) {
+        width: 285px;
+        height: 360px;
+        background-size: auto 360px;
+        left: -266px;
+        top: -50px;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: 414px;
+      height: 265px;
+      left: 0;
+      top: -73px;
+      margin-top: -58px;
+      margin-left: 242px;
+      padding-top: 152px;
+    }
+
+    @include media-breakpoint-up(xl) {
+      width: 497px;
+      height: 318px;
+      margin-top: -84px;
+      margin-left: auto;
+      right: 76px;
+      left: auto;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      margin-left: 355px;
+      right: 0;
+    }
+  }
+}

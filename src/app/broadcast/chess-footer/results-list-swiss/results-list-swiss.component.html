@@ -1,0 +1,63 @@
+<div class="results-list">
+  <div class="results-list__aside">
+    <table class="table">
+      <tr class="table__row">
+        <td class="table__col">
+          №
+        </td>
+        <td class="table__col">
+          Players
+        </td>
+      </tr>
+      <tr class="table__row" *ngFor="let playerResults of playersResults; index as i; trackBy: trackByFn;">
+        <td class="table__col table__col--order">
+          {{ i + 1}}
+        </td>
+        <td class="table__col">
+          <span class="player">
+            <span *ngIf="playerResults.player?.avatar" class="player__photo">
+              <img [src]="playerResults.player.avatar" alt="photo">
+            </span>
+            <span class="player__title">{{ playerResults?.player?.full_name | wcWordsFirstLetters }}</span>
+            <span class="player__flag">
+              <wc-country-flag [countryId]="playerResults?.player?.federation"></wc-country-flag>
+            </span>
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="results-list__scroll" wcHideScrollbar>
+    <table class="table">
+      <thead class="table__head">
+        <tr class="table__row">
+          <td class="table__col">Number of games</td>
+          <td class="table__col">Wins</td>
+          <td class="table__col">Draws</td>
+          <td class="table__col">Losses</td>
+          <td class="table__col">Results</td>
+        </tr>
+      </thead>
+      <tbody class="table__body">
+        <tr class="table__row" *ngFor="let playerResults of playersResults; index as i;trackBy: trackByFn;">
+          <td class="table__col">
+            {{ playerResults.games }}
+          </td>
+          <td class="table__col">
+            {{ playerResults.wins }}
+          </td>
+          <td class="table__col">
+            {{ playerResults.draw }}
+          </td>
+          <td class="table__col">
+            {{ playerResults.loss }}
+          </td>
+          <td class="table__col table__col--green">
+            {{ playerResults.total }}
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

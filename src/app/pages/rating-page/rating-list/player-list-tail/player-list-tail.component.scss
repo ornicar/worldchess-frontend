@@ -1,0 +1,237 @@
+@import "settings";
+@import "mixins";
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+.country {
+  display: flex;
+  align-items: center;
+}
+
+.rating-tile {
+  padding:  5px 0;
+}
+
+
+.rating-tile__list {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include phones() {
+    padding: 0 20px;
+  }
+}
+
+@for $i from 1 through 10 {
+  .rating-tile__elem:nth-child(#{$i}) {
+    box-shadow: 0px 0px 10px rgba(167, 135, 92, 0.902457);
+
+    &:hover {
+      box-shadow: 0px 0px 20px rgba(167, 135, 92, 0.902457);
+    }
+    .rating-tile__rank {
+      color: #a7875c;
+    }
+  }
+}
+
+.rating-tile__elem {
+  display: flex;
+  position: relative;
+  flex: 0 1 auto;
+  flex-direction: column;
+  width: calc(20% - 16px);
+  min-height: 431px;
+  margin: 0 8px 16px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px rgba(210, 210, 210, 0.902457);
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0px 0px 20px rgba(210, 210, 210, 0.902457);
+  }
+
+  &--king {
+    box-shadow: 0px 0px 10px #B4966E !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #B4966E !important;
+    }
+  }
+
+  &--blitz {
+    box-shadow: 0px 0px 10px #1AE2D7 !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #1AE2D7 !important;
+    }
+  }
+
+  &--rapid {
+    box-shadow: 0px 0px 10px #FF5D53 !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #FF5D53 !important;
+    }
+  }
+
+  &--woman {
+    box-shadow: 0px 0px 10px #ea47ff !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #ea47ff !important;
+    }
+  }
+
+  &--gain {
+    box-shadow: 0px 0px 10px #b4654b !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #b4654b !important;
+    }
+  }
+
+  &--lost {
+    box-shadow: 0px 0px 10px #7481b4 !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #7481b4 !important;
+    }
+  }
+
+  &--youngest {
+    box-shadow: 0px 0px 10px #7701FF !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #7701FF !important;
+    }
+  }
+
+  &--oldest {
+    box-shadow: 0px 0px 10px #4d90b4 !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #4d90b4 !important;
+    }
+  }
+
+  &--active {
+    box-shadow: 0px 0px 10px #ffee82 !important;
+    &:hover {
+      box-shadow:  0px 0px 20px #ffee82 !important;
+    }
+  }
+
+  @include tablets() {
+    width: calc(25% - 16px);
+  }
+
+  @include ipad() {
+    width: calc(100% / 3 - 16px);
+  }
+
+  @include phones() {
+    width: calc(50% - 16px);
+
+  }
+
+  @include phones-small() {
+    width: calc(100%);
+    padding: 20px;
+    margin: 0 0px 16px;
+  }
+}
+
+
+
+.rating-tile__rank {
+  display: flex;
+  color: #000;
+  height: 38px;
+  width: 50px;
+  justify-content: center;
+  font: 400 33px/22px $gerbera-font;
+}
+
+.rating-tile__name {
+  display: flex;
+  position: relative;
+  height: 92px;
+}
+
+.rating-tile__name-portrait {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f6f6f6;
+  margin-right: 13px;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.rating-tile__name-text {
+  font: 400 22px/32px $gerbera-font;
+  margin-top: 10px;
+  white-space: normal;
+  letter-spacing: normal;
+  display: inline-block;
+  word-wrap: break-word;
+  width: calc(100% - 60px);
+
+  @include phones-small() {
+    font: 400 21px/30px $gerbera-font;
+  }
+}
+
+.rating-tile__country {
+  display: flex;
+}
+
+.rating-tile__flag {
+  display: inline-flex;
+  position: relative;
+  width: 24px;
+  height: 17px;
+  margin-right: 5px;
+  background-color: #f6f6f6;
+}
+
+.flag-icon {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  line-height: inherit;
+  vertical-align: middle;
+}
+
+.rating-tile__country-name {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.3px;
+}
+
+.rating-tile__score {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 46px;
+  font-weight: normal;
+  color: #000;
+  letter-spacing: 2.6px;
+  font: 400 22px/22px $gerbera-font;
+}
+
+.rating-tile__scores {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.rating-tile__score-name {
+  display: inline-block;
+  color: #5e5e5e;
+  text-transform: uppercase;
+  width: 48%;
+  font: 400 15px/15px $gerbera-font;
+}

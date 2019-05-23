@@ -1,0 +1,123 @@
+<ng-container *ngIf="gameState$ | async as gameState">
+  <wcd-widget-layout class="wc-container" [class.light-mode]="isLightStyle$ | async">
+    <ng-container slot="title">
+      <wc-chess-board-title [gameState]="gameState" [withoutBoard]="withoutBoard"></wc-chess-board-title>
+    </ng-container>
+
+    <ng-container slot="main">
+      <div class="main-area">
+        <div>
+          <wc-broadcast-single-chess-board-controller
+            [viewMode]="ChessBoardViewMode.Normal"
+            [boardId]="(gameState$ | async)?.board?.id"
+            [tournament]="tournament"
+          >
+          </wc-broadcast-single-chess-board-controller>
+
+          <wc-chess-navigation
+            [boardId]="(gameState$ | async)?.board?.id"
+          ></wc-chess-navigation>
+        </div>
+
+        <div class="main-area__controls">
+          <div class="main-area__protect">
+            <wc-broadcast-nav-protect></wc-broadcast-nav-protect>
+          </div>
+
+          <div *ngIf="hasVideo$ | async" class="main-area__video-checkbox">
+            <div class="wcd-checkbox">
+              <div class="wcd-checkbox__control" (click)="onVideoEnableClick()">
+                <svg
+                  *ngIf="videoIsEnable"
+                  width="15"
+                  height="13"
+                  viewBox="0 0 15 13"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M1.72656 5L7 10.75L13 2.25" stroke="white" stroke-width="2" stroke-linecap="square" />
+                </svg>
+              </div>
+              <div class="wcd-checkbox__label" (click)="onVideoEnableClick()">enable video</div>
+            </div>
+          </div>
+        </div>
+        <!-- Временно убрали фото -->
+        <!-- <div *ngIf="withoutBoard" class="available-soon">
+          <img src="assets/img/available-soon.png" alt="available-soon">
+        </div> -->
+      </div>
+    </ng-container>
+
+    <ng-container slot="livestream" *ngIf="(hasVideo$ | async) && videoIsEnable">
+      <wcd-livestream-container> </wcd-livestream-container>
+    </ng-container>
+
+    <ng-container slot="history">
+      <wc-history-moves
+        *ngIf="gameState?.isNotExpected && gameState?.board"
+        [myGameIsActive]="gameState?.myGameIsActive"
+        [board]="gameState?.board"
+        class="chess-page__history-moves"
+      ></wc-history-moves>
+      <wc-history-moves-placeholder
+        *ngIf="!gameState?.isNotExpected && tour"
+        [myGameIsActive]="gameState?.myGameIsActive"
+        [tour]="tour"
+        [tournament]="tournament"
+        class="chess-page__history-moves"
+      ></wc-history-moves-placeholder>
+      <a class="base-site-link" (click)="goToWC()">
+        <div class="base-site-link__text">
+          <svg width="265" height="89" viewBox="0 0 265 89" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M1 30.6351C1 30.6351 14.7585 26.3402 22.1291 23.934C13.1212 41.2887 11.1557 48.334 11.1557 55.3773C11.1557 62.4227 13.9409 65 17.7068 65C21.4746 65 27.208 57.6124 31.7935 35.9629C29.4998 54.8619 31.1272 62.767 35.7245 62.767C42.2755 62.767 42.7669 39.7423 40.31 28.7464C46.5347 29.7773 59.8844 32.0103 61.5217 32.5258C55.462 31.4948 50.4913 35.4763 48.8678 42.4474C47.2305 49.4928 48.8285 54.6907 52.103 55.3773C55.3795 56.066 60.2205 52.0371 61.7674 35.2742C59.6387 53.1443 60.1301 58.299 63.5697 58.9856C67.0094 59.6742 71.1035 52.1134 73.069 39.9134C74.5903 30.4722 77 15 77 15"
+              stroke="#F0EDFF"
+              stroke-width="2"
+            />
+            <path d="M49 22C63.3246 28.3092 83.4293 29.3608 97 26.469" stroke="#F0EDFF" stroke-width="2" />
+            <path
+              d="M73.0058 41C71.48 51.0261 70.8707 57.2483 71.0226 61.3964C71.1763 65.5446 72.091 69 74.5299 69C76.9687 69 80.0186 62.7778 82 47.0501"
+              stroke="#F0EDFF"
+              stroke-width="2"
+            />
+            <path
+              d="M90.8207 45.2809C91.4735 40.7534 88.3091 38.4188 86.2607 38.9738C82.6779 39.9441 81.4954 46.1289 82.1893 50.4565C83.0395 55.7642 85.8795 58.514 88.8661 58.2191C92.1244 57.895 95.8714 54.1748 101.082 40.5903C108.25 20.0526 108.799 10.852 108.494 6.46814C108.168 1.77762 106.79 0 104.503 0C101.897 0 99.2743 4.1646 99.2743 23.1266C99.2743 31.9196 100.13 43.7943 102.224 59.6745C102.875 46.2512 105.969 38.6497 110.531 39.1349C115.091 39.62 113.013 45.8863 111.508 50.9417C109.708 56.9771 110.107 60.0627 111.915 61.2911C114.235 62.8688 117.045 61.7763 119 58.3801"
+              stroke="#F0EDFF"
+              stroke-width="2"
+            />
+            <path
+              d="M154.728 46.3207C151.532 53.5133 147.242 62.7608 139.334 62.7608C135.296 62.7608 132.716 59.666 133.025 55.9115C133.403 51.3309 137.273 48.2319 144.129 43.752C152.584 38.2281 154.981 35.7169 154.981 30.9082C154.981 27.4393 153.467 25 150.943 25C146.023 25 143.499 32.5789 144.634 42.5539C145.512 50.2561 149.176 60.7058 155.57 62.5903C161.962 64.4727 165.665 59.5078 166 55.0545"
+              stroke="#F0EDFF"
+              stroke-width="2"
+            />
+            <path
+              d="M174 86C176.367 42.5698 180.762 28.4298 186.001 28.2601C191.239 28.0924 191.324 34.6575 188.536 44.7575C186.177 53.3021 185.747 57.3826 188.282 58.6451C190.564 59.7823 196.013 56.2473 200.197 48.1249C202.923 42.8304 211.184 20.0124 211.184 9.57503C211.184 4.69469 209.831 2 207.128 2C203.408 2 198.93 13.4474 196.987 40.8851C195.237 65.606 199.056 72.2801 202.394 72.0276C205.949 71.7589 209.527 61.368 210.507 49.9752C211.521 38.1925 216.084 34.1525 222 37.1825"
+              stroke="#F0EDFF"
+              stroke-width="2"
+            />
+            <path d="M174.104 24C174.104 24 173.896 78.5402 173.896 86" stroke="#F0EDFF" stroke-width="2" />
+            <path
+              d="M264 46.9883C246.704 55.6732 232.819 67.9767 229.369 76.4202C227.071 82.0403 228.139 88 233.375 88C235.874 88 239.055 86.9192 241.626 83.1751C245.434 77.6265 249.561 66.2879 253.607 26C250.591 44.4967 246.862 49.5629 242.498 48.677C238.298 47.8279 238.612 38.3035 239.564 27.3683C237.58 49.2406 235.596 55.6732 232.423 56.6381C229.557 57.5105 227.663 54.8278 226.711 50.5279C225.877 46.7548 225.599 42.1634 226.869 33.8009"
+              stroke="#F0EDFF"
+              stroke-width="2"
+            />
+            <path
+              d="M211.353 46.2817C210.022 51.9599 212.595 58.3385 216.679 58.9508C220.864 59.5777 225.644 54.2329 226 42"
+              stroke="#F0EDFF"
+              stroke-width="2"
+            />
+          </svg>
+        </div>
+        <div class="base-site-link__name">
+          on
+          <span>worldchess.com</span>
+          <svg width="21" height="15" viewBox="0 0 21 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.4997 13.864L18.8223 7.5L12.4997 1.13604" stroke="white" stroke-width="2" />
+            <path d="M17.5952 7.5H1" stroke="white" stroke-width="2" stroke-linecap="square" />
+          </svg>
+        </div>
+      </a>
+    </ng-container>
+  </wcd-widget-layout>
+</ng-container>

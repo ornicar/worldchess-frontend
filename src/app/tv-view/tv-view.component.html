@@ -1,0 +1,5 @@
+<wc-layout>
+  <ng-container *ngIf="news$ | async as news">
+    <wc-setka-news [news]="news" class="post"></wc-setka-news>
+  </ng-container>
+</wc-layout>

@@ -1,0 +1,50 @@
+<div class="subscriptions" [ngClass]="getClasses()">
+  <ng-container *ngFor="let item of subscriptions$ | async">
+    <ng-container *ngIf="item.target === 'route'">
+      <ng-container *ngIf="!isPaygatePage">
+        <a class="item"
+          angulartics2On="click"
+          [angularticsAction]="item.gstAction"
+          angularticsCategory="subscriptions"
+          [routerLink]="item.link">
+          <div class="title" [innerHTML]="item.title"></div>
+          <div class="prices">
+            <div class="price new" *ngIf="item.price && !item.oldPrice">{{item.price / 100 | currency:'USD':'symbol-narrow' }}</div>
+            <div class="price strike" *ngIf="item.oldPrice">${{item.oldPrice}}</div>
+            <div class="price" *ngIf="item.oldPrice">{{item.price / 100 | currency:'USD':'symbol-narrow' }}</div>
+            <button class="btn">{{item.buttonCaption}}</button>
+          </div>
+        </a>
+      </ng-container>
+      <ng-container *ngIf="isPaygatePage">
+        <a class="item"
+          angulartics2On="click"
+          [angularticsAction]="item.gstAction"
+          angularticsCategory="subscriptions"
+          [href]="item.link"
+          (click)="navigate(item)">
+          <div class="title" [innerHTML]="item.title"></div>
+          <div class="prices">
+            <div class="price new" *ngIf="item.price && !item.oldPrice">{{item.price / 100 | currency:'USD':'symbol-narrow' }}</div>
+            <div class="price strike" *ngIf="item.oldPrice">${{item.oldPrice}}</div>
+            <div class="price" *ngIf="item.oldPrice">{{item.price / 100 | currency:'USD':'symbol-narrow' }}</div>
+            <button class="btn">{{item.buttonCaption}}</button>
+          </div>
+        </a>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="item.target === 'blank'">
+      <a class="item"
+        angulartics2On="click"
+        [angularticsAction]="item.gstAction"
+        angularticsCategory="subscriptions"
+        [href]="item.link" target="_blank">
+        <div class="title" [innerHTML]="item.title"></div>
+        <div class="prices">
+          <div class="soon">{{item.soon}}</div>
+          <button class="btn">{{item.buttonCaption}}</button>
+        </div>
+      </a>
+    </ng-container>
+  </ng-container>
+</div>

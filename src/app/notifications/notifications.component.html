@@ -1,0 +1,18 @@
+<ng-container *ngIf="notification$ | async as notification">
+  <svg class="icon shake"><use xlink:href="#bell" /></svg>
+  <div class="timer">
+    <wc-timer
+      [date]="notification.data?.tour_start"
+      [format]="'h[:]mm[:]ss'"
+      [stopTrim]="'s'"
+      [stopAfterZero]="true"
+    >
+    </wc-timer>
+  </div>
+
+  <wc-hugetooltip>
+    <div class="tooltip-buttons">
+      <a (click)="onClickNotification($event, notification)" class="button-pink">Let's play!</a>
+    </div>
+  </wc-hugetooltip>
+</ng-container>

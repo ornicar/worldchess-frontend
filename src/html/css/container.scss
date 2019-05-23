@@ -1,0 +1,23 @@
+.wc-container {
+  margin: 0 auto;
+  position: relative;
+  min-width: 320px;
+  padding: 0;
+  background-color: #fff;
+  width: 100%;
+
+  &__wrap {
+    display: flex;
+    flex: 1 0 1px;
+    width: 100%;
+
+    @include phones() {
+      height: auto;
+    }
+  }
+
+  &--header {
+    width: 100%;
+    max-width: 100%;
+  }
+}

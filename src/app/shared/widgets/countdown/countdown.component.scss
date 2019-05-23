@@ -1,0 +1,106 @@
+@import "settings";
+@import "mixins";
+@import "../../../../html/css/variables";
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .value {
+    display: flex;
+    align-items: center;
+    font-size: 36px;
+    white-space: nowrap;
+
+    @include media-breakpoint-up(sm) {
+      font-size: 55px;
+    }
+  }
+
+  .number {
+    @include media-breakpoint-up(sm) {
+      display: inline-block;
+      min-width: 33px;
+      text-align: center;
+    }
+  }
+
+  .key {
+    text-transform: uppercase;
+    color: $gray-700;
+    position: relative;
+    top: 15px;
+    font: 300 10px/15px $gerbera-font;
+
+    @include media-breakpoint-up(sm) {
+      font-size: 11px;
+    }
+  }
+
+  & + .countdown-item {
+    margin-left: 36px;
+    &:after {
+
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 55px;
+  }
+}
+
+.countdown-colon {
+  margin: 0 10px;
+  font-size: 36px;
+  color: $gray-700;
+
+  @media (min-width: 375px) {
+    margin: 0 18px;
+  }
+
+  @include media-breakpoint-up(sm) {
+    font-size: 42px;
+  }
+}
+
+.countdown-colon-mini {
+  margin: 0 5px;
+  font-size: 22px;
+  color: $gray-700;
+}
+
+.countdown-mini {
+  .countdown-colon {
+    margin: 0 5px;
+    font-size: 18px;
+    color: $gray-700;
+
+    @include media-breakpoint-up(md) {
+      font-size: 22px;
+    }
+  }
+
+  .countdown-item {
+    justify-content: flex-end;
+    .value {
+      line-height: 1.0;
+      font-size: 18px;
+
+      @include media-breakpoint-up(md) {
+        font-size: 31px;
+      }
+    }
+    .number {
+      display: inline-block;
+      min-width: 10px;
+      text-align: center;
+      font-size: 16px;
+
+      @include media-breakpoint-up(md) {
+        font-size: 22px;
+      }
+    }
+  }
+}
+

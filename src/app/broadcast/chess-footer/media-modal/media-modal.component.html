@@ -1,0 +1,42 @@
+<div class="media-modal">
+  <div class="media-modal__close" >
+    <img class="media-modal__close-cross" (click)="closeModal()" src="assets/icons/cross-close.svg" alt="close">
+  </div>
+  <div class="media-modal__media-wrapper"
+    (swipeleft)="isAbleToNext && goNext()"
+    (swiperight)="isAbleToPrev && goPrev()"
+    [class.media-modal__media-wrapper--video]="selectedMedia?.video_url">
+    <img *ngIf="selectedMedia && !selectedMedia.video_url && !loading"
+      [src]="selectedMedia.image.full">
+    <iframe class="media-modal__video"
+      *ngIf="selectedMedia && !!selectedMedia.video_url && !loading"
+      [src]="getYoutubeVideoUrl() | wcSafeUrl"
+      allowfullscreen
+      frameborder="0"
+    ></iframe>
+  </div>
+  <div class="media-modal__prev media-modal__control" *ngIf="isAbleToPrev" (click)="goPrev()">
+    <span class="media-modal__prev-icon media-modal__control-icon">
+      <svg class="icon">
+        <use xlink:href="#arrow-down"></use>
+      </svg>
+    </span>
+  </div>
+  <div class="media-modal__next media-modal__control" *ngIf="isAbleToNext" (click)="goNext()">
+    <span class="media-modal__next-icon media-modal__control-icon">
+      <svg class="icon">
+        <use xlink:href="#arrow-down"></use>
+      </svg>
+    </span>
+  </div>
+  <div class="media-modal__footer">
+      <div class="media-modal__caption">
+        <!-- <div class="media-modal__caption-title">
+          {{selectedBlock?.title}}
+        </div> -->
+        <div class="media-modal__caption-text">
+          {{selectedMedia?.caption}}
+        </div>
+      </div>
+    </div>
+</div>

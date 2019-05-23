@@ -1,0 +1,24 @@
+<div>
+  <form class="players-form">
+    <div *ngIf="(tournament$ | async) as tournament">
+      <label class="tournament-form__input">
+        <input type="file" accept=".csv" (change)="onFileLoad($event.target.files)">
+      </label>
+      <a class="btn btn-blue"
+         *ngIf="tournament.players"
+         [href]="tournament.players"
+         target="_blank">
+        Open current image in a new page
+      </a>
+      <span class="tournament-form__error" *ngIf="(errors$ | async)?.results">
+        {{(errors$ | async)?.results[0]}}
+      </span>
+    </div>
+  </form>
+</div>
+<div class="controls">
+  <button class="btn btn-blue" (click)="onClose()">Close</button>
+  <button class="btn btn-blue" *ngIf="ableToSave()" (click)="onSave()">Save</button>
+  <button class="btn btn-blue" *ngIf="ableToNext()" (click)="onNext()">Next</button>
+  <button class="btn btn-blue" *ngIf="ableToSend()" (click)="onSendToApprove()">Send to approve</button>
+</div>

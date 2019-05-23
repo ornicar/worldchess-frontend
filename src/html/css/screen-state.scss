@@ -1,0 +1,29 @@
+.screen-state-icon {
+  position: fixed;
+  width: 34px;
+  height: 34px;
+  border-radius: 30px;
+  display: none;
+  cursor: pointer;
+
+  @include phones() {
+    display: block;
+  }
+}
+
+.lock-mobile-screen {
+  @include phones() {
+    overflow: hidden;
+  }
+
+  .screen-state-icon {
+    @include phones() {
+      display: none;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+  }
+}
+

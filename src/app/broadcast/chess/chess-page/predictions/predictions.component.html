@@ -1,0 +1,12 @@
+<div class="prediction">
+  <wc-flow-content [trigger]="selectedMovePosition.prediction.length">
+    <wc-prediction
+      *ngFor="let prediction of selectedMovePosition.prediction;  let i = index"
+      [score]="prediction.score"
+      [predictions]="prediction.positions"
+      [class]="'prediction-' + i"
+      [selectedPrediction]="gameState.selectedPredictMove"
+      (predictionChange)="onPredictionChange($event)">
+    </wc-prediction>
+  </wc-flow-content>
+</div>

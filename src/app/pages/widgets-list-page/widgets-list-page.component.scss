@@ -1,0 +1,50 @@
+@import "settings";
+@import "mixins";
+@import "../../../html/css/variables";
+
+.widgets {
+  padding: 20px;
+
+  &__title, &__example {
+    margin-bottom: 60px;
+    padding-top: 17px;
+    font-size: 32px;
+    color: #fff;
+    font-weight: 300;
+  }
+
+
+  &__item {
+    margin: 60px 0;
+    display: flex;
+  }
+
+  &__item-name {
+    width: 40%;
+    padding-right: 50px;
+    cursor: pointer;
+  }
+
+  &__item-code-wrapper {
+    width: 50%;
+  }
+
+  &__item-code-name {
+
+  }
+
+  &__item-code {
+    border: 1px solid white;
+    color: $black-light;;
+    word-break: break-word;
+  }
+
+  &__tag {
+    color: #888888;
+  }
+
+  &__code {
+    padding-left: 20px;
+  }
+
+}

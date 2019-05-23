@@ -1,0 +1,107 @@
+<div class="chat" (swiperight)="closeChatScreen()">
+  <div class="chat__body">
+    <!--  MOVIES WILL BE IMPLEMENTED IN V2 -->
+    <!-- <div class="chess-move">
+        <div class="chess-move__left"></div>
+        <div class="chess-move__text">
+          <div class="chess-move__count">1</div>
+          <div class="wc-title wc-title_small">
+            <div class="wc-title__img wc-title__img--small">
+              <svg class="icon">
+                <use xlink:href="#officer" />
+              </svg>
+            </div>
+            Rxd6
+          </div>
+        </div>
+        <div class="chess-move__right">
+          <a href="#" class="chess-move__like-btn like-btn">
+            <div class="like-btn__img">
+              <img src="assets/img/icons/like.png" alt="">
+            </div>
+            <div class="like-btn__count">158</div>
+          </a>
+          <a href="#" class="chess-move__like-btn like-btn">
+            <div class="like-btn__img">
+              <img src="assets/img/icons/dislike.png" alt="">
+            </div>
+            <div class="like-btn__count">158</div>
+          </a>
+        </div>
+      </div> -->
+    <ul class="chat__list"
+        #messagesList
+        (swiperight)="closeChatScreen()"
+        (scroll)="onScrollTop()">
+      <div class="chat__list--item" *ngFor="let message of notMoveMessages">
+        <wc-chat-message
+          class="chat__elem"
+          [message]="message"
+          [showLikes]="!chatLocked"
+          (like)="likeMessage($event)"
+          (unlike)="unlikeMessage($event)"
+          (reply)="replyMessage($event)">
+        </wc-chat-message>
+        <!--<wc-chat-move-->
+          <!--*ngIf="message.move"-->
+          <!--[message]="message"-->
+          <!--[showLikes]="!chatLocked"-->
+          <!--(onLikeMessage)="likeMessage($event)"-->
+          <!--(onUnlikeMessage)="unlikeMessage($event)"-->
+          <!--(onDislikeMessage)="dislikeMessage($event)">-->
+        <!--</wc-chat-move>-->
+      </div>
+      <div class="chat__empty-msg" *ngIf="messages.length === 0 && !chatLocked">
+        <div class="chat__text">
+          There are no messages yet.
+          Be the first! ♥️
+        </div>
+      </div>
+      <div class="chat__finish-msg" *ngIf="showFinishMessage">
+        <div class="chat__finish-msg__bg"></div>
+        <div class="chat__finish-msg__text">
+          This round is finished and the<br>
+          chat is closed. But check out<br>
+          what's 👉🏻 <a routerLink="/" target="_blank">live now</a>, or see what's<br>
+          new in 🛒 the <a href="https://shop.worldchess.com" target="_blank">shop</a> or meet some<br>
+          people in real life using 👬 <a href="https://mates.worldchess.com" target="_blank">mates!</a>.
+        </div>
+      </div>
+    </ul>
+  </div>
+  <div class="chat__footer">
+    <div class="input"
+         *ngIf="!isAnonymous">
+      <wc-emoji-input
+        [model]="messageText"
+        (modelChange)="setMessageText($event)"
+        [inputClass]="'input__elem'"
+        [textArea]="{cols: 18, rows: 1, maxLength: 150}"
+        [onEnter]="onEnterText.bind(this)"
+        [searchClass]="'my-emoji'"
+        [closeAfterSelection]="true"
+        [focusInput$]="focusInput.asObservable()"
+        [style.pointer-events]="chatLocked? 'none' : 'initial'"
+        [style.display]="'inline-block'"
+        (click)="openPopup(false)"
+        (setPopupAction)="setPopupAction($event)">
+      </wc-emoji-input>
+      <i class="input__add-btn" (click)="onOpenPopup($event);"></i>
+      <i class="input__send-msg-btn" (click)="onEnterText();"></i>
+      <div class="input__avatar"
+           [style.backgroundColor]="avatarColor">
+        <span class="input__avatar-text">
+          {{profile?.full_name.slice(0, 2)}}
+        </span>
+      </div>
+    </div>
+    <div class="chat__anonymous" *ngIf="isAnonymous">
+      <a [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]">
+        Please Register
+        <svg class="chat__anonymous-arrow"><use xlink:href="#arrow-down" /></svg>
+      </a>
+    </div>
+  </div>
+  <div class="screen-state-icon" (click)="openChatScreen()"></div>
+  <div class="chat--btn-close" (click)="closeChatScreen()"></div>
+</div>

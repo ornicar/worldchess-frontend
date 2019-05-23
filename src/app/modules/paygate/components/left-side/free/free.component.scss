@@ -1,0 +1,119 @@
+@import 'variables';
+@import 'media';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: $blue-2;
+}
+
+.lazy-load-content {
+  position: relative;
+  padding: 0 25px;
+  flex: 1;
+  @include tablets() {
+    display: flex;
+    flex-direction: column;
+    padding: 0 25px;
+  }
+}
+
+.lazy-load-content__img {
+  text-align: center;
+  height: 174px;
+  margin-bottom: 20px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  @include tablets() {
+    height: 140px;
+    margin-bottom: 10px;
+  }
+  @include phones-small() {
+    display: none;
+  }
+}
+
+.lazy-load-content__text {
+  display: flex;
+  margin: 0 -8px;
+  font: 300 15px/20px $gerbera-font;
+  color: #000;
+  height: 100%;
+  margin-bottom: 55px;
+  overflow-y: auto;
+  @include phones-small() {
+    flex-direction: column;
+  }
+}
+
+.lazy-load-content__text-coll {
+  flex: 1;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  @include tablets() {
+    padding: 0 5px;
+  }
+  @include phones-small() {
+    flex: 0 0 auto;
+  }
+
+  p {
+    margin-bottom: 10px;
+    @include tablets() {
+      margin-bottom: 7px;
+    }
+  }
+}
+
+.price {
+  font: 400 15px/20px $gerbera-font;
+  color: #999;
+  margin-left: auto;
+  position: absolute;
+  right: 15px;
+  bottom: 10px;
+
+  span {
+    font: 300 33px/41px $gerbera-font;
+    color: #000;
+    @include phones-small() {
+      font: 300 27px/27px $gerbera-font;
+    }
+  }
+  @include phones-small() {
+    right: 25px;
+    bottom: 15px;
+  }
+}
+
+.lazy-load-content__buttoms {
+  display: none;
+  justify-content: center;
+  padding: 20px 0;
+  margin-top: auto;
+  @include ipad() {
+    display: flex;
+  }
+  @include phones-small() {
+    display: none;
+  }
+}
+
+.lazy-load-content__btn {
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  min-width: 246px;
+  font: 300 22px/22px $gerbera-font;
+  border-radius: 3px;
+  border: 0;
+  cursor: pointer;
+}

@@ -1,0 +1,34 @@
+<div class="wc-container container container--flex">
+  <wc-chess-footer-info
+    [tournament]="tournament"
+    class="information-aside information-aside--media information-aside--portable"
+    (goToMedia)="changeTab.emit('media')"
+  >
+  </wc-chess-footer-info>
+  <a class="news-last" [href]="getNewsUrl()" target="_blank">
+    <div class="news-last__photo" [ngStyle]="{ 'background-image': newsImage() }"></div>
+    <div class="news-last__info">
+      <div class="news-last__info__body">
+        <div class="text text--small">{{ news.timestamp | date: 'MMM d - h:mm a' }}</div>
+        <div class="title">{{ news.title }}</div>
+      </div>
+      <div class="news-last__info__footer">
+        <div class="news-tag">
+          <div class="news-tag__list">
+            <div *ngFor="let item of news.tags" class="news-tag__elem">
+              <a class="news-tag__link" target="_blank" [href]="getNewsFiltersUrl(item.id)">
+                {{ item.name }}
+              </a>
+            </div>
+          </div>
+        </div>
+        <a
+          href="https://worldchess.com/news"
+          target="_blank"
+          class="read-all-btn read-all-btn--desck read-all-btn--right"
+          >read all news</a
+        >
+      </div>
+    </div>
+  </a>
+</div>

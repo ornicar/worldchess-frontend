@@ -1,0 +1,101 @@
+@import '../../../../../../html/css/variables';
+@import '../../../../../../html/css/media';
+
+.chess-navigation {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+
+  &__timeline {
+    margin-left: 10px;
+    width: 100%;
+  }
+
+  &__btn {
+    position: relative;
+    fill: $gray-dark;
+    background-color: transparent;
+    border: 0px;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    cursor: pointer;
+    transition: fill 0.3s;
+
+    &--back {
+      .icon {
+        transform: rotate(90deg);
+      }
+
+    }
+    &--forward {
+      .icon {
+        transform: rotate(-90deg);
+      }
+    }
+
+    &--to-begining {
+      .icon {
+        transform: rotate(90deg);
+      }
+
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 3px;
+        display: inline-block;
+        width: 2px;
+        height: 100%;
+        background-color: $gray-dark;
+      }
+    }
+
+    &--to-ending {
+      .icon {
+        transform: rotate(-90deg);
+      }
+
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 3px;
+        display: inline-block;
+        width: 2px;
+        height: 100%;
+        background-color: $gray-dark;
+      }
+    }
+
+    &:disabled {
+      cursor: default;
+      fill: #9E9E9E;
+      &:before {
+        background-color: #9E9E9E;
+      }
+    }
+  }
+
+  &--my-game &__btn {
+    fill: #FFFFFF;
+
+    &:before {
+      background-color: #FFFFFF;
+    }
+
+    &:disabled {
+      fill: #c5c5c5;
+
+      &:before {
+        background-color: #c5c5c5;
+      }
+    }
+  }
+  &__icon {
+    width: 18px;
+    height: 12px;
+  }
+}

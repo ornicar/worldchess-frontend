@@ -1,0 +1,84 @@
+@import 'variables';
+@import 'media';
+
+.turn-history__white {
+  display: table-cell;
+  vertical-align: middle;
+  border-right: 0;
+  padding: 3px;
+  position: relative;
+  width: 140px;
+  @include phones-big() {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+}
+
+.turn-history__black {
+  display: table-cell;
+  vertical-align: middle;
+  border-right: 0;
+  border-left: 0;
+  padding: 3px;
+  position: relative;
+  width: 140px;
+
+  .turn-history__progress {
+    background-color: #090909;
+  }
+  @include phones-big() {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: #979797;
+    padding: 10px;
+  }
+}
+
+.turn-history__turn {
+  display: flex;
+  float: left;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px 0 0;
+  border-radius: 20px;
+  font: 400 12px/16px $cofo-sans-font;
+  color: #383838;
+
+  &--active {
+    background-color: #79FFAE;
+  }
+  @include phones-big() {
+    width: 100%;
+    font: 400 14px/18px $cofo-sans-font;
+  }
+}
+
+.turn-history__time {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  float: right;
+  font: 400 10px/13px $cofo-sans-font;
+  color: #656565;
+  height: 24px;
+  padding: 0 9px;
+  @include phones-big() {
+    display: none;
+  }
+}
+
+.turn-history__progress {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #D8D8D8;
+  height: 2px;
+}

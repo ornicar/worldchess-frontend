@@ -1,0 +1,57 @@
+<div class="history-moves" [class.my-game]="myGameIsActive">
+  <div class="scroll-element" [class.scroll-element--hide-line-number]="hideMoveNumbers" #scrollWrap wcHideScrollbar [wcForceHideVerticalScrollBar]="true">
+    <div class="scroll-section">
+      <ng-container *ngIf="groupedMoves$ | async as groupedMoves">
+        <div *ngFor="let groupMoves of groupedMoves; trackBy: trackByMoveGroup; let number = index" class="moves-line">
+          <div *ngIf="!hideMoveNumbers" class="moves-line-number">{{ number + 1 }}</div>
+
+          <div class="moves-line-content">
+            <ng-container *ngFor="let move of groupMoves; trackBy: trackByMove">
+              <wc-move
+                *ngIf="move; else historyMovePlaceholder"
+                [move]="move"
+                [selected]="move.id === selectedMove?.id"
+                [completed]="move.id === (completedMoveId$ | async) && board.status === boardStatus.COMPLETED"
+                (click)="onMoveClick(move.id)"
+                wcAutoScroll
+                [whenScroll]="move.id === selectedMove?.id"
+                [autoScrollWrap]="scrollWrap"
+                wcInsideScrollArea
+                [wcInsideScrollAreaWrap]="scrollWrap"
+                [wcInsideScrollAreaElementHeightOffset]="0.2"
+                (wcInsideScrollAreaIsInside)="onMoveIntersectScrollArea(move, $event)"
+                [class.can-click]="this.canChangeSelectedMove">
+              </wc-move>
+            </ng-container>
+            <ng-container *ngIf="groupMovesHasSelected(groupMoves)">
+              <ng-container *ngTemplateOutlet="variationMovesContainer"></ng-container>
+            </ng-container>
+          </div>
+        </div>
+
+        <div *ngIf="showPlaceholdersLine$ | async" class="moves-line">
+          <div *ngIf="!hideMoveNumbers" class="moves-line-number">{{ groupedMoves.length + 1 }}</div>
+
+          <div class="moves-line-content">
+            <wc-move-placeholder></wc-move-placeholder>
+            <wc-move-placeholder></wc-move-placeholder>
+          </div>
+        </div>
+
+        <ng-template #historyMovePlaceholder>
+          <wc-move-placeholder></wc-move-placeholder>
+        </ng-template>
+
+        <ng-template #variationMovesContainer>
+          <ng-container *ngIf="(variationMoves$ | async)[selectedMove?.id] as variationMoves">
+            <wc-variation-moves [variationMoves]="variationMoves" [selectedVariationMove]="selectedVariationMove"></wc-variation-moves>
+          </ng-container>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+
+  <div @smoothShowing *ngIf="myGameIsActive && newMoves.size" class="new-moves" (click)="selectLatMove()">
+    {{ newMoves.size }} new {{ newMoves.size === 1 ? 'move' : 'moves' }}
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<ng-container *ngIf="(isAuthorized$ | async); else anonymous">
+  <ng-container *ngIf="(account$ | async) as account">
+    <div class="control-sign-in-wrapper">
+      <div
+        class="control-sign-in"
+        [style.background-image]="
+          'url(' + (account?.avatar?.full || '/assets/images/account/avatar-placeholder.svg') + ')'
+        "
+      ></div>
+      <div class="auth-popup-wrapper">
+        <div class="auth-popup">
+          <div class="auth-popup-row">
+            <div class="auth-popup-col">
+              <!-- <a class="auth-popup__link-black" href="#">Status</a> -->
+              <a class="auth-popup__link-black" routerLink="/account/membership">Membership</a>
+              <a class="auth-popup__link-black" routerLink="/account/profile">Profile</a>
+              <a class="auth-popup__link-violet" routerLink="/account/events" *ngIf="(founderApproved$ | async)"
+                >Tournaments</a
+              >
+            </div>
+            <!-- <div *ngIf="isDevMode" class="auth-popup-col">
+                <button class="auth-popup__btn-blue">FIDE ID</button>
+              </div> -->
+          </div>
+          <div class="auth-popup-row">
+            <span class="auth-popup__link-violet" (click)="logout()">Log out</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #anonymous>
+  <div class="control-sign-in-wrapper">
+    <div class="control-sign-in"></div>
+    <div class="auth-popup-wrapper">
+      <div class="auth-popup">
+        <div class="auth-popup-row">
+          <div class="auth-popup-col">
+            <h4 class="auth-popup-title">
+              Want to become a <span class="auth-popup-title__text-purple">member?</span>
+            </h4>
+            <a routerLink="/sign-up" class="auth-popup__btn">want to join</a>
+            <a routerLink="/sign-in" class="auth-popup__link">already have</a>
+            <a [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]" class="auth-popup__link"
+              >outlet link login</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

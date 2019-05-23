@@ -1,0 +1,27 @@
+<wc-layout>
+  <div class="bg-grey block block-100w">
+    <div class="container">
+      <div class="d-flex block block-offset">
+        <div class="d-none d-md-block">
+          <h1>Restore</h1>
+        </div>
+        <div (keyup.enter)="restore()" class="form form-default d-flex flex-column block-100w" *ngIf="!(success$ | async)">
+          <app-email-input [email]="email" [responseError]="(formErrors$ | async)?.email"></app-email-input>
+          <div class="d-flex flex-column after-form">
+            <div class="d-flex flex-column flex-sm-row mb-10 info">
+              <div class="d-sm-block info-text">
+                we will send you a link to reset your password
+                don’t actually forget? <a routerLink="/sign-in">sign in</a>
+              </div>
+              <button (click)="restore()" class="btn btn-blue submit" [disabled]="loading$ | async">get a new password</button>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-column message" *ngIf="success$ | async">
+          <p class="thank-you">Thank you!</p>
+          <p class="sent-email">The link to reset your password has been send to your email</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</wc-layout>

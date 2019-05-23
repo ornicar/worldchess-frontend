@@ -1,0 +1,177 @@
+@import 'variables';
+@import 'media';
+
+.register {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    padding: 25px;
+    background-color: #525252;
+}
+
+.register__close {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 19px;
+    height: 19px;
+    cursor: pointer;
+
+    &:after,
+    &:before {
+        content: '';
+        display: block;
+        width: 25px;
+        height: 1px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        background-color: #999;
+    }
+
+    &:before {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+}
+
+.register__title {
+    font: 300 33px/43px $gerbera-font;
+    color: #fff;
+    height: 160px;
+    padding-right: 25px;
+    letter-spacing: -0.1px;
+
+    a {
+        color: #999;
+    }
+
+    @include laptop() {
+        font: 300 29px/29px $gerbera-font;
+    }
+
+    @include tablets() {
+        font: 300 29px/29px $gerbera-font;
+        height: auto;
+    }
+}
+
+.register__labels {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
+    @include tablets() {
+        margin: 0 auto;
+    }
+
+    @include phones() {
+        margin: 0 auto;
+        padding: 0 50px;
+    }
+
+    @include phones-small() {
+        padding: 0;
+    }
+}
+
+.register__footer {
+    height: 160px;
+    display: flex;
+    margin: 0 -5px;
+
+    @include tablets() {
+        flex-direction: column;
+        height: auto;
+    }
+}
+
+.register__footer-coll {
+    display: flex;
+    align-items: flex-end;
+    flex: 1;
+    padding: 0 5px;
+
+    @include tablets() {
+        padding: 0 0 25px;
+    }
+
+    @include phones() {
+        width: calc(100% / 3);
+        padding: 0 50px 25px;
+        width: 100%;
+    }
+
+    @include phones-small() {
+        padding: 0 0 25px;
+    }
+
+    &:last-child {
+        @include tablets() {
+            justify-content: center;
+            padding: 0;
+        }
+
+        @include phones() {
+            padding: 0;
+        }
+    }
+}
+
+.register__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 60px;
+    padding: 14px;
+    background-color: #9bcfff;
+    border-radius: 3px;
+    border: 0;
+    font: 300 22px/22px $gerbera-font;
+    cursor: pointer;
+
+    &--pro {
+        background-color: $pink;
+    }
+
+    &--premium {
+        background-color: #dca4ff;
+    }
+
+    @include tablets() {
+        width: 246px;
+    }
+
+    @include phones-small() {
+        width: 100%;
+        font: 300 18px/18px $gerbera-font;
+    }
+}
+
+.register__footer-text {
+    font: 400 15px/23px $gerbera-font;
+    color: #fff;
+
+    a {
+        color: #979797;
+    }
+}
+
+.login__incorrect {
+    font: 300 15px/23px $gerbera-font;
+    color: #ff7070;
+    min-height: 46px;
+
+    a {
+        color: #fff;
+    }
+}
+
+.nobr {
+    white-space: nowrap;
+}

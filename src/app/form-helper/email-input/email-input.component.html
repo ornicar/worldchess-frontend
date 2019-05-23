@@ -1,0 +1,10 @@
+<mat-form-field>
+  <input matInput [placeholder]="label" (focus)="isFocus = true" [formControl]="email">
+
+  <span *ngIf="getEmailError()" matSuffix class="form-error-text">{{getEmailError()}}</span>
+  <mat-icon *ngIf="email.value || isFocus" class="custom-icon" matSuffix
+            [svgIcon]="getEmailError() ? 'input_error' : 'input_success'"></mat-icon>
+  <!--<a *ngIf="additionalText" class="additional-text" matSuffix>{{additionalText}}</a>-->
+  <mat-icon *ngIf="original" class="custom-icon" matSuffix
+            [svgIcon]="isEdit() ? 'edit' : 'non_edit'"></mat-icon>
+</mat-form-field>

@@ -1,0 +1,18 @@
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+:host {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  font: inherit;
+}
+
+.match-flag {
+  width: 40px;
+}
+
+.match-name {
+  margin-left: 20px;
+  font: inherit;
+}

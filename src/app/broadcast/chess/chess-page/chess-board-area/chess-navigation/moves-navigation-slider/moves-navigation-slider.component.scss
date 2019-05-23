@@ -1,0 +1,50 @@
+@import 'nouislider/nouislider';
+
+wc-moves-navigation-slider {
+  display: block;
+  height: 70px;
+  position: relative;
+}
+
+.chess-timeline {
+  &__slider {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    bottom: 0;
+  }
+
+  &__live-text {
+    position: absolute;
+    left: 100%;
+    top: -37px;
+    transform: translateX(-50%);
+    cursor: pointer;
+
+    color: white;
+    background: #59f19b;
+    padding: 1px 3px;
+  }
+
+  &__live-circle {
+    position: absolute;
+    left: calc(100% - 5px);
+    top: -5px;
+    width: 10px;
+    height: 10px;
+
+    background: #59f19b;
+    border-radius: 10px;
+    pointer-events: none;
+  }
+
+  &__live-position {
+    position: absolute;
+    left: 100%;
+    top: 12px;
+    transform: translateX(-50%);
+
+    color: #59f19b;
+  }
+}

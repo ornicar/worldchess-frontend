@@ -1,0 +1,33 @@
+<div class="results-list-circular">
+  <h3 class="without_results" *ngIf="playersResults?.length === 0">Results will be available after the first round</h3>
+  <ul class="results-list-circular__list">
+    <li
+      *ngFor="let playerResults of playersResults; index as i; trackBy: trackByFn"
+      class="results-list-circular__elem"
+    >
+      <div class="results-list-circular__position">{{ i + 1 }}</div>
+      <div class="results-list-circular__title">
+        <div class="results-list-circular__name">
+          <span class="results-list-circular__name-text">
+            {{ playerResults?.player?.full_name | wcReplace: ',':'' }}
+          </span>
+          <div class="results-list-circular__flag">
+            <wc-country-flag [countryId]="playerResults?.player?.federation"></wc-country-flag>
+          </div>
+        </div>
+      </div>
+      <div class="results-list-circular__count">
+        <div class="results-list-circular__count-number">
+          {{ parseInt(playerResults.total) }}
+          <div *ngIf="i === 0" class="results-list-circular__crown">
+            <img src="/assets/icons/crown.svg" alt="img" />
+          </div>
+        </div>
+        <div *ngIf="!isInteger(playerResults.total)" class="results-list-circular__count-half">
+          <span>1</span>
+          <span>2</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,8 @@
+<div *ngIf="labels.length > 0"
+     [style.background-color]="getColor(labels[0])"
+     class="marker marker--first">{{getTitle(labels[0])}}
+</div>
+<div *ngIf="labels.length > 1"
+     [style.background-color]="getColor(labels[1])"
+     class="marker marker--second">{{getTitle(labels[1])}}
+</div>

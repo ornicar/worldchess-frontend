@@ -1,0 +1,38 @@
+.like-btn {
+    position: relative;
+    width: 30px;
+    height: 30px; 
+    z-index: 5;
+
+    &__img {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: #fff;
+        transition: 0.3s;
+
+        &:hover {
+            background-color: $purple;
+        }
+
+        img {
+            width: 18px;
+        }
+    }
+
+    &__count {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        font-family: $gerbera-font;
+        font-size: 11px;
+        font-weight: 700;
+        color: $black;
+    }
+}

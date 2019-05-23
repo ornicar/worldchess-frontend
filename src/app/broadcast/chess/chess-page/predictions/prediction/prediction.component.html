@@ -1,0 +1,71 @@
+<div class="prediction__row">
+  <div class="prediction__text">
+    <div class="score-number">{{ score > 0 ? '+' : '' }}{{ score  | number : '1.2' }}</div>
+  </div>
+
+  <div class="prediction__btn">
+    <a href="#" class="prediction__arrow prediction__arrow--left"
+       [ngClass]="{active: predictions[0] !== selectedPrediction}"
+       (click)="onPrevMove($event)">
+      <svg class="arrow-down__icon">
+        <use xlink:href="#arrow-down" />
+      </svg>
+    </a>
+    <div class="gradient left-gradient"></div>
+  </div>
+  <ul class="prediction__list" wcHideScrollbar [wcHideScrollbarType]="'horizontal'">
+
+    <ng-template #predMove let-move="move" let-selectedMove="selectedMove">
+
+      <div class="prediction__number" *ngIf="move.is_white_move">{{move.move_number}}</div>
+      <div class="move-block selectable" (click)="moveClick(move)"
+           [wcAdjustOverflowHidden] = "move === selectedMove"
+           [ngClass]="{'selected': move === selectedMove}">
+        <div class="prediction__figure" [ngClass]="{'prediction__figure--white': move.is_white_move}">
+          <wc-figure [san]="move.san" [isWhite]="move.is_white_move"></wc-figure>
+        </div>
+        <div class="prediction__move">{{move.san | wcRemoveFigureNotation}}</div>
+      </div>
+    </ng-template>
+
+    <li class="prediction__elem" [ngClass]="{'half-move': first && !move[0].is_white_move}"
+        *ngFor="let move of predictions | wcGroupBy : 'move_number' | wcToIterable; let first = first;">
+
+      <ng-container *ngIf="first && !move[0].is_white_move">
+        <div class="prediction__number">{{move[0].move_number}}</div>
+        <div class="move-block" (click)="moveClick(move)"
+             [wcAdjustOverflowHidden] = "move === selectedPrediction">
+          <div>...</div>
+        </div>
+
+        <ng-template *ngIf="move[0] as firstMove"
+                     [ngTemplateOutlet]="predMove"
+                     [ngTemplateOutletContext]="{move: firstMove, selectedMove: selectedPrediction}">
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngIf="!first || move[0].is_white_move">
+        <ng-template *ngIf="move[0] as firstMove"
+                     [ngTemplateOutlet]="predMove"
+                     [ngTemplateOutletContext]="{move: firstMove, selectedMove: selectedPrediction}">
+        </ng-template>
+
+        <ng-template *ngIf="move[1] as secondMove"
+                     [ngTemplateOutlet]="predMove"
+                     [ngTemplateOutletContext]="{move: secondMove, selectedMove: selectedPrediction}">
+        </ng-template>
+      </ng-container>
+
+    </li>
+  </ul>
+  <div class="prediction__btn">
+    <a href class="prediction__arrow prediction__arrow--right"
+       [ngClass]="{active: predictions[predictions.length - 1] !== selectedPrediction}"
+       (click)="onNextMove($event)">
+      <svg class="arrow-down__icon">
+        <use xlink:href="#arrow-down" />
+      </svg>
+    </a>
+    <div class="gradient right-gradient"></div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div *ngIf="name" class="name">{{name}}</div>
+
+<div (click)="canChange && onSelectClick()" [class.select-option--can-change]="canChange" class="select-option">
+  <ng-container *ngIf="isAutocomplete && isOpen && !isMobile; else selectHeader">
+    <img src="/assets/icons/search-icon.svg" class="search-icon">
+    <input #autocomplete class="search-input" type="text" [placeholder]="autocompletePlaceholder" [formControl]="autocompleteFormControl" />
+  </ng-container>
+
+  <ng-template #selectHeader>
+    <ng-container *ngIf="selectedOption; else dafaultSelected">
+      <ng-container *ngTemplateOutlet="titleSelectedTemplate; context: {$implicit: selectedOption}"></ng-container>
+    </ng-container>
+    <ng-template #dafaultSelected>
+      <ng-container *ngTemplateOutlet="titleNonSelectedTemplate"></ng-container>
+    </ng-template>
+  </ng-template>
+</div>
+
+<ng-container *ngIf="canChange">
+
+  <wc-arrow-down class="arrow" (click)="toggleDropdown()"></wc-arrow-down>
+
+  <div #dropdown class="dropdown"
+       [class.dropdown--left]="alignLeft"
+       [style.margin-right.px]="-marginLedtDropdown"
+       wcScreenFixed>
+    <div class="dropdown-content">
+      <ng-container *ngIf="isMobile">
+        <div class="dropdown-link dropdown-link--mobile-header">
+          <div class="select-option select-option--back" (click)="closeDropdown()">
+            <wc-arrow-down class="back"></wc-arrow-down>
+            <span>Main page</span>
+          </div>
+        </div>
+        <div *ngIf="isAutocomplete && isOpen" class="dropdown-link dropdown-link--mobile-header">
+          <div class="select-option">
+            <img src="/assets/icons/search-icon.svg" class="search-icon">
+            <input #autocomplete class="search-input" type="text" [placeholder]="autocompletePlaceholder" [formControl]="autocompleteFormControl" />
+          </div>
+        </div>
+      </ng-container>
+      <div *ngFor="let option of isAutocomplete ? filteredOptions : optionsExcludeSelected" class="dropdown-link">
+        <div class="select-option" (click)="changeOption(option)">
+          <ng-container *ngTemplateOutlet="optionTemplate; context: {$implicit: option}"></ng-container>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="afterDropdownContentTemplate">
+      <ng-container *ngTemplateOutlet="afterDropdownContentTemplate"></ng-container>
+    </ng-container>
+  </div>
+</ng-container>

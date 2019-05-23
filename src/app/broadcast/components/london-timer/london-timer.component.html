@@ -1,0 +1,18 @@
+<div class="container bg-black">
+  <div class="broadcast">
+    <div class="countdown-wrapper">
+      <div class="countdown-text">FIDE World Chess Championship Match 2018 starts in</div>
+      <app-countdown [countDownDate]="countDownDate"></app-countdown>
+    </div>
+    <div class="image-wrapper">
+      <img class="image" src="../../assets/images/broadcasts/multi-chess.svg" alt="multi-chess">
+    </div>
+    <div class="description">
+      With online access, you will have the best seats in the house!
+      Multi-camera view, commentary, access to behind-the-scenes,
+      interviews and press conferences, advanced chat options and more.
+      It's 2018 and chess is spectacular!
+    </div>
+  </div>
+  <app-subscriptions [fixed]="false"></app-subscriptions>
+</div>

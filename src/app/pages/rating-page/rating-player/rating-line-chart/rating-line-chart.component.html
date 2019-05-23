@@ -1,0 +1,29 @@
+<div class="block-statistics__head">
+  <div class="chart-filter">
+    <ul class="chart-filter__list">
+      <li class="chart-filter__elem">
+        <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.CLASSIC"
+              (click)="setMode(RatingTypeGame.CLASSIC)">Classic</span>
+      </li>
+      <li class="chart-filter__elem">
+        <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.RAPID"
+              (click)="setMode(RatingTypeGame.RAPID)">Rapid</span>
+      </li>
+      <li class="chart-filter__elem">
+        <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.BLITZ"
+              (click)="setMode(RatingTypeGame.BLITZ)">Blitz</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="block-schedule">
+  <div class="block-schedule--wrap">
+    <svg #chartPoints class="chart_points"></svg>
+    <div class="chart-wrap">
+      <svg #chart class="chart"></svg>
+    </div>
+  </div>
+</div>

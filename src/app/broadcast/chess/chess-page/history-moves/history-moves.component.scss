@@ -1,0 +1,122 @@
+@import '../../../../../html/css/variables';
+@import '../../../../../html/css/media';
+
+.history-moves {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  position: relative;
+}
+
+.scroll-element {
+  flex: 1 1 1px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-left: -20px;
+
+  &--hide-line-number {
+    margin-left: 0;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40px;
+    z-index: z-index(base);
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(246,246,246,1) 98%);
+  }
+}
+
+.scroll-section {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+
+  &:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: calc(100% / 2 + 10px);
+    width: calc(100% / 2 - 10px);
+    height: 100%;
+    background-color: #ebebeb;
+  }
+
+  .scroll-element--hide-line-number &:after {
+    left: 50%;
+    width: 50%;
+  }
+}
+
+.moves-line {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.moves-line-number {
+  align-self: flex-start;
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  border-top: 1px solid transparent;
+  color: $black-light;
+  padding: 0 10px 0 0;
+  text-align: left;
+  width: 20px;
+  height: 38px;
+  font: 400 10px/15px $gerbera-font;
+
+  .my-game & {
+    color: #fff;
+  }
+}
+
+.moves-line-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  > wc-move,
+  > wc-move-placeholder {
+    flex: 1 1 auto;
+    width: 50%;
+  }
+
+  > wc-variation-moves {
+    flex: 1 1 100%;
+  }
+}
+
+.new-moves {
+  position: absolute;
+  bottom: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #59F19B;
+  height: 24px;
+  border-radius: 13px;
+  padding: 0 9px;
+  z-index: z-index(base, 1);
+  font: 400 12px/24px $gerbera-font;
+  color: #ffffff;
+  cursor: default;
+
+  &.can-click {
+    cursor: pointer;
+  }
+}

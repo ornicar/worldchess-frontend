@@ -1,0 +1,102 @@
+@import "settings";
+@import "mixins";
+@import '../../../html/css/variables';
+@import '../../../html/css/media';
+
+.account {
+  background: transparent;
+}
+a.as-text {
+  white-space: nowrap;
+}
+
+
+a.as-text.active {
+  color: #000;
+  pointer-events: none;
+}
+
+// .account.premium {
+//   $border-color: #383838;
+
+//   .account-nav {
+//     border-bottom: 1px solid $border-color;
+//     border-top: 1px solid $border-color;
+//   }
+
+//   a.as-text {
+//     color: #a0a0a0;
+
+//     @include media-breakpoint-up(sm) {
+//       border-right: 1px solid $border-color;
+//     }
+//   }
+
+//   a.as-text.active {
+//     color: #fff;
+//     pointer-events: none;
+//   }
+
+//   a.as-text.inactive {
+//     color: #383838;
+//   }
+// }
+
+.account-nav {
+  $border-color: #e5e5e5;
+  background-color: $broadcast-menu-bg;
+
+  border-bottom: 1px solid #DCDCDC;
+  font-size: 14px;
+
+  &-list {
+    overflow-x: auto;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    color:#5e5e5e5e;
+    padding: 20px;
+    text-transform: lowercase;
+    font: 300 22px/22px $gerbera-font;
+    text-transform: capitalize;
+    border-right: 1px solid #DCDCDC;
+
+    @include phones() {
+      font: 300 15px/15px $gerbera-font;
+      padding: 10px;
+    }
+
+    &.active {
+      color: #2D2D2D;
+    }
+  }
+}
+
+.container {
+  padding: 0;
+}
+
+.as-text__count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid #9E9E9E;
+  font: 400 15px/22px $gerbera-font;
+  color: #2D2D2D;
+  margin-left: 9px;
+}
+
+.as-text__marker {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #63FFA4;
+  border: 1px solid #F6F6F6;
+  margin-left: 9px;
+  flex: 0 0 auto;
+}

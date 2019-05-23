@@ -1,0 +1,23 @@
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+:host {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      fill: #D2D2D2;
+        animation: rotation 1s linear infinite;
+    }
+}

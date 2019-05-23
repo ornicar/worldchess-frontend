@@ -1,0 +1,34 @@
+.time-info {
+    padding: 9px 0;
+    background-color: #d2d2d2;
+
+    &__list {
+        display: flex;
+    }
+
+    &__elem {
+        flex: 1;
+        padding: 5px 14px;
+        border-right: 1px solid #b1b1b1;
+
+        &:last-child {
+            border-right: 0;
+        }
+    }
+
+    &__text {
+        font: 400 13px/13px $gerbera-font;
+        color: $black;
+        margin-bottom: 5px;
+        min-height: 32px;
+
+        @include tablets-big() {
+            font: 400 11px/16px $gerbera-font;
+        }
+    }
+
+    &__value {
+        font: 400 15px/22px $gerbera-font;
+        color: #000;
+    }
+}

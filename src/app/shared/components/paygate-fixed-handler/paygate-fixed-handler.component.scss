@@ -1,0 +1,30 @@
+@import 'variables';
+@import 'media';
+
+.create-free-account {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 53px;
+  font: 300 22px/22px $gerbera-font;
+  color: #000;
+  cursor: pointer;
+  z-index: 9999;
+
+  &.fixed {
+    position: fixed;
+  }
+  @include phones() {
+    font: 300 16px/17px $gerbera-font;
+    height: 46px;
+  }
+  &.arena {
+    @include phones-big() {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<ng-container *ngIf="player$ | async as playerInfo; else playerName">
+  <div class="flag">
+    <wc-country-flag *ngIf="playerInfo.federation" [countryId]="playerInfo.federation"></wc-country-flag>
+  </div>
+  <div class="name">{{ playerInfo.full_name | wcFullNameCutName }}</div>
+  <div *ngIf="!isMinimalViewMode && (playerInfo.rank || playerInfo.rating)" class="rank">
+    <span *ngIf="playerInfo.rank">{{ playerInfo.rank }}</span>
+    <span *ngIf="playerInfo.rating">{{ playerInfo.rating }}</span>
+  </div>
+</ng-container>
+
+<ng-template #playerName>
+  <div class="name">{{ playerName$ | async }}</div>
+</ng-template>

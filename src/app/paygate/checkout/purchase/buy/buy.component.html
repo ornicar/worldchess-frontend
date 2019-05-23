@@ -1,0 +1,80 @@
+<div class="buy">
+  <div class="buy-start">
+    <div class="title">
+      <span class="title-number" *ngIf="isAuthorized">1</span>
+      <span class="title-number" *ngIf="!isAuthorized">2</span>
+      Payment info
+    </div>
+    <div class="forms">
+      <div class="form card-form" [formGroup]="cardForm" (click)="serverError = ''">
+        <div class="form-wrapper">
+          <div class="card" [ngClass]="isCommonError || serverError ? 'card-error' : ''">
+            <app-card-number-input [cardNumber]="cardForm.get('number')"></app-card-number-input>
+            <app-card-name-input [cardName]="cardForm.get('name')"></app-card-name-input>
+            <div class="row">
+              <app-card-date-input [cardDate]="cardForm.get('date')"></app-card-date-input>
+              <app-card-cvc-input [cardCVC]="cardForm.get('cvc')"></app-card-cvc-input>
+            </div>
+            <div class="secured">
+              secured by STRIPE
+            </div>
+          </div>
+          <div class="form-error-text" *ngIf="serverError">{{serverError}}</div>
+        </div>
+      </div>
+      <div class="form form-promocode">
+        <div class="form-wrapper">
+          <div class="promo-code-active">
+            <div class="row align-items-end">
+              <app-card-promo-input [promoCode]="cardForm.get('promoCode')"
+                                    [invalid]="promoCodeStatus"></app-card-promo-input>
+              <button class="btn btn-blue" (click)="onCheckPromoCode()" [disabled]="loading">apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="info">
+    <div class="title">
+      <span class="title-number" *ngIf="isAuthorized">2</span>
+      <span class="title-number" *ngIf="!isAuthorized">3</span>
+      <span>Confirm & buy</span>
+    </div>
+    <div class="price">
+      <div class="price-box">
+        <div class="value">{{getPrice() / 100 | currency:'USD':'symbol-narrow'}}</div>
+        <div class="text">
+          will be charged <span class="now">now</span> <br> from your card
+        </div>
+      </div>
+      <button
+        angulartics2On="click"
+        angularticsAction="buy"
+        angularticsCategory="payment-modal"
+        class="btn btn-blue"
+        (click)="onBuyClick()"
+        *ngIf="isAuthorized"
+        [disabled]="loading">
+        buy
+      </button>
+      <button
+        angulartics2On="click"
+        angularticsAction="sign in & buy"
+        angularticsCategory="payment-modal"
+        class="btn btn-blue"
+        (click)="onBuyClick()"
+        *ngIf="!isAuthorized"
+        [disabled]="loading">
+        sign in & buy
+      </button>
+    </div>
+    <div class="form-status-text" *ngIf="buyStatus.length > 0">{{ buyStatus }}</div>
+    <div class="terms">
+      Clicking BUY you agree to the
+      <a href="/assets/docs/terms-of-use.pdf">Terms of Use</a>,
+      <a href="/assets/docs/privacy-policy.pdf">Private Policy</a>
+      and to receive emails from World Chess
+    </div>
+  </div>
+</div>

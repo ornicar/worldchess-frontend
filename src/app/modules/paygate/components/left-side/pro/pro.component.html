@@ -1,0 +1,31 @@
+<wc-subscription-menu active="pro"></wc-subscription-menu>
+
+<div class="lazy-load-content">
+  <div class="lazy-load-content__img">
+    <img src="../../../../../../assets/images/main-page/other-chess-events.png" alt="" />
+  </div>
+
+  <div class="lazy-load-content__text">
+    <div class="lazy-load-content__text-coll">
+      <p>All free features plus...</p>
+      <p>Access to all video streams, including premium events</p>
+      <p>Premium chat status and features</p>
+      <p>Broadcast your own events with online paywall</p>
+      <p>Multi-camera view of the top events</p>
+    </div>
+    <div class="lazy-load-content__text-coll">
+      <p>Opportunity to ask questions players during press conferences</p>
+      <p>Dedicated World Chess space at the Grand Prix events</p>
+      <p>Live PGN download of all games</p>
+      <p>Early access to all official limited edition merchandise</p>
+      <div class="price" *ngIf="proPrice$ | async as proPrice">
+        <span class="price__price">{{ proPrice / 100 | currency: 'EUR':'symbol-narrow' }}</span> <span>/ per year</span>
+      </div>
+    </div>
+  </div>
+  <div class="lazy-load-content__buttoms">
+    <button class="lazy-load-content__btn" (click)="mobileShowForm.emit(true)">become a member</button>
+  </div>
+</div>
+
+<wc-with-fide (mobileShowForm)="mobileShowForm.emit($event)"></wc-with-fide>

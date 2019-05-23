@@ -1,0 +1,45 @@
+<wc-layout>
+  <div class="widgets bg-black">
+    <div class="widgets__title ">
+      Current Widgets
+    </div>
+    <br>
+    <p> Click to the name of a widget for loading in example section</p>
+    <div class="widgets__list"
+      *ngIf="widgetsList">
+      <div *ngFor="let widget of widgetsList"
+        class="widgets__item">
+
+        <div class="widgets__item-name"
+          (click)="loadExampleWidget(widget.id)">
+          {{widget.name}}
+
+        </div>
+        <div class="widgets__item-code-wrapper">
+          <div class="widgets__item-code-title">
+            Grab the code:
+          </div>
+
+          <div class="widgets__item-code">
+            <span class="widgets__tag"><</span><span class="widgets__tag">iframe</span> <div class="widgets__code">src="{{mainUrl}}/widget/{{widget.id}}"
+            width="280"
+            height="700"
+            style="border: 0"></div>
+            <span class="widgets__tag"><</span><span class="widgets__tag">/iframe></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="widgets__example">
+      Example Widget
+    </div>
+    <!-- @TODO change the link when it's deployed to widget.chess.usetech.ru / widget.worldchess.com -->
+    <iframe *ngIf="selectedWidget"
+      [src]="safeWidgetUrl(selectedWidget.id)"
+      width="280"
+      height="700"
+      style="border: 1px solid white; box-sizing: content-box;">
+    </iframe>
+  </div>
+</wc-layout>

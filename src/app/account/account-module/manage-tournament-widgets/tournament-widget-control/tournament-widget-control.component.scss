@@ -1,0 +1,14 @@
+:host(wc-tournament-widget-control) {
+  display: inline-block;
+}
+
+.widget-control {
+  display: flex;
+
+  select, input, span {
+    height: 22px;
+  }
+
+  & > div {
+  }
+}

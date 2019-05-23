@@ -1,0 +1,25 @@
+<div class="chess-layout" [class.chess-layout--switched]="switched">
+  <div class="chess-layout__title">
+    <ng-content select="[slot=title]"></ng-content>
+  </div>
+
+  <div class="chess-layout__board">
+    <ng-content select="[slot=main]"></ng-content>
+  </div>
+
+  <div class="chess-layout__predictions">
+    <ng-content select="[slot=predictions]"></ng-content>
+  </div>
+
+  <div class="chess-layout__livestream">
+    <ng-content select="[slot=livestream]"></ng-content>
+  </div>
+
+  <div class="chess-layout__history">
+    <ng-content select="[slot=history]"></ng-content>
+  </div>
+
+  <div class="chess-layout__aside">
+    <ng-content select="[slot=aside]"></ng-content>
+  </div>
+</div>

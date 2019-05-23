@@ -1,0 +1,110 @@
+@import '../../../../html/css/variables.scss';
+@import '../../../../html/css/media.scss';
+
+.create-tournament {
+  display: block;
+  margin-bottom: 20px;
+
+  &.premium {
+    color: black;
+
+    .create-tournament__tab--selected,
+    .btn--remove,
+    .create-tournament__title {
+      color:black;
+    }
+
+    .create-tournament__tab--inactive {
+      color: $black;
+    }
+
+    .tournament-form {
+      color: black;
+    }
+  }
+
+  &__title{
+    margin-bottom: 20px;
+    color: $black;
+  }
+
+  padding: 40px;
+  // }
+  @include phones() {
+    padding: 20px;
+  }
+
+
+  &__tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  &__tab {
+    color: #848484;
+    margin-right: 20px;
+
+    &--inactive {
+      color: #b7b7b7;
+    }
+
+    &--selected {
+      color: black;
+    }
+  }
+}
+
+.tournament-form {
+  &__input {
+    display: flex;
+    width: 50%;
+    min-width: 480px;
+    max-width: 768px;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    & input, select, span {
+      flex: 1;
+      height: 22px;
+    }
+
+    &-row {
+      display: flex;
+
+      &__item {
+        flex-basis: 33%;
+        padding: 10px 15px 10px 0;
+
+        label {
+          width: 100%;
+          display: inline-block;
+        }
+
+        textarea {
+          width: 100% ;
+        }
+      }
+    }
+  }
+
+  &__error {
+    color: red;
+  }
+
+  &__errors {
+    margin-bottom: 20px;
+  }
+
+  button {
+    display: inline-block;
+  }
+}
+
+.controls {
+  display: flex;
+  margin-top: 20px;
+
+  & button {
+    margin-right: 20px;
+  }
+}

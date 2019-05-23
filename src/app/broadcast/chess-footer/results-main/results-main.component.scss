@@ -1,0 +1,268 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+
+:host {
+  flex: 2;
+  display: flex;
+  overflow: hidden;
+  min-height: 552px;
+}
+
+.results {
+  background: black;
+  display: flex;
+  position: relative;
+  color: white;
+  width: 100%;
+  min-height: 552px;
+  overflow: hidden;
+
+  &__timer-wrapper {
+    position: absolute;
+    top: 70%;
+    width: 100%;
+    text-align: center;
+    z-index: z-index(base, 1);
+    @include phones() {
+      top: 45%;
+    }
+  }
+
+  .without_results {
+    align-self: center;
+    margin: auto;
+  }
+
+  &__timer {
+    transform: rotate(-10deg);
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    margin: auto;
+    color: #9E9E9E;
+    width: 190px;
+    font: 400 12px/12px $gerbera-font;
+    box-shadow: 0 0 40px 0 #4FC2FF;
+    @include phones() {
+      width: 140px;
+      padding: 10px;
+    }
+
+    & wc-timer {
+      color: #4FC2FF;
+      display: block;
+      margin-top: 10px;
+      font: 300 26px/26px $gerbera-font;
+      @include phones() {
+        font-size: 20px;
+      }
+    }
+  }
+
+  &__half {
+    width: 50%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @include ipad() {
+      flex-direction: column;
+    }
+
+    &.right {
+      flex-direction: row-reverse;
+
+      .results__score {
+        align-items: flex-start;
+        padding: 20px 20px 20px 40px;
+
+        @include phones() {
+          padding: 20px 20px 20px 30px;
+          padding-top: 0;
+        }
+      }
+
+      @include ipad() {
+        flex-direction: column;
+      }
+
+      .avatar-image {
+        @include ipad() {
+          align-items: flex-end;
+        }
+        img {
+          transform: scaleX(-1);
+          @include ipad() {
+            transform: scaleX(-1) translate(-50%, 0);
+          }
+        }
+      }
+    }
+
+    &:last-of-type {
+      border-left: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .avatar-image {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 100%;
+      flex: 2;
+      width: 66%;
+      overflow: hidden;
+      padding: 20px;
+
+      @include ipad() {
+        width: 100%;
+      }
+
+      img {
+        height: auto;
+        width: 100%;
+
+        @include tablets() {
+          height: 100%;
+          width: auto;
+          transform: translate(-50%, 0);
+        }
+        
+      }
+    }
+  }
+
+  &__score {
+    position: relative;
+    height: 100%;
+    font: 300 160px/199px $gerbera-font;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 20px 40px 20px 20px;
+    flex: 1;
+    width: 33%;
+    text-align: center;
+    z-index: 1;
+
+    @include tablets() {
+      font: 300 150px/199px $gerbera-font;
+      position: static;
+      width: 100%;
+    }
+    @include phones() {
+      justify-content: flex-end;
+      align-items: flex-end;
+      font: 300 120px/120px $gerbera-font;
+      padding: 20px 30px 20px 20px;
+      padding-top: 0;
+      flex: 0 0 auto;
+      height: 220px;
+    }
+
+    &--less {
+      color: #4A4A4A;
+    }
+  }
+
+  &__result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 220px;
+    
+    @include ipad() {
+      justify-content: flex-end;
+      line-height: 1;
+    }
+
+    &--winner {
+
+      @include phones() {
+        justify-content: flex-end;
+      }
+
+      &:after {
+        content: '';
+        background: url("/assets/icons/crown.svg") no-repeat center;
+        background-size: cover;
+        width: 40px;
+        height: 54px;
+        position: absolute;
+        top: 0;
+        left: calc(50% - 25px);
+
+        @include ipad() {
+          left: 50%;
+          transform: translate(-50%, 0);
+        }
+      }
+    }
+
+    &--less {
+      color: #4A4A4A;
+
+      @include phones() {
+        justify-content: flex-start;
+      }
+    }
+
+  }
+
+  &__name {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    font: 400 15px/20px $gerbera-font;
+    width: 100%;
+
+    &.right {
+      left: 0;
+
+      @include phones() {
+        padding: 20px 30px;
+      }
+
+      wc-country-flag {
+        margin-right: 10px;
+        margin-left: 0;
+      }
+    }
+
+    wc-country-flag {
+      height: 15px;
+      width: 23px;
+      display: inline-block;
+      margin-left: 10px;
+      flex: 0 0 auto;
+    }
+
+    @include ipad() {
+      padding-top: 0;
+      white-space: normal;
+    }
+
+    @include phones() {
+      font-size: 14px;
+      padding: 20px 30px 20px 20px;
+      
+    }
+
+    &.right {
+      flex-direction: row-reverse;
+      right: auto;
+      left: 0;
+    }
+  }
+}

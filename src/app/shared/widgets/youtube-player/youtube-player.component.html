@@ -1,0 +1,7 @@
+<div class="youtube-player-wrapper"
+  [class.pause]="state === PlayerState.PAUSED"
+  [class.play]="state === PlayerState.PLAYING"
+  [class.is-hover]="isHover">
+  <wc-preloader *ngIf="state === PlayerState.PRELOADING"></wc-preloader>
+  <div class="youtube-player" [id]="playerId"></div>
+</div>

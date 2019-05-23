@@ -1,0 +1,37 @@
+<div class="player">
+  <div class="player__color player__color--white"></div>
+  <ng-template *ngIf="whitePlayer$ | async as playerInfo; else whitePlayerName"
+    [ngTemplateOutlet]="player"
+    [ngTemplateOutletContext]="{playerInfo: playerInfo}">
+  </ng-template>
+
+  <ng-template #whitePlayerName>
+    <div class="player__name">{{ whitePlayerName$ | async }}</div>
+  </ng-template>
+</div>
+<div class="player">
+  <div class="player__color player__color--black"></div>
+  <ng-template *ngIf="blackPlayer$ | async as playerInfo; else blackPlayerName"
+    [ngTemplateOutlet]="player"
+    [ngTemplateOutletContext]="{playerInfo: playerInfo}">
+  </ng-template>
+
+  <ng-template #blackPlayerName>
+    <div class="player__name">{{ blackPlayerName$ | async }}</div>
+  </ng-template>
+</div>
+
+<ng-template #player let-playerInfo="playerInfo">
+  <div class="player__between">
+    <div class="player__left">
+      <div class="player__country">
+        <wc-country-flag *ngIf="playerInfo.federation" [countryId]="playerInfo.federation"></wc-country-flag>
+      </div>
+      <div class="player__name">{{ playerInfo.full_name }}</div>
+    </div>
+    <div class="player__right">
+      <div class="player__rank">{{ playerInfo.rank }}</div>
+      <div class="player__rating">{{ playerInfo.rating }}</div>
+    </div>
+  </div>
+</ng-template>

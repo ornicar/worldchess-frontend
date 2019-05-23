@@ -1,0 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+
+html {
+  position: relative;
+  height: 700px;
+  width: 280px;
+  overflow: hidden;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  position: relative;
+  font-weight: 300;
+  &.is-fixed {
+    overflow: hidden;
+    padding-right: 15px;
+  }
+}
+
+main {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  height: 1px;
+}
+
+a {
+  cursor: pointer;
+}
+
+a, a:hover, a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+label {
+  cursor: pointer;
+}
+
+input::-webkit-input-placeholder {
+  color: #ccc;
+}
+
+input:-moz-placeholder {
+  color: #ccc;
+}
+
+input::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  height: auto;
+}
+

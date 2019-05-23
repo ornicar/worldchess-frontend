@@ -1,0 +1,19 @@
+@import '../../../../../../html/css/variables.scss';
+@import '../../../../../../html/css/media.scss';
+@import '../../../../../../html/css/title.scss';
+
+:host {
+  display: block;
+  padding: 16px 25px;
+  min-height: 130px;
+}
+
+h1.wc-title {
+  display: block;
+}
+
+.wc-title {
+  &__time {
+    display: inline;
+  }
+}

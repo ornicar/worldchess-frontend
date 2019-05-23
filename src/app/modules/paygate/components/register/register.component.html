@@ -1,0 +1,62 @@
+<wc-preloader *ngIf="loading$ | async"></wc-preloader>
+
+<form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!(loading$ | async)" class="register">
+  <a class="register__close" (click)="closePopup()"></a>
+  <div class="register__title">
+    Create a free account and join World Chess
+    <p *ngIf="product$ | async">
+      Already have an account? <span class="nobr"><a (click)="goToLogin()">Log in</a>!</span>
+    </p>
+  </div>
+  <div class="register__labels">
+    <label class="input-text">
+      <div class="input-text__wparrer">
+        <input
+          class="input-text__elem"
+          [class.input-text__elem--active]="!!form.controls['full_name'].value"
+          type="text"
+          formControlName="full_name"
+        />
+        <div class="input-text__placeholder">Name</div>
+      </div>
+      <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+        <div [hidden]="!errors?.full_name?.required">Full name is required.</div>
+        <div [hidden]="!errors?.full_name?.response">{{ errors?.full_name?.response }}</div>
+      </div>
+    </label>
+
+    <label class="input-text__input">
+      <div class="input-text__wparrer">
+        <input
+          class="input-text__elem"
+          [class.input-text__elem--active]="!!form.controls['email'].value"
+          type="email"
+          formControlName="email"
+        />
+        <div class="input-text__placeholder">Email</div>
+      </div>
+      <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+        <div [hidden]="!errors?.email?.required">Email is required.</div>
+        <div [hidden]="!errors?.email?.email">Email is invalid.</div>
+        <div [hidden]="!errors?.email?.response">{{ errors?.email?.response }}</div>
+      </div>
+    </label>
+  </div>
+  <div class="register__footer">
+    <div class="register__footer-coll">
+      <div class="register__footer-text">
+        By creating your account, you agree to our
+        <a target="_blank" href="https://worldchess.com/assets/docs/terms-of-use.pdf">Terms and Conditions</a> &
+        <a target="_blank" href="https://worldchess.com/assets/docs/privacy-policy.pdf"
+          >Privacy Policy & Cookie Statement</a
+        >.
+      </div>
+    </div>
+
+    <div class="register__footer-coll">
+      <button class="register__btn" type="submit">
+        become a member
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,49 @@
+.rounds-form {
+  &__round {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #7bcffb;
+    margin-bottom: 20px;
+  }
+
+  &__round-form,
+  &__round-form-time-control {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    label {
+
+      span {
+
+      }
+    }
+  }
+
+  &__group-name {
+    margin-top: 25px;
+  }
+
+  &__row {
+    margin-top: 20px;
+  }
+
+  &__label {
+    display: inline-block;
+    width: 200px;
+    margin-right: 10px;
+  }
+
+  &__input {
+    height: 22px;
+    border: 1px solid #9e9e9e;
+    width: 200px;
+    outline: none;
+    margin-right: 10px;
+  }
+}
+
+.text-button {
+  cursor: pointer;
+  display: inline-block;
+}

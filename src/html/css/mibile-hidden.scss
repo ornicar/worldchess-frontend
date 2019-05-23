@@ -1,0 +1,5 @@
+.mibile-hidden {
+    @include phones() {
+        display: none;
+    }   
+}

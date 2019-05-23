@@ -1,0 +1,44 @@
+@import 'variables';
+@import 'media';
+
+.nav {
+  display: flex;
+  padding: 25px 25px 12px;
+  @include tablets() {
+    padding: 25px 25px 0;
+  }
+  @include phones-small() {
+    padding: 25px 25px 15px;
+  }
+}
+
+.nav__elem {
+  margin-right: 35px;
+  @include tablets() {
+    margin-right: 15px;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.nav__link {
+  font: 300 22px/41px $gerbera-font;
+  color: #000;
+  display: flex;
+  padding: 8px 25px;
+  border-radius: 4px;
+  @include tablets() {
+    font: 300 18px/40px $gerbera-font;
+    padding: 0 14px;
+  }
+
+  &:hover {
+    background-color: rgba(#fff, 0.35);
+  }
+
+  &.active {
+    background-color: #fff;
+  }
+}

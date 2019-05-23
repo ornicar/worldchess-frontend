@@ -1,0 +1,23 @@
+<div
+  class="livestream-camera-list"
+  (click)="toggleList()"
+  [class.opened]="isOpened"
+  [class.livestream-main]="main"
+>
+  <div class="selected">
+    {{ prefix }} {{ getItemLabel(selectedItem) }}
+    <svg class="arrow-down__icon"><use xlink:href="#arrow-down" /></svg>
+  </div>
+  <ul>
+    <li
+      *ngFor="let item of list"
+      (click)="onItemClick($event, item)"
+      [class.active]="isActive(item)"
+    >
+      <span class="livestream-camera-list__item">{{ prefix }} {{ getItemLabel(item) }}</span>
+      <ng-container *ngIf="!item.link_display">
+        <svg class="icon icon-lock"><use xlink:href="#lock" /></svg>
+      </ng-container>
+    </li>
+  </ul>
+</div>

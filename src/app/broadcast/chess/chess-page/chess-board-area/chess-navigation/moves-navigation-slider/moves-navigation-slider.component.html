@@ -1,0 +1,29 @@
+<div class="chess-timeline">
+  <div class="chess-timeline__slider"
+       [ngClass]="{
+         'chess-timeline__slider--live': value === max && isLive,
+         'chess-timeline__slider--position-white': selectedMove?.is_white_move,
+         'chess-timeline__slider--position-black': !selectedMove?.is_white_move
+       }">
+    <nouislider
+      *ngIf="max"
+      [ngModel]="value"
+      [tooltips]="currentPositionFormatter"
+      [behaviour]="'none'"
+      [min]="0"
+      [max]="max"
+      [step]="1"
+      [animate]="!isLive"
+      (change)="onSliderChange($event)">
+    </nouislider>
+    <ng-container *ngIf="max && isLive">
+      <div class="chess-timeline__live-text" (click)="onLiveClick()">LIVE</div>
+      <div class="chess-timeline__live-circle"></div>
+      <div #livePosition
+           class="chess-timeline__live-position"
+           [style.opacity]="isShowLiveNumberTooltip ? 1 : 0">
+        {{ currentPositionFormatter.to(max) }}
+      </div>
+    </ng-container>
+  </div>
+</div>

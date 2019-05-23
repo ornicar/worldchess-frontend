@@ -1,0 +1,11 @@
+<wc-chess-board
+  [viewMode]="viewMode"
+  [bottomPlayerColor]="bottomPlayerColor$ | async"
+  [canMove]="canMove$ | async"
+  [canCompleteMove]="canCompleteMove$ | async"
+  [board]="board$ | async"
+  [position]="position$ | async"
+  (moveCompleted)="onMoveCompleted($event)"
+  (moveCancelled)="onMoveCancelled()"
+>
+</wc-chess-board>

@@ -1,0 +1,67 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+
+.chess-footer {
+  margin: 0 auto;
+  position: relative;
+  min-width: 320px;
+  width: 100%;
+
+  &--flex {
+    display: flex;
+
+    @include phones() {
+      flex-direction: column;
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); 
+  }
+}
+
+.footer-tabs {
+  background-color: #fff;
+
+  &__list {
+      display: flex;
+      overflow-y: auto;
+  }
+
+  &__elem {
+    cursor: pointer;
+      &--active,
+      &:hover {
+          .footer-tabs__link {
+              color: #000;
+          }
+      }
+
+      &:last-child {
+        padding-right: 50px;
+      }
+  }
+
+  &__link {
+      display: flex;
+      align-items: center;
+      min-height: 60px;
+      padding: 14px 28px;
+      color: $gray-dark;
+      transition: 0.3s;
+      font: 400 22px/32px $gerbera-font;
+
+      @include phones() {
+        min-height: 55px;
+        padding: 14px 10px;
+        font: 400 22px/22px $gerbera-font;
+      }
+  }
+}

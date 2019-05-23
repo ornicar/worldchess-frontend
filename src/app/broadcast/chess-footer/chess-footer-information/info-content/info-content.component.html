@@ -1,0 +1,39 @@
+<div class="content-text"
+     [class.empty-tabs]="(tabs$ | async).length === 0">
+  <div class="content-text__aside">
+    <ul class="content-text__menu" *ngIf="tabs$ | async as tabs">
+      <li class="content-text__menu-elem"
+          *ngFor="let tab of tabs"
+          (click)="selectContentTab(tab)">
+      <span class="content-text__menu-link"
+            [class.content-text__menu-link--active]="isActive(tab)">{{tabsTitle[tab]}}</span>
+      </li>
+    </ul>
+  </div>
+  <div class="content-text__main">
+    <p [innerHtml]="(content$ | async) | wcSanitizeHtml"></p>
+    <!-- <div class="social-link">
+      <div class="social-link__text">
+        More on:
+      </div>
+      <ul class="social-link__list">
+        <li class="social-link__elem">
+          <a target="_blank" href="https://twitter.com/theworldchess" class="social-link__link">
+            <img class="social-link__icon" src="/assets/img/icon-twitter.svg" alt="twitter">
+          </a>
+        </li>
+        <li class="social-link__elem">
+          <a target="_blank" href="https://www.facebook.com/theworldchess" class="social-link__link">
+            <img class="social-link__icon" src="/assets/img/icon-facebook.svg" alt="facebook">
+          </a>
+        </li>
+        <li class="social-link__elem">
+          <a target="_blank" href="https://www.instagram.com/theworldchess" class="social-link__link">
+            <img class="social-link__icon" src="/assets/img/icon-instagram.svg" alt="instagram">
+          </a>
+        </li>
+      </ul>
+    </div> -->
+  </div>
+</div>
+

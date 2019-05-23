@@ -1,0 +1,45 @@
+<div class="chess-footer">
+  <ul class="footer-tabs">
+    <ul class="footer-tabs__list">
+      <li *ngFor="let tab of tabs" class="footer-tabs__elem" [class.footer-tabs__elem--active]="activeTab===tab.value">
+        <span (click)="setActiveTab(tab.value)" class="footer-tabs__link">
+          {{tab.title}}
+        </span>
+      </li>
+    </ul>
+  </ul>
+</div>
+
+<ng-container *ngIf="tournament && tabs.length > 0">
+  <wc-chess-footer-news
+    *ngIf="activeTab === 'news'"
+    [tournament]="tournament"
+    class="footer-tabs__tab" (changeTab)="setActiveTab($event)">
+  </wc-chess-footer-news>
+
+  <wc-chess-footer-information
+    *ngIf="activeTab === 'information'"
+    [tournament]="tournament"
+    class="footer-tabs__tab" (changeTab)="setActiveTab($event)">
+  </wc-chess-footer-information>
+
+  <wc-chess-footer-media
+    *ngIf="activeTab === 'media'"
+    [tournament]="tournament"
+    class="footer-tabs__tab" (changeTab)="setActiveTab($event)">
+  </wc-chess-footer-media>
+
+  <wc-chess-footer-results
+    *ngIf="activeTab === 'results'"
+    [tournament]="tournament"
+    [tour]="tour"
+    class="footer-tabs__tab" (changeTab)="setActiveTab($event)">
+  </wc-chess-footer-results>
+
+  <wc-chess-footer-players
+    *ngIf="activeTab === 'players'"
+    [tournament]="tournament"
+    class="footer-tabs__tab" (changeTab)="setActiveTab($event)">
+  ></wc-chess-footer-players>
+</ng-container>
+

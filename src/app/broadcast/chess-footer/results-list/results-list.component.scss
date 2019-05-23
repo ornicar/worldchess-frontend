@@ -1,0 +1,304 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+
+$rapidColor: #59F19B;
+$blitzColor: #7701ff;
+$armageddonColor: #FF3828;
+
+:host {
+  width: 100%;
+  height: 150px;
+  background-color: #f6f6f6;
+  height: 326px;
+  padding: 55px 0;
+  @include tablets-big() {
+    height: 267px;
+    padding: 40px 0;
+  }
+  @include phones() {
+    height: 234px;
+    padding: 20px 0;
+  }
+}
+
+.results-info {
+  display: flex;
+  font: 300 22px/29px $gerbera-font;
+  @include tablets-big() {
+    font: 300 18px/22px $gerbera-font;
+  }
+
+  &__numbers {
+    position: absolute;
+    top: -40px;
+    height: 5px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+
+    &--rapid {
+      border-top: 1px solid $red;
+      border-left: 1px solid $red;
+      border-right: 1px solid $red;
+    }
+
+    &--blitz {
+      border-top: 1px solid $blitzColor;
+      border-left: 1px solid $blitzColor;
+    }
+
+    &--armageddon {
+      border-top: 1px solid $armageddonColor;
+      border-left: 1px solid $armageddonColor;
+    }
+  }
+
+  &__numbers-list {
+    display: flex;
+    position: relative;
+    top: 14px;
+  }
+
+  &__section-title {
+    position: absolute;
+    width: 100%;
+    top: 33px;
+    padding: 10px 20px;
+    color: #9E9E9E;
+    font: 300 18px/18px $gerbera-font;
+    @include tablets-big() {
+      font: 300 15px/22px $gerbera-font;
+    }
+    @include phones() {
+      padding: 0 20px;
+    }
+
+    &--inner {
+      top: -42px;
+      color: #4A4A4A;
+      text-align: center;
+      @include phones() {
+        top: -37px;
+      }
+    }
+
+    &--rapid {
+      color: $red;
+    }
+
+    &--blitz {
+      color: $blitzColor;
+    }
+
+    &--armageddon {
+      color: $armageddonColor;
+    }
+  }
+
+  &__number {
+    min-width: 75px;
+    text-align: center;
+    color: #9E9E9E;
+    font: 300 18px/24px $gerbera-font;
+    @include tablets-big() {
+      min-width: 75px;
+      font: 300 15px/20px $gerbera-font;
+    }
+    @include laptop() {
+      min-width: 54px;
+      font: 300 15px/20px $gerbera-font;
+    }
+  }
+
+  &__games {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 70px;
+    @include tablets-big() {
+      height: 191px;
+    }
+  }
+
+  &__scores-list {
+    display: flex;
+    position: relative;
+  }
+
+  &__scores-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    line-height: 50px;
+    width: 75px;
+    height: 69px;
+    text-align: center;
+    background-color: white;
+    min-width: 75px;
+    max-width: 75px;
+    font: 300 15px/15px $gerbera-font;
+
+    @include tablets-big() {
+      width: 75px;
+      height: 52px;
+      min-width: 75px;
+      max-width: 75px;
+    }
+    @include laptop() {
+      width: 54px;
+      height: 52px;
+      min-width: 54px;
+      max-width: 54px;
+    }
+
+    &--black {
+      background-color: black;
+      color: white;
+
+      &.results-info__scores-item--gray {
+        background-color: rgb(190, 190, 190);
+        color: white;
+      }
+    }
+  }
+
+  &__players-list {
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: flex-start;
+    padding-top: 70px;
+    @include tablets-big() {
+      height: 191px;
+    }
+
+    .results-info__section-title {
+      @include phones() {
+        display: none;
+      }
+    }
+  }
+
+  &__player {
+    height: 69px;
+    width: 617px;
+    display: flex;
+    border-top: 1px solid #9E9E9E;
+    @include tablets-big() {
+      height: 52px;
+      width: 424px;
+    }
+
+    &:last-of-type {
+      border-bottom: 1px solid #9E9E9E;
+    }
+    @include phones() {
+      width: 50px;
+    }
+  }
+
+  &__player-name {
+    display: flex;
+    align-items: center;
+    width: 419px;
+    height: 69px;
+    padding: 20px;
+    @include tablets-big() {
+      width: 322px;
+      height: 52px;
+    }
+
+    & wc-country-flag {
+      position: relative;
+      width: 23px;
+      height: 15px;
+      margin-right: 20px;
+    }
+    @include phones() {
+      display: none;
+    }
+  }
+
+  &__player-name-mobile {
+    text-align: center;
+    width: 50px;
+    display: none;
+    @include phones() {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &__player-rating {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-left: 1px solid #9E9E9E;
+    border-right: 0;
+    width: 198px;
+    text-align: center;
+    border-bottom: none;
+    padding: 0 20px;
+    @include phones() {
+      display: none;
+    }
+  }
+
+  &__sums-list {
+    position: relative;
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 70px;
+    @include tablets-big() {
+      height: 191px;
+    }
+
+    .results-info__section-title {
+      text-align: center;
+    }
+    @include phones() {
+      min-width: 54px;
+    }
+
+  }
+
+  &__sum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 69px;
+    width: 179px;
+    line-height: 50px;
+    text-align: center;
+    border: 1px solid #9E9E9E;
+    background-color: #59F19B;
+    border-bottom: none;
+    @include tablets-big() {
+      height: 52px;
+      width: 133px;
+    }
+    @include phones() {
+      width: 54px;
+    }
+
+    &:last-of-type {
+      border-bottom: 1px solid #9E9E9E;
+    }
+
+    &--new {
+      background-color: #4FC2FF;
+    }
+
+    &--ended {
+      background-color: #866549;
+    }
+  }
+}

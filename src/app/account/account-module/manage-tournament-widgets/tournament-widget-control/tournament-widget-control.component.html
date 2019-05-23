@@ -1,0 +1,13 @@
+<div class="widget-control">
+  <div *ngIf="widgetForm"
+        [formGroup]="widgetForm"></div>
+  <div>
+    <select [formControl]="widgetForm.controls['tour']">
+      <option [ngValue]="null" disabled selected>Choose tour</option>
+      <option *ngFor="let tour of tours" [ngValue]="tour.id">
+        {{ tour.tour_number }}&nbsp;
+        ({{tour.datetime_of_round | date : 'MMMM d y'}} - {{tour.datetime_of_round_finish | date : 'MMMM d y'}})
+      </option>
+    </select>
+  </div>
+</div>

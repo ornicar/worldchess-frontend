@@ -1,0 +1,85 @@
+<div
+  *ngIf="isMobile"
+  (swiperight)="onSwipeRight()"
+  (swipeleft)="onSwipeLeft()"
+  class="mobile-carousel">
+  <div
+    *ngIf="currentBoardIdx > 0"
+    class="arrow-left"
+    >
+    <svg class="icon"><use xlink:href="#arrow-down" /></svg>
+  </div>
+  <wc-chess-board-grid-item
+    *ngFor="let board of (filteredBoards$ | async); trackBy: trackByBoard; let idx = index;"
+    [class.active]="currentBoardIdx === idx"
+    [ngClass]="isSlideLeft ? 'slide-left' : 'slide-right'"
+    [viewMode]="viewModes[activeViewModeIndex]"
+    [tournament]="tournament"
+    [board]="board"
+    [isSelected]="board.id === choseGameId"
+    [class.selected]="board.id === choseGameId"
+    (click)="onChildGameClick($event, board)"
+  >
+  </wc-chess-board-grid-item>
+  <div
+    *ngIf="!isLastBoard"
+    class="arrow-right"
+    >
+    <svg class="icon"><use xlink:href="#arrow-down" /></svg>
+  </div>
+</div>
+
+<wc-drag-scroll
+  #drag
+  *ngIf="!isMobile"
+  [dragDisabled]="!enableDragScroll"
+  [dragScrollYDisabled]="true"
+  (dragScrollStatus)="onDragScrollStatusChange($event)"
+  wcHideScrollbar
+  [wcHideScrollbarType]="'horizontal'"
+>
+  <virtual-scroller
+    [parentScroll]="drag.elementRef.nativeElement"
+    [horizontal]="true"
+    [modifyOverflowStyleOfParentScroll]="false"
+    [items]="filteredBoards$ | async"
+    (vsUpdate)="boardsList = $event"
+  >
+    <div class="board-grid" #container>
+      <wc-chess-board-grid-item
+        *ngFor="let board of boardsList; trackBy: trackByBoard"
+        [viewMode]="viewModes[activeViewModeIndex]"
+        [tournament]="tournament"
+        [board]="board"
+        [isSelected]="board.id === choseGameId"
+        [class.selected]="board.id === choseGameId"
+        (click)="onChildGameClick($event, board)"
+      >
+      </wc-chess-board-grid-item>
+    </div>
+  </virtual-scroller>
+</wc-drag-scroll>
+
+<div class="controls">
+  <ng-container *ngIf="filtersStatus$ | async as filtersStatus">
+    <wc-game-favorite-icon
+      *ngIf="canUseFavorites$ | async"
+      [fill]="true"
+      [checked]="filtersStatus.onlyFavorites"
+      (click)="changeFilterFavorites(!filtersStatus.onlyFavorites)"
+    >
+    </wc-game-favorite-icon>
+  </ng-container>
+
+  <div *ngIf="!isMobile" class="size-controls">
+    <div class="size-controls__slider">
+      <div class="size-controls__slider-circle" style="top: 50%;"></div>
+    </div>
+    <button type="button" class="size-controls__prev" (click)="onNextViewMode()" [disabled]="isNextViewModeDisables">
+        <svg class="icon"><use xlink:href="#minus" /></svg>
+    </button>
+    <button type="button" class="size-controls__next" (click)="onPrevViewMode()" [disabled]="isPrevViewModeDisables">
+        <svg class="icon"><use xlink:href="#plus" /></svg>
+    </button>
+  </div>
+</div>

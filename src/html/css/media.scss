@@ -1,0 +1,64 @@
+
+@mixin tablets-big {
+	@media screen and (max-width: $tablets-big) {
+		@content;
+	}
+}
+
+@mixin laptop {
+	@media screen and (max-width: $laptop) {
+		@content;
+	}
+}
+
+@mixin tablets {
+	@media screen and (max-width: $tablets) {
+		@content;
+	}
+}
+
+@mixin ipad {
+	@media screen and (max-width: $ipad) {
+		@content;
+	}
+}
+
+@mixin phones-big {
+	@media screen and (max-width: $phones-big) {
+		@content;
+	}
+}
+
+@mixin phones {
+	@media screen and (max-width: $phones) {
+		@content;
+	}
+}
+
+@mixin phones-medium {
+	@media screen and (max-width: $phones-medium) {
+		@content;
+	}
+}
+
+@mixin phones-small {
+	@media screen and (max-width: $phones-small) {
+		@content;
+	}
+}
+
+@mixin portrait {
+  @media screen and (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin phones-landscape {
+  @media screen and (orientation: landscape) and (max-width: $ipad) {
+    @content;
+  }
+}
+
+// @include screen-size-desktop() {
+//	...
+// }

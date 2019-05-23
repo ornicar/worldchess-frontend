@@ -1,0 +1,254 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="register">
+  <ng-container *ngIf="step === 1" formGroupName="step1">
+    <a class="register__close" (click)="closePopup()"></a>
+    <div class="register__title">
+      Fill in your information, we’ll send it to FIDE
+    </div>
+    <div class="register__labels">
+      <div class="input-text">
+        <div class="input-text__row">
+          <div class="input-text__col">
+            <label class="input-text__input">
+              <div class="input-text__wparrer">
+                <input
+                  class="input-text__elem"
+                  [class.input-text__elem--active]="!!form.controls['step1'].controls['full_name'].value"
+                  type="text"
+                  formControlName="full_name"
+                />
+                <div class="input-text__placeholder">Full name</div>
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.full_name?.required">Invalid full name</div>
+                <div [hidden]="!errors?.full_name?.response">{{ errors?.full_name?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="input-text__row">
+          <div class="input-text__col">
+            <label class="input-text__input">
+              <div class="input-text__wparrer">
+                <input
+                  class="input-text__elem"
+                  [class.input-text__elem--active]="!!form.controls['step1'].controls['fide_id'].value"
+                  type="text"
+                  formControlName="fide_id"
+                />
+                <div class="input-text__placeholder">
+                  FIDE ID<span class="input-text__placeholder--additional">(optional)</span>
+                </div>
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.fide_id?.required">Invalid last name</div>
+                <div [hidden]="!errors?.fide_id?.response">{{ errors?.fide_id?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="input-text__row">
+          <div class="input-text__col">
+            <div class="date-of-birth">
+              <div class="date-of-birth__text">Date of birth</div>
+              <div class="date-of-birth__inputs">
+                <input
+                  type="text"
+                  (change)="onDateChanged()"
+                  placeholder="DD"
+                  #birthdate_day
+                  class="date-of-birth__input"
+                  mask="00"
+                />
+                /
+                <input
+                  type="text"
+                  (change)="onDateChanged()"
+                  placeholder="MM"
+                  #birthdate_month
+                  class="date-of-birth__input"
+                  mask="00"
+                />
+                /
+                <input
+                  type="text"
+                  (change)="onDateChanged()"
+                  placeholder="YYYY"
+                  #birthdate_year
+                  class="date-of-birth__input"
+                  mask="0000"
+                />
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.date_of_birth?.required">Invalid date of birth</div>
+                <div [hidden]="!errors?.date_of_birth?.response">{{ errors?.date_of_birth?.response }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="input-text__col">
+            <div class="gender">
+              <div class="gender__text">Gender</div>
+              <div class="gender__radio">
+                <label class="register-radio">
+                  <input
+                    type="radio"
+                    formControlName="gender"
+                    value="female"
+                    name="gender"
+                    class="register-radio__input"
+                  />
+                  <div class="register-radio__content">
+                    <div class="register-radio__btn"></div>
+                    <div class="register-radio__text">F<span>emale</span></div>
+                  </div>
+                </label>
+                <label class="register-radio">
+                  <input
+                    type="radio"
+                    formControlName="gender"
+                    value="male"
+                    name="gender"
+                    class="register-radio__input"
+                  />
+                  <div class="register-radio__content">
+                    <div class="register-radio__btn"></div>
+                    <div class="register-radio__text">M<span>ale</span></div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-text__row">
+          <div class="input-text__col">
+            <label class="input-text__input">
+              <div class="input-text__wparrer">
+                <input
+                  class="input-text__elem"
+                  [class.input-text__elem--active]="!!form.controls['step1'].controls['place_of_birth'].value"
+                  type="text"
+                  formControlName="place_of_birth"
+                />
+                <div class="input-text__placeholder">Place of birth</div>
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.place_of_birth?.required">Invalid place of birth</div>
+                <div [hidden]="!errors?.place_of_birth?.response">{{ errors?.place_of_birth?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="input-text__row">
+          <div class="input-text__col" *ngIf="countries$ | async as countries">
+            <label class="input-text__input">
+              <app-select-input
+                label="Nationality"
+                [control]="form.controls['step1'].controls['nationality']"
+                [options]="countries"
+              ></app-select-input>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.nationality?.required">Invalid nationality</div>
+                <div [hidden]="!errors?.nationality?.response">{{ errors?.nationality?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="register__footer">
+      <div class="register__footer-coll">
+        <div class="register__steps">step <span>2 of 3</span></div>
+        <div class="navigation">
+          <button class="navigation__btn" (click)="goToStep(2)">
+            next
+            <svg class="icon">
+              <use xlink:href="#arrow-right"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="step === 2" formGroupName="step2">
+    <a class="register__close" (click)="closePopup()"></a>
+    <div class="register__title">
+      Fill in your information, we’ll send it to FIDE
+    </div>
+    <div class="register__labels">
+      <div class="input-text">
+        <div class="input-text__row">
+          <div class="input-text__col" *ngIf="countries$ | async as countries">
+            <label class="input-text__input">
+              <app-select-input
+                label="Federation"
+                [control]="form.controls['step2'].controls['federation']"
+                [options]="countries"
+              ></app-select-input>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.federation?.required">Invalid federation</div>
+                <div [hidden]="!errors?.federation?.response">{{ errors?.federation?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="input-text__row">
+          <div class="input-text__col">
+            <label class="input-text__input">
+              <div class="input-text__wparrer">
+                <input
+                  class="input-text__elem"
+                  [class.input-text__elem--active]="!!form.controls['step2'].controls['email'].value"
+                  type="text"
+                  formControlName="email"
+                />
+                <div class="input-text__placeholder">Your email</div>
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.email?.required">Your email</div>
+                <div [hidden]="!errors?.email?.response">{{ errors?.email?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="input-text__row">
+          <div class="input-text__col">
+            <label>
+              <input (change)="onFileChanged($event)" type="file" style="display: none" />
+              <img class="photo-preview" *ngIf="preview" [src]="preview" />
+              <div class="your-photo" *ngIf="!preview">
+                <div class="your-photo__text">Your photo</div>
+                <div class="your-photo__icon">
+                  <svg class="icon">
+                    <use xlink:href="#media-horse"></use>
+                  </svg>
+                </div>
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.photo?.required">Please upload your photo</div>
+                <div [hidden]="!errors?.photo?.response">{{ errors?.photo?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="register__footer">
+      <div class="register__footer-coll">
+        <div class="navigation navigation--flex-start">
+          <button class="navigation__btn" (click)="goToStep(1)">
+            <svg class="icon">
+              <use xlink:href="#arrow-left"></use>
+            </svg>
+            back
+          </button>
+        </div>
+      </div>
+      <div class="register__footer-coll">
+        <div class="register__steps">step <span>2 of 3</span></div>
+        <button class="register__btn" type="submit">send to FIDE</button>
+      </div>
+    </div>
+  </ng-container>
+</form>

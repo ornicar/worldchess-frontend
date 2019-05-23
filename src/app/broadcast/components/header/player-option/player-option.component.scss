@@ -1,0 +1,10 @@
+@import '../../../../../html/css/variables.scss';
+@import '../../../../../html/css/media.scss';
+
+.player-name {
+  font: inherit;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}

@@ -1,0 +1,41 @@
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+:host {
+  font: 400 18px/23px $gerbera-font;
+  color: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-right: 16px;
+    border: 10px solid #5E5E5E;
+    border-radius: 50%;
+  }
+}
+
+:host(.state--starts:before) {
+  border-color: #7BCFFB;
+}
+
+:host(.state--webcast:before) {
+  border-color: #A88669;
+}
+
+:host(.state--live:before) {
+  border-color: #58F19B;
+}
+
+.start-date {
+  color: #979797;
+  padding: 0 0;
+}
+
+:host-context(wc-header-small) .start-date {
+  color: #FFFFFF;
+}

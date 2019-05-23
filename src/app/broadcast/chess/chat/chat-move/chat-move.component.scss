@@ -1,0 +1,108 @@
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+.chat__move {
+  height: 68px;
+  margin-left: -8px;
+  padding: 0 11px 0 15px;
+
+  &.black-move {
+    color: #6c6c6c;
+    background-color: #000;
+
+    .chat__move--color {
+      color: #fff;
+    }
+
+    .icon {
+      background-color: #464646;
+    }
+
+    .chat__move--vote-like {
+      .icon {
+        background: #464646 url("/assets/images/chat/like-black.png") no-repeat center;
+      }
+    }
+  }
+
+  &.white-move {
+    color: #222222;
+    background-color: #fff;
+
+    .icon {
+      background-color: #E6E6E6;
+    }
+
+    .chat__move--vote-like {
+      .icon {
+        background: #E6E6E6 url("/assets/images/chat/like-white.png") no-repeat center;
+      }
+    }
+  }
+
+  &--content {
+    display: flex;
+    align-items: center;
+  }
+
+  &--color {
+    flex-grow: 1;
+    font-size: 21px;
+    white-space: nowrap;
+  }
+
+  &--vote {
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+
+    & > span {
+      display: flex;
+      align-items: center;
+    }
+
+    .icon {
+      width: 33px;
+      height: 33px;
+      border-radius: 100%;
+      background-color: rgba(82, 82, 82, 0.55);
+      cursor: pointer;
+
+      &.disabled {
+        cursor: default;
+      }
+    }
+
+    .count {
+      font-size: 11px;
+      display: inline-block;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    &-dislike {
+      .icon {
+        background: url("/assets/images/chat/dislike.png") no-repeat center;
+      }
+    }
+  }
+
+  &--header {
+    display: inline-block;
+    width: 100%;
+    line-height: 10px;
+    font-size: 10px;
+
+    &-number {
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    &-time {
+      max-width: 30px;
+      float: right;
+      margin-left: -30px;
+      white-space: nowrap;
+    }
+  }
+}

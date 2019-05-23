@@ -1,0 +1,122 @@
+@import '../html/css/media.scss';
+@import "../html/css/variables";
+
+:host {
+  display: block;
+}
+
+.livestream-camera-list {
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  font-size: 14px;
+  font-weight: lighter;
+
+  .selected {
+    padding: 6px 8px;
+    cursor: pointer;
+  }
+
+  .arrow-down__icon {
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    color: #fff;
+    stroke: #fff;
+    transition: transform 0.18s ease-in;
+  }
+
+  ul {
+    background-color: $black-bg;
+    display: none;
+    list-style: none;
+
+
+    li {
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex: 1;
+
+      &:hover {
+        background: darken($black-bg, 5%);
+      }
+
+      &.active {
+        color: #59f19b;
+      }
+
+      .livestream-camera-list__item {
+        flex-grow: 1;
+      }
+
+      .icon-lock {
+        max-width: 16px;
+        max-height: 16px;
+        margin-left: 6px;
+      }
+    }
+  }
+
+  &.opened {
+    @include phones() {
+      flex-flow: column-reverse;
+    }
+
+    .arrow-down__icon {
+      transform: rotate(180deg);
+    }
+
+    ul {
+      display: block;
+
+      @include phones() {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+    }
+  }
+
+  &.livestream-main {
+    flex-flow: column-reverse;
+
+    ul {
+      li {
+        background-color: #58ef99;
+        color: #000;
+
+        &:hover {
+          background-color: darken(#58ef99, 5%);
+        }
+
+        &.active {
+          color: #fff;
+        }
+      }
+
+
+    }
+
+    .arrow-down__icon {
+      transform: rotate(180deg);
+      color: #000;
+      stroke: #000;
+
+      @include phones() {
+        transform: rotate(0);
+      }
+    }
+
+    &.opened {
+      .arrow-down__icon {
+        transform: rotate(0);
+
+        @include phones() {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}

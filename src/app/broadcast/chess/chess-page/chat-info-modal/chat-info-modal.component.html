@@ -1,0 +1,13 @@
+<div class="chat-info">
+  <div class="chat-info__title"
+    [ngSwitch]="(type$ | async)">
+    <span *ngSwitchCase="ChatInfoModalTypes.BANNED">Banned!</span>
+    <span *ngSwitchCase="ChatInfoModalTypes.RESTRICTED">Restricted!</span>
+  </div>
+
+  <div class="chat-info__close" (click)="closeModal()"></div>
+
+  <div class="chat-info__content">
+    {{ detail$ | async }}
+  </div>
+</div>

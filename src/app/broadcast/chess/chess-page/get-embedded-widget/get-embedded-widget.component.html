@@ -1,0 +1,127 @@
+<div class="get-embedded-widget">
+  <div class="get-embedded-widget__title">
+    Embedding options
+  </div>
+
+  <div class="get-embedded-widget__close" (click)="closeModal()"></div>
+
+  <div class="get-embedded-widget__content">
+    <div class="get-embedded-widget__row">
+      <div class="get-embedded-widget__sub-title">
+        Choose game
+      </div>
+      <div class="get-embedded-widget__fields">
+        <div class="get-embedded-widget__selects">
+          <select
+            class="select"
+            name="tour"
+            [ngModel]="tour"
+            (ngModelChange)="changeTour($event)"
+            [disabled]="wholeTournament"
+          >
+            <option *ngFor="let tour of tours$ | async" [ngValue]="tour"> Round {{ tour.tour_number }} </option>
+          </select>
+
+          <select
+            class="select"
+            name="board"
+            [(ngModel)]="boardId"
+            [disabled]="wholeTournament || (boards$ | async)?.length === 0"
+          >
+            <option *ngFor="let board of boards$ | async" [ngValue]="board.id">
+              {{ getPlayersName(board) }}
+            </option>
+          </select>
+        </div>
+        <label class="checkbox">
+          <input class="checkbox__input" type="checkbox" [(ngModel)]="wholeTournament" />
+          <div class="checkbox__btn">
+            <svg class="icon">
+              <use xlink:href="#check"></use>
+            </svg>
+          </div>
+          whole <br />
+          tournament
+        </label>
+      </div>
+    </div>
+
+    <div class="get-embedded-widget__row">
+      <div class="get-embedded-widget__sub-title">
+        Choose widget size
+      </div>
+      <div class="get-embedded-widget__fields">
+        <div class="size-options">
+          <div
+            class="size-option"
+            [class.size-option--selected]="selectedSize === Size.Full"
+            (click)="selectedSize = Size.Full"
+          >
+            <div class="size-option__title">Full width (980px)</div>
+            <div class="size-option__image">
+              <img src="../../../../../assets/images/board/board1.png" alt="board" />
+            </div>
+          </div>
+          <div
+            class="size-option"
+            [class.size-option--selected]="selectedSize === Size.Narrow"
+            (click)="selectedSize = Size.Narrow"
+          >
+            <div class="size-option__title">Narrow (580px)</div>
+            <div class="size-option__image">
+              <img src="../../../../../assets/images/board/board2.png" alt="board" />
+            </div>
+          </div>
+          <div
+            class="size-option"
+            [class.size-option--selected]="selectedSize === Size.Responsive"
+            (click)="selectedSize = Size.Responsive"
+          >
+            <div class="size-option__title">Narrow-Responsive</div>
+            <div class="size-option__image">
+              <img src="../../../../../assets/images/board/board3.png" alt="board" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="get-embedded-widget__row-col get-embedded-widget__row-col--mobile">
+      <div class="get-embedded-widget__row get-embedded-widget__row--mobile">
+        <div class="get-embedded-widget__sub-title">
+          Choose color theme
+        </div>
+        <div class="get-embedded-widget__fields">
+          <div class="color-options">
+            <div
+              class="color-option"
+              [class.color-option--selected]="selectedStyle === Style.Light"
+              (click)="selectedStyle = Style.Light"
+            >
+              <div class="color-option__color"></div>
+              <div class="color-option__label">light</div>
+            </div>
+            <div
+              class="color-option"
+              [class.color-option--selected]="selectedStyle === Style.Dark"
+              (click)="selectedStyle = Style.Dark"
+            >
+              <div class="color-option__color  color-option__color--black"></div>
+              <div class="color-option__label">dark</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="get-embedded-widget__row get-embedded-widget__row--flex-2">
+        <div class="get-embedded-widget__sub-title">
+          Create embedding URL
+        </div>
+        <div class="get-embedded-widget__fields get-embedded-widget__fields--column">
+          <textarea #iframeCodeEl cols="20" rows="5" class="iframe-code" [ngModel]="iframeCode" readonly></textarea>
+
+          <button class="btn-copy" (click)="copyToClipboard()">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

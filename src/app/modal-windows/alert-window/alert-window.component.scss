@@ -1,0 +1,25 @@
+@import "../../../html/css/variables";
+@import "../../../html/css/media";
+
+p.mat-dialog-title {
+  text-align: center;
+  font: 400 24px/34px $gerbera-font;
+}
+
+div.mat-dialog-content {
+  text-align: center;
+  margin: 60px 0;
+  font-size: 24px;
+}
+
+div.mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+
+  button {
+    background-color: white;
+    padding: 0 25px;
+    box-shadow: 0 0 45px #63FFA4;
+  }
+}

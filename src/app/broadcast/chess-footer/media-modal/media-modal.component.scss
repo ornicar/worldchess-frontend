@@ -1,0 +1,176 @@
+@import '../html/css/media.scss';
+@import '../html/css/variables.scss';
+
+.media-modal {
+
+  &__media-wrapper {
+    height: 80%;
+    width: auto;
+    display: flex;
+    justify-content: center;
+
+    @include phones() {
+      height: 60%;
+    }
+
+    & img {
+      height: 100%;
+      width: auto;
+    }
+
+    &--video {
+      height: 70%;
+      width: 80%;
+      max-width: 1280px;
+      max-height: 768px;
+
+      @include ipad() {
+        height: 40%;
+      }
+
+      @include portrait() {
+        width: 100%;
+      }
+
+      @include phones-landscape() {
+        height: 60%;
+        margin: 10px auto;
+        top: 45px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  &__close-cross {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.4);
+      transition: all 0.3s ease;
+    }
+  }
+
+  &__close {
+    width: 100%;
+    height: 10%;
+
+    @include ipad() {
+      height: 30%;
+    }
+
+  }
+
+  &__control {
+    position: absolute;
+    height: 80%;
+    width: 60px;
+    z-index: 1100;
+    top: 10%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include phones() {
+      height: 60%;
+      top: 20%;
+    }
+
+    &:hover {
+      & .media-modal__control-icon {
+        transition: all 0.3s ease;
+        opacity: 0.5;
+      }
+    }
+
+    &-icon {
+      display: block;
+      width: 4rem;
+      height: 4rem;
+      fill: black;
+      opacity: 0.1;
+      z-index: z-index(base);
+
+      & img {
+        color: black;
+        height: 100%
+      }
+    }
+  }
+
+  &__prev {
+    left: 0;
+  }
+
+  &__prev-icon {
+    & svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__next-icon {
+    & svg {
+      transform: rotate(270deg);
+    }
+  }
+
+  &__next {
+    right: 0;
+  }
+
+  &__footer {
+    width: 100%;
+    height: 10%;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    @include ipad() {
+      height: 30%;
+    }
+  }
+
+  &__caption-title {
+    font-size: 33px;
+    max-width: 100%;
+    margin-left: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 40px;
+    line-height: 1.35;
+
+    @include phones() {
+      font-size: 26px;
+    }
+  }
+
+  &__caption-text {
+    font-size: 22px;
+    max-width: 100%;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 40px;
+    line-height: 1.35;
+
+    @include phones() {
+      font-size: 18px;
+    }
+  }
+
+  &__video {
+    height: 100%;
+    width: 100%;
+  }
+}

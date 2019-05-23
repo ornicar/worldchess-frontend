@@ -1,0 +1,126 @@
+<form *ngIf="form"
+  [formGroup]="form"
+  class="main-form tournament-form">
+
+  <label class="tournament-form__input">
+    <span>Tournament type</span>
+    <select formControlName="tournament_type">
+      <option value="null" disabled selected >Choose tournament type</option>
+      <option *ngFor="let type of tournamentTypes" [ngValue]="type.value">
+        {{ type.title }}
+      </option>
+    </select>
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.status">{{(errors$ | async)?.tournament_type[0]}}
+  </span>
+
+  <label class="tournament-form__input">
+    <span>Tournament name</span>
+    <input type="text" formControlName="title">
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.title">{{(errors$ | async)?.title[0]}}
+  </span>
+
+  <label class="tournament-form__input">
+    <span>Tournament Additional name</span>
+    <input type="text" formControlName="additional_title">
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.additional_title">{{(errors$ | async)?.additional_title[0]}}
+  </span>
+
+  <!-- DATES -->
+  <label class="tournament-form__input">
+    <span>Start:</span>
+    <input type="datetime-local" [value]="getDate('datetime_of_tournament')" formControlName="datetime_of_tournament" placeholder="дд.мм.гг. --:--">
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.datetime_of_tournament">{{(errors$ | async)?.datetime_of_tournament[0]}}
+  </span>
+
+  <label class="tournament-form__input">
+      <span>Finish:</span>
+    <input type="datetime-local" [value]="getDate('datetime_of_finish') "formControlName="datetime_of_finish" placeholder="дд.мм.гг. --:--">
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.datetime_of_finish">{{(errors$ | async)?.datetime_of_finish[0]}}
+  </span>
+
+  <label class="tournament-form__input">
+    <span>Tournament status</span>
+    <select formControlName="status">
+      <option value="null" disabled selected >Choose tournament status</option>
+      <option *ngFor="let status of tournamentStatuses" [ngValue]="status.value">
+        {{ status.title }}
+      </option>
+    </select>
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.status">{{(errors$ | async)?.status[0]}}
+  </span>
+
+  <label class="tournament-form__input">
+    <span>Location</span>
+    <input formControlName="location" type="text">
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.location">{{(errors$ | async)?.location[0]}}
+  </span>
+
+  <label class="tournament-form__input">
+    <span>Prize Fund</span>
+    <input type="number" formControlName="prize_fund">
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.image">{{(errors$ | async)?.prize_fund[0]}}
+  </span>
+
+  <label class="tournament-form__input">
+    <span>Tournament Prize Currency</span>
+    <select formControlName="prize_fund_currency">
+      <option value="null" disabled selected >Choose currency</option>
+      <option *ngFor="let type of tournamentPrizeCurrency" [ngValue]="type.value">
+        {{ type.title }}
+      </option>
+    </select>
+  </label>
+
+  <label class="tournament-form__input">
+    <span>New Image</span>
+    <input type="file" accept="image/*" (change)="onFileLoad($event.target.files)">
+  </label>
+
+  <span class="tournament-form__error"
+    *ngIf="(errors$ | async)?.image">{{(errors$ | async)?.image[0]}}
+  </span>
+
+  <label class="tournament-form__input"
+    *ngIf="getImage()">
+    <a class="btn btn-blue" target="_blank" [href]="getImage()">Open current image in a new page</a>
+  </label>
+</form>
+
+<div class="tournament-form__errors"
+  *ngIf="validationErrors && validationErrors.length">
+  <div class="tournament-form__error" *ngFor="let field of validationErrors">
+    {{field.name}}:
+    <span *ngFor="let error of field.errors">{{error.name}} {{getErrorMessage(error.text)}}  </span>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-blue" (click)="onClose()">Close</button>
+  <button class="btn btn-blue" [disabled]="isSaveDisabled()" *ngIf="ableToSave()"(click)="onSave()">Save</button>
+  <button class="btn btn-blue" [disabled]="!!isNextDisabled" *ngIf="ableToNext()"(click)="onNext()">Next</button>
+  <button class="btn btn-blue" *ngIf="ableToSend()" (click)="onSendToApprove()">Send to approve</button>
+</div>

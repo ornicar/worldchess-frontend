@@ -1,0 +1,161 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #ececec;
+    padding: 25px;
+}
+
+.lazy-load-content {
+    position: relative;
+    padding: 0 25px;
+    flex: 1;
+
+    @include tablets() {
+        display: flex;
+        flex-direction: column;
+        padding: 0 25px;
+    }
+}
+
+.lazy-load-content__img {
+    text-align: center;
+    height: 174px;
+    margin-bottom: 20px;
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    @include tablets() {
+        height: 140px;
+        margin-bottom: 10px;
+    }
+
+    @include phones-small() {
+        display: none;
+    }
+}
+
+.lazy-load-content__text {
+    display: flex;
+    margin: 0 -8px;
+    font: 300 15px/20px $gerbera-font;
+    color: #000;
+    height: 100%;
+    overflow-y: auto;
+
+    @include phones-small() {
+        flex-direction: column;
+    }
+}
+
+.lazy-load-content__text-coll {
+    flex: 1;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+
+    @include tablets() {
+        padding: 0 5px;
+    }
+
+    @include phones-small() {
+        flex: 0 0 auto;
+    }
+
+    p {
+        margin-bottom: 20px;
+
+        @include tablets() {
+            margin-bottom: 7px;
+        }
+    }
+}
+
+.price {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    font: 400 15px/20px $gerbera-font;
+    color: #999;
+    margin-left: auto;
+    flex: 1;
+
+    span {
+        font: 300 33px/41px $gerbera-font;
+        color: #000;
+        margin-right: 10px;
+
+        @include phones-small() {
+            font: 300 27px/41px $gerbera-font;
+        }
+    }
+}
+
+.lazy-load-footer__row {
+    display: flex;
+    align-items: flex-end;
+
+    @include phones-small() {
+        flex-direction: column;
+        padding: 0;
+    }
+}
+
+.logo-block {
+    display: flex;
+    flex: 2;
+
+    .fide-checkbox {
+        display: none;
+    }
+
+    label {
+        display: flex;
+    }
+}
+
+.logo-block__check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 39px;
+    height: 41px;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-right: 15px;
+    padding: 7px;
+    flex: 0 0 auto;
+
+    .icon {
+        fill: #000;
+
+        &.checked {
+            fill: #000;
+        }
+    }
+}
+
+.logo-block__title {
+    div {
+        font: 300 22px/29px $gerbera-font;
+
+        @include tablets() {
+            font: 300 18px/22px $gerbera-font;
+        }
+    }
+
+    a {
+        font: 400 15px/20px $gerbera-font;
+        color: #999;
+
+        @include phones-small() {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,208 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+
+.all-teams {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #fff;
+
+    &__elem {
+        border-top: solid 1px #d2d2d2;
+
+        &:first-child {
+            border-top: 0;
+        }
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 81px;
+        border-bottom: solid 1px #d2d2d2;
+        padding: 17.5px 22.5px;
+    }
+
+    &__body {
+        overflow-y: auto;
+        flex: 1;
+        height: 100%;
+    }
+
+    &__title {
+        color: #9e9e9e;
+        font: 300 33px/48px $gerbera-font;
+    }
+
+    &__close {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 25px;
+        height: 25px;
+
+        &:after,
+        &:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #000;
+            transform: rotate(45deg);
+        }
+
+        &:before {
+            transform: rotate(-45deg)
+        }
+    }
+
+    &__more {
+      position: relative;
+      font-size: 15px;
+      color: #000;
+      padding: 15px 0;
+      text-align: center;
+      cursor: pointer;
+      background-color: #f6f6f6;
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 2;
+
+      &:hover {
+        background-color: white;
+      }
+
+      &:after {
+        content: '';
+        width: 6px;
+        height: 6px;
+        margin-left: 6px;
+        border: solid black;
+        display: inline-block;
+        border-width: 0 1px 1px 0;
+        transform: rotate(-45deg);
+      }
+    }
+
+}
+
+
+.one-team {
+    &__header {
+        border-bottom: solid 1px #d2d2d2;
+        height: 51px;
+        display: flex;
+        align-items: center;
+        padding: 10.6px 17.6px;
+
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        padding: 13px 10px;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 170px;
+        padding: 1px 10px;
+
+        @include phones() {
+          height: auto;
+          flex-direction: row;
+        }
+    }
+
+    &__elem {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        width: 50%;
+        padding: 15px 5px;
+
+        @include phones() {
+          flex: 1 0 auto;
+          min-width: 260px;
+          padding: 15px 10px;
+        }
+    }
+
+    &__number {
+        margin-right: 20px;
+        font: 400 15px/22px $gerbera-font;
+
+        @include phones() {
+          flex: 0 0 auto;
+        }
+    }
+
+    &__photo {
+        overflow: hidden;
+        border-radius: 50%;
+        width: 32.7px;
+        height: 32.7px;
+        background-color: #d8d8d8;
+        margin-right: 25px;
+        flex: 0 0 auto;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__name {
+        margin-right: 15px;
+        font: 300 22px/32px $gerbera-font;
+
+        @include phones() {
+          flex: 0 0 auto;
+        }
+    }
+
+    &__fm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 5px;
+        height: 17.2px;
+        background-color: #333333;
+        color: #fff;
+        margin-right: 7px;
+        font: 700 11px/16px $gerbera-font;
+
+        @include phones() {
+          flex: 0 0 auto;
+        }
+    }
+
+    &__year {
+        font: 700 11px/16px $gerbera-font;
+
+        @include phones() {
+          flex: 0 0 auto;
+        }
+    }
+
+    &__flag {
+        margin-right: 15px;
+        img {
+            display: block;
+        }
+    }
+
+    &__country {
+        margin-right: 20px;
+        white-space: nowrap;
+        font: 400 22px/32px $gerbera-font;
+    }
+
+    &__country-reduction {
+        margin-right: 70px;
+        font: 400 11px/16px $gerbera-font;
+    }
+}

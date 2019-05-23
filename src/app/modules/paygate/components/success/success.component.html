@@ -1,0 +1,27 @@
+<div class="congratulations">
+  <div class="congratulations__contetnt">
+    <div class="congratulations__logo-mobile">
+      <svg class="icon">
+        <use xlink:href="#logo"></use>
+      </svg>
+    </div>
+    <div class="congratulations__text" *ngIf="tournamentProduct$ | async as product; else commonCongratulations">
+      Congratulations!<br/>
+      Successfully purchased.
+    </div>
+    <ng-template #commonCongratulations>
+      <div class="congratulations__text">
+        Congratulations!<br />
+        You are a part of World Chess community now.
+      </div>
+    </ng-template>
+  </div>
+  <div class="congratulations__buttons" *ngIf="tournamentProduct$ | async as product; else commonSuccessButton">
+    <button [routerLink]="['', { outlets: { p: null} }]" class="congratulations__btn">finish</button>
+  </div>
+  <ng-template #commonSuccessButton>
+    <div class="congratulations__buttons">
+      <button [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]" class="congratulations__btn">log in</button>
+    </div>
+  </ng-template>
+</div>

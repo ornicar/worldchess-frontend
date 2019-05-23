@@ -1,0 +1,56 @@
+@import '../../../../html/css/variables.scss';
+@import '../../../../html//css/media.scss';
+
+.my-events {
+  color: black;
+  padding: 40px;
+
+  &.premium {
+    color: black;
+
+    .events-list {
+      color: black;
+    }
+  }
+
+  @include phones() {
+    padding: 20px;
+  }
+
+  &__create {
+    border: 1px solid $border-color;
+    margin-bottom: 16px;
+  }
+
+  &__title {
+    margin-bottom: 16px;
+  }
+}
+
+.events-list {
+  color: black;
+  border-top: 1px solid $border-color;
+  border-left: 1px solid $border-color;
+  overflow-x: auto;
+
+  &__row {
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
+    min-width: 768px;
+  }
+
+  &__cell {
+    flex: 1;
+    padding: 5px;
+    border-right: 1px solid $border-color;
+  }
+
+  &__manage {
+    & button {
+      border: 1px solid $border-color;
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+}

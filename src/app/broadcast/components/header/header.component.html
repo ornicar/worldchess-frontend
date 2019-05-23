@@ -1,0 +1,153 @@
+<div class="container-select container-select--logo">
+  <svg class="icon-logo"><use xlink:href="#fide-world-chess-lock-up" /></svg>
+</div>
+
+<wc-header-select
+  *ngIf="(events$ | async)?.length"
+  [options]="events$ | async"
+  [selected]="selectedEvent$ | async"
+  [isReadOnly]="isReadOnly"
+  (selectedChange)="changeEvent($event)"
+  class="container-select"
+ >
+  <ng-template #titleNonSelected>
+    <div class="select-item">
+      Choose cycle
+    </div>
+  </ng-template>
+  <ng-template #titleSelected let-event>
+    <div class="select-item">
+      {{ event.name }}
+    </div>
+  </ng-template>
+  <ng-template #option let-event>
+    <div class="select-item">
+      {{ event.name }}
+    </div>
+  </ng-template>
+</wc-header-select>
+
+<wc-header-select
+  *ngIf="(tournaments$ | async)?.length"
+  [options]="tournaments$ | async"
+  [selected]="selectedTournament$ | async"
+  [isReadOnly]="isReadOnly"
+  (selectedChange)="changeTournament($event)"
+  class="container-select"
+ >
+  <ng-template #titleNonSelected>
+    <div class="select-item">
+      Choose tournament
+    </div>
+  </ng-template>
+  <ng-template #titleSelected let-tournament>
+    <div class="select-item">
+      <div class="item-text-overflow">
+        {{ tournament.title }} {{ tournament.additional_title }}
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #option let-tournament>
+    <div class="select-item">
+      <div class="item-text-overflow">
+        {{ tournament.title }} {{ tournament.additional_title }}
+      </div>
+    </div>
+  </ng-template>
+</wc-header-select>
+
+<wc-header-select
+  *ngIf="(tours$ | async)?.length"
+  [options]="tours$ | async"
+  [selected]="selectedTour$ | async"
+  [isReadOnly]="isReadOnly"
+  (selectedChange)="changeTour($event)"
+  class="container-select"
+>
+  <ng-template #titleNonSelected>
+    <div class="select-item">
+      Choose round
+    </div>
+  </ng-template>
+  <ng-template #titleSelected let-tour>
+    <div class="select-item">
+      Round {{ tour.tour_number }}
+    </div>
+  </ng-template>
+  <ng-template #option let-tour>
+    <div class="select-item">
+      Round {{ tour.tour_number }}
+    </div>
+  </ng-template>
+</wc-header-select>
+
+<wc-header-select
+  *ngIf="(matches$ | async)?.length && (teamsCount$ | async) > 0"
+  [options]="matches$ | async"
+  [selected]="selectedMatch$ | async"
+  [isReadOnly]="isReadOnly"
+  (selectedChange)="changeMatch($event)"
+  class="container-select"
+>
+  <ng-template #titleNonSelected>
+    <div class="select-item">
+      Choose match
+    </div>
+  </ng-template>
+  <ng-template #titleSelected let-match>
+    <div class="select-item">
+      <wc-match-option [teamId]="match.first_team" [showOnlyFlag]="true"></wc-match-option>
+      <div class="delimiter-horizontal"></div>
+      <wc-match-option [teamId]="match.second_team" [showOnlyFlag]="true"></wc-match-option>
+    </div>
+  </ng-template>
+  <ng-template #option let-match>
+    <div class="select-item">
+      <wc-match-option [teamId]="match.first_team"></wc-match-option>
+      <div class="delimiter-horizontal"></div>
+      <wc-match-option [teamId]="match.second_team"></wc-match-option>
+    </div>
+  </ng-template>
+</wc-header-select>
+
+<wc-header-select
+  *ngIf="(boards$ | async)?.length"
+  [autocompleteFields]="['white_player_name', 'black_player_name']"
+  [autocompleteFunction]="getBoardAutocompleteFunction()"
+  [options]="boards$ | async"
+  [selected]="selectedBoard$ | async"
+  [isReadOnly]="isReadOnly"
+  (selectedChange)="changeBoard($event)"
+  class="container-select"
+>
+  <ng-template #titleNonSelected>
+    <div class="select-item">
+      Choose pairing
+    </div>
+  </ng-template>
+  <ng-template #titleSelected let-board>
+    <div class="select-item">
+      <wc-player-option [playerId]="board.white_player"
+      [playerName]="board.white_player_name"></wc-player-option>
+      <div class="delimiter-horizontal"></div>
+      <wc-player-option [playerId]="board.black_player"
+      [playerName]="board.black_player_name"></wc-player-option>
+    </div>
+  </ng-template>
+  <ng-template #option let-board>
+    <div class="select-item">
+      <wc-player-option [playerId]="board.white_player"
+        [playerName]="board.white_player_name"></wc-player-option>
+      <div class="delimiter-horizontal"></div>
+      <wc-player-option [playerId]="board.black_player"
+        [playerName]="board.black_player_name"></wc-player-option>
+    </div>
+  </ng-template>
+  <ng-template #afterDropdownContent>
+    <a *ngIf="canOpenMultiboard() && !isMultiboard" class="open-multiboard" [routerLink]="['/tournament', this.tournament.id, 'tour', this.tour.id, 'multiboard']">View all in multiboard view</a>
+  </ng-template>
+</wc-header-select>
+
+<div class="container-select container-select--protect">
+  <wc-broadcast-nav-protect [check]="updateProtect$ | async"></wc-broadcast-nav-protect>
+</div>

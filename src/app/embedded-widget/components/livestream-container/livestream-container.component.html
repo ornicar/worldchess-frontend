@@ -1,0 +1,22 @@
+<div class="video-block" [class.livestream-main]="main">
+  <div class="video-block__wrapper">
+    <iframe class="video-block__video" *ngIf="selectedCamera?.link_display" width="560" height="315"
+      [src]="selectedCamera.link_display | wcSafeUrl" frameborder="0" scrolling="no" allowfullscreen></iframe>
+  </div>
+
+  <div class="video-block__cameras hovered" *ngIf="cameras && cameras.length > 1 && selectedCamera">
+    <wc-livestream-camera-list
+      [main]="main"
+      prefix="Camera"
+      label="name"
+      compare="id"
+      [list]="cameras"
+      [selectedItem]="selectedCamera"
+      (itemSelected)="selectCamera($event)"
+    ></wc-livestream-camera-list>
+    <!-- #TODO Locale dropdown -->
+  </div>
+</div>
+
+<div class="screen-state-icon" (click)="openLiveStreamScreen()"></div>
+<div class="chess-page__livestream--close" (click)="closeLiveStreamScreen()"></div>

@@ -1,0 +1,129 @@
+@import "../../../html/css/variables";
+@import "../../../html/css/media";
+
+$basic-color: #5184FF;
+$pro-color: #8D73FF;
+
+.account-info-form__selected-plan {
+  display: flex;
+  align-items: stretch;
+  width: 308px;
+  margin-left: 64px;
+  background: #5184FF;
+  border-radius: 10px;
+  padding: 19px 24px;
+
+  &--basic {
+    background: $basic-color;
+  }
+
+  &--pro {
+    background: $pro-color;
+  }
+
+  @include phones() {
+      margin-left: 0;
+      padding: 10px;
+      width: 100%;
+  }
+}
+
+.selected-plan {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  width: 100%;
+
+  @include phones() {
+      width: 100%;
+  }
+}
+
+.selected-plan__content {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+
+  @include phones() {
+      padding: 10px 10px 19px 10px;
+  }
+}
+
+.selected-plan__text {
+  font: 400 22px/29px $gerbera-font;
+  margin-bottom: 10px;
+
+  @include phones() {
+      font: 400 15px/15px $gerbera-font;
+  }
+}
+
+.selected-plan__title {
+  font: 300 34px/34px $gerbera-font;
+  margin-bottom: 14px;
+
+  @include phones() {
+      font: 400 29px/29px $gerbera-font;
+  }
+}
+
+.selected-plan__cost {
+  font: 300 22px/22px $gerbera-font;
+  margin-bottom: 32px;
+
+  @include phones() {
+      font: 400 15px/15px $gerbera-font;
+  }
+}
+
+.selected-plan__heart {
+  width: 119px;
+  height: 115px;
+  fill: #FF8585;
+  align-self: center;
+  margin-bottom: 24px;
+
+  @include phones() {
+      width: 83px;
+      height: 80px;
+      margin-bottom: 20px;
+  }
+}
+
+.selected-plan__btn {
+  align-self: center;
+  border: 1px solid #fff;
+  color: #fff;
+  width: 149px;
+  height: 55px;
+  background-color: transparent;
+  border-radius: 4px;
+  font: 300 22px/29px $gerbera-font;
+  cursor: pointer;
+
+  @include phones() {
+      width: 129px;
+      height: 35px;
+      font: 300 15px/20px $gerbera-font;
+  }
+}
+
+.selected-plan__footer {
+  border-top: 1px solid #fff;
+  padding-top: 16px;
+  margin-top: auto;
+
+  @include phones() {
+      padding: 10px;
+  }
+}
+
+.selected-plan__footer-title {
+  font: 300 22px/22px $gerbera-font;
+  margin-bottom: 18px;
+}
+
+.selected-plan__footer-text {
+  font: 300 15px/20px $gerbera-font;
+}
+

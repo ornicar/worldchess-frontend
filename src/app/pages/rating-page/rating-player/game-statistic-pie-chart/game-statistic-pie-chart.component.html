@@ -1,0 +1,54 @@
+<div class="block-statistics__head">
+  <div class="filters">
+    <ul class="filters__list">
+      <li class="filters__elem">
+        <span class="filters__link" (click)="setMode('white')">
+          <div class="filters__icon"
+               [class.filters__icon--active]="mode === 'white'">
+            <img alt="В" src="assets/icons/white-filter.svg">
+          </div>
+        </span>
+      </li>
+      <li class="filters__elem">
+        <span class="filters__link" (click)="setMode('black')">
+          <div class="filters__icon"
+               [class.filters__icon--active]="mode === 'black'">
+            <img alt="W" src="assets/icons/black-filter.svg">
+          </div>
+        </span>
+      </li>
+      <li class="filters__elem">
+        <span class="filters__link" (click)="setMode('white_and_black')">
+          <div class="filters__icon"
+               [class.filters__icon--active]="mode === 'white_and_black'">
+            <img alt="ВW" src="assets/icons/white-black-filter.svg">
+          </div>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="block-statistics__content">
+  <h2 class="block-statistics__title">{{title}}</h2>
+  <div class="block-chart">
+    <div class="block-chart__aside">
+      <ul class="block-chart__list">
+        <li class="block-chart__elem">
+          <div class="block-chart__marker" style="background-color: #8cd8ff"></div>
+          <div class="block-chart__value">win {{getPercent('win')}}%</div>
+        </li>
+        <li class="block-chart__elem">
+          <div class="block-chart__marker" style="background-color: #dcdcdc"></div>
+          <div class="block-chart__value">draw {{getPercent('draw')}}%</div>
+        </li>
+        <li class="block-chart__elem">
+          <div class="block-chart__marker" style="background-color: #ff3828"></div>
+          <div class="block-chart__value">loss {{getPercent('loss')}}%</div>
+        </li>
+      </ul>
+    </div>
+    <div class="block-chart__chart">
+      <svg #chart class="chart pie"></svg>
+    </div>
+  </div>
+</div>

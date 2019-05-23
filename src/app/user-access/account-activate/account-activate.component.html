@@ -1,0 +1,22 @@
+<wc-layout>
+  <div class="container">
+    <h1>Activate account</h1>
+
+    <div class="d-flex block">
+      <div class="d-none d-md-block"></div>
+      <div class="d-flex flex-column">
+        <div class="info">
+          <p *ngIf="loading$ | async">Activation...</p>
+          <p *ngIf="success$ | async">
+            Thank you, {{ (profile$ | async)?.full_name }}. <br>
+            Your account has been activated.
+          </p>
+          <p *ngIf="(errors$ | async)?.detail as error" class="error">
+            {{ error }}<br />
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</wc-layout>

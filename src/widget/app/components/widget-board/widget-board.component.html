@@ -1,0 +1,26 @@
+<div
+  *ngIf="(widgetStatus$ | async) === widgetStatus.LIVE"
+  class="widget__board"
+  [class.widget__board--main-page]="forMainPage"
+  >
+
+  <img *ngIf="!forMainPage" alt="Fabiano Caruana" class="photo widget__face widget__face--fabiano" src="assets/fabiano-caruana.png">
+
+  <img *ngIf="!forMainPage" alt="Magnus Carlsen" class="photo widget__face widget__face--magnus" src="assets/magnus-carlsen.png">
+
+  <wc-widget-chess-board-controller
+    [viewMode]="!forMainPage ? ChessBoardViewMode.WidgetVertical : ChessBoardViewMode.Normal"
+    [boardId]="(gameState$ | async)?.board?.id"
+  ></wc-widget-chess-board-controller>
+</div>
+
+<div class="widget__timer"
+  *ngIf="(widgetStatus$ | async) === widgetStatus.WAIT">
+  Game starts in
+  <wc-timer [date]="(tour$ | async)?.datetime_of_round" [format]="'DD:HH:mm:ss'"></wc-timer>
+</div>
+
+<div class="widget__end"
+  *ngIf="(widgetStatus$ | async) === widgetStatus.END">
+  All rounds are finished!
+</div>

@@ -1,0 +1,10 @@
+<mat-form-field>
+  <input
+    matInput
+    class="promo-code"
+    placeholder="promo code"
+    [formControl]="promoCode"
+    (focus)="isFocus = true"
+  >
+  <mat-icon class="custom-icon" matSuffix [svgIcon]="getPromoCodeStatus()"></mat-icon>
+</mat-form-field>

@@ -1,0 +1,96 @@
+@import "settings";
+@import "mixins";
+@import "../../../../html/css/variables";
+.container {
+  padding: 0;
+  min-height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.broadcast {
+  padding: 6px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 0 auto;
+  height: calc(100vh - 220px);
+  min-height: 600px;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    padding-top: 13px;
+    padding-bottom: 20px;
+    height: calc(100vh - 176px);
+  }
+}
+
+.countdown-text {
+  max-width: 280px;
+  font-size: 22px;
+  margin-bottom: 3px;
+  line-height: 30px;
+  margin-bottom: 25px;
+  font-weight: 300;
+
+  @include media-breakpoint-up(lg) {
+    line-height: 43px;
+    font-size: 32.5px;
+    max-width: 335px;
+  }
+}
+
+.countdown-wrapper {
+  @include media-breakpoint-up(lg) {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+.image-wrapper {
+  padding: 12px 0 12px 5px;
+
+  @include media-breakpoint-up(lg) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 22px 19px 9px;
+  }
+}
+
+.image {
+  width: 100%;
+  max-width: 208px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 40px;
+
+  @include media-breakpoint-up(lg) {
+    max-width: 485.42px;
+    margin: auto;
+    width: 100%;
+    max-height: 100%;
+  }
+}
+
+.description {
+  color: $gray-550;
+  max-width: 450px;
+  margin-top: auto;
+  font: 300 14px/21px $gerbera-font;
+
+  @include media-breakpoint-up(lg) {
+    font: 300 15px/22px $gerbera-font;
+    padding: 27px 5px;
+    letter-spacing: 0.15px;
+    max-width: 420px;
+  }
+}

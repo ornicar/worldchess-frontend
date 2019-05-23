@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types",
+      "@types/moment-duration-format"
+    ],
+    "types": ["youtube"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "paths": {
+      "@common/*": ["./projects/common-components/*"],
+      "@app/*": ["./src/app/*"]
+    }
+  }
+}

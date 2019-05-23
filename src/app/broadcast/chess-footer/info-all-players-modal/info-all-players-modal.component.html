@@ -1,0 +1,41 @@
+<div class="wc-popup__wrap"
+  (click)="onWrapperClick($event)">
+  <div class="all-teams">
+    <div class="all-teams__header">
+      <div class="all-teams__title">All teams</div>
+      <span class="all-teams__close"
+        (click)="closeModal.emit()"></span>
+    </div>
+    <div class="all-teams__body">
+      <ul class="all-teams__list">
+        <!-- @TODO make separate component "TeamComponent" -->
+        <li class="all-teams__elem"
+          *ngFor="let team of teamsWithPlayers$ | async trackBy: trackTeamByFn">
+          <div class="one-team">
+            <div class="one-team__header">
+              <div class="one-team__flag">
+                <wc-country-flag *ngIf="team.federation" [countryId]="team.federation"></wc-country-flag>
+              </div>
+              <div class="one-team__country-reduction">{{team.short_name}}</div>
+              <div class="one-team__country">{{team.name}}</div>
+            </div>
+            <ul class="one-team__list">
+              <li class="one-team__elem"
+                *ngFor="let player of team.players trackBy: trackPlayerByFn">
+                <div class="one-team__number">{{player.board_number}}</div>
+                <div class="one-team__photo"
+                  *ngIf="player.player.avatar">
+                  <img [src]="player.player.avatar" alt="photo.jpg">
+                </div>
+                <div class="one-team__name">{{player.player.full_name}}</div>
+                <div class="one-team__fm" *ngIf="player.player.rank">{{player.player.rank}}</div>
+                <div class="one-team__year">{{player.player.birth_year}}</div>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <div *ngIf="canShowMore() | async" (click)="onShowMore() " class="all-teams__more"><span>show more</span></div>
+      </ul>
+    </div>
+  </div>
+</div>

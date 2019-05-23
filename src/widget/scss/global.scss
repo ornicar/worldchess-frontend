@@ -1,0 +1,289 @@
+@import "../html/css/variables";
+
+#app {
+  overflow: hidden;
+}
+
+.main-wrapper {
+  position: relative;
+  margin: 0 auto;
+  max-width: $max-width;
+  min-width: $min-width;
+}
+
+.container {
+  padding: 0 20px;
+}
+
+.notifications {
+  font-family: $gerbera-font;
+}
+
+.btn {
+  cursor: pointer;
+  height: 35px;
+  padding: 0 14px;
+  text-align: center;
+  display: block;
+  color: #000;
+  transition: $ease;
+  border: none;
+  font: 400 15px/35px $gerbera-font;
+
+  &-blue {
+    color: $black;
+    background: $blue;
+    &:hover {
+      background: lighten($blue, 10%);
+    }
+  }
+
+  &-hollow {
+    font: 300 15px/36px $gerbera-font;
+    height: 35px;
+    background-color: $blue !important;
+    color: #000000 !important;
+    border-radius: 2px;
+    box-shadow: 0px 0px 10px $var-blue;
+
+    &:hover {
+      color: #000000 !important;;
+      background: #FFFFFF !important;
+    }
+  }
+
+  &[disabled], &-disabled {
+    background-color: grey;
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  &-apply {
+    width: 93px;
+    padding: 0 14px;
+    background-color: transparent;
+    border: 1px solid $gray-550;
+    margin-left: 20px;
+    color: white;
+  }
+}
+
+.checkbox {
+  input {
+    display: none;
+    &:hover + span {
+      &:before {
+        border-color: #999;
+      }
+    }
+    &.is-error + span {
+      &:before {
+        border-color: red;
+      }
+    }
+    &:checked + span {
+      &:before {
+        border-color: #fff !important;
+        //background-image: url('~/assets/images/icon-check.svg');;
+      }
+    }
+  }
+  span {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    display: block;
+    &:before {
+      content: '';
+      width: 18px;
+      height: 18px;
+      border: 1px solid #656565;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      margin: -10px 0;
+      background-repeat: no-repeat;
+      background-size: 10px 10px;
+      background-position: center center;
+      transition: $ease;
+    }
+  }
+}
+
+.vue-scrollbar {
+  margin: 0;
+  &__scrollbar-vertical {
+    width: 12px;
+    &:hover {
+      background: rgba(0, 0, 0, .2);
+    }
+  }
+  &__wrapper {
+    background: transparent !important;
+  }
+  .scrollbar {
+    margin: 2px;
+    border-radius: 50px;
+  }
+}
+
+.video-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+  @include mobile{
+    display: none;
+  }
+}
+
+// global z-index anti-scoped sheet
+
+// [FRONTPAGE]
+.usermenu-opener {
+  z-index: 2; // FIXME
+  .signin-register {
+    z-index: 1;
+  }
+  .username {
+    z-index: 2;
+  }
+}
+
+.usermenu {
+  z-index: 2;
+  &-close {
+    z-index: 104;
+  }
+  &-content {
+    z-index: 100;
+  }
+}
+
+.shop .media:before {
+  z-index: 1;
+}
+
+.slider-next, .slider-prev {
+  z-index: 1;
+}
+
+// [GAMES]
+.chessboard {
+  .hexagon {
+    z-index: 1;
+  }
+  .board {
+    z-index: 2;
+  }
+}
+
+.modal {
+  z-index: 99;
+}
+
+.nav-games {
+  .item:before {
+    z-index: 1;
+  }
+  .dropdown:hover {
+    z-index: 2;
+  }
+}
+
+.nav-main {
+  z-index: 100;
+}
+
+.nav-user {
+  z-index: 999;
+}
+
+.timeline {
+  .mark {
+    z-index: 1;
+  }
+  .soon {
+    z-index: 99;
+  }
+}
+
+.notifications {
+  z-index: 3;
+}
+
+.mobile-menu {
+  z-index: 99;
+}
+
+.menu-height {
+  height: $navbar-height;
+}
+
+.lottie-404 {
+  height: calc(100% - 131.5px);
+  overflow: hidden;
+  position: relative;
+
+  @media (orientation: landscape) and (max-width: 576px) {
+    max-height: calc(100% - 101.5px);
+  }
+
+  @media (orientation: portrait) and (max-width: 576px) {
+    max-height: calc(100% - 131.5px);
+  }
+
+  @media (min-width: 576px) {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  & > div {
+    @media (orientation: landscape) and (max-width: 576px) {
+      width: auto;
+      height: 100%;
+    }
+
+    @media (orientation: portrait) and (max-width: 576px){
+      width: 688px;
+      height: 804px;
+      position: absolute;
+      bottom: -174px;
+      left: 50%;
+      margin-left: -344px !important;
+    }
+
+    @media (min-width: 576px){
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    & > svg {
+      display: block;
+
+      @media (min-width: 576px){
+        max-height: 100%;
+        max-width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) !important;
+        width: auto !important;
+        height: auto !important;
+      }
+
+      .png {
+        display: none !important;
+      }
+    }
+  }
+}

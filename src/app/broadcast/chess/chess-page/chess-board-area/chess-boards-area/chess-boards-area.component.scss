@@ -1,0 +1,254 @@
+@import '../../../../../../html/css/variables';
+@import '../../../../../../html/css/media';
+
+:host {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+div.mobile-carousel {
+  display: flex;
+
+  wc-chess-board-grid-item {
+    display: none;
+
+    &::before {
+      display: none;
+    }
+
+    &.active {
+      display: flex;
+      width: 100%;
+
+      &.slide-left {
+        animation: slide 0.5s forwards;
+        left: 100%;
+      }
+
+      &.slide-right {
+        left: -100%;
+        animation: slide 0.5s forwards;
+      }
+    }
+  }
+
+  div.arrow-right, div.arrow-left {
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    svg {
+      fill: $light-gray;
+      transform: rotate(270deg);
+      display: flex;
+      position: relative;
+      left: 0px;
+      animation: arrow-right 0.5s infinite alternate;
+    }
+  }
+
+  div.arrow-left {
+    right: auto;
+    left: 0;
+    svg {
+      transform: rotate(90deg);
+      animation: arrow-left 0.5s infinite alternate;
+    }
+  }
+}
+
+@keyframes slide {
+    100% {
+      left: 0;
+    }
+}
+
+@keyframes arrow-right {
+    100% { left: 3px; }
+}
+
+@keyframes arrow-left {
+    100% { left: -3px; }
+}
+
+wc-drag-scroll {
+  display: flex;
+  overflow: auto hidden;
+  margin-right: -17px;
+
+  &::before {
+    content: '';
+    display: block;
+  }
+}
+
+.board-grid {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+
+  @include phones {
+    flex-flow: row nowrap;
+  }
+}
+
+virtual-scroller {
+  width: 100%;
+}
+
+wc-chess-board-grid-item {
+  flex: 0 0 auto;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    height: 100%;
+    border-right: 1px solid #3D3D3D;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    border-bottom: 1px solid #3D3D3D;
+  }
+
+  &.selected {
+    background: #2F2F2F;
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  @include phones {
+    display: none;
+  }
+}
+
+.size-controls {
+  position: relative;
+  height: 70px;
+  width: 30px;
+  margin-top: 21px;
+}
+
+.size-controls__prev,
+.size-controls__next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: 20px;
+  border: 0;
+  line-height: 0;
+  cursor: pointer;
+
+  &[disabled] {
+    filter: grayscale(100%);
+    background-color: #e6e6e6;
+  }
+
+  .icon {
+    width: 15px;
+    height: 15px;
+    stroke: #652600;
+  }
+}
+
+.size-controls__next {
+  button: auto;
+  top: 0;
+}
+
+.size-controls__slider {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: calc(100% - 58px);
+  background-color: #9F9F9F;
+}
+
+.size-controls__slider-circle {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+wc-game-favorite-icon {
+  cursor: pointer;
+  filter: drop-shadow(0 0 14px rgba(0, 0, 0, 0.7));
+  width: 26px;
+  height: 26px;
+}
+
+:host(.grid-size--normal) {
+  wc-drag-scroll {
+    &::before {
+      padding-top: multiboard-grid-size(normal, true);
+
+      @include phones {
+        padding-top: multiboard-grid-size(normal-mobile, true);
+      }
+    }
+  }
+
+  .board-grid {
+    height: multiboard-grid-size(normal, true);
+
+    @include phones {
+      height: multiboard-grid-size(normal-mobile, true);
+    }
+  }
+}
+
+:host(.grid-size--medium) {
+  wc-drag-scroll {
+    &::before {
+      padding-top: multiboard-grid-size(medium, true);
+    }
+  }
+
+  .board-grid {
+    height: multiboard-grid-size(medium, true);
+  }
+}
+
+:host(.drag-scroll) {
+  .board-grid {
+    user-select: none;
+    cursor: grab;
+  }
+}
+
+:host(.drag-scroll.is-dragging) {
+  .board-grid {
+    cursor: grabbing;
+  }
+}

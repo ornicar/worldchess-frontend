@@ -1,0 +1,141 @@
+<div class="profile" *ngIf="account$ | async as account" [ngClass]="'profile-bg-' + (account?.premium ? 'pro' : 'basic')">
+  <div class="profile__wrapper">
+    <div class="profile__info">
+      <div class="profile__form" *ngIf="profileForm && editMode; else profileView">
+        <div class="profile__form-col">
+          <div class="profile__form-row">
+            <app-text-input [control]="profileForm.controls['nickname']" label="Nickname"></app-text-input>
+          </div>
+          <div class="profile__form-row">
+            <wc-datepicker-input [control]="profileForm.controls['birth_date']" label="Birth date" ></wc-datepicker-input>
+          </div>
+          <div class="profile__form-row" *ngIf="countries$ | async as countries">
+            <app-select-input [control]="profileForm.controls['country']" [options]="countries" optionLabelField="name" optionValueField="id" label="Country"></app-select-input>
+          </div>
+          <div class="profile__form-row">
+            <p class="profile__form-label">Subscription</p>
+            <wc-checkbox-control [control]="profileForm.controls['receive_newsletters']" label="receive our newsletters"></wc-checkbox-control>
+          </div>
+          <!-- <div class="profile__form-row" *ngIf="account.founder_approve_status === FounderStatus.APPROVE">
+            <p class="profile__form-label">I'm an organizer</p>
+            <p class="profile__form-action"><a (click)="discardOrganizer()">discard it</a></p>
+            <p class="profile__form-underline" *ngIf="account.admin_email"><a [href]="'mailto:' + account.admin_email">Contact with our administrator</a></p>
+          </div> -->
+          <div class="profile__form-row" *ngIf="account.founder_approve_status === FounderStatus.NONE">
+            <wc-checkbox-control [control]="profileForm.controls['founder_approve_status']" label="I wanna be an organizer"></wc-checkbox-control>
+          </div>
+        </div>
+        <div class="profile__form-row">
+          <app-text-input [control]="profileForm.controls['facebook']" label="Facebook"></app-text-input>
+        </div>
+        <div class="profile__form-row">
+          <app-text-input [control]="profileForm.controls['twitter']" label="Twitter"></app-text-input>
+        </div>
+        <div class="profile__form-row">
+          <app-text-input [control]="profileForm.controls['instagram']" label="Instagram"></app-text-input>
+        </div>
+        <div class="profile__form-row">
+          <app-select-input [control]="profileForm.controls['mates']" label="Mates" [options]="matesOptions"></app-select-input>
+        </div>
+        <div class="profile__form-row">
+          <wc-checkbox-control label="Make profile public" [control]="profileForm.controls['is_public']"></wc-checkbox-control>
+        </div>
+        <div class="profile__form-col submit-col">
+          <div class="profile__form-row-bottom">
+            <button class="cancel-btn" (click)="cancelEdit()" [disabled]="loading$ | async">cancel</button>
+            <button class="submit-btn" (click)="updateProfile()" [disabled]="loading$ | async">save changes</button>
+          </div>
+        </div>
+      </div>
+      <ng-template #profileView>
+        <div class="profile__view">
+          <div class="profile__view-body">
+            <div class="profile__view-row">
+              <p class="profile__view-row__label">Email</p>
+              <p class="profile__view-row__value">{{ account?.email }}</p>
+            </div>
+            <div class="profile__view-row" *ngIf="account?.nickname">
+              <p class="profile__view-row__label">Nickname</p>
+              <p class="profile__view-row__value">{{ account?.nickname}}</p>
+            </div>
+            <div class="profile__view-row" *ngIf="account?.birth_date">
+              <p class="profile__view-row__label">Birth date</p>
+              <p class="profile__view-row__value">{{ account?.birth_date | wcProfileBirthday }}</p>
+            </div>
+            <div class="profile__view-row" *ngIf="accountCountry$ | async as country">
+              <p class="profile__view-row__label">Country</p>
+              <p class="profile__view-row__value">{{ country.name }}</p>
+            </div>
+            <div class="profile__view-row">
+              <p class="profile__view-row__label">Mates</p>
+              <p class="profile__view-row__value">{{ !!account?.social_accounts?.mates ? 'Has an account' : 'Has no account' }}</p>
+            </div>
+            <div class="profile__view-row" *ngIf="account.founder_approve_status === FounderStatus.APPROVE">
+              <p class="profile__view-row__value">I'm an organizer</p>
+            </div>
+            <div class="profile_view-row">
+              <p class="profile__view-row__label">Privacy</p>
+              <p class="profile__view-row__value">{{ account?.is_public ? 'Account is public' : 'Account isn`t public' }}</p>
+            </div>
+            <div class="profile__view-row">
+                <div class="profile__edit-btn" *ngIf="!editMode" (click)="toggleEditMode()">
+                  <svg class="icon">
+                    <use xlink:href="#pencil"></use>
+                  </svg>
+                  edit
+                </div>
+              </div>
+          </div>
+          <div class="profile__view-footer" *ngIf="account?.is_public">
+            <div class="profile__social">
+              <a [href]="account?.social_accounts?.twitter" *ngIf="account?.social_accounts?.twitter" class="profile__social-elem profile__twitter">
+                <svg class="profile__social-elem-icon">
+                  <use xlink:href="#twitter"></use>
+                </svg>
+              </a>
+              <a [href]="account?.social_accounts?.facebook" *ngIf="account?.social_accounts?.facebook" class="profile__social-elem profile__fb">
+                <svg class="profile__social-elem-icon">
+                  <use xlink:href="#fb"></use>
+                </svg>
+              </a>
+              <a [href]="account?.social_accounts?.instagram" *ngIf="account?.social_accounts?.instagram" class="profile__social-elem profile__instagram">
+                <svg class="profile__social-elem-icon">
+                  <use xlink:href="#instagram"></use>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="profile__aside">
+      <div class="profile__account-avatar" (click)="openAvatarEditor()" [ngClass]="'profile__account-avatar--' + (account?.premium ? 'pro' : 'basic')">
+        <img [src]="account?.avatar?.full" *ngIf="account?.avatar?.full; else noAvatar">
+        <ng-template #noAvatar>
+          <img src="../../../assets/images/account/avatar-placeholder.svg" class="placeholder" alt="player">
+        </ng-template>
+        <div class="profile__account-avatar--hover">
+          <svg class="icon">
+            <use xlink:href="#pencil"></use>
+          </svg>
+          <span>edit</span>
+        </div>
+      </div>
+      <div class="profile__account-full-name" *ngIf="editMode; else viewFullName">
+        <wc-full-name-input [fullName]="profileForm.controls['full_name']" label="Full Name"></wc-full-name-input>
+      </div>
+      <ng-template #viewFullName>
+        <div class="profile__account-full-name">
+          {{ account.full_name }}
+        </div>
+      </ng-template>
+      <div class="profile__account-type" [ngClass]="'profile__account-type--' + (account?.premium ? 'pro' : 'basic')">
+        {{ account?.premium ? 'trainer' : 'beginner' }}
+      </div>
+    </div>
+
+  </div>
+
+
+</div>

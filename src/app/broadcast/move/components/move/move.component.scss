@@ -1,0 +1,108 @@
+@import '../../../../../html/css/variables';
+@import '../../../../../html/css/media';
+
+:host {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  position: relative;
+  height: 38px;
+  z-index: z-index(base);
+  cursor: pointer;
+  font-family: $gerbera-font;
+  border-top: solid 1px $gray-dark;
+
+  @include phones() {
+    height: 43px;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 3px;
+    width: calc(100% - 6px);
+    height: calc(100% - 14px);
+    background-color: transparent;
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0;
+    transition: background-color 0.3s;
+  }
+}
+
+:host(:hover) {
+  &:after {
+    background-color: #d2d2d2;
+    opacity: 1;
+  }
+}
+
+:host(.select) {
+  &:after {
+    transition: none;
+    background-color: $green;
+    opacity: 1;
+  }
+}
+
+:host(.select.completed) {
+  &:after {
+    transition: none;
+    background-color: #A9876B;
+  }
+}
+
+.cell {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.figure {
+  padding: 0 1px 0 7px;
+  width: 22px;
+}
+
+.move {
+  color: $black;
+  width: 28px;
+  white-space: nowrap;
+  font: 700 12px/16px $gerbera-font;
+
+  @include phones() {
+    font: 400 13px/13px $gerbera-font;
+  }
+}
+
+.marker {
+  width: 15px;
+  padding: 0 1px;
+}
+
+.value {
+  color: $black-light;
+  padding: 0 2px;
+  width: 28px;
+  font: 400 10px/13px $gerbera-font;
+
+  @include phones() {
+    font: 400 11px/13px $gerbera-font;
+  }
+}
+
+.time {
+  color: $black-light;
+  padding: 0 10px 0 2px;
+  justify-content: flex-end;
+  flex: 1 1 auto;
+  font: 400 10px/13px $gerbera-font;
+
+  @include phones() {
+    font: 400 11px/13px $gerbera-font;
+  }
+}

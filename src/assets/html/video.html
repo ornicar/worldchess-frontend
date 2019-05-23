@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Video</title>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    video {
+      height: 100%;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      object-fit: cover;
+      min-width: 100%;
+      min-height: 100%;
+    }
+  </style>
+</head>
+<body>
+<video muted loop webkit-playsinline playsinline autoplay>
+  <source src="../video/banner_lq.mp4" type="video/mp4">
+  <source src="../video/banner_lq.ogv" type="video/ogv">
+  <source src="../video/banner_lq.webm" type="video/webm">
+</video>
+</body>
+</html>

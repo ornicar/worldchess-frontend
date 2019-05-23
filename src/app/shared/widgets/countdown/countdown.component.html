@@ -1,0 +1,11 @@
+<div class="d-flex" [ngClass]="mini ? 'countdown-mini' : 'countdown'">
+  <div *ngFor="let item of countdown.items; let i = index" class="d-flex align-items-center">
+    <div class="countdown-item">
+      <span class="value">
+        <span class="number" *ngFor="let number of item.numbers">{{ number }}</span>
+      </span>
+      <span class="key" *ngIf="!mini">{{item.key}}</span>
+    </div>
+    <div *ngIf="i !== countdown.items.length - 1" class="countdown-colon">:</div>
+  </div>
+</div>

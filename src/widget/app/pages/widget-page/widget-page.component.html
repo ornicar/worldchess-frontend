@@ -1,0 +1,30 @@
+<wc-widget-header></wc-widget-header>
+<div class="widget">
+  <div class="widget__header">
+    <div class="widget__event">
+      {{(tournament$ | async)?.title}}
+    </div>
+
+    <div class="widget__data">
+        <span *ngIf="(tour$ | async)?.tour_number"
+          class="widget__round">Round {{(tour$ | async)?.tour_number}}
+        </span>
+    </div>
+  </div>
+
+<wc-widget-board
+  *ngIf="widget$ | async as widget"
+  [widget]="widget"
+  [forMainPage]="false">
+</wc-widget-board>
+
+  <div class="widget__footer">
+    <a target="_blank" href="https://worldchess.com/paygate"
+      class="widget__watch-button">
+      Watch on the official site
+    </a>
+  </div>
+
+</div>
+
+<wc-widget-footer></wc-widget-footer>

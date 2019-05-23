@@ -1,0 +1,24 @@
+<a [href]="getNewsUrl()" class="news-card-link" target="_blank">
+  <div class="news-card">
+    <div class="news-card__img" [ngStyle]="{'background-image': newsImage()}"></div>
+    <div class="news-card__content">
+      <div class="news-card__info">
+        <div class="text">{{newsItem.timestamp | date: 'MMM d - h:mm a'}}</div>
+        <div class=" wc-title wc-title--small">{{newsItem.title}}</div>
+      </div>
+      <div class="news-card__tags">
+        <div class="news-tag">
+          <div class="news-tag__list">
+            <div *ngFor="let item of newsItem.tags" class="news-tag__elem">
+              <a class="news-tag__link"
+                target="_blank"
+                [href]="getNewsFilterUrl(item.id)">
+                {{item.name}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

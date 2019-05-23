@@ -1,0 +1,39 @@
+@import "../../../html/css/variables";
+@import "../../../html/css/media";
+
+.your-event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 217px;
+  background-color: #8D73FF;
+
+  @include phones() {
+    min-height: 132px;
+  }
+
+  &__title {
+    font: 300 41px/59px $gerbera-font;
+    color: #fff;
+    margin-bottom: 23px;
+
+    @include phones() {
+      text-align: center;
+      font: 300 30px/35px $gerbera-font;
+      margin-bottom: 10px;
+    }
+  }
+  &__start {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 91px;
+    height: 36px;
+    border-radius: 2px;
+    box-shadow: 0 2px 44px 0 rgba(74, 213, 111, 0.8);
+    background-color: #fff;
+    font: 400 15px/22px $gerbera-font;
+    color: #000;
+  }
+}

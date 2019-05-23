@@ -1,0 +1,67 @@
+<div class="wc-container container container--flex">
+    <wc-chess-footer-info
+      [tournament]="tournament"
+      class="information-aside information-aside--portable"
+      (goToMedia)="changeTab.emit('media')">
+    </wc-chess-footer-info>
+    <div class="information-main">
+      <wc-info-rounds class="round-list"
+        *ngIf="(schedules$ | async)?.length > 0"
+        [rounds]="schedules$ | async">
+      </wc-info-rounds>
+
+      <wc-info-players
+        class="players players--desktop"
+        *ngIf="(selectedTeamPlayers$ | async)?.length > 0"
+        [teams]="teams$ | async"
+        [selectedTeam]="selectedTeam$ | async"
+        [teamPlayers]="selectedTeamPlayers$ | async"
+        (teamSelect)="onSelectTeam($event)"
+        (toggleModal)="onToggleModal($event)">
+      </wc-info-players>
+
+      <div class="information-main__empty"
+        *ngIf="((selectedTeamPlayers$ | async)?.length === 0) && ((schedules$ | async)?.length === 0)">
+        <img src="assets/img/media-horse.svg" alt="img" class="information-main__empty-img" />
+        <div class="information-main__empty-msg">
+          Sorry! No information posted yet…<br>
+          Stay tuned for the updates though.
+        </div>
+      </div>
+    </div>
+</div>
+
+  <div class="wc-container container players--tablet">
+    <wc-info-players
+      class="players"
+      *ngIf="(selectedTeamPlayers$ | async)?.length > 0"
+      [teams]="teams$ | async"
+      [selectedTeam]="selectedTeam$ | async"
+      [teamPlayers]="selectedTeamPlayers$ | async"
+      (teamSelect)="onSelectTeam($event)"
+      (toggleModal)="onToggleModal($event)">
+    </wc-info-players>
+  </div>
+
+  <div class="wc-container container container--gray">
+    <wc-info-content class="content-text"
+      [tournament]="tournament">
+    </wc-info-content>
+  </div>
+
+
+  <wc-info-all-players-modal
+    (click)="onClickOverlay($event)"
+    *ngIf="showModal"
+    class="wc-popup"
+    [tournament]="tournament"
+    (closeModal)="onToggleModal(false)">
+  </wc-info-all-players-modal>
+
+<div class="wc-container container">
+  <wc-chess-footer-info
+    [tournament]="tournament"
+    class="information-aside information-aside--mobile"
+    (goToMedia)="changeTab.emit('media')">
+  </wc-chess-footer-info>
+</div>

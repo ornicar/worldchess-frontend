@@ -1,0 +1,25 @@
+@import "../../../../../html/css/media";
+@import "../../../../../html/css/variables";
+
+.prediction {
+  min-height: 117px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+
+  @include phones() {
+    min-height: 39px;
+  }
+}
+
+
+wc-prediction{
+  @include phones() {
+    display: none;
+  }
+
+  &.prediction-0 {
+    display: block;
+  }
+}

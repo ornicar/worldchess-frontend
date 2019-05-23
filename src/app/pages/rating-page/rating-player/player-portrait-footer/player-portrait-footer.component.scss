@@ -1,0 +1,76 @@
+@import "settings";
+@import "mixins";
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+.rating-player__info {
+  display: flex;
+}
+
+.country {
+  display: flex;
+  align-items: center;
+  bottom: 10px;
+  left: 10px;
+}
+
+.country__name {
+  font: 400 11px/11px $gerbera-font;
+  line-height: 1;
+  letter-spacing: 1.5px;
+  color: #656565;
+}
+
+.country__flag {
+  display: flex;
+  position: relative;
+  width: 24px;
+  height: 17px;
+  margin-right: 10px;
+  border: 1px solid $border-color;
+}
+
+.social {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.social__list {
+  display: flex;
+}
+
+.social__link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 29px;
+  height: 29px;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+
+  img {
+    max-width: 13px;
+    max-height: 13px;
+  }
+
+  @include phones() {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.social__elem {
+  margin-right: 10px;
+}
+
+
+.rating-count {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  color: #fff;
+  background-color: #000;
+  padding: 0 4px;
+  margin-right: 5px;
+}

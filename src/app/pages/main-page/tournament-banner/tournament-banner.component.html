@@ -1,0 +1,10 @@
+<wc-main-page-banner-wrapper [backgroundImage]="banner.image.full">
+  <ng-container left-column>
+    <div class="title-block">
+      {{ banner.title }}
+    </div>
+    <div class="title-block__buttons">
+      <a [routerLink]="['/tournament', banner.tournament]" class="title-block__btn">{{ banner.link_text }}</a>
+    </div>
+  </ng-container>
+</wc-main-page-banner-wrapper>

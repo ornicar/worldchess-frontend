@@ -1,0 +1,49 @@
+<div class="lazy-load-content">
+  <div class="lazy-load-content__img">
+    <img src="../../../../../../assets/images/main-page/other-chess-events.png" alt="" />
+  </div>
+
+  <div class="lazy-load-content__text">
+    <div class="lazy-load-content__text-coll">
+      <p>All free features plus...</p>
+      <p>Access to all premium events broadcasts</p>
+      <p>Verified Official profile on Worldchess.com</p>
+      <p>Premium chat status and features</p>
+    </div>
+    <div class="lazy-load-content__text-coll">
+      <p>Priority access to all World Chess events</p>
+      <p>Priority access to official merchandise</p>
+      <p>Opportunity to ask questions during press conferences</p>
+    </div>
+  </div>
+</div>
+
+<div class="lazy-load-footer__row" *ngIf="product$ | async as product">
+  <div class="logo-block">
+    <!--div class="lazy-load-title" *ngIf="tournament$ | async as tournament">{{ tournament.title }} {{ tournament.additional_title }}</div-->
+    <!-- <div class="lazy-load-title">Test tournament title</div> -->
+    <!--div class="price" *ngIf="tournament$ | async as tournament">
+        <span>{{ tournament.ticket_price / 100 | currency:'USD':'symbol-narrow' }}</span> / one time payment
+      </div-->
+
+    <label>
+<!--      <input class="fide-checkbox" type="checkbox" />-->
+<!--      <div class="logo-block__check">-->
+<!--        <svg class="icon">-->
+<!--          <use xlink:href="#check"></use>-->
+<!--        </svg>-->
+<!--      </div>-->
+      <div class="logo-block__title" *ngIf="product?.tournament as tournament">
+        <div>{{ tournament?.title }} {{ tournament?.additional_title }}</div>
+<!--        <a href="#">learn more</a>-->
+      </div>
+    </label>
+  </div>
+  <div class="price">
+    <span>{{ product.price / 100 | currency: 'USD':'symbol-narrow' }}</span>
+    <div>
+      one time<br />
+      payment
+    </div>
+  </div>
+</div>

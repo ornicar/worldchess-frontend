@@ -1,0 +1,32 @@
+<div class="news-container news-container--flex">
+  <wc-news-last
+    *ngIf="(newsLoader.news$ | async).length"
+    class="news-last-wrapper"
+    [tournament]="tournament"
+    [news]="(newsLoader.news$ | async)[0]"
+    (changeTab)="changeTab.emit($event)">
+  </wc-news-last>
+  <div class="news-last-wrapper news-last-wrapper--empty"
+       *ngIf="!(newsLoader.news$ | async).length">
+    <wc-preloader *ngIf="!init || newsLoader.loading; else empty"></wc-preloader>
+    <ng-template #empty>
+      <img src="assets/img/media-horse.svg" alt="img" class="news-last-wrapper__empty-img"/>
+      <div class="news-last-wrapper__empty-msg">
+        Sorry! No news posted yet…<br>
+        Stay tuned for the updates though.
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div class="news-container news-container--flex" *ngIf="(newsLoader.news$ | async).length > 1">
+  <ul class="card-list">
+    <wc-news-card
+      *ngFor="let newsItem of newsLoader.news$ | async | slice:1:newsLoader.show"
+      class="card-list__elem"
+      [newsItem]="newsItem">
+    </wc-news-card>
+  </ul>
+</div>
+<div class="" *ngIf="newsLoader.showButton">
+  <div (click)="showMore()" class="news-more"><span>show more</span></div>
+</div>

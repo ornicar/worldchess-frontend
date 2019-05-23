@@ -1,0 +1,15 @@
+<div #board class="board default coords-inner merida"></div>
+<div
+  *ngIf="promotionMoves.length"
+  class="promotion"
+  [class.white]="promotionMoves[0].color === 'w'"
+  [class.black]="promotionMoves[0].color === 'b'"
+>
+  <div
+    *ngFor="let move of promotionMoves"
+    class="promotion__figure"
+    [class.white]="move.color === 'w'"
+    [class.black]="move.color === 'b'"
+    [ngClass]="move.promotion"
+    (click)="addNewPosition(move.san)"></div>
+</div>

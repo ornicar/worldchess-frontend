@@ -1,0 +1,79 @@
+<div>
+  <form *ngIf="form"
+        [formGroup]="form"
+        class="added-form tournament-form">
+    <div>
+      <label class="tournament-form__input">
+        <span>Add result</span>
+        <span *ngIf="form.controls['results'].value"
+              (click)="showFile(form.controls['results'].value)">Current file</span>
+        <input type="file" accept="application/pdf" (change)="onFileLoad('results', $event.target.files)">
+      </label>
+      <span class="tournament-form__error" *ngIf="(errors$ | async)?.results">
+        {{(errors$ | async)?.results[0]}}
+      </span>
+    </div>
+    <div>
+      <label class="tournament-form__input">
+        <span>Add regulations</span>
+        <span *ngIf="form.controls['rules'].value"
+              (click)="showFile(form.controls['rules'].value)">Current file</span>
+        <input type="file" accept="application/pdf" (change)="onFileLoad('rules', $event.target.files)">
+      </label>
+      <span class="tournament-form__error" *ngIf="(errors$ | async)?.rules">
+        {{(errors$ | async)?.rules[0]}}
+      </span>
+    </div>
+    <div>
+      <label class="tournament-form__input">
+        <span>Country</span>
+        <select formControlName="country">
+          <option value="null" disabled selected>Choose country</option>
+          <option *ngFor="let country of countries$ | async" [ngValue]="country.id">
+            {{ country.name }}
+          </option>
+        </select>
+      </label>
+    </div>
+    <div>
+    </div>
+    <div>
+      <label class="tournament-form__input">
+        <span>Main arbiter</span>
+        <input type="text" formControlName="main_referee">
+      </label>
+      <span class="tournament-form__error" *ngIf="(errors$ | async)?.main_referee">
+        {{(errors$ | async)?.main_referee[0]}}
+      </span>
+    </div>
+    <div>
+      <label class="tournament-form__input">
+        <span>Tournament Director</span>
+        <input type="text" formControlName="tournament_director">
+      </label>
+      <span class="tournament-form__error" *ngIf="(errors$ | async)?.tournament_director">
+        {{(errors$ | async)?.tournament_director[0]}}
+      </span>
+    </div>
+    <div class="tournament-form__input-row">
+      <div class="tournament-form__input-row__item">
+        <label>About</label>
+        <textarea formControlName="about" rows="7" cols="60"></textarea>
+      </div>
+      <div class="tournament-form__input-row__item">
+        <label>Press</label>
+        <textarea formControlName="press" rows="7" cols="60"></textarea>
+      </div>
+      <div class="tournament-form__input-row__item">
+        <label>Contact</label>
+        <textarea formControlName="contacts" rows="7" cols="60"></textarea>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="controls">
+  <button class="btn btn-blue" (click)="onClose()">Close</button>
+  <button class="btn btn-blue" [disabled]="isSaveDisabled()" *ngIf="ableToSave()" (click)="onSave()">Save</button>
+  <button class="btn btn-blue" [disabled]="!!isNextDisabled" *ngIf="ableToNext()" (click)="onNext()">Next</button>
+  <button class="btn btn-blue" *ngIf="ableToSend()" (click)="onSendToApprove()">Send to approve</button>
+</div>

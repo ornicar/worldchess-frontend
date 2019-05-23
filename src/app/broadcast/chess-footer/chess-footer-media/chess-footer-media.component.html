@@ -1,0 +1,50 @@
+<div class="wc-container container container--flex chess-footer-media__container">
+  <wc-chess-footer-info
+    [tournament]="tournament"
+    class="information-aside information-aside--media information-aside--portable"
+    [showMedia]="false">
+  </wc-chess-footer-info>
+  <div class="media-main"
+    *ngIf="counts && cover">
+    <div class="media-main__photo"
+      [ngStyle]="{'background-image': getMainImage()}">
+    </div>
+    <div class="media-main__info news-info--black">
+      <div class="media-main__info-body">
+        <div class="text text--small media-main__info-date">{{ coverTime | date: 'MMM d — h:mm a'}}</div>
+        <div class="wc-title">{{cover?.caption}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="media-main"
+    [class.media-main--empty]="true"
+    *ngIf="!counts || !cover">
+    <wc-preloader *ngIf="loading else empty"></wc-preloader>
+    <ng-template #empty>
+      <img src="assets/img/media-horse.svg" alt="img" class="media-main__empty-img" />
+      <div class="media-main__empty-msg">
+        Sorry! No photos taken yet…<br>
+        Stay tuned for the updates though.
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<div *ngFor="let block of mediaBlocks$ | async trackBy: trackMediaBy ">
+  <wc-media-list *ngIf="counts && counts[block.id] > 0"
+    [list]="(mediaLists$ | async)[block.id]"
+    [block]="block"
+    (openMedia)="onOpenMedia($event)"
+    (showMore)="loadMoreReacordsForBlock($event)"
+    [showButton]="blocksOffsets[block.id] + limit < (mediaLists$ | async)[block.id]?.count">
+  </wc-media-list>
+</div>
+
+<ngx-smart-modal #myModal identifier="myModal" (onDataAdded)="onDataAdded($event)">
+  <wc-media-modal class="media-modal"
+    *ngIf="selectedMedia"
+    [data]="myModal.getData()"
+    [isAbleToPrev]="isAbleToPrev()"
+    [isAbleToNext]="isAbleToNext()">
+  </wc-media-modal>
+</ngx-smart-modal>

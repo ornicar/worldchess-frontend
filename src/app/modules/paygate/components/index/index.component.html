@@ -1,0 +1,20 @@
+<div class="lazy-load">
+  <div class="lazy-load__coll" [class.lazy-load__coll--hide]="mobileShowForm">
+    <div class="tariff">
+      <div class="tariff__body">
+        <ng-container [ngSwitch]="plan$ | async">
+          <wc-free *ngSwitchCase="'basic'" (mobileShowForm)="mobileShowForm = $event"></wc-free>
+          <wc-pro *ngSwitchCase="'pro'" (mobileShowForm)="mobileShowForm = $event"></wc-pro>
+          <wc-premium *ngSwitchCase="'premium'" (mobileShowForm)="mobileShowForm = $event"></wc-premium>
+          <wc-tournament-purchase *ngSwitchCase="'tournament'"></wc-tournament-purchase>
+          <wc-logo *ngSwitchCase="undefined"></wc-logo>
+          <wc-logo *ngSwitchDefault></wc-logo>
+        </ng-container>
+      </div>
+    </div>
+    <a class="register__close" (click)="closePopup()"></a>
+  </div>
+  <div class="lazy-load__coll">
+    <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
+  </div>
+</div>

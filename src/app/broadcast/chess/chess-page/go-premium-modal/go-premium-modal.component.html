@@ -1,0 +1,27 @@
+<div class="go-premium">
+  <div class="go-premium__title">
+    Go premium!
+  </div>
+
+  <div class="go-premium__close" (click)="closeModal()"></div>
+
+  <div class="go-premium__content">
+    <div class="go-premium__buy-section">
+
+      <div class="go-premium__buy-half" *ngFor="let plan of this.plans">
+        <div class="go-premium__buy-text">
+          {{plan.price / 100 | currency:'USD':'symbol-narrow' }}
+          <span *ngIf="plan.oldPrice"
+            class="go-premium__buy-text--black go-premium__buy-text--crossed">${{ plan.oldPrice }}</span>
+          <br>
+          {{ plan.titleModal }}
+        </div>
+        <button class="go-premium__buy-button" (click)="openCheckout(plan)">
+          buy
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div class="go-premium__image"></div>
+</div>

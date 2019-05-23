@@ -1,0 +1,32 @@
+<div class="chat__elem" [class.chat__elem--answer]="message.my">
+  <div class="chat__avatar" [style.backgroundColor]="color">
+    <span class="chat__avatar-text">{{userPrefix}}</span>
+  </div>
+  <div class="chat__text">
+  <span class="chat__text--header">
+    <span class="chat__text--header-min_name_line">{{message?.user?.full_name}}</span>
+    <span class="chat__text--header-name">{{message?.user?.full_name}}</span>
+    <span class="chat__text--header-time">{{message.created | date : 'HH:mm'}}</span>
+  </span>
+    <span class="message" [innerHtml]="message.text | wcBackLightReplyMessage | wcSanitizeHtml"></span>
+    <span class="likes-block" *ngIf="message.likes">
+  <span class="likes">
+    <span class="likes-icon"></span>
+    <span class="likes-counter">{{message.likes}}</span>
+  </span>
+  </span>
+    <div class="chat__message-hover" *ngIf="showLikes">
+      <div class="chat__btns">
+      <span class="reply" (click)="reply.next(message)">
+        <span class="reply-icon chat__btns-icon"></span>
+        <span class="btn-text">reply</span>
+      </span>
+      <span class="like" (click)="toggleLikeMessage()">
+        <span class="like-icon chat__btns-icon"></span>
+        <span class="btn-text">{{message.current_user_vote !== 1 ? 'like' : 'unlike'}}</span>
+      </span>
+      </div>
+    </div>
+  </div>
+</div>
+

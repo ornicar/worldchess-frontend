@@ -1,0 +1,24 @@
+@import '../../../../../html/css/variables';
+@import '../../../../../html/css/media';
+
+.livestream-board-swap-button {
+  position: absolute;
+  top: 71px;
+  left: -17px;
+  width: 34px;
+  height: 34px;
+  background-color: #ffffff;
+  box-shadow: 0 0 16px 2px #8D73FF;
+  border-radius: 50%;
+  padding: 7px;
+  fill: $blue;
+  z-index: z-index(base);
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    transform: scale(1.1, 1.1);
+  }
+  @include phones() {
+    display: none;
+  }
+}

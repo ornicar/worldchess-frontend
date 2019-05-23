@@ -1,0 +1,30 @@
+html {
+    font-size: 16px;
+
+    @include tablets {
+        font-size: 14px;
+    }
+}
+
+.wc-tournament {
+  line-height: 1.42em;
+  font-weight: normal;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: normal;
+  }
+
+  h1 {
+    margin: 0.47em 0;
+  }
+
+  a { text-decoration: none;}
+
+
+  ul li { list-style: none;}
+}

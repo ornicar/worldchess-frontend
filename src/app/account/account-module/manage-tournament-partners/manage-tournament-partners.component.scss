@@ -1,0 +1,38 @@
+.partners-form {
+  position: relative;
+  // TODO color depend on theme (isPremium)
+
+  .partner-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .item-btn {
+    cursor: pointer;
+    padding: 0 10px;
+    display: inline-block;
+  }
+
+  .btn{
+    &--remove {
+      cursor: pointer;
+      padding: 0 10px;
+      display: inline-block;
+    }
+
+    &--update {
+    }
+
+    &--add {
+      margin-top: 20px;
+    }
+  }
+
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+}

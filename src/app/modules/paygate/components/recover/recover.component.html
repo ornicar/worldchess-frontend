@@ -1,0 +1,57 @@
+<!-- <div *ngIf="(loading$ | async)">
+  Loading
+</div>
+
+<div *ngIf="(success$ | async)">
+  Confirmation link was sent to sasha@kolts.ru. Please use this link to finish e-mail confirmation.
+</div> -->
+<ng-container *ngIf="(recoveryState$ | async) === RecoveryState.RECOVERY">
+  <form [formGroup]="recoveryForm" (ngSubmit)="recover()" class="register">
+    <a class="register__close" (click)="closePopup()"></a>
+    <div class="register__title">
+      Recovery
+    </div>
+    <div class="register__labels">
+      <div class="input-text">
+        <label class="input-text__input">
+          <div class="input-text__wparrer">
+            <input
+              class="input-text__elem"
+              [class.input-text__elem--active]="!!recoveryForm.controls['email'].value"
+              type="email"
+              formControlName="email"
+            />
+            <div class="input-text__placeholder">Email</div>
+          </div>
+          <div *ngIf="recoveryForm.controls['email'].errors && recoveryForm.controls['email'].dirty" class="input-text__error">
+            <div [hidden]="!recoveryForm.controls['email'].errors['required']">Email is required.</div>
+            <div [hidden]="!recoveryForm.controls['email'].errors['email']">Email is invalid.</div>
+          </div>
+        </label>
+      </div>
+
+      <div class="login__incorrect" *ngIf="(recoveryError$ | async) as error">{{ error['email'] }}</div>
+    </div>
+    <div class="register__footer">
+      <div class="register__footer-coll">
+        <div class="register-checkbox__text">
+          we will send you a link to reset your password don't actually forget? <a [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]">sing in</a>
+        </div>
+      </div>
+
+      <div class="register__footer-coll">
+        <button class="register__btn register__btn--pro register__btn--premium" type="submit">Recovery</button>
+      </div>
+    </div>
+  </form>
+</ng-container>
+
+<ng-container *ngIf="(recoveryState$ | async) === RecoveryState.CONFIRM">
+  <wc-confirm [embedded]="true" (success)="confirm($event)" (back)="goToRecovery()"></wc-confirm>
+</ng-container>
+
+
+<ng-container *ngIf="(recoveryState$ | async) === RecoveryState.RESET">
+  <wc-password [embedded]="true" (success)="reset($event)"></wc-password>
+</ng-container>
+

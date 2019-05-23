@@ -1,0 +1,44 @@
+<wc-chess-page-layout class="wc-container">
+  <ng-container slot="main">
+    <wc-chess-boards-area [tournament]="tournament" [tour]="tour" (choseGame)="choseGame($event)"></wc-chess-boards-area>
+  </ng-container>
+
+  <ng-container slot="livestream">
+    <wc-livestream-container
+      [tourId]="tour?.id">
+    </wc-livestream-container>
+  </ng-container>
+
+  <ng-container slot="history">
+    <ng-container *ngIf="selectedGameState$ | async as selectedGameState; else tourInfoBlock">
+      <wc-game-players [board]="selectedGameState.board"></wc-game-players>
+      <wc-match-time-info [board]="selectedGameState.board"></wc-match-time-info>
+      <wc-history-moves *ngIf="selectedGameState.isNotExpected" [hideMoveNumbers]="true" [board]="selectedGameState.board" class="chess-page__history-moves"></wc-history-moves>
+      <wc-history-moves-placeholder *ngIf="!selectedGameState.isNotExpected" [hideMoveNumbers]="true" [tour]="selectedGameState.board?.tour" [tournament]="tournament" class="chess-page__history-moves"></wc-history-moves-placeholder>
+      <a [routerLink]="['/tournament', tournament.id, 'pairing', selectedGameState.board.id]" class="to-chess-game-page">Watch full broadcast →</a>
+    </ng-container>
+
+    <ng-template #tourInfoBlock>
+      <div class="tournament-info">
+        <div class="tournament-info__title">
+          {{tournament.title}} {{tournament.additional_title}}
+        </div>
+        <div class="tournament-info__about">
+          <!-- {{tournament.about}} -->
+        </div>
+      </div>
+      <wc-tour-metrics [tour]="tour"></wc-tour-metrics>
+
+      <div class="choose-game">
+        <svg width="85" height="32" viewBox="0 0 85 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M83.7822 31.7465C72.7026 -2.96136 26.6535 13.118 2.62593 7.08632C-0.678819 6.25672 13.7891 3.13961 10.9853 1.20351C7.96738 -0.880483 3.66245 3.40913 1.09859 6.03163C0.853229 6.2826 2.80877 9.05168 10.2666 13.3949" stroke="#979797"/>
+        </svg>
+
+        Choose a game to <br>
+        see detailed info and <br>
+        notation
+      </div>
+    </ng-template>
+  </ng-container>
+</wc-chess-page-layout>
+

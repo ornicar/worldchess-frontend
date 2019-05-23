@@ -1,0 +1,20 @@
+<div class="round-divst__elem"
+  *ngFor="let round of rounds; let i = index;">
+  <div
+    class="round-cell"
+    [class.round-cell--hatching]="round.is_rest_day"
+    [class.round-cell--past]="isPast(round)"
+    [class.round-cell--active]="isNow(round)">
+    <div class="round-cell__title">{{round.title}}</div>
+    <div class="round-cell__comments">{{round.description}}</div>
+    <div class="round-cell__date">
+      <div>{{getDayOfWeek(round)}}</div>
+      <div>{{getDate(round)}}</div>
+    </div>
+    <img
+      *ngIf="isPast(round)"
+      class="round-cell__strikeout"
+      [src]="getScribble(i)"
+    />
+  </div>
+</div>

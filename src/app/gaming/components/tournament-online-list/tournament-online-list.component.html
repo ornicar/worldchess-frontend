@@ -1,0 +1,20 @@
+<wc-tournament-list-title>
+  <ng-template #title>
+    <span>Online</span> tournaments
+  </ng-template>
+</wc-tournament-list-title>
+<wc-tournament-list
+  [tournaments]="tournamentsList$ | async"
+  [isDisplayShowMoreBtn]="false"
+  (clickItem)="onClickItem($event)">
+  <ng-template #buttons let-tournament>
+    <button class="btn btn-white" [routerLink]="['/tournament', tournament.id]">watch</button>
+    <button
+      *ngIf="tournament.available && !tournament.user_signed"
+      (click)="onClickRegister($event, tournament.id, tournament)"
+      class="btn btn-white">
+      register
+    </button>
+  </ng-template>
+</wc-tournament-list>
+<wc-own-event-button></wc-own-event-button>

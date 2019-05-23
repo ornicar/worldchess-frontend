@@ -1,0 +1,8 @@
+<wc-header-small
+  *ngIf="currentTournament"
+  [event]="currentEvent"
+  [tournament]="currentTournament"
+  [enableTournamentDropdown]="false"
+  (selectedItemChange)="onChangeNavigation($event)"
+>
+</wc-header-small>

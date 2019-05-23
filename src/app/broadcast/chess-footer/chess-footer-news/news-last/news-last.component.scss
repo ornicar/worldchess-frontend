@@ -1,0 +1,102 @@
+@import '../html/css/media.scss';
+@import '../html/css/variables.scss';
+
+.news-last {
+  color: initial;
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+
+  &__photo {
+    background-size: cover;
+    background-position: center center;
+    flex-grow: 1;
+  }
+
+  &__info {
+    display: inline-block;
+    padding: 20px;
+    background-color: $gray;
+
+    &__body {
+        word-break: break-word;
+
+        .text {
+          font: 400 18px/18px $gerbera-font;
+          margin-bottom: 20px;
+          color: $black-light;
+          @include tablets-big() {
+            font: 400 15px/15px $gerbera-font;
+          }
+        }
+    
+        .title {
+          font: 300 28px/38px $gerbera-font;
+          @include tablets-big() {
+            font: 300 22px/32px $gerbera-font;
+          }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        align-items: flex-end;
+        flex: 0;
+        padding-top: 5px;
+    }
+  }
+}
+
+.read-all-btn {
+  background-color: $blue;
+  padding: 5px 20px;
+  color: #000;
+  border: 1px solid transparent;
+  z-index: z-index(base, 1);
+  font: 400 15px/22px $gerbera-font;
+
+  &:hover {
+    transition: all .4s ease;
+    border: 1px solid black;
+  }
+
+  &--right {
+      margin-left: auto;
+  }
+
+  &--desck {
+      @include phones() {
+         display: none;
+      }
+  }
+}
+
+.news-tag {
+  &__list {
+      display: flex;
+      flex-wrap: wrap;
+  }
+
+  &__elem {
+      display: flex;
+      margin-right: 15px;
+      margin-top: 5px;
+
+      &:last-child {
+          margin-right: 0;
+      }
+  }
+
+  &__link {
+      white-space: nowrap;
+      border: solid 1px #e5e5e5;
+      color: $black-light;
+      padding: 2px 11px;
+      font: 400 11px/16px $gerbera-font;
+
+      &:hover {
+        transition: all .4s ease;
+        border: 1px solid black;
+      }
+  }
+}

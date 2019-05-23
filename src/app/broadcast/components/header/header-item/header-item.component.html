@@ -1,0 +1,5 @@
+<div *ngIf="name" class="name">{{name}}</div>
+
+<div *ngIf="selected" [class.select-option--can-change]="true" class="select-option" (click)="onClick.emit(selected)">
+  <ng-container *ngTemplateOutlet="titleSelectedTemplate; context: {$implicit: selected}"></ng-container>
+</div>

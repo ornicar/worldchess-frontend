@@ -1,0 +1,10 @@
+<div
+  *ngIf="!(isAuthorized$ | async)"
+  (click)="openPaygatePopup()"
+  class="create-free-account"
+  [class.fixed]="!fixed || isFixed"
+  [class.arena]="isArena"
+  [ngStyle]="{ 'background-color': background }"
+>
+  Create a free account and join the World Chess
+</div>

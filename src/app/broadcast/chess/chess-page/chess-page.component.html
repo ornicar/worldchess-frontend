@@ -1,0 +1,36 @@
+<ng-container *ngIf="gameState$ | async as gameState">
+  <wc-chess-page-layout class="wc-container" [switched]="!boardInCenter" [class.my-game]="(gameState$ | async)?.myGameIsActive">
+    <ng-container slot="title">
+      <wc-chess-board-title [gameState]="gameState" [withoutBoard]="withoutBoard"></wc-chess-board-title>
+    </ng-container>
+
+    <ng-container slot="main">
+      <wc-livestream-board-swap-button *ngIf="!boardInCenter" (click)="toggleLivestreamBoard()"></wc-livestream-board-swap-button>
+      <wc-chess-single-game-container [isMinimalMode]="!boardInCenter" [tournament]="tournament" [tour]="tour" [board]="board" [withoutBoard]="withoutBoard"></wc-chess-single-game-container>
+    </ng-container>
+
+    <ng-container slot="predictions">
+      <wc-predictions *ngIf="gameState?.selectedMove?.prediction" [gameState]="gameState"></wc-predictions>
+    </ng-container>
+
+    <ng-container slot="livestream">
+      <wc-livestream-board-swap-button *ngIf="swapButtonAvailable && boardInCenter" (click)="toggleLivestreamBoard()" (swipeleft)="toggleLivestreamBoard(true)"></wc-livestream-board-swap-button>
+      <wc-livestream-container
+        [class.switched]="!boardInCenter"
+        [tourId]="gameState?.board?.tour || tour?.id"
+        [tournament]="tournament"
+        [main]="!boardInCenter">
+      </wc-livestream-container>
+    </ng-container>
+
+    <ng-container slot="history">
+      <wc-match-time-info [board]="gameState?.board"></wc-match-time-info>
+      <wc-history-moves *ngIf="gameState?.isNotExpected && gameState?.board" [myGameIsActive]="gameState?.myGameIsActive" [board]="gameState?.board" class="chess-page__history-moves"></wc-history-moves>
+      <wc-history-moves-placeholder *ngIf="!gameState?.isNotExpected && tour" [myGameIsActive]="gameState?.myGameIsActive" [tour]="tour" [tournament]="tournament" class="chess-page__history-moves"></wc-history-moves-placeholder>
+    </ng-container>
+
+    <ng-container slot="aside">
+      <wc-chat [board]="gameState?.board"></wc-chat>
+    </ng-container>
+  </wc-chess-page-layout>
+</ng-container>

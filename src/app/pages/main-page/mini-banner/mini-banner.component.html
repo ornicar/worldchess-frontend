@@ -1,0 +1,15 @@
+<div class="info">
+  <div class="type">{{content.type}}</div>
+  <h3 class="title" [innerHtml]="content.title | wcSanitizeHtml"></h3>
+  <a *ngIf="content.link.navigation; else externalLink" [routerLink]="content.link.navigation" class="link">
+    {{ content.link.label }}
+  </a>
+  <ng-template #externalLink>
+    <a [href]="content.link.path" class="link">
+      {{ content.link.label }}
+    </a>
+  </ng-template>
+</div>
+<div *ngIf="content.image && content.image.full" class="image">
+  <img [src]="content.image.full" [alt]="content.title">
+</div>

@@ -1,0 +1,17 @@
+<div class="partner-control">
+  <div *ngIf="partnerForm"
+        [formGroup]="partnerForm"></div>
+  <select [formControl]="partnerForm.controls['partner']">
+    <option [ngValue]="null" disabled selected>Choose partner</option>
+    <option *ngFor="let partner of partners" [ngValue]="partner.id">
+      {{ partner.name }}
+    </option>
+  </select>
+  <select [formControl]="partnerForm.controls['partner_cat']">
+    <option [ngValue]="null" disabled selected>Choose partner type</option>
+    <option *ngFor="let type of partnerTypes" [ngValue]="type.value">
+      {{ type.title }}
+    </option>
+  </select>
+  <input placeholder="Partner Sequence" type="number" [formControl]="partnerForm.controls['partner_seq']">
+</div>

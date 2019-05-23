@@ -1,0 +1,75 @@
+@import '../../html/css/variables';
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: rotate(10deg);
+  }
+  20%,
+  80% {
+    transform: rotate(-10deg);
+  }
+  30%,
+  50%,
+  70% {
+    transform: rotate(15deg);
+  }
+  40%,
+  60% {
+    transform: rotate(-15deg);
+  }
+}
+
+:host {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  &:hover {
+    wc-hugetooltip {
+      display: block;
+    }
+  }
+}
+
+svg.icon {
+  width: 30px;
+  height: 30px;
+  &.shake {
+    transform: rotate(0deg);
+    animation: shake 0.82s infinite;
+  }
+}
+
+div.timer {
+  margin-left: 10px;
+  color: #000;
+}
+
+div.tooltip-buttons {
+  display: flex;
+  justify-content: center;
+
+  a.button-pink {
+    cursor: pointer;
+    align-self: center;
+    padding: 0 36px;
+    border: 0;
+    outline: 0;
+    background-color: $violet;
+    color: #fff;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 4px;
+    text-align: center;
+    font: 300 15px/35px $gerbera-font;
+    letter-spacing: 0.3px;
+  }
+}
+
+wc-hugetooltip {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}

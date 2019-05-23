@@ -1,0 +1,139 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+
+.news-container {
+  margin: 0 auto;
+  position: relative;
+  min-width: 320px;
+  width: 100%;
+  min-height: 617px;
+
+  &--flex {
+    display: flex;
+  }
+
+  @include phones() {
+    flex-direction: column;
+    min-height: auto;
+  }
+}
+
+.news-info {
+  position: relative;
+  flex: 0 1 auto;
+  width: 425px;
+  background-color: $black;
+  padding: 11px 11px;
+  padding-bottom: 110px;
+  // @TODO use one style for the info block, move to :host style of the -info.component when styles become encapsulated
+  overflow: hidden;
+
+  @include phones() {
+    width: 100%;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &--mobile {
+    display: none;
+
+    @include phones() {
+      display: flex;
+    }
+  }
+
+  &--portable {
+    display: flex;
+
+    @include phones() {
+      display: none;
+    }
+  }
+}
+
+.news-last-wrapper {
+  min-height: 600px;
+  flex: 2;
+  display: flex;
+  cursor: pointer;
+
+  &:hover {
+    .news-last__info {
+      background-color: white;
+    }
+  }
+
+  &--empty {
+    background-color: $black-bg;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__empty-img {
+    width: 40%;
+    height: 40%;
+  }
+
+  &__empty-msg {
+    text-align: center;
+    color: $light-gray;
+    font-size: 22px;
+    margin-top: 40px;
+  }
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid #e0e0e0;
+  width: 100%;
+
+  &__elem {
+    width: 50%;
+    flex: 0 0 auto;
+
+    @include ipad() {
+      width: 100%;
+      min-height: auto;
+    }
+  }
+
+  &__card {
+    display: flex;
+  }
+}
+
+.news-more {
+  position: relative;
+  font: 400 18px/23px $gerbera-font;
+  color: #000;
+  padding: 20px 0;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: z-index(base, 1);
+
+  @include tablets-big() {
+    font-size: 15px;
+  }
+
+  &:hover {
+    background-color: white;
+  }
+
+  &:after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    margin-left: 6px;
+    border: solid black;
+    display: inline-block;
+    border-width: 0 1px 1px 0;
+    transform: rotate(-45deg);
+  }
+}

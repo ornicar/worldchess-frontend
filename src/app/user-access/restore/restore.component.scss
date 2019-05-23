@@ -1,0 +1,141 @@
+@import "settings";
+@import "mixins";
+@import "../../../html/css/variables";
+.bg-grey {
+  @include media-breakpoint-up(sm) {
+    background-color: #ffffff;
+  }
+}
+
+h1 {
+  font-weight: lighter;
+  padding: 9px 0;
+  font: 300 33px/45px $gerbera-font;
+}
+
+.block {
+  > div {
+    flex: 100% 1 1;
+  }
+
+  &-100w {
+    min-height: calc(100vh - 50px);
+  }
+}
+
+.form {
+  padding-right: 0;
+  position: relative;
+
+  @include media-breakpoint-up(sm) {
+    padding-right: 42px;
+    padding-left: 42px;
+    padding-top: 8px;
+  }
+
+  @include media-breakpoint-up(md) {
+    padding-right: 112px;
+  }
+}
+
+.after-form {
+  margin-top: auto;
+  bottom: 0;
+  color: $gray-600;
+  font-size: 14px;
+  position: relative;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 15px;
+  }
+
+  .mb-10 {
+    margin-bottom: 10px;
+  }
+
+  .mb-30 {
+    margin-bottom: 30px;
+  }
+
+  .info {
+    letter-spacing: 0.18px;
+    padding-bottom: 2px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    font: 400 11px/17px $gerbera-font;
+
+    @include media-breakpoint-up(sm) {
+      font-size: 15px;
+      line-height: 22px;
+      letter-spacing: -0.06px;
+      padding-bottom: 0;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @include media-breakpoint-up(md) {
+      flex-wrap: wrap;
+    }
+
+    @include media-breakpoint-up(xl) {
+      flex-wrap: nowrap;
+    }
+
+    .info-text {
+      max-width: 260px;
+
+      @include media-breakpoint-up(sm) {
+        max-width: 350px;
+      }
+    }
+
+    a {
+      letter-spacing: 0.3px;
+
+      @include media-breakpoint-up(sm) {
+        letter-spacing: inherit;
+      }
+    }
+  }
+}
+
+.submit {
+  margin-right: 1px;
+  white-space: nowrap;
+  margin-left: 0;
+  margin-top: 20px;
+  width: 100%;
+
+  @include media-breakpoint-up(sm) {
+    margin-right: -1px;
+    margin-left: 20px;
+    margin-top: 0;
+    width: auto;
+  }
+
+  @include media-breakpoint-up(md) {
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 0;
+  }
+
+  @include media-breakpoint-up(xl) {
+    width: auto;
+    margin-top: 0;
+    margin-left: 20px;
+  }
+}
+
+
+.message {
+  margin-top: 26px;
+
+  .thank-you, .sent-email {
+    font-size: 22px;
+  }
+
+  .sent-email {
+    color: #656565;
+  }
+}

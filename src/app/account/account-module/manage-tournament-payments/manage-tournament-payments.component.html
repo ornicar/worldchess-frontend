@@ -1,0 +1,32 @@
+<div class="payments-form tournament-form">
+  <form *ngIf="form"
+    [formGroup]="form">
+
+    <label class="payments-form__input">
+
+      <span> Broadcast Type: </span>
+
+      <select class="payments-form__input" formControlName="broadcast_type">
+          <option value="null" disabled >Choose Broadcast Type</option>
+          <option *ngFor="let type of broadcastTypes" [ngValue]="type.value">
+            {{ type.title }}
+          </option>
+        </select>
+    </label>
+
+    <label class="payments-form__input">
+      <span> Price, USD </span>
+
+      <input type="number" formControlName="ticket_price">
+
+    </label>
+  </form>
+</div>
+
+
+<div class="controls">
+  <button class="btn btn-blue" (click)="onClose()">Close</button>
+  <button class="btn btn-blue" [disabled]="isSaveDisabled()" *ngIf="ableToSave()"(click)="onSave()">Save</button>
+  <button class="btn btn-blue" *ngIf="ableToNext()"(click)="onNext()">Next</button>
+  <button class="btn btn-blue" *ngIf="ableToSend()" (click)="onSendToApprove()">Send to approve</button>
+</div>

@@ -1,0 +1,43 @@
+<h1 class="wc-title wc-title--big wc-title--big wc-title--white wc-title--light field__title">
+  <ng-container *ngIf="gameState?.myGameIsActive; else gameStatus">
+    It's your move now!
+  </ng-container>
+  <ng-template #gameStatus>
+    <ng-container *ngIf="notification$ | async as notification; else withoutNotification">
+      {{ notification }}
+    </ng-container>
+    <ng-template #withoutNotification>
+      <ng-container *ngIf="boardStatus$ | async as boardStatus; else boardWillAvailable" [ngSwitch]="boardStatus">
+        <ng-container *ngSwitchCase="BoardStatus.EXPECTED">
+          Round is beginning
+          <wc-timer *ngIf="tour$ | async as tour" [date]="tour.datetime_of_round" [format]="'DD:HH:mm:ss'"></wc-timer>
+        </ng-container>
+        <ng-container *ngSwitchCase="BoardStatus.GOES">
+          <ng-container *ngIf="stockfishMessage$ | async as stockfishMessage; else gameStarted">{{stockfishMessage}}
+          </ng-container>
+          <ng-template #gameStarted>
+            The game has started
+            <wc-timer *ngIf="tour$ | async as tour"
+                      [date]="tour.datetime_of_round"
+                      [format]="'mm'"
+                      [stopAfterZero]="false"
+                      class="wc-title__time"></wc-timer>
+            minutes ago
+          </ng-template>
+        </ng-container>
+        <ng-container *ngSwitchCase="BoardStatus.COMPLETED">
+          <ng-container *ngIf="board$ | async as board; else withoutResult" [ngSwitch]="board.result">
+            <ng-container *ngSwitchCase="BoardResult.VICTORY">White won</ng-container>
+            <ng-container *ngSwitchCase="BoardResult.DRAW">A draw!</ng-container>
+            <ng-container *ngSwitchCase="BoardResult.DEFEAT">Black won</ng-container>
+          </ng-container>
+          <ng-template #withoutResult>Game 1 is starting soon!</ng-template>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="withoutBoard">
+        Round's pairings will be available soon.
+      </ng-container>
+    </ng-template>
+  </ng-template>
+</h1>

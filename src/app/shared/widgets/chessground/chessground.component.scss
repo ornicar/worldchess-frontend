@@ -1,0 +1,122 @@
+@import 'pgnViewer/css/chessground.css';
+@import 'pgnViewer/css/pgnvjs.css';
+@import 'pgnViewer/css/theme.css';
+@import "../../../../html/css/variables";
+
+wc-chessground {
+  display: block;
+  position: relative;
+  z-index: z-index(base, 1);
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    top: 0;
+    left: 0;
+    z-index: z-index(base, 2);
+  }
+}
+
+wc-chessground.movable {
+  &::before {
+    display: none;
+  }
+
+  .cg-board {
+    cursor: pointer;
+  }
+}
+
+.promotion {
+  position: absolute;
+  left: 20px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 3px;
+  background-color: #fff;
+  fill: #B1B1B1;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 5px;
+    box-sizing: content-box;
+    border-top: 13px solid #fff;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    border-bottom: 0;
+  }
+
+  &.white {
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.55));
+    top: -65px;
+  }
+
+  &.black {
+    filter: drop-shadow(0 0 2px rgba(255,255,255,0.60));
+    top: -65px;
+  }
+}
+
+.promotion__figure {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-position: center center;
+  background-size: auto 100%;
+  cursor: pointer;
+
+  &.white {
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.55));
+
+    &.p {
+      background-image: url('pgnViewer/css/images/pieces/merida/wP.svg');
+    }
+    &.b {
+      background-image: url('pgnViewer/css/images/pieces/merida/wB.svg');
+    }
+    &.n {
+      background-image: url('pgnViewer/css/images/pieces/merida/wN.svg');
+    }
+    &.r {
+      background-image: url('pgnViewer/css/images/pieces/merida/wR.svg');
+    }
+    &.q {
+      background-image: url('pgnViewer/css/images/pieces/merida/wQ.svg');
+    }
+    &.k {
+      background-image: url('pgnViewer/css/images/pieces/merida/wK.svg');
+    }
+  }
+
+  &.black {
+    filter: drop-shadow(0 0 2px rgba(255,255,255,0.60));
+
+    &.p {
+      background-image: url('pgnViewer/css/images/pieces/merida/bP.svg');
+    }
+    &.b {
+      background-image: url('pgnViewer/css/images/pieces/merida/bB.svg');
+    }
+    &.n {
+      background-image: url('pgnViewer/css/images/pieces/merida/bN.svg');
+    }
+    &.r {
+      background-image: url('pgnViewer/css/images/pieces/merida/bR.svg');
+    }
+    &.q {
+      background-image: url('pgnViewer/css/images/pieces/merida/bQ.svg');
+    }
+    &.k {
+      background-image: url('pgnViewer/css/images/pieces/merida/bK.svg');
+    }
+  }
+}

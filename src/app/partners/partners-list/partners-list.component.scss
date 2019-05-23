@@ -1,0 +1,205 @@
+@import 'settings';
+@import 'mixins';
+@import "../../../html/css/variables";
+@import "../../../html/css/media";
+
+.partners {
+  padding: 1px 0 0;
+  background-color: #fff;
+  min-height: 217px;
+
+  @include phones-small() {
+    padding: 1px 0 0;
+  }
+
+  .block-header {
+    font: 400 38px/48px $gerbera-font;
+    letter-spacing: 1.3px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-top: 19px;
+
+    @include tablets-big() {
+      font: 400 33px/32px $gerbera-font;
+      margin-bottom: 25px;
+    }
+
+    @include phones() {
+      margin-bottom: 52px;
+      font: 300 22px/22px $gerbera-font;
+    }
+
+    a {
+      color: inherit;
+      letter-spacing: 0px;
+    }
+  }
+
+  .partners-wrapper {
+    margin: 0 -7px;
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-down(md) {
+      border-top: 1px solid #9E9E9E;
+    }
+
+    .partner-item {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      padding: 0 20px;
+    }
+  }
+
+  .line-break {
+    display: none;
+
+    @include media-breakpoint-up(lg) {
+      display: block;
+      width: 1px;
+      height: 49px;
+      background-color: #cfcfcf;
+      opacity: 0.55;
+      margin: 0 3.5%;
+      align-self: center;
+    }
+
+    @include media-breakpoint-up(xl) {
+      height: 68px;
+      margin-left: 3.8%;
+      margin-right: 3.5%;
+      transform: translateY(4%);
+    }
+  }
+}
+
+.partner-logo {
+  display: flex;
+  flex: 1;
+  padding: 0 5px;
+  height: 133px;
+  max-width: 250px;
+
+  @include media-breakpoint-up(lg) {
+    margin-bottom: 0;
+  }
+
+  @include media-breakpoint-down(md) {
+    height: 130px;
+  }
+
+  @include phones-small() {
+    height: 112px;
+  }
+
+  &--mass-media {
+    transform: scale(0.75);
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &#phosagro {
+    width: 36%;
+    align-items: center;
+    justify-content: center;
+  }
+  &#kaspersky {
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+  }
+  &#unibet {
+    width: 28%;
+    align-items: center;
+    justify-content: center;
+  }
+  &#dupont {
+    width: 20%;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2%;
+  }
+  &#prytek {
+    width: 15%;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2.3%;
+  }
+  &#isklar {
+    width: 10%;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+  }
+
+  @include media-breakpoint-up(lg) {
+    &#phosagro {
+      width: 19.9%;
+      margin-left: 4.9%;
+    }
+    &#kaspersky {
+      width: 16.3%;
+      margin-left: 2.8%;
+    }
+    &#unibet {
+      width: 14.6%;
+      margin-left: 2.7%;
+      transform: translateY(1%);
+    }
+    &#dupont {
+      width: 10.7%;
+      margin-right: 0;
+      margin-left: 0.1%;
+      transform: translateY(-1%);
+    }
+    &#prytek {
+      width: 7.527%;
+      margin-right: 0;
+      margin-left: 2.2%;
+    }
+    &#isklar {
+      width: 4.8%;
+      margin-right: 0;
+      margin-left: 2.4%;
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    &#phosagro {
+      width: 20.1%;
+      margin-left: 3.65%;
+    }
+    &#kaspersky {
+      width: 16.5%;
+      margin-left: 3.1%;
+    }
+    &#unibet {
+      width: 14.9%;
+      margin-left: 3%;
+    }
+    &#dupont {
+    }
+    &#prytek {
+      margin-left: 2.45%;
+    }
+    &#isklar {
+      margin-left: 2.7%;
+      width: 4.7%;
+      transform: translateY(-1%);
+    }
+  }
+
+}
+
+ngu-carousel {
+  width: 100%;
+}

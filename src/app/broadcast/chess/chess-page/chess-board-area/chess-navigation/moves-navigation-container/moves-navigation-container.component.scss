@@ -1,0 +1,42 @@
+@import '../../../../../../../html/css/variables';
+@import '../../../../../../../html/css/media';
+
+:host {
+  display: block;
+  height: 70px;
+  position: relative;
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: #adadff;
+}
+
+.navigation {
+  height: 70px;
+  margin-top: -70px;
+  position: relative;
+}
+
+.back-to-live {
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #FFFFFF;
+  padding: 6px 12px;
+  background: #59F19B;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0) rotate(-9deg);
+  cursor: pointer;
+  font: 700 13px/18px $gerbera-font;
+}
+
+wc-moves-navigation-slider {
+  display: block;
+  height: 70px;
+}

@@ -1,0 +1,107 @@
+/* autoprefixer grid: autoplace */
+@import '../../../../../../html/css/variables';
+@import '../../../../../../html/css/media';
+@import '../../../../../../scss/settings';
+
+:host {
+  display: block;
+}
+
+// @todo add STYLE FOR IE.
+//!!! caution: check every change 1) chrome 2) narrow screen 3) ie 4) ie + narrow screen
+.chess-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 316px max-content;
+  grid-template-rows: max-content max-content 1fr max-content;
+  grid-template-areas: "title secondary aside" "main secondary aside" "main history aside" "predictions history aside";
+  transition: background-color 0.38s ease-in;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  @include phones() {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "title" "main" "predictions" "history" "secondary" "aside";
+  }
+
+  &__title {
+    grid-area: title;
+    z-index: z-index(base, 5);
+  }
+
+  &__board {
+    grid-area: main;
+    position: relative;
+    z-index: z-index(base, 4);
+
+    .chess-layout--switched & {
+      width: 316px;
+      margin: 0 auto;
+    }
+
+    @include phones() {
+      z-index: z-index(base, 5);
+    }
+
+  }
+
+  &__predictions {
+    grid-area: predictions;
+    z-index: z-index(base, 4);
+  }
+
+  &__livestream {
+    grid-area: secondary;
+    box-shadow: 0 0 22px 0 #8D73FF;
+    z-index: z-index(base, 6);
+    position: relative;
+    height: 178px;
+
+    @include phones() {
+      box-shadow: none;
+      height: auto;
+    }
+  }
+
+  &__history {
+    grid-area: history;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #fff;
+    width: 316px;
+    z-index: z-index(base, -1);
+
+    @include phones() {
+      width: 100%;
+    }
+  }
+
+  &__aside {
+    grid-area: aside;
+    display: flex;
+    z-index: z-index(base, 5);
+
+    @include phones() {
+      position: absolute;
+      width: 0;
+    }
+  }
+
+  &--switched & {
+    &__board {
+      grid-area: secondary;
+      box-shadow: 0 0 22px 0 #59f19b;
+      z-index: z-index(base, 6);
+    }
+
+    &__livestream {
+      grid-area: main;
+      box-shadow: none;
+      height: auto;
+      z-index: z-index(base, 4);
+    }
+  }
+}

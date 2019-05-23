@@ -1,0 +1,24 @@
+<div class="board-container" [ngClass]="containerPositionClasses.join(' ')">
+  <div class="board" *ngIf="gameState$ | async as gameState">
+    <div class="board__center">
+      <div class="chess-board">
+        <wc-broadcast-multiple-chess-board-controller [isSelected]="isSelected" [viewMode]="chessBoardViewMode[currentViewMode]" [boardId]="gameState?.board?.id"></wc-broadcast-multiple-chess-board-controller>
+      </div>
+    </div>
+  </div>
+  <a *ngIf="isSelected" [routerLink]="['/tournament', tournament.id, 'pairing', board.id]" class="chess-page-link">
+    <svg width="39" height="37" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M35.3909 0.975241C36.6622 -0.244777 38.7757 0.656255 38.7757 2.41828V34.8571C38.7757 35.9617 37.8803 36.8571 36.7757 36.8571H2.97263C1.1709 36.8571 0.287848 34.6616 1.58783 33.4141L35.3909 0.975241Z"
+        fill="#59F19B"/>
+    </svg>
+    <span>→</span>
+  </a>
+  <wc-game-favorite-icon
+    *ngIf="(canUseFavorites$ | async) && (isSelected || isHovered)"
+    [checked]="isFavorites$ | async"
+    [disabled]="favoriteBoardsIsLoading$ | async"
+    (click)="onToggleFavorite($event)"
+  >
+  </wc-game-favorite-icon>
+</div>

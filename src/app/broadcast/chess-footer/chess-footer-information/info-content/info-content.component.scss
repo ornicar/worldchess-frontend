@@ -1,0 +1,118 @@
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+.content-text {
+  display: flex;
+  padding: 55px;
+  width: 80%;
+  max-width: 1260px;
+
+  @include tablets {
+    width: 100%;
+  }
+
+  &.empty-tabs {
+    display: none;
+  }
+
+  @include phones {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  &__aside {
+    width: 130px;
+    flex: 0 0 auto;
+
+    @include phones {
+      width: auto;
+    }
+  }
+
+  &__main {
+
+    p {
+      margin-bottom: 30px;
+      font: 400 16px/23px $gerbera-font;
+      @include phones {
+        font: 400 13px/20px $gerbera-font;
+      }
+    }
+
+    a {
+      font: 400 16px/23px $gerbera-font;
+      color: $blue;
+      @include phones {
+        font: 400 13px/20px $gerbera-font;
+      }
+    }
+  }
+
+  &__menu {
+    @include phones {
+      display: flex;
+    }
+  }
+
+  &__menu-elem {
+    margin-bottom: 23px;
+
+    @include phones {
+      margin-right: 30px;
+      margin-bottom: 24px;
+    }
+  }
+
+  &__menu-link {
+    color: #9e9e9e;
+    cursor: pointer;
+    transition: 0.3s;
+    font: 400 15px/22px $gerbera-font;
+
+    @include phones {
+      font: 400 15px/15px $gerbera-font;
+    }
+
+    &:hover,
+    &--active {
+      color: #000;
+    }
+  }
+}
+
+.social-link {
+  display: flex;
+  justify-content: flex-end;
+
+  &__text {
+      color: #929292;
+      margin-right: 41px;
+      font: 400 15px/22px $gerbera-font;
+  }
+
+  &__list {
+      display: flex;
+  }
+
+  &__elem {
+      margin-right: 15px;
+
+      &:last-child {
+          margin-right: 0;
+      }
+  }
+
+  &__link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 25px;
+      height: 25px;
+      border: solid 1px #dcdcdc;
+      border-radius: 50%;
+  }
+
+  &__icon {
+      fill: #6e6e6e;
+  }
+}

@@ -1,0 +1,325 @@
+@import 'variables';
+@import 'media';
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: z-index(modal);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  @include phones() {
+    overflow: auto;
+  }
+}
+
+.get-embedded-widget {
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 630px;
+  min-height: 537px;
+  position: relative;
+  font-family: $gerbera-font;
+  color: #000000;
+  @include phones() {
+    overflow-y: auto;
+    max-height: calc(100vh - 50px);
+  }
+  @include phones() {
+    width: auto;
+    height: auto;
+  }
+
+  &__title {
+    padding: 16px 35px;
+    color: #000000;
+    font: 300 33px/43px $gerbera-font;
+    @include phones() {
+      font: 300 20px/26px $gerbera-font;
+      padding: 10px 16px;
+      border-bottom: 1px solid $gray-dark;
+      margin-bottom: 15px;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    width: 31px;
+    height: 31px;
+
+    &:after,
+    &:before {
+      content: '';
+      width: 33px;
+      height: 2px;
+      background-color: #d8d8d8;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -2px;
+      margin-left: -16.5px;
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__content {
+    padding: 0 35px;
+    @include phones() {
+      padding: 0 16px;
+    }
+  }
+
+  &__fields {
+    display: flex;
+    @include phones() {
+      flex-direction: column;
+    }
+
+    &--column {
+      flex-direction: column;
+    }
+  }
+
+  &__selects {
+    display: flex;
+    @include phones() {
+      margin-bottom: 15px;
+    }
+  }
+
+  &__row-col {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+
+    &--mobile {
+      @include phones() {
+        flex-direction: column;
+      }
+    }
+  }
+
+  &__row {
+    margin: 0 0 14px;
+    flex: 1 0 auto;
+
+    &--flex-2 {
+      flex: 2 0 auto;
+    }
+
+    &--mobile {
+      @include phones() {
+        display: flex;
+        align-items: center;
+
+        .get-embedded-widget__sub-title {
+          margin-bottom: 0;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  &__sub-title {
+    font: 400 15px/20px $gerbera-font;
+    color: #656565;
+    margin: 0 0 15px;
+  }
+}
+
+.color-options,
+.size-options {
+  display: flex;
+  flex-flow: row;
+}
+
+.size-options {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.color-option,
+.size-option {
+  cursor: pointer;
+  background: transparent;
+  transition: background .2s ease-in-out;
+
+  &__title {
+    font: 400 15px/23px $gerbera-font;
+    margin-bottom: 10px;
+    @include phones() {
+      font: 400 11px/16px $gerbera-font;
+    }
+  }
+
+  &--selected {
+    .size-option__image {
+      background: #ffffff;
+      box-shadow: 0 0 7px rgba(189, 189, 189, 0.2);
+    }
+  }
+
+  &__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 107px;
+    padding: 7px;
+    border-radius: 3px;
+    @include phones() {
+      width: 70px;
+      height: 55px;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}
+
+.color-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 3px;
+  padding: 6px;
+  width: 51px;
+  height: 71px;
+  margin-right: 10px;
+
+  &--selected {
+    background: #ffffff;
+    box-shadow: 0 0 7px rgba(189, 189, 189, 0.2);
+  }
+
+  &__color {
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    background-color: #e5e5e5;
+    margin-bottom: 6px;
+    flex: 0 0 auto;
+    @include phones() {
+      width: 21px;
+      height: 21px;
+      margin-bottom: 0;
+      margin-right: 7px;
+    }
+
+    &--black {
+      background-color: #3b3b3b;
+    }
+  }
+
+  &__label {
+    font: 400 11px/15px $gerbera-font;
+  }
+  @include phones() {
+    flex-direction: row;
+    width: 68px;
+    height: 29px;
+  }
+}
+
+.checkbox {
+  display: flex;
+  font: 400 11px/15px $gerbera-font;
+  @include phones() {
+    margin-left: auto;
+  }
+}
+
+.checkbox__input {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkbox__btn {
+  position: relative;
+  top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #9e9e9e;
+  width: 20px;
+  height: 20px;
+  margin-right: 13px;
+  padding: 3px;
+
+  .icon {
+    opacity: 0;
+  }
+}
+
+.checkbox__input:checked + .checkbox__btn .icon {
+  opacity: 1;
+}
+
+.select {
+  background-color: transparent;
+  border: 0;
+  font: 300 22px/54px $gerbera-font;
+  max-width: 275px;
+  margin-right: 30px;
+  border-bottom: 1px solid #9e9e9e;
+  @include phones() {
+    font: 300 18px/54px $gerbera-font;
+    max-width: 50%;
+    flex: 1 0 auto;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  option {
+    background-color: #fff;
+    border: 1px solid $gray-dark;
+  }
+}
+
+.iframe-code {
+  background-color: #fff;
+  border: 0;
+  border-radius: 3px;
+  padding: 10px;
+  height: 75px;
+  font: 400 11px/15px $gerbera-font;
+  resize: none;
+  margin-bottom: 15px;
+}
+
+.btn-copy {
+  background-color: $blue;
+  width: 166px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: 400 15px/17px $gerbera-font;
+  border-radius: 3px;
+  border: 0;
+  cursor: pointer;
+  @include phones() {
+    margin: 0 auto;
+  }
+}

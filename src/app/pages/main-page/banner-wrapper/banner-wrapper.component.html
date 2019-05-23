@@ -1,0 +1,32 @@
+<div class="banner-wrapper" [ngStyle]="{ 'background-image': backgroundImageStyle }">
+  <div *ngIf="showVideo" class="banner-video">
+    <ng-content select="[banner-video]"></ng-content>
+  </div>
+  <div class="banner-content">
+    <div class="main-header">
+      <div class="main-logo-wrapper">
+        <div class="main-logo-text">Official fide broadcasting</div>
+        <img class="main-logo" src="assets/images/main-logo.svg" alt="main-logo">
+      </div>
+      <div class="user-navigation" *ngIf="isAuthorized$ | async">
+        <wc-user-nav></wc-user-nav>
+      </div>
+    </div>
+    <div class="main-mage">
+      <div class="main-page__column main-page__column--flex-2">
+        <div class="title-block-wrapper">
+            <ng-content select="[left-column]"></ng-content>
+        </div>
+      </div>
+      <div class="main-page__column main-page__column--flex-3" >
+        <ng-content select="[right-column]"></ng-content>
+      </div>
+    </div>
+    <div class="sponsor">
+      <a href="//kaspersky.com/" target="_blank">
+        <div class="text">Protected by</div>
+        <svg class="icon"><use xlink:href="#kaspersky-logo" /></svg>   
+      </a>
+    </div>
+  </div>
+</div>

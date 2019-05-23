@@ -1,0 +1,126 @@
+.wc-title {
+    display: flex;
+    margin-right: 19px;
+    margin: 0;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1px;
+    font: 400 32px/38px $gerbera-font;
+
+    &--small {
+        font: 300 28px/38px $gerbera-font;
+
+        @include tablets-big {
+            font: 300 22px/32px $gerbera-font;
+        }
+
+        .block-title__dropdown-link & {
+            margin-right: 0;
+        }
+    }
+
+    &__text {
+        display: inline-block;
+        white-space: nowrap;
+        &--name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &--big {
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        &--width {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+
+        }
+    }
+
+    &--big {
+      font-size: 40px;
+      line-height: 48px;
+      max-height: 147px;
+      overflow: hidden;
+
+        @include tablets-big {
+            font-size: 36px;
+            line-height: 48px;
+            max-height: 147px;
+        }
+
+        @include tablets {
+            font-size: 32px;
+            line-height: 48px;
+            max-height: 147px;
+        }
+    }
+
+    &--white {
+        color: #fff;
+        fill: #fff;
+    }
+
+    &__img {
+        display: flex;
+        align-items: center;
+        width: 31px;
+        height: 31px;
+        margin-right: 10px;
+        flex: 1 0 auto;
+
+        &--small {
+            display: flex;
+            width: 18px;
+            height: 20px;
+        }
+
+        &--big {
+            width: 36px;
+            height: 39px;
+        }
+
+        &--flag {
+            margin-right: 0;
+            width: 30px;
+        }
+    }
+
+    &__img-wrap {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        &--rectangle {
+            display: flex;
+            align-items: center;
+            border-radius: 0;
+            width: 25px;
+            height: 22px;
+        }
+    }
+
+    &--padding-left {
+        padding-left: 15px;
+
+        @include phones {
+            padding-left: 0;
+        }
+    }
+
+    &--light {
+      font-family: $gerbera-font;
+      font-weight: 300;
+    }
+}

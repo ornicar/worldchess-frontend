@@ -1,0 +1,48 @@
+@import '../../../../../../../html/css/variables';
+@import '../../../../../../../html/css/media';
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50px;
+  padding: 4px 12px;
+  background-color: #A9876B;
+  font: 500 15px/22px $gerbera-font;
+  color: #fff;
+  float: right;
+}
+
+:host(.top-position) {
+  border-radius: 2px 2px 0 0;
+}
+
+:host(.bottom-position) {
+  border-radius: 0 0 2px 2px;
+}
+
+// For multiboard:
+
+:host-context(.view-mode--multiboard-medium),
+:host-context(.view-mode--multiboard-normal) {
+  font: 300 14px/22px $gerbera-font;
+}
+
+.view-mode--multiboard-medium :host-context.black-player,
+.view-mode--multiboard-normal :host-context.black-player {
+  background-color: #000;
+}
+
+.view-mode--multiboard-medium :host-context.white-player,
+.view-mode--multiboard-normal :host-context.white-player {
+  background-color: #C8C0AC;
+}
+
+:host-context(.view-mode--multiboard-normal) {
+  width: 40px;
+}
+
+:host-context(.view-mode--multiboard-medium) {
+  width: 30px;
+}

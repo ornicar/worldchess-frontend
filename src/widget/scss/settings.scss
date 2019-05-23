@@ -1,0 +1,69 @@
+// vars
+$geoslab: 'GeometricSlab', serif;
+$gerbera: 'Gerbera', Arial, sans-serif;
+$gerberaLight: 'GerberaLight', Arial, sans-serif;
+$border-color: #e0e0e0;
+$ease: all 0.4s ease;
+$ease: all 0.4s ease;
+$max-width: 1920px;
+$min-width: 320px;
+$title-font-size: 55px;
+$navbar-height: 56px;
+$usermenu-tabs-height: $navbar-height;
+
+//colors
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-250: #E5E5E5 !default;
+$gray-280: #f6f6f6 !default;
+$gray-300: #dee2e6 !default;
+$gray-350: #E4E4E4 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-550: #A0A0A0 !default;
+$gray-550: #9E9E9E !default;
+$gray-600: #6c757d !default;
+$gray-700: #5e5e5e !default;
+$gray-850: #464646 !default;
+$gray-800: #383838 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+
+
+$twitter: #55acee;
+$facebook: #3b5998;
+$color-grey: #656565;
+$blue: #7bcffb;
+$blue-200: #43B1EB;
+$blue-300: #4FABFF;
+$green: #59F19B;
+$brown: #674e3e;
+
+// mixins
+@mixin mobile {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1080px) {
+    @content;
+  }
+}
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1366px
+) !default;

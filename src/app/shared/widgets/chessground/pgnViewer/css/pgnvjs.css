@@ -1,0 +1,428 @@
+div.whole:focus {
+    /* The following suppresses the outline of the element that has the focus. Only when
+       that focus is set, the keyboard mappings work. You may of course enable the outline
+       for debugging purposes. */
+    outline: 0;
+}
+
+span.whiteHeader:before {
+    content: " White: ";
+}
+
+span.blackHeader:before {
+    content: " Black: ";
+}
+
+span.restHeader:before { content: " ("}
+span.restHeader:after { content: ")"}
+
+div.layout-left.whole, div.layout-right.whole {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+div.layout-left > .headers, div.layout-right > headers {
+    flex: 1 100%;
+}
+
+div.moves {
+    /* overflow-y: auto; */
+    padding: 10px;
+}
+div.layout-left > .moves, div.layout-right > .moves {
+    position: relative;
+    flex: 1 40%;
+}
+
+div.layout-left > .moves, div.layout-right > .moves, div.layout-top > .moves, div.layout-bottom > .moves {
+    overflow-y: auto;
+}
+
+div.layout-right > .moves {
+    order: 1;
+}
+
+div.layout-right > .outerBoard {
+    order: 2;
+    /* flex: 1 1 auto; */
+}
+
+div.layout-bottom.whole {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+div.layout-bottom > .outerBoard {
+    order: 2;
+}
+
+div.layout-top-left > .outerBoard {
+    float: left;
+    margin-right: 10px;
+}
+
+div.layout-bottom-left > .outerBoard {
+    float: left;
+    margin-right: 10px;
+    /* display: table-cell;
+    vertical-align: bottom; */
+}
+
+div.layout-top-right > .outerBoard {
+    float: right;
+    margin-left: 10px;
+}
+
+/* Not found any trick that allows to use baseline, bottom, ... with float: left|right */
+div.layout-bottom-right > .outerBoard {
+    float: right;
+    margin-left: 10px;
+}
+
+div.layout-left > .outerBoard div.edit .gray, div.buttons .gray {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+/** Font Awesome buttons (see http://fontawesome.io/) */
+
+.fen {
+    width: 96%;
+    height: 30px;
+    min-height: 30px;
+    padding: 2px;
+    font-family: monospace;
+}
+
+div.error {
+    color: red;
+}
+div.buttons > i.button, div.edit > i.button {
+    font-size: 16px;
+    line-height: 1.4em;
+    color: #71a0df;
+    background-color: white;
+    background-image: none;
+     margin: 5px;
+    padding: 4px;
+    border: solid lightgrey 1px;
+    border-radius: 4px;
+}
+
+div.buttons > i.button.selected, div.edit > i.button.selected, .nagMenu.selected {
+    color: #fff;
+    background-color: #71a0df;
+}
+
+div.nagMenu {
+    border: 1px grey dotted;
+    display: none;
+    width: 600px;
+}
+
+div.nagMenu a {
+    text-decoration: none;
+}
+
+div.nagMove, div.nagObservation, div.nagPosition {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 33.3%;
+    text-align: left;
+    flex-wrap: wrap;
+}
+
+.nagMove i, .nagPosition i, .nagObservation i {
+    display: flex!important;
+    cursor: pointer;
+    transition: 0.13s;
+    align-items: center;
+    margin: 2px;
+}
+
+.nagMove i::before, .nagPosition i::before, .nagObservation i::before {
+    content: attr(data-symbol);
+    /* font-size: 1.2em; */
+    font-style: normal;
+    font-weight: bold;
+    display: block;
+    width: 30px;
+    text-align: center;
+    background: #f3f3f3;
+    padding: 2px 2px;
+    margin-right: 6px;
+    transition: 0.13s;
+}
+
+a.active i::before {
+    background: #71a0df!important;
+    color: #fff!important;
+}
+
+.nagMove i:hover, .nagPosition i:hover, .nagObservation i:hover {
+    background: #efefef;
+    color: #71a0df;
+}
+
+/* Necessary fixes for examples  */
+button.ui-multiselect {
+    background-image: none;
+    background-color: white;
+}
+
+ul.ui-multiselect-checkboxes > li {
+    margin-bottom: 0px;
+}
+
+select.nag {
+    width: 80px;
+}
+
+
+div.buttons > i.button:hover,div.edit > i.button:hover  {
+    cursor: pointer;
+    border: solid dimgrey 1px;
+}
+
+/** The following are all font-awesome buttons.
+  Where known, I have added their short names (to find them later again). **/
+div.buttons > .button.flipper.default:before { /* fa-adjust */
+    content: "\f042";
+}
+div.buttons > .button.first.default:before { /* fa-fast-backward */
+    content: "\f049";
+}
+div.buttons > .button.prev.default:before {    /* fa-step-backward */
+    content: "\f048";
+}
+div.buttons > .button.next.default:before {    /* fa-step-forward */
+    content: "\f051";
+}
+div.buttons > .button.last.default:before {    /* fa-fast-forward */
+    content: "\f050";
+}
+div.buttons > .button.play.default:before {    /* fa-play-circle */
+    content: "\f144";
+}
+div.buttons > .button.stop.default:before {     /* fa-pause */
+    content: "\f04c";
+}
+
+div.edit > .button.promoteVar.default:before { /* hand-o-up */
+    content: "\f0a6";
+}
+div.edit > .button.deleteMoves.default:before { /* scissors  */ 
+    content: "\f0c4";
+}
+
+.button.fa-times {
+   color: red;
+}
+
+.button.fa-times:hover {
+    border: red 2px solid;
+}
+
+textarea.pgn {
+    padding: 2px;
+    border: 1px solid grey;
+    width: 96%;
+    height: 100px;
+    font-family: monospace;
+}
+
+/* Green buttons. */
+div.buttons.green > .button, div.edit.green > .button {
+    color: green;
+    border: solid lightgrey 1px;
+    border-radius: 4px;
+}
+/* Blue buttons. */
+div.buttons.blue > .button, div.edit.blue > .button {
+    color: blue;
+    border: solid lightgrey 1px;
+    border-radius: 4px;
+}
+
+.ui-widget {
+    font-size: 1em;
+}
+
+div.commentRadio label {
+    display: inline;
+}
+div.comment > textarea.comment {
+    font-family: monospace;
+    width: 96%;
+    height: 50px;
+    padding: 2px;
+}
+
+.moves a {
+    text-decoration: underline;
+}
+
+.moves .move a.yellow {
+    background-color: rgba(255, 255, 153, 1.0);
+}
+
+.moves .move a {
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.moves .move a:hover {
+    border: 1px yellow dotted;
+    background-color: rgba(255, 255, 153, 1.0);
+    cursor: crosshair;
+}
+
+.moves .move {
+    font-size: 16px;
+    font-family: Georgia, "Bitstream Charter", serif;;
+    color: black;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.moves .move.var {
+    font-weight: 500;
+}
+
+.moves .variation {
+    font-size: 100%;
+    display: block;
+    padding: 5px;
+}
+.moves .variation:before {
+    content: ' ( ';
+}
+
+.moves .variation .variation:before {
+    content: ' ( ';
+}
+
+.moves .variation .variation {
+    font-size: 90%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.moves .variation .variation:after {
+    content: ' ) ';
+}
+
+.moves .variation:after {
+    content: ' ) ';
+}
+
+.moves > .varblock .white:before {
+    display: inline;
+}
+
+.moves .move .comment {
+    color: green;
+    font-weight: 500;
+}
+
+.moves .white:before {
+    content: '\A';
+    display: inline-block;
+}
+
+/* Pattern of the Chess.com similar */
+/* board */
+.chesscom.whole {
+    /*    border: 2px solid #404040; */
+    border: 2px gray solid;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.chesscom .headers {
+    font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
+    font-size: 18px;
+/*    padding: 15px;*/
+    background-color: #f3f3f3;
+    font-weight: bold;
+    flex: 1 100%;
+}
+
+.chesscom .headers > .whiteHeader:before {
+    content: "";
+}
+
+.chesscom .headers > .whiteHeader {
+    display: inline-block;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.chesscom .headers > .blackHeader:before {
+    content: "  vs. ";
+}
+
+.chesscom .headers > .blackHeader {
+    display: inline-block;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.chesscom .headers > .restHeader {
+    display: block;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    font-weight: 500;
+    font-size: 80%;
+}
+
+.chesscom .players {
+    font-weight: 900;
+}
+
+.chesscom .outerBoard {
+    width: 388px;
+}
+
+.moves {
+    padding: 10px;
+}
+
+.chesscom .endBoard {
+    clear: both;
+}
+.chesscom .moves a {
+    text-decoration: none;
+}
+
+/**
+  CHESSGROUND changes.
+  */
+ 
+.cg-board-wrap.coords-inner {
+    margin-bottom: 0px;
+    margin-right: 0px;
+}
+.cg-board-wrap {
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+.cg-board-wrap.coords-inner coords.ranks {
+    right: -2px;
+}
+.cg-board-wrap.coords-inner coords.files {
+    bottom: 2px;
+    left: 2px;
+    text-align: left;
+}
+.cg-board-wrap coords.files {
+    text-transform: none;
+}
+
+/*-------------------------------*/
+
+.outerBoard {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+}

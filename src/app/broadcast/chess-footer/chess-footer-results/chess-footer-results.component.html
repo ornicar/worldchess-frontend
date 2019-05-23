@@ -1,0 +1,41 @@
+<div class="news-container news-container--flex">
+  <wc-chess-footer-info
+    class="information-aside information-aside--portable"
+    (goToMedia)="changeTab.emit('media')"
+    [tournament]="tournament">
+ </wc-chess-footer-info>
+  <results-cards
+    *ngIf="tournament.isCircular || tournament.isSwiss"
+    [playersResults]="playersResults">
+  </results-cards>
+  <wc-results-main
+    *ngIf="tournament.isMatch"
+    [playersResults]="playersResults"
+    [isEnd]="isEnd$ | async">
+  </wc-results-main>
+</div>
+<div class="news-container news-container--flex">
+  <wc-results-list
+    *ngIf="tournament.isMatch && playersResults?.length > 0"
+    [playersResults]="playersResults"
+    [classic]="classicList"
+    [rapid]="rapidList"
+    [blitz]="blitzList"
+    [armageddon]="armageddonList"
+    [isEnd]="isEnd$ | async">
+  </wc-results-list>
+  <results-list-circular
+    *ngIf="tournament.isCircular"
+    [results]="results"
+    [players]="players">
+  </results-list-circular>
+  <wc-results-list-swiss
+    *ngIf="tournament.isSwiss"
+    [playersResults]="playersResults">
+  </wc-results-list-swiss>
+</div>
+<wc-chess-footer-info
+  [tournament]="tournament"
+  class="information-aside information-aside--mobile"
+  (goToMedia)="changeTab.emit('media')">
+</wc-chess-footer-info>

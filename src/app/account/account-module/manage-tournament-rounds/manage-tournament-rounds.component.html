@@ -1,0 +1,198 @@
+
+<div class ="rounds-form tournament-form">
+  <form *ngIf="form"
+    [formGroup]="form">
+  <div formArrayName="entities">
+    <div class="rounds-form__round" *ngFor="let round of roundsControls; let i = index">
+      <div [formGroupName]="i" class="rounds-form__round-form">
+        <div class="rounds-form__row">
+          <label>
+            <span class="rounds-form__label">
+              Tour number
+            </span>
+            <input class="rounds-form__input" placeholder="Round Number" type="number" formControlName="tour_number" />
+          </label>
+        </div>
+
+        <!-- <span class="main-form__error"
+          *ngIf="(errors$ | async)?.status">{{(errors$ | async)?.tour_number[0]}}
+        </span> -->
+
+        <div class="rounds-form__row">
+          <label>
+            <span class="rounds-form__label">
+              Datetime
+            </span>
+            <input class="rounds-form__input"
+              type="datetime-local"
+              [value]="getDateForInput(roundsControls[i], 'datetime_of_round')"
+              formControlName="datetime_of_round">
+          </label>
+        </div>
+
+        <div class="rounds-form__row">
+          <label>
+            <span class="rounds-form__label">
+              Datetime finish
+            </span>
+            <input class="rounds-form__input"
+              type="datetime-local"
+              [value]="getDateForInput(roundsControls[i], 'datetime_of_round_finish')"
+              formControlName="datetime_of_round_finish">
+          </label>
+        </div>
+
+        <div class="rounds-form__row">
+          <label>
+            <span class="rounds-form__label">
+              Board type
+            </span>
+            <select class="rounds-form__input" formControlName="board_type">
+              <option value="null" disabled >Choose board type</option>
+              <option *ngFor="let type of boardTypes" [ngValue]="type.value">
+                {{ type.title }}
+              </option>
+            </select>
+          </label>
+        </div>
+
+        <div class="rounds-form__row">
+          <label>
+            <span class="rounds-form__label">
+              Status
+            </span>
+            <select class="rounds-form__input" formControlName="status">
+              <option value="null" disabled >Choose tour status</option>
+              <option *ngFor="let status of tourStatuses" [ngValue]="status.value">
+                {{ status.title }}
+              </option>
+            </select>
+          </label>
+        </div>
+
+        <div [formGroupName]="'time_control'" class="rounds-form__round-form-time-control">
+          <h3 class="rounds-form__group-name">Time control</h3>
+
+          <div class="rounds-form__row">
+            <label>
+              <span class="rounds-form__label">
+                Start time
+              </span>
+              <input class="rounds-form__input"
+                type="time"
+                step="1"
+                [value]="getDateForInput(roundsControls[i].get('time_control'), 'start_time')"
+                formControlName="start_time">
+            </label>
+          </div>
+          <div class="rounds-form__row">
+            <label>
+              <span class="rounds-form__label">
+                Black start time
+              </span>
+              <input class="rounds-form__input"
+                type="time"
+                step="1"
+                [value]="getDateForInput(roundsControls[i].get('time_control'), 'black_start_time')"
+                formControlName="black_start_time">
+            </label>
+          </div>
+          <div class="rounds-form__row">
+            <label>
+              <span class="rounds-form__label">
+                Additional time
+              </span>
+              <input class="rounds-form__input"
+                type="time"
+                step="1"
+                [value]="getDateForInput(roundsControls[i].get('time_control'), 'additional_time')"
+                formControlName="additional_time">
+            </label>
+          </div>
+          <div class="rounds-form__row">
+            <label>
+              <span class="rounds-form__label">
+                Increment
+              </span>
+              <input class="rounds-form__input"
+                type="time"
+                step="1"
+                [value]="getDateForInput(roundsControls[i].get('time_control'), 'increment')"
+                formControlName="increment">
+            </label>
+          </div>
+          <div class="rounds-form__row">
+            <label>
+              <span class="rounds-form__label">
+                Additional time move
+              </span>
+              <input class="rounds-form__input" placeholder="Additional time move" type="text" formControlName="additional_time_move"/>
+            </label>
+          </div>
+          <div class="rounds-form__row">
+            <label>
+              <span class="rounds-form__label">
+                Additional time move
+              </span>
+              <input class="rounds-form__input" placeholder="Increment start move" type="text" formControlName="additional_time_move"/>
+            </label>
+          </div>
+        </div>
+
+        <div class="rounds-form__row">
+          <div class="rounds-form__actions">
+            <div class="btn btn-blue" *ngIf="isSaveOneAvailable(i)" (click) ="saveOne(i)">SAVE</div>
+            <div class="btn btn-blue" *ngIf="isSaved(i)" (click) ="deleteOne(i)">DELETE</div>
+          </div>
+        </div>
+          <!-- list -->
+        <div *ngIf="isSaved(i)" class="rounds-form__row">
+          <label>
+            <span class="rounds-form__label">
+              CSV File
+            </span>
+            <input type="file" accept=".csv" (change)="onBoardsLoad($event.target.files, round.get('id').value)">
+          </label>
+        </div>
+
+        <div class="roudns-form__file-response" *ngIf="isSaved(i) && fileLoadResponse[round.get('id').value]">
+          <div> Loaded: {{fileLoadResponse[round.get('id').value].loaded }} </div>
+          <div> Errors:
+            <div *ngFor="let error of getErrors(fileLoadResponse[round.get('id').value].errors)">
+              {{error.name}}: {{error.text}}
+            </div>
+          </div>
+          <div> Warnings:
+            <div *ngFor="let warn of getErrors(fileLoadResponse[round.get('id').value].warnings)">
+              {{warn.name}}: {{warn.text}}
+            </div>
+          </div>
+        </div>
+
+        <div formArrayName="links" class="rounds-form__row">
+          <div class="btn btn-blue" (click)="addLink(round)">Add Link</div>
+
+          <div *ngFor="let link of round.get('links').controls; let j = index" [formGroupName]="j">
+            <input class="rounds-form__input" type="text" />
+
+            <div class="rounds-form__row">
+              <span class="btn btn-blue" (click)="deleteLink(round, j)">Delete Link</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  </form>
+  <button class="btn btn-blue" [disabled]="isAddNewDisabled()" (click)="saveLastAndAddNew()">Save And Add New</button>
+</div>
+
+<div class="controls">
+  <button class="btn btn-blue" (click)="onClose()">Close</button>
+  <button class="btn btn-blue" [disabled]="isSaveDisabled()" *ngIf="ableToSave()"(click)="onSave()">Save</button>
+  <button class="btn btn-blue" *ngIf="ableToNext()"(click)="onNext()">Next</button>
+  <button class="btn btn-blue" *ngIf="ableToSend()" (click)="onSendToApprove()">Send to approve</button>
+</div>

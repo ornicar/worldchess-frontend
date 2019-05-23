@@ -1,0 +1,22 @@
+@import "../html/css/variables.scss";
+
+.widget-header {
+  color: white;
+  padding: 10px;
+  text-align: center;
+  background-color: black;
+
+  &__fide {
+    font: 300 20px/29px $gerbera-font;
+    margin: 0 10px;
+  }
+  &__logo {
+    height: 20px;
+  }
+
+  &__title {
+    font: 300 20px/29px $gerbera-font;
+    margin: 0 10px;
+    text-transform: capitalize;
+  }
+}

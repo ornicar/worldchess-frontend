@@ -1,0 +1,17 @@
+<wc-chess-board-area
+  *ngIf="!isMinimalMode"
+  [tournament]="tournament"
+  [tour]="tour"
+  [gameState]="gameState$ | async"
+></wc-chess-board-area>
+<wc-broadcast-single-chess-board-controller
+  *ngIf="isMinimalMode"
+  [viewMode]="ChessBoardViewMode.OnlyBoard"
+  [boardId]="(gameState$ | async)?.board?.id"
+  [tournament]="tournament"
+>
+</wc-broadcast-single-chess-board-controller>
+<!-- Временно убрали магнуса -->
+<!-- <div *ngIf="withoutBoard" class="available-soon">
+  <img src="assets/img/available-soon.png" alt="available-soon">
+</div> -->

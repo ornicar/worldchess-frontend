@@ -1,0 +1,31 @@
+<div class="line"></div>
+
+<ng-container *ngIf="isNotExpected$ | async">
+  <ng-container *ngIf="scores$ | async as scores">
+    <wc-moves-navigation-chart
+      *ngIf="scores.length"
+      [style.width.px]="sliderWidth"
+      [scores]="scores"
+      [isWhiteMode]="variationMovesIsActive$ | async">
+    </wc-moves-navigation-chart>
+  </ng-container>
+
+  <div class="navigation" [style.width.px]="sliderWidth">
+    <ng-container *ngIf="!(variationMovesIsActive$ | async); else variationMovesIsActive">
+      <ng-container *ngIf="moves$ | async as moves">
+        <wc-moves-navigation-slider
+          *ngIf="moves.length"
+          [moves]="moves"
+          [selectedMove]="selectSelectedMove$ | async"
+          [isLive]="isLive"
+          (sliderChanged)="sliderChanged($event)"
+        >
+        </wc-moves-navigation-slider>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #variationMovesIsActive>
+      <a href (click)="deactivateVariationMoves($event)" class="back-to-live">Back to live</a>
+    </ng-template>
+  </div>
+</ng-container>

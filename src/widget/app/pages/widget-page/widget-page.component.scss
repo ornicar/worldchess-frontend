@@ -1,0 +1,104 @@
+@import "../html/css/variables.scss";
+
+@import "../../../../html/css/icon.scss";
+
+
+wc-widget-page {
+  // flex: 1;
+  background-color: black;
+  height: 700px;
+  width: 280px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.widget {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-family: $gerbera-font;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  align-content: center;
+  padding: 10px;
+
+  &__event {
+    font: 300 25px/36px $gerbera-font;
+  }
+
+  &__data {
+    font: 300 20px/29px $gerbera-font;
+    text-align: center;
+  }
+
+  &__watch-button {
+    background-color: #A247FB;
+    color: white;
+    width: auto;
+    display: inline-block;
+    padding: 10px 20px;
+    font: 300 16px/23px $gerbera-font;
+    border-radius: 3px;
+    box-shadow: 0px 0px 30px 3px #A247FB;
+    color: white !important;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  }
+}
+
+
+.chess-board {
+  display: flex;
+  width: 100%;
+
+  &__aside {
+      flex: 1 0 auto;
+      display: flex;
+      width: 20px;
+  }
+
+  &__gauge {
+      display: flex;
+      width: 100%;
+  }
+
+  &__wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      flex: 1 0 auto;
+      padding: 26px;
+      background-color: $brown-bg;
+  }
+
+  &__player {
+      position: absolute;
+      left: 50%;
+      top: 7px;
+      transform: translate(-50%, 0);
+      width: 11px;
+      height: 11px;
+
+      &--white {
+          fill: #fff;
+      }
+
+      &--top {
+        top: 7px;
+      }
+
+      &--bottom {
+        bottom: 7px;
+        top: auto;
+      }
+  }
+}

@@ -1,0 +1,11 @@
+<mat-form-field>
+  <input
+    matInput
+    class="date"
+    placeholder="MM/YY"
+    [formControl]="cardDate"
+    [dropSpecialCharacters]="false" mask="00 / 00"
+    (focus)="isFocus = true">
+  <mat-icon class="custom-icon" matSuffix *ngIf="cardDate.value || isFocus"
+            [svgIcon]="cardDate.errors ? 'input_error' : 'input_success'"></mat-icon>
+</mat-form-field>

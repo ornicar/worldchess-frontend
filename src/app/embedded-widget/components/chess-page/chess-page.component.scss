@@ -1,0 +1,226 @@
+@import 'variables';
+@import 'media';
+@import 'settings';
+
+wcd-widget-layout {
+  background-color: $black-bg;
+}
+
+wcd-widget-layout.light-mode {
+  background-color: #f2f2f2;
+}
+
+::ng-deep .light-mode {
+  .wc-title {
+    color: #000 !important;
+  }
+
+  wc-chess-board {
+    .left-time,
+    .name {
+      color: #000 !important;
+    }
+
+    .rank {
+      span {
+        background-color: #c9c9c9 !important;
+        color: #000 !important;
+      }
+    }
+  }
+}
+
+::ng-deep wc-chess-board-title {
+  min-height: auto !important;
+}
+
+::ng-deep .history-moves {
+  @include phones() {
+    flex-direction: row !important;
+  }
+}
+
+::ng-deep .scroll-section {
+  @include phones() {
+    flex-direction: row !important;
+
+    &:after {
+      display: none !important;
+    }
+  }
+}
+
+::ng-deep .scroll-element {
+  @include phones() {
+    overflow-y: hidden !important;
+    overflow-x: scroll !important;
+    margin-left: 0 !important;
+
+    &:before {
+      display: none !important;
+    }
+  }
+}
+
+::ng-deep wc-move {
+  @include phones() {
+    height: 39px !important;
+    border-top: 0 !important;
+
+    &:nth-child(even) {
+      background-color: #d8d8d8;
+    }
+  }
+}
+
+::ng-deep .moves-line-number {
+  @include phones() {
+    padding: 10px !important;
+  }
+}
+
+.chess-page__history-moves {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  height: auto;
+  @include phones() {
+    height: 39px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.field__header {
+  @include phones() {
+    display: none;
+  }
+}
+
+.field__body {
+  justify-content: center;
+  @include phones() {
+    flex-direction: column;
+  }
+}
+
+.main-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__controls {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+
+  &__protect {
+    flex: 1 0 auto;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    color: #656565;
+    padding: 0 25px;
+    @include phones-small() {
+      padding: 0 10px;
+    }
+  }
+
+  &__video-checkbox {
+    padding: 0 38px;
+    display: flex;
+    align-items: center;
+    @include phones() {
+      padding: 0 10px;
+    }
+  }
+}
+
+wc-broadcast-single-chess-board-controller {
+  width: 390px;
+  @include tablets-big() {
+    width: 340px;
+  }
+  @include phones() {
+    width: 249px;
+  }
+}
+
+.wcd-checkbox {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  &__control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #9e9e9e;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+
+  &__label {
+    padding-left: 11px;
+    font: 15px/15px $gerbera;
+    color: #ffffff;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.base-site-link {
+  background: #866fff;
+  height: 95px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  z-index: z-index(base);
+
+  &__text {
+    height: 70px;
+  }
+
+  &__name {
+    align-self: flex-end;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    font: 15px/23px $gerbera;
+    color: #b6a9ff;
+    padding: 0 11px;
+
+    span {
+      flex: 1 0 auto;
+      color: #ffffff;
+      width: 210px;
+      margin-left: 5px;
+    }
+  }
+}
+
+.available-soon {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  min-width: 375px;
+  max-width: 530px;
+  width: 80%;
+  transform: translate(-50%, 0);
+  z-index: z-index(base, 1);
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}

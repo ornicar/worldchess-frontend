@@ -1,0 +1,57 @@
+/* autoprefixer grid: autoplace */
+@import 'variables';
+@import 'media';
+@import 'settings';
+
+:host {
+  display: block;
+}
+
+.chess-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 316px;
+  grid-template-rows: max-content 1fr max-content;
+  grid-template-areas: "title history" "main history" "livestream livestream";
+  transition: background-color 0.38s ease-in;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  @include phones() {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "title" "main" "history" "livestream";
+  }
+
+  &__title {
+    grid-area: title;
+    z-index: z-index(base, 5);
+  }
+
+  &__board {
+    grid-area: main;
+    position: relative;
+    z-index: z-index(base, 4);
+  }
+
+  &__livestream {
+    grid-area: livestream;
+    z-index: z-index(base, 6);
+    position: relative;
+  }
+
+  &__history {
+    grid-area: history;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #fff;
+    width: 316px;
+    z-index: z-index(base, -1);
+
+    @include phones() {
+      width: 100%;
+    }
+  }
+}

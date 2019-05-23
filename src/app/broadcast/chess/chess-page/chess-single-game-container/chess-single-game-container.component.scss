@@ -1,0 +1,21 @@
+@import '../../../../../html/css/variables.scss';
+
+:host {
+  display: block;
+}
+
+.available-soon {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  min-width: 375px;
+  max-width: 530px;
+  width: 80%;
+  transform: translate(-50%, 0);
+  z-index: z-index(base, 1);
+
+  img {
+      display: block;
+      width: 100%;
+  }
+}

@@ -1,0 +1,12 @@
+.login {
+    display: flex;
+    align-items: center;
+
+    &__text {
+        font-family: $gerbera-font;
+        font-size: 12px;
+        font-weight: 400; 
+        color: $black;
+        margin-right: 21.5px;
+    }
+}

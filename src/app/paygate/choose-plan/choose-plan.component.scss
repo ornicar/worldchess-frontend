@@ -1,0 +1,582 @@
+@import "../../../html/css/variables";
+@import "../../../html/css/media";
+
+$basic-color: #5184FF;
+$pro-color: #8D73FF;
+
+.choose-plan {
+  margin-bottom: 62px;
+  @include phones() {
+    margin-bottom: 42px;
+  }
+}
+
+.choose-plan__title {
+  text-align: center;
+  color: #fff;
+  font: 300 33px/33px $gerbera-font;
+  margin-bottom: 50px;
+  color: #fff;
+  @include tablets-big() {
+    font: 300 34px/34px $gerbera-font;
+  }
+  @include phones() {
+    font: 300 22px/22px $gerbera-font;
+    margin-bottom: 18px;
+  }
+}
+
+.choose-plan__plans {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 -2.5% 79px;
+
+  .choose-plan__title {
+    margin-bottom: 21px;
+  }
+  @include ipad() {
+    margin: 0 -1.5%;
+  }
+  @include phones {
+    flex-direction: column;
+  }
+
+}
+
+.choose-plan__options {
+  border-radius: 10px;
+  padding: 13px 25px;
+  margin-bottom: 79px;
+  background-color: #2D2D2D;
+  box-shadow: 0 0 20px #7BCFFB;
+  @include phones {
+    margin-bottom: 20px;
+    padding: 13px 20px;
+  }
+}
+
+.choose-plan__plan-title {
+  font: 300 34px/34px $gerbera-font;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.choose-plan__elem {
+  display: flex;
+  font: 400 22px/28px $gerbera-font;
+  margin-bottom: 15px;
+  color: #fff;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+  @include phones {
+    font: 400 15px/15px $gerbera-font;
+  }
+}
+
+.choose-plan__elem-icon {
+  position: relative;
+  top: 0;
+  width: 24px;
+  height: 23px;
+  margin-right: 19px;
+  flex: 0 0 auto;
+  stroke: #8C53FF;
+  @include phones {
+    top: 0;
+    width: 16px;
+    height: 13px;
+    margin-right: 12px;
+  }
+}
+
+.choose-plan__plan {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0 2.5%;
+  @include ipad() {
+    margin: 0 1.5%;
+  }
+  @include phones {
+    margin: 0 1.5% 37px;
+  }
+
+  &--basic {
+    .choose-plan__options {
+      background-color: #2D2D2D;
+      box-shadow: 0 0 20px #7BCFFB;
+    }
+
+    .choose-plan__title {
+      color: #5184FF;
+    }
+
+    .choose-plan__elem {
+      color: #fff;
+    }
+
+    .choose-plan__elem-icon {
+      stroke: #4892FF;
+    }
+
+    &.active {
+      .choose-plan__options {
+        background-color: #fff;
+        box-shadow: 0 0 20px #7BCFFB;
+      }
+
+      .choose-plan__elem {
+        color: #2D2D2D;
+      }
+    }
+  }
+
+  &--pro {
+    .choose-plan__options {
+      background-color: #2D2D2D;
+      box-shadow: 0 0 20px rgba(140, 83, 255, 0.49799);
+    }
+
+    .choose-plan__title {
+      color: #8C53FF;
+    }
+
+    .choose-plan__elem {
+      color: #fff;
+    }
+
+    .choose-plan__elem-icon {
+      stroke: #8C53FF;
+    }
+
+    .choose-plan__btn {
+      background-color: #8C53FF;
+    }
+
+    &.active {
+      .choose-plan__options {
+        background-color: #fff;
+        box-shadow: 0 0 20px #7BCFFB;
+      }
+
+      .choose-plan__elem {
+        color: #2D2D2D;
+      }
+    }
+  }
+
+  &--premium {
+    .choose-plan__options {
+      background-color: #2D2D2D;
+      box-shadow: 0 0 20px rgba(255, 105, 105, 0.498132);
+
+    }
+
+    .choose-plan__title {
+      color: #FF6969;
+    }
+
+    .choose-plan__elem {
+      color: #fff;
+    }
+
+    .choose-plan__elem-icon {
+      stroke: #FF6969;
+    }
+
+    .choose-plan__btn {
+      background-color: #FF6969;
+    }
+
+    &.active {
+      .choose-plan__options {
+        background-color: #fff;
+        box-shadow: 0 0 20px #7BCFFB;
+      }
+
+      .choose-plan__elem {
+        color: #2D2D2D;
+      }
+    }
+
+  }
+}
+
+.choose-plan__btn-wpap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  margin-top: auto;
+  min-width: 153px;
+  @include phones {
+    width: 99px;
+  }
+}
+
+.choose-plan__check {
+  position: absolute;
+  right: -15px;
+  top: -15px;
+  width: 31px;
+  height: 31px;
+}
+
+.choose-plan__btn {
+  width: 100%;
+  height: 55px;
+  padding: 5px 24px;
+  font: 400 22px/22px $gerbera-font;
+  color: #fff;
+  background-color: #5184FF;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.0001);
+  border: 0;
+  margin-bottom: 5px;
+  cursor: pointer;
+  border-radius: 2px;
+  @include phones {
+    font: 400 15px/20px $gerbera-font;
+    height: 35px;
+  }
+
+}
+
+.choose-plan__btn-cost {
+  font: 300 22px/22px $gerbera-font;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  @include phones {
+    font: 300 15px/15px $gerbera-font;
+  }
+
+  &--gray {
+    color: #5E5E5E;
+  }
+}
+
+/*-----------------------*/
+.advantages {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 42px 0;
+  border-top: 1px solid #ABABAB;
+  border-bottom: 1px solid #ABABAB;
+  margin: 0 -5px;
+  @include phones {
+    border-color: #383838;
+    flex-direction: column;
+    padding: 19px 0;
+  }
+}
+
+.advantages__advantage {
+  display: flex;
+  padding: 0 5px;
+  align-items: center;
+
+  @include phones {
+    margin-bottom: 19px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.advantages__advantage-circle {
+  position: relative;
+  width: 61px;
+  height: 61px;
+  margin-right: 21px;
+  background-color: #2D2D2D;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  box-shadow: 0px 0px 40px rgba(255, 255, 255, 0.3);
+
+  @include ipad() {
+    width: 40px;
+    height: 40px;
+  }
+
+  @include phones {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.advantages__title {
+  font: 300 22px/29px $gerbera-font;
+  color: #fff;
+  margin-bottom: 14px;
+  @include phones {
+    font: 300 15px/22px $gerbera-font;
+    margin-bottom: 0;
+  }
+}
+
+.advantages__text {
+  font: 300 15px/22px $gerbera-font;
+  color: #9B9B9B;
+}
+
+/*plan-head*/
+
+.plan-head {
+  border-bottom: 1px solid #5E5E5E;
+  margin-bottom: 49px;
+  padding: 20px 20px 53px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plan-head__header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 775px;
+  margin: 0 30px;
+  &:after {
+    content: "";
+    position: absolute;
+    width: calc(100% - 50px);
+    height: 1px;
+    top: 50%;
+    left: 25px;
+    right: 25px;
+    background-color: #fff;
+    background: -moz-linear-gradient(left, rgba(81,132,255,1) 0%, rgba(141,115,255,1) 100%);
+    background: -webkit-linear-gradient(left, rgba(81,132,255,1) 0%,rgba(141,115,255,1) 100%);
+    background: linear-gradient(to right, rgba(81,132,255,1) 0%,rgba(141,115,255,1) 100%);
+  }
+}
+
+.plan-head__plan {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+
+.plan-head__plan-elem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100px;
+  z-index: z-index(base);
+
+  &--basic {
+    &.active {
+      .plan-head__plan-cyrcle {
+        background-color: $basic-color;
+        border: 1px solid $basic-color;
+        box-shadow: 0 0 10px $basic-color;
+      }
+
+      .plan-head__plan-text {
+        color: $basic-color;
+      }
+    }
+
+    &.purchased {
+      .plan-head__plan-cyrcle {
+        border: 1px solid $basic-color;
+        background-color: transparent;
+      }
+
+      .plan-head__plan-text {
+        color: $basic-color;
+      }
+    }
+  }
+
+  &--pro {
+    .plan-head__plan-cyrcle {
+      background-color: $pro-color;
+    }
+    
+    &.active {
+      .plan-head__plan-cyrcle {
+        background-color: $pro-color;
+        border: 1px solid $pro-color;
+        box-shadow: 0 0 10px $pro-color;
+      }
+
+      .plan-head__plan-text {
+        color: $pro-color;
+      }
+    }
+
+    &.purchased {
+      .plan-head__plan-cyrcle {
+        border: 1px solid $pro-color;
+        background-color: transparent;
+      }
+
+      .plan-head__plan-text {
+        color: $pro-color;
+      }
+    }
+  }
+}
+
+.plan-head__plan-link {
+  display: flex;
+}
+
+.plan-head__plan-cyrcle {
+  position: relative;
+  flex: 0 0 auto;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  background-color: #000;
+
+}
+
+.plan-head__plan-text {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, 0);
+  font: 700 11px/15px $gerbera-font;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.plan-head__content {
+    display: flex;
+    margin-bottom: 36px;
+    max-width: 1390px;
+    width: 100%;
+    justify-content: center;
+    align-self: center;
+
+    @include phones {
+        flex-direction: column;
+    }
+}
+
+.plan-head__list-text {
+    color: #fff;
+    font: 400 22px/32px $gerbera-font;
+
+    @include phones {
+        font: 400 22px/22px $gerbera-font;
+    }
+}
+
+.plan-head__center {
+    flex: 2;
+    min-height:400px;
+
+    @include phones {
+        order: -1;
+    }
+}
+
+.plan-head__aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 270px;
+    flex: 1;
+    padding-left: 40px;
+
+    @include phones {
+        width: 100%;
+        padding-left: 0;
+    }
+}
+
+.plan-head__list-elem {
+    display: flex;
+    margin-top: 18px;
+
+    @include phones {
+        margin-top: 13px;
+    }
+
+    &--basic {
+      .choose-plan__elem-icon {
+        color: $basic-color;
+        fill: $basic-color;
+        stroke: $basic-color;
+      }  
+    }
+
+    &--pro {
+      .choose-plan__elem-icon {
+        color: $pro-color;
+        fill: $pro-color;
+        stroke: $pro-color;
+      }
+    }
+
+    .choose-plan__elem-icon {
+      position: relative;
+      top: 0;
+      width: 24px;
+      height: 23px;
+      margin-right: 19px;
+      flex: 0 0 auto;
+      stroke: #8C53FF;
+      @include phones {
+        top: 0;
+        width: 16px;
+        height: 13px;
+        margin-right: 12px;
+      }
+    }
+}
+
+.plan-head__list-number {
+    position: relative;
+    top: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid #8D73FF;
+    box-shadow: 0px 0px 5px #8D73FF;
+    font: 400 15px/15px $gerbera-font;
+    color: #8D73FF;
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+.plan-head__buttons {
+    display: flex;
+    justify-content: center;
+}
+
+
+.plan-head__btn {
+    background: #5184FF;
+    border-radius: 2px;
+    width: 153px;
+    height: 55px;
+    border: 0;
+    font: 400 22px/29px $gerbera-font;
+    color: #fff;
+    cursor: pointer;
+
+    &--basic {
+      background: $basic-color;
+    }
+
+    &--pro {
+      background: $pro-color;
+    }
+}
+
+

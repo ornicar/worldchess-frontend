@@ -1,0 +1,65 @@
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.youtube-player-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2000;
+
+  &.pause::after {
+    position: absolute;
+    display: none;
+    content: '';
+    background-image: url('../../../../assets/images/video-player/play.svg');
+    background-size: cover;
+    left: 50%;
+    top: 50%;
+    margin-left: -46px;
+    margin-top: -46px;
+    width: 93px;
+    height: 93px;
+  }
+
+  &.play::after {
+    position: absolute;
+    display: none;
+    content: '';
+    background-image: url('../../../../assets/images/video-player/pause.svg');
+    background-size: cover;
+    left: 50%;
+    top: 50%;
+    margin-left: -46px;
+    margin-top: -46px;
+    width: 93px;
+    height: 93px;
+  }
+
+  &.play.is-hover::after,
+  &.pause.is-hover::after {
+    display: block;
+  }
+
+
+  .youtube-player {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+

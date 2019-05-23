@@ -1,0 +1,19 @@
+<mat-form-field>
+  <input
+    matInput
+    [placeholder]="label"
+    [formControl]="fullName"
+    (focus)="isFocus = true">
+  <span *ngIf="getError()" matSuffix class="form-error-text">{{getError()}}</span>
+  <mat-icon
+    *ngIf="fullName.value || isFocus"
+    matSuffix
+    class="custom-icon"
+    [svgIcon]="getError() ? 'input_error' : 'input_success'">
+  </mat-icon>
+  <mat-icon
+    *ngIf="original"
+    matSuffix
+    class="custom-icon"
+    [svgIcon]="isEdit() ? 'edit' : 'non_edit'"></mat-icon>
+</mat-form-field>

@@ -1,0 +1,15 @@
+<div class="cell figure">
+  <wc-figure [san]="move.san" [isWhite]="isWhite"></wc-figure>
+</div>
+<div class="cell move">
+  {{ move.san | wcRemoveFigureNotation }}
+</div>
+<div class="cell marker">
+  <wc-move-icon *ngIf="!isCastling" [reaction]="move.reaction"></wc-move-icon>
+</div>
+<div class="cell value">
+  {{ move.stockfish_score > 0 ? '+' : '' }}{{ move.stockfish_score | number : '1.2' }}
+</div>
+<div class="cell time">
+  {{ move.seconds_spent !== null ? (move.seconds_spent * 1000 | wcDuration:'hh[h]mm[m]ss[s]') : '...' }}
+</div>

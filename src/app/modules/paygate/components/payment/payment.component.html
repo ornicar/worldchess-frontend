@@ -1,0 +1,161 @@
+<wc-preloader *ngIf="loading$ | async"></wc-preloader>
+
+<form *ngIf="!(loading$ | async)" [formGroup]="form" (ngSubmit)="submit()" class="register" [class.mobile]="isMobile">
+  <a class="register__close" (click)="closePopup()"></a>
+
+  <div *ngIf="!isShownPromocodeScreen || !isMobile; else promocodeTitle" class="register__title">
+    Thanks for registering! Now fill in your payment information
+  </div>
+
+  <ng-template #promocodeTitle>
+    <div class="register__title">
+      Do you have promocode? Use it!
+    </div>
+  </ng-template>
+
+  <ng-container *ngIf="isShownPromocodeScreen">
+    <div class="coupon" [class.mobile]="isMobile">
+      <label class="input-text__input">
+        <div class="input-text__wparrer" [class.input-text__wparrer--error]="promocodeError">
+          <input
+            class="input-text__elem"
+            formControlName="promocode"
+            [class.input-text__elem--active]="!!form.controls['promocode'].value"
+            (keydown.enter)="applyPromocode($event)"
+            type="text"
+          />
+          <div class="input-text__placeholder">Promocode</div>
+          <div *ngIf="promocodeError" class="input-text__error">
+            <div>{{ promocodeError }}</div>
+          </div>
+        </div>
+      </label>
+      <button
+        class="register__btn register__btn--pro"
+        (click)="applyPromocode($event)"
+        [class.accepted]="promocodeAccepted"
+        [disabled]="promocodeAccepted"
+      >
+        {{ promocodeAccepted ? 'accepted' : 'apply' }}
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isShownPromocodeScreen || !isMobile">
+    <div class="register__labels">
+      <div class="card">
+        <div class="card__row">
+          <div class="card__col card__col--flex-3">
+            <label class="input-text__input">
+              <div class="input-text__wparrer">
+                <input
+                  mask="0000 0000 0000 0000"
+                  class="input-text__elem"
+                  [class.input-text__elem--active]="!!form.controls['card_number'].value"
+                  type="text"
+                  formControlName="card_number"
+                />
+                <div class="input-text__placeholder">Card number</div>
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.card_number?.required">Invalid card number</div>
+                <div [hidden]="!errors?.card_number?.response">{{ errors?.card_number?.response }}</div>
+              </div>
+            </label>
+          </div>
+          <div class="card__col">
+            <label class="input-text__input">
+              <div class="input-text__wparrer">
+                <input
+                  mask="000"
+                  class="input-text__elem"
+                  [class.input-text__elem--active]="!!form.controls['cvc'].value"
+                  type="text"
+                  formControlName="cvc"
+                />
+                <div class="input-text__placeholder">CVC</div>
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.cvc?.required">Invalid cvc</div>
+                <div [hidden]="!errors?.cvc?.response">{{ errors?.cvc?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="card__row">
+          <div class="card__col">
+            <app-select-input
+              label="Exp. Month"
+              [control]="form.controls['exp_month']"
+              [options]="months"
+            ></app-select-input>
+          </div>
+          <div class="card__col">
+            <app-select-input
+              label="Exp. Year"
+              [control]="form.controls['exp_year']"
+              [options]="years"
+            ></app-select-input>
+          </div>
+          <div class="card__col card__col--flex-2"></div>
+        </div>
+
+        <div class="card__row">
+          <div class="card__col">
+            <label class="input-text__input">
+              <div class="input-text__wparrer">
+                <input
+                  class="input-text__elem"
+                  [class.input-text__elem--active]="!!form.controls['name'].value"
+                  type="text"
+                  formControlName="name"
+                />
+                <div class="input-text__placeholder">Name on card</div>
+              </div>
+              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
+                <div [hidden]="!errors?.name?.required">Invalid Name on card</div>
+                <div [hidden]="!errors?.name?.response">{{ errors?.name?.response }}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="register__footer">
+    <div *ngIf="!isShownPromocodeScreen || !isMobile" class="register__footer-coll">
+      <div class="input-text-small">
+        Your subscription will be automatically renewed unless you tell us to stop. Before the start of each renewal,
+        you will be sent a reminder notice stating the term and rate then in effect (current rates listed below). If you
+        do nothing, your credit/debit card or payment account will be charged or you will be sent an invoice for your
+        subscription. You may cancel at any time during your subscription by contacting customer service at the infor-
+        mation below, and receive a full refund for all unserved issues.
+      </div>
+    </div>
+
+    <div class="register__footer-coll">
+      <div class="price" *ngIf="totalPrice$ | async as totalPrice">
+        <div class="cost__sum">{{ totalPrice / 100 | currency: 'EUR':'symbol-narrow' }}</div>
+        <div class="cost__text">
+          billed annualy
+        </div>
+      </div>
+      <div class="register__steps">step <span>2 of 3</span></div>
+      <button
+        *ngIf="!isShownPromocodeScreen || !isMobile; else promocodeButton"
+        class="register__btn register__btn--pro"
+        type="submit"
+      >
+        checkout
+      </button>
+
+      <ng-template #promocodeButton>
+        <button class="register__btn register__btn--pro" (click)="hidePromocodeScreen()">
+          {{ promocodeAccepted ? 'submit' : 'skip' }}
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</form>

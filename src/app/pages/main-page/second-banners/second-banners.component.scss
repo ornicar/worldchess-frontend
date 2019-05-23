@@ -1,0 +1,40 @@
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+
+$border: #1B1B1B;
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+
+  @include phones {
+    flex-direction: column;
+  }
+}
+
+wc-mini-banner {
+  flex: 1 1 0;
+  width: 0;
+  box-sizing: border-box;
+  border-top: 1px solid $border;
+
+  @include phones {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+wc-mini-banner + wc-mini-banner {
+  border-left: 1px solid $border;
+  
+
+  &.focus {
+    border-left: 0px;
+  }
+
+  @include phones {
+    border-left: 0;
+    border-top: 1px solid $border;
+  }
+}

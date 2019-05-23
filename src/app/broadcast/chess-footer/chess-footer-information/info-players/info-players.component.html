@@ -1,0 +1,47 @@
+<div class="players__header">
+  <div class="players__dropdown">
+    <div class="players__dropdown-btn" (click)="toggleDropdown()">
+      <div class="players__dropdown-flag">
+        <wc-country-flag [countryId]="selectedTeam?.federation">
+        </wc-country-flag>
+      </div>
+      <div class="players__dropdown-country-reduction">{{selectedTeam?.short_name}}</div>
+      <div class="players__dropdown-country">{{selectedTeam?.name}}</div>
+      <span class="players__dropdown-link"
+        [class.players__dropdown-link--opened]="isDropdownOpened">
+        <svg class="icon">
+          <use xlink:href="#arrow-down"></use>
+        </svg>
+      </span>
+    </div>
+    <ul class="players__dropdown-list" [hidden]="!isDropdownOpened">
+      <li class="players__dropdown-elem"
+        *ngFor="let team of teams"
+        (click)="selectTeam(team)">
+        <div class="players__dropdown-flag">
+          <wc-country-flag [countryId]="team.federation"></wc-country-flag>
+        </div>
+        <div class="players__dropdown-country-reduction">{{team.short_name}}</div>
+        <div class="players__dropdown-country">{{team.name}}</div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="players__body">
+  <ul class="players__list">
+    <li class="players__elem"
+      *ngFor="let player of sortedTeamPlayers"
+    >
+      <div class="players__number">{{player.board_number}}</div>
+      <div class="players__photo"
+        *ngIf="player.player.avatar">
+        <img [src]="player.player.avatar" alt="photo.jpg">
+      </div>
+      <div class="players__name">{{player.player.full_name}}</div>
+      <div class="players__rank" *ngIf="player.player.rank">{{player.player.rank}}</div>
+      <div class="players__year">{{player.player.birth_year}}</div>
+    </li>
+  </ul>
+
+  <span (click)="toggleModal.emit(true)" class="btn btn--right">see more</span>
+</div>

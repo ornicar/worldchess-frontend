@@ -1,0 +1,26 @@
+<wc-subscription-menu active="basic"></wc-subscription-menu>
+
+<div class="lazy-load-content">
+  <div class="lazy-load-content__img">
+    <img src="../../../../../../assets/images/main-page/other-chess-events.png" alt="" />
+  </div>
+
+  <div class="lazy-load-content__text">
+    <div class="lazy-load-content__text-coll">
+      <p>Free forever</p>
+      <p>Play chess on the official platform and accumulate internal rating points</p>
+      <p>Watch open events</p>
+    </div>
+    <div class="lazy-load-content__text-coll">
+      <p>Chat with friends and experts during broadcasts</p>
+      <p>Your official chess profile on worldchess.com</p>
+      <p>Broadcast your own events</p>
+      <div class="price"><span>free</span> / forever</div>
+    </div>
+  </div>
+  <div class="lazy-load-content__buttoms">
+    <button class="lazy-load-content__btn" (click)="mobileShowForm.emit(true)">become a member</button>
+  </div>
+</div>
+
+<wc-with-fide (mobileShowForm)="mobileShowForm.emit($event)"></wc-with-fide>

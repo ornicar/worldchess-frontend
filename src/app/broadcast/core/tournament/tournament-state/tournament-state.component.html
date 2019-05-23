@@ -1,0 +1,8 @@
+<span class="start-text">
+  {{ stateText }}
+</span>
+<span *ngIf="stateDate" class="start-date">
+  &nbsp;
+  <span *ngIf="monthCount < 1">{{stateDate | date : 'MMMM y'}}</span>
+  <span *ngIf="monthCount >= 1">{{monthCount | wcNumberToWorlds}} month{{monthCount > 1 ? 's' : ''}}</span>
+</span>

@@ -1,0 +1,25 @@
+<ng-container *ngIf="!isMinimalViewMode; else minimalMode">
+  <ng-container  *ngIf="isShowTimer$ | async; else staticTime">
+    <div class="move-time"
+      [class.chess-player__move-time--white]="isWhitePlayer$ | async">
+      <span>
+        move time
+      </span>
+      <wc-timer [date]="(timers$ | async)?.startTimeDate" format="HH:mm:ss" stopTrim="m s" [stopAfterZero]="false"></wc-timer>
+    </div>
+    <div class="left-time left-time--active">
+      <wc-timer [date]="(timers$ | async)?.secondsLeftDate" format="HH:mm:ss" stopTrim="m s"></wc-timer>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #staticTime>
+  <div class="left-time">
+    {{ ((playerLastMoveSecondsLeft$ | async) * 1000) | wcDuration:'HH:mm:ss':({stopTrim: 'm s'})}}
+  </div>
+</ng-template>
+
+<ng-template #minimalMode>
+  <div *ngIf="isShowTimer$ | async" class="move-time-label"></div>
+</ng-template>
+

@@ -1,0 +1,245 @@
+@import '../../../../../html/css/variables';
+@import '../../../../../html/css/media';
+
+:host {
+  width: 100%;
+}
+
+.board {
+  display: flex;
+  width: 392px;
+  flex-direction: column;
+  flex: 0 0 auto;
+
+  &__info {
+    min-height: 28px;
+
+    &--bottom {
+      margin-bottom: 25px;
+    }
+  }
+  @include tablets-big() {
+    width: 340px;
+  }
+  @include phones() {
+    width: 249px;
+  }
+}
+
+.board-wrapper {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  position: relative;
+  @include tablets-big() {
+    padding-bottom: 30px;
+  }
+  @include phones() {
+    padding-bottom: 0;
+  }
+
+  &__aside {
+    flex: 1;
+    padding: 41px 20px 110px;
+
+    &--left {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      @include phones() {
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    @include phones() {
+      padding: 20px;
+    }
+  }
+  @include phones() {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.board__center {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.board-buttons {
+  position: absolute;
+  left: calc(100% + 20px);
+  bottom: 0;
+  min-width: 33.5px;
+  @include phones() {
+    left: calc(100% + 5px);
+  }
+
+  &__elem {
+    margin-top: 15px;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    color: $black-light;
+    fill: $black-light;
+    transition: 0.3s;
+    @include phones() {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &--active,
+    &:hover {
+      color: $gray;
+      fill: $gray;
+
+      & .board-buttons__icon .icon {
+        fill: $gray;
+      }
+    }
+  }
+
+  &__icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 11px;
+    flex: 0 0 auto;
+    display: none; // временно
+    @include phones() {
+      margin-right: 0;
+    }
+  }
+
+  &__text {
+    font: 400 12px/17px $gerbera-font;
+    @include phones() {
+      text-align: center;
+    }
+  }
+
+  &__list {
+    @include phones() {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.chess-board {
+  display: flex;
+  width: 100%;
+
+  &__aside {
+    flex: 1 0 auto;
+    display: flex;
+    width: 18px;
+  }
+
+  &__gauge {
+    display: flex;
+    width: 100%;
+  }
+}
+
+.field {
+  display: flex;
+  position: relative;
+  flex: 1 1 auto;
+  flex-direction: column;
+
+  &__header {
+    padding: 16px 25px;
+    min-height: 130px;
+    flex: 0 0 auto;
+  }
+
+  &__title {
+    display: block;
+
+    .wc-title__img {
+      display: inline-block;
+    }
+  }
+
+  &__body {
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__footer {
+    display: block;
+    z-index: z-index(base);
+    @include phones() {
+      min-height: 0;
+    }
+  }
+
+  &__aside {
+    max-width: 210px;
+    flex: 0 0 auto;
+  }
+
+  &__center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 auto;
+  }
+}
+
+.multiboard-control {
+  position: absolute;
+  right: 60px;
+  bottom: 24px;
+  z-index: z-index(base, 20);
+  @include phones() {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.shared {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  width: 92px;
+  height: 32px;
+  background-color: $black-bg;
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(197, 89, 255, 0.7);
+  z-index: z-index(sticky);
+
+  cursor: pointer;
+  @include phones() {
+    position: fixed;
+    bottom: 19px;
+    left: 60px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+  }
+}
+
+.shared__icon {
+  width: 19px;
+  height: 12px;
+  fill: #fff;
+  margin-right: 6px;
+  @include phones() {
+    margin-right: 0;
+  }
+}
+
+.shared__text {
+  font: 400 11px/23px $gerbera-font;
+  color: #fff;
+  @include phones() {
+    display: none;
+  }
+}

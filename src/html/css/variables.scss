@@ -1,0 +1,77 @@
+/*+++*/
+
+$gray: #f6f6f6;
+$gray-dark: #d9d9d9;
+$green: #59f19b;
+$blue: #7bcffb;
+$blue-2: #9bcfff;
+$deep-blue: #5184ff;
+$black-bg: #242424;
+$brown-bg: #5f4d44;
+$black: #383838;
+$black-light: #656565;
+$purple: #c7deff;
+$violet: #8d73ff;
+$orange: #ff6300;
+$red: #ff6969;
+$light-gray: #9e9e9e;
+$var-blue: #4fabff;
+$border-color: #e5e5e5;
+$pink: #ff9595;
+
+$gerbera-font: 'Gerbera', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+$cofo-sans-font: 'Cofo_sans', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+
+$tablets-big: 1919px;
+$laptop: 1366px;
+$tablets: 1280px;
+$ipad: 1024px;
+$phones-big: 980px;
+$phones: 768px;
+$phones-medium: 630px;
+$phones-small: 520px;
+
+$z-layers: (
+  base: 100,
+  base-dropdown: 200,
+  sticky: 300,
+  overlay-right: 400,
+  overlay-left: 500,
+  modal: 600,
+);
+
+// // examples:
+// // z-index(modal);
+// // z-index(modal, 1); // for child elements if needed.
+@function z-index($layer, $sub-layer: 0) {
+  @return map_get($z-layers, $layer) + $sub-layer;
+}
+
+$multiboard-grid-size: (
+  normal: 360px,
+  normal-mobile: 360px,
+  medium: 240px,
+);
+
+$multiboard-grid-rows: (
+  normal: 2,
+  normal-mobile: 1,
+  medium: 3,
+);
+@function multiboard-grid-size($viewMode, $isWrap: false) {
+  $rows: map_get($multiboard-grid-rows, $viewMode);
+  $size: map_get($multiboard-grid-size, $viewMode);
+  @return if($isWrap, $size * $rows, $size);
+}
+
+// broadcast menu
+$broadcast-menu-bg: #f6f6f6;
+$broadcast-menu-border: #d9d9d9;
+$broadcast-menu-color: #000000;
+
+$broadcast-menu-small-bg: #000000;
+$broadcast-menu-small-border: #383838;
+$broadcast-menu-small-color: #ffffff;
+
+$game-board-white-cell: #ba8d60;
+$game-board-black-cell: #754a1f;

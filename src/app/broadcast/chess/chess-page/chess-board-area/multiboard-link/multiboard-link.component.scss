@@ -1,0 +1,56 @@
+@import '../../../../../../html/css/variables';
+@import '../../../../../../html/css/media';
+
+:host {
+  display: block;
+  position: relative;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  box-shadow: 0 0 14px #652600;
+  background: #fff;
+
+  svg {
+    display: block;
+  }
+}
+
+.tooltip {
+  display: none;
+  background: #fff;
+  padding: 7px 17px;
+  border-radius: 2px;
+  position: absolute;
+  top: calc(50% - 13px);
+  right: calc(100% + 32px);
+  font: 400 11px/15px $gerbera-font;
+  white-space: nowrap;
+  color: #383838;
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
+
+  &::after {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-top: -4px;
+    content: '';
+    display: block;
+    border-style: solid;
+    border-width: 5px 7px;
+    border-color: #fff transparent transparent #fff;
+  }
+}
+
+:host(.show-tooltip) {
+  .link:hover + .tooltip {
+    display: block;
+    opacity: 1;
+  }
+}

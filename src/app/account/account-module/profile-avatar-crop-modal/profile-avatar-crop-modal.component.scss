@@ -1,0 +1,49 @@
+@import '../../../../html/css/variables';
+@import '../../../../html/css/media';
+
+.profile-avatar-crop--preview {
+  border: 0;
+  border-radius: 99999px;
+}
+
+.profile-avatar-crop__header {
+  display: flex;
+  flex-direction: row;
+
+  input[type=file] {
+    display: none;
+  }
+}
+
+.profile-avatar-crop--btn {
+  display: flex;
+  flex-direction: row;
+  border: 0;
+  outline: 0;
+  color: #000;
+  background: #fff;
+  border-radius: 2px;
+  margin: 0 8px;
+  font: 300 16px/24px $gerbera-font;
+  padding: 6px;
+  cursor: pointer;
+
+  &.flex-end {
+    align-self: flex-end;
+  }
+
+  .icon {
+    margin-left: 8px;
+  }
+}
+
+.icon {
+  fill: #000;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+
+  &.rotate90 {
+    transform: rotate(90deg);
+  }
+}

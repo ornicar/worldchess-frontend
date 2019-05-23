@@ -1,0 +1,121 @@
+.form {
+  min-width: 0;
+
+  .mat-icon {
+    margin-left: 9px;
+    height: auto;
+    position: relative;
+
+    &[ng-reflect-svg-icon="input_success"] {
+      top: 2px;
+      margin-right: 4px;
+    }
+
+    &[ng-reflect-svg-icon="non_edit"] {
+      width: 19px;
+      margin-right: 1px;
+      top: 2px;
+
+      @include media-breakpoint-up(sm) {
+        top: 5px;
+      }
+    }
+  }
+
+  .mat-form-field {
+    display: block;
+    //min-width: 270px; BUG on payment page.
+  }
+
+  //@include media-breakpoint-up(md) {
+  //  min-width: 535px;
+  //}
+}
+
+.form-error-text, .additional-text {
+  position: relative;
+  top: 0;
+  font-size: 14px;
+  color: #FF5858;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 11px;
+    letter-spacing: 0.07px;
+    top: -2px;
+    margin-right: 2px;
+  }
+}
+
+/* @Syroezhkin - убрал так как нет сообщения об ошибке при вводе неверного пароля
+.form-error-text {
+  display: none; // MW0W-298. Дмитрий Огнев сказал убрать сообщения совсем
+}*/
+
+.additional-text {
+  color: $gray-600;
+}
+
+.mat-form-field-suffix .mat-icon.custom-icon {
+  font-size: 100%;
+}
+
+.submit {
+  margin-left: auto;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 32px;
+  letter-spacing: 0;
+  padding: 0 31px 3px;
+
+  &:-moz-focusring {
+    border: none;
+  }
+
+  @include media-breakpoint-up(sm) {
+    margin-left: 50px;
+    margin-bottom: 0;
+    height: 34px;
+    letter-spacing: 0.4px;
+    padding: 0 12px 2px 13px;
+  }
+}
+
+.social {
+  white-space: nowrap;
+
+  .btn {
+    color: white;
+    margin-left: 16px;
+    font-size: 14px;
+    line-height: 32px;
+    letter-spacing: 0;
+    padding: 0 15px 3px;
+
+    @include media-breakpoint-up(sm) {
+      margin-left: 23px;
+      font-size: 15px;
+      line-height: 34px;
+      padding-bottom: 1px;
+    }
+
+    @include media-breakpoint-up(xl) {
+      width: 154px;
+    }
+
+    &.btn-facebook {
+      background: $facebook;
+      margin-left: 0;
+      padding-right: 14px;
+      padding-left: 13px;
+
+      @include media-breakpoint-up(sm) {
+        margin-left: 17px;
+      }
+    }
+
+    &.btn-twitter {
+      background: $twitter;
+      padding-left: 14px;
+    }
+  }
+}

@@ -1,0 +1,133 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+@import '../html/css/settings.scss';
+
+.information-main {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  background-color: $gray;
+
+  &__empty {
+    background-color: $black-bg;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 30px 0;
+  }
+
+  &__empty-img {
+    width: 40%;
+    height: 40%;
+    margin-top: 10px;
+  }
+
+  &__empty-msg {
+    text-align: center;
+    color: $light-gray;
+    font-size: 22px;
+    margin: 40px 10px 10px;
+  }
+  @include phones() {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+.information-aside {
+  position: relative;
+  flex: 0 0 auto;
+  width: 425px;
+  background-color: $black;
+  padding: 20px;
+  overflow: hidden;
+
+  &--portable {
+    display: flex;
+    @include phones() {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    display: none;
+    @include phones() {
+      display: flex;
+    }
+  }
+
+  &--media {
+    padding-bottom: 16px;
+  }
+  @include phones() {
+    width: 100%;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.container {
+  margin: 0 auto;
+  position: relative;
+  min-width: 320px;
+  @include phones() {
+    min-width: 300px;
+  }
+
+  &--flex {
+    display: flex;
+    min-height: 617px;
+    @include phones() {
+      flex-direction: column;
+      min-height: auto;
+    }
+  }
+
+  &--gray {
+    background-color: $gray;
+  }
+}
+
+.players {
+  display: block;
+  background-color: #efefef;
+
+  &--desktop {
+    @include phones() {
+      display: none;
+    }
+  }
+
+  &--tablet {
+    display: none;
+    @include phones() {
+      display: block;
+    }
+  }
+}
+
+.wc-popup {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: z-index(modal);
+  background-color: rgba(0, 0, 0, 0.2);
+
+  &__wrap {
+    width: 866px;
+    height: 90vh;
+  }
+
+  &[_ngcontent-c3] {
+    left: auto;
+  }
+}

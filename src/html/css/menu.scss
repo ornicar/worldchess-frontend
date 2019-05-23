@@ -1,0 +1,21 @@
+.menu {
+    &__list {
+        display: flex;
+    }
+
+    &__elem {
+        margin-right: 75px;
+
+        &:last-child {
+            margin-right: 0; 
+        }
+    }
+
+    &__link {
+        font-family: $gerbera-font;
+        font-size: 15px;
+        font-weight: 400;
+        padding: 10px 0;
+        color: #000;
+    }
+}

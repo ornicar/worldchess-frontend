@@ -1,0 +1,11 @@
+<div *ngIf="move" [ngClass]="move.is_white_move ? 'turn-history__white' : 'turn-history__black'">
+  <div class="turn-history__turn" [class.turn-history__turn--active]="isSelected">
+    <wc-history-move-figure [san]="move.san" [isWhite]="move.is_white_move"></wc-history-move-figure>
+    {{ move.san | wcRemoveFigureNotation }}
+  </div>
+  <div class="turn-history__time">
+    {{ move.seconds_spent !== null ? (move.seconds_spent * 1000 | wcDuration:'hh[h]mm[m]ss[s]') : '...' }}
+  </div>
+  <div class="turn-history__progress" style="width: 20px;" *ngIf="false">
+  </div>
+</div>

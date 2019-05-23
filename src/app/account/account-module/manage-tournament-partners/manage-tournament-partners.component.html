@@ -1,0 +1,44 @@
+<div class="partners-form tournament-form">
+  <div *ngIf="partnersForm"
+       [formGroup]="partnersForm">
+    <div *ngFor="let partnerControl of partnersForm.controls; let idx = index"
+         [formGroupName]="idx"
+         class="partner-item">
+      <wc-tournament-partner-control
+        [partners]="partnersList$ | async"
+        [formControl]="partnerControl">
+      </wc-tournament-partner-control>
+      <span *ngIf="partnerControl.value?.id !== null"
+            (click)="removePartner(idx)"
+            class="item-btn btn--remove">X</span>
+      <span *ngIf="ableToUpdatePartner(idx)"
+            [class.disabled]="partnerControl.invalid || loading"
+            (click)="updatePartner(idx)"
+            class="itm-btn btn--update">Save Updates</span>
+    </div>
+    <div>
+      <button class="btn btn-blue btn--add"
+              [disabled]="isDisabledAddBtn"
+              (click)="addPartner()">Add partner
+      </button>
+    </div>
+  </div>
+</div>
+<div class="controls">
+  <button class="btn btn-blue" (click)="onClose()">Close</button>
+  <button class="btn btn-blue"
+          *ngIf="ableToSave()"
+          [disabled]="isDisabledSaveAction"
+          (click)="onSave()">Save
+  </button>
+  <button class="btn btn-blue"
+          *ngIf="ableToNext()"
+          [disabled]="isNextDisabled"
+          (click)="onNext()">Next
+  </button>
+  <button class="btn btn-blue"
+          *ngIf="ableToSend()"
+          [disabled]="isDisabledSaveAction"
+          (click)="onSendToApprove()">Send to approve
+  </button>
+</div>

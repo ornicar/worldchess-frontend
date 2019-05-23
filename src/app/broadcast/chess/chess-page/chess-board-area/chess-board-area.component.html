@@ -1,0 +1,63 @@
+<div class="field__body">
+  <div class="field__center">
+    <div class="board-wrapper">
+      <div class="board-wrapper__aside">
+        <div class="shared" (click)="share()">
+          <div class="shared__icon">
+            <svg class="icon">
+              <use xlink:href="#shared" />
+            </svg>
+          </div>
+          <div class="shared__text">
+            Share
+          </div>
+        </div>
+      </div>
+      <div class="board">
+        <div class="board__center">
+          <wc-broadcast-single-chess-board-controller
+            [boardId]="gameState?.board?.id"
+            [bottomPlayerColor]="orientation"
+            [tournament]="tournament"
+          >
+          </wc-broadcast-single-chess-board-controller>
+          <div class="board-buttons">
+            <ul #boardMenu class="board-buttons__list">
+              <li *ngIf="isShowBoardMenu" class="board-buttons__elem">
+                <a class="board-buttons__link" (click)="onFlipBoard()">
+                  <div class="board-buttons__icon">
+                    <svg class="icon"><use xlink:href="#flip-icon" /></svg>
+                  </div>
+                  <div class="board-buttons__text">Flip board</div>
+                </a>
+              </li>
+              <li *ngIf="isShowBoardMenu" class="board-buttons__elem">
+                <a class="board-buttons__link" (click)="onLoadPGN()">
+                  <div class="board-buttons__icon">
+                    <svg class="icon"><use xlink:href="#pgn-icon" /></svg>
+                  </div>
+                  <div class="board-buttons__text">PGN</div>
+                </a>
+              </li>
+              <li class="board-buttons__elem">
+                <a class="board-buttons__link" (click)="toggleBoardMenu()">
+                  <div class="board-buttons__icon">
+                    <svg class="icon"><use xlink:href="#more-icon" /></svg>
+                  </div>
+                  <div class="board-buttons__text"></div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <wc-chess-navigation [myGameIsActive]="gameState?.myGameIsActive" [boardId]="gameState?.board?.id">
+        </wc-chess-navigation>
+      </div>
+      <div *ngIf="canOpenMultiboard()" class="multiboard-control">
+        <wc-multiboard-link [tournament]="tournament" [tourId]="tour?.id"></wc-multiboard-link>
+      </div>
+      <div class="board-wrapper__aside board-wrapper__aside--left"></div>
+    </div>
+  </div>
+</div>
+<div class="field__footer"></div>

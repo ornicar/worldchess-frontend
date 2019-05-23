@@ -1,0 +1,77 @@
+@import "settings";
+@import "mixins";
+@import '../../../../html/css/variables';
+@import '../../../../html/css/media';
+
+.not-found {
+  background-color: #000000;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: z-index(base);
+  padding-top: 50px;
+
+  .title {
+    padding: 20px;
+    font: 300 22px/30px $gerbera-font;
+
+    @include media-breakpoint-up(lg) {
+      font: 300 33px/39px $gerbera-font;
+      letter-spacing: 1.4px;
+    }
+
+    a {
+      display: inline;
+      color: $color-grey;
+      font-family: $gerbera-font;
+
+      &:after {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-top: 1px solid $blue;
+        border-right: 1px solid $blue;
+        transform: translateY(-50%) rotate(45deg);
+        display: inline-block;
+        position: relative;
+        top: 1px;
+        margin-left: 4px;
+
+        @include media-breakpoint-up(lg) {
+          width: 7px;
+          height: 7px;
+          top: 0;
+          margin-left: 7px;
+        }
+      }
+
+      @include media-breakpoint-up(lg) {
+        letter-spacing: 0;
+        padding-right: 15px;
+      }
+    }
+
+    .gray {
+      color: $color-grey;
+      font-family: $gerbera-font;
+    }
+
+    .main-logo {
+      height: 25px;
+      position: relative;
+      top: 3.5px;
+      margin-right: 5px;
+
+      @include media-breakpoint-up(lg) {
+        height: 34px;
+        top: 5px;
+      }
+    }
+  }
+}

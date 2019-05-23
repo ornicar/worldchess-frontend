@@ -1,0 +1,183 @@
+@import 'settings';
+@import 'mixins';
+@import "../../../html/css/variables";
+
+.partners {
+  padding-top: 20px;
+  padding-bottom: 26px;
+
+  @include media-breakpoint-up(lg) {
+    padding-bottom: 56px;
+  }
+
+  @include media-breakpoint-up(xl) {
+    padding-top: 23px;
+    padding-bottom: 45px;
+  }
+
+
+  .block-header {
+    font: 400 29px/43px $gerbera-font;
+    letter-spacing: 1.32px;
+    margin-left: -2px;
+    margin-right: -2px;
+    margin-bottom: 19px;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 33px;
+      letter-spacing: 1.3px;
+      margin-left: 9px;
+      margin-right: 9px;
+      margin-bottom: 25px;
+    }
+
+    @include media-breakpoint-up(xl) {
+      margin-bottom: 22px;
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .partners-wrapper {
+    margin: 0 -7px;
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-up(lg) {
+      justify-content: flex-start;
+    }
+
+    a.partner-logo {
+      display: flex;
+      padding: 0 5px;
+      margin-bottom: 9px;
+
+      @include media-breakpoint-up(lg) {
+        margin-bottom: 0;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+      }
+
+      &#phosagro {
+        width: 36%;
+        align-items: center;
+        justify-content: center;
+      }
+      &#kaspersky {
+        width: 30%;
+        align-items: center;
+        justify-content: center;
+      }
+      &#unibet {
+        width: 28%;
+        align-items: center;
+        justify-content: center;
+      }
+      &#dupont {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+        margin-right: 2%;
+      }
+      &#prytek {
+        width: 15%;
+        align-items: center;
+        justify-content: center;
+        margin-right: 2.3%;
+      }
+      &#isklar {
+        width: 10%;
+        align-items: center;
+        justify-content: center;
+        margin-right: auto;
+      }
+
+      @include media-breakpoint-up(lg) {
+        &#phosagro {
+          width: 19.9%;
+          margin-left: 4.9%;
+        }
+        &#kaspersky {
+          width: 16.3%;
+          margin-left: 2.8%;
+        }
+        &#unibet {
+          width: 14.6%;
+          margin-left: 2.7%;
+          transform: translateY(1%);
+        }
+        &#dupont {
+          width: 10.7%;
+          margin-right: 0;
+          margin-left: 0.1%;
+          transform: translateY(-1%);
+        }
+        &#prytek {
+          width: 7.527%;
+          margin-right: 0;
+          margin-left: 2.2%;
+        }
+        &#isklar {
+          width: 4.8%;
+          margin-right: 0;
+          margin-left: 2.4%;
+        }
+      }
+
+      @include media-breakpoint-up(xl) {
+        &#phosagro {
+          width: 20.1%;
+          margin-left: 3.65%;
+        }
+        &#kaspersky {
+          width: 16.5%;
+          margin-left: 3.1%;
+        }
+        &#unibet {
+          width: 14.9%;
+          margin-left: 3%;
+        }
+        &#dupont {
+        }
+        &#prytek {
+          margin-left: 2.45%;
+        }
+        &#isklar {
+          margin-left: 2.7%;
+          width: 4.7%;
+          transform: translateY(-1%);
+        }
+      }
+
+    }
+  }
+
+  .line-break {
+    display: none;
+
+    @include media-breakpoint-up(lg) {
+      display: block;
+      width: 1px;
+      height: 49px;
+      background-color: #cfcfcf;
+      opacity: 0.55;
+      margin: 0 3.5%;
+      align-self: center;
+    }
+
+    @include media-breakpoint-up(xl) {
+      height: 68px;
+      margin-left: 3.8%;
+      margin-right: 3.5%;
+      transform: translateY(4%);
+    }
+  }
+}

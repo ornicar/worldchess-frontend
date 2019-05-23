@@ -1,0 +1,47 @@
+<div class="lazy-load-footer">
+  <div class="lazy-load-footer__row">
+    <div class="logo-block">
+      <label>
+        <input class="fide-checkbox" type="checkbox" (change)="toggleFide()" />
+        <div class="logo-block__check">
+          <svg class="icon" [class.checked]="fideSelected$ | async">
+            <use xlink:href="#check"></use>
+          </svg>
+        </div>
+        <div class="logo-block__title">
+          Get BETA<br />
+          World Chess Passport
+          <!-- <svg class="icon">
+            <use xlink:href="#logo-fide"></use>
+          </svg> -->
+        </div>
+      </label>
+    </div>
+    <div class="price">
+      <span class="price__price" *ngIf="fidePrice$ | async as fidePrice">{{
+        fidePrice / 100 | currency: 'EUR':'symbol-narrow'
+      }}</span>
+      <span>/ per year</span>
+    </div>
+  </div>
+  <!-- временно скрываем -->
+  <!-- <div class="lazy-load-footer__row lazy-load-footer__row--hidden-mobile">
+    <ul class="lazy-load-footer__list">
+      <li class="lazy-load-footer__elem">
+        Official player<br />
+        registration at FIDE
+      </li>
+      <li class="lazy-load-footer__elem">
+        Official<br />
+        FIDE rating
+      </li>
+      <li class="lazy-load-footer__elem">
+        Online rating<br />
+        counts as official
+      </li>
+    </ul>
+  </div> -->
+  <div class="lazy-load-footer__row lazy-load-footer__row--open-mobile">
+    <button class="lazy-load-footer__btn" (click)="mobileShowForm.emit(true)">become a member</button>
+  </div>
+</div>

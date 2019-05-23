@@ -1,0 +1,38 @@
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+:host {
+  display: flex;
+  align-items: center;
+  flex-flow: row nowrap;
+}
+
+.text {
+  flex: 0 0 auto;
+  font: 400 13px/13px $gerbera-font;
+  letter-spacing: 1.3px;
+  color: currentColor;
+  text-transform: uppercase;
+  margin-right: 17px;
+  @include tablets-big() {
+    font: 400 11px/11px $gerbera-font;
+  }
+  @include phones-small() {
+    margin-right: 10px;
+    font: 400 11px/11px $gerbera-font;
+  }
+}
+
+.icon {
+  flex: 0 0 auto;
+  height: 30px;
+  width: 137px;
+  fill: currentColor;
+  @include tablets-big() {
+    height: 29px;
+    width: 116px;
+  }
+  @include phones-small() {
+    width: 100px;
+  }
+}

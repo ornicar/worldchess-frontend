@@ -1,0 +1,16 @@
+:host(wc-tournament-partner-control) {
+  display: inline-block;
+}
+
+.partner-control {
+  display: flex;
+
+  input, span, select {
+    height: 22px;
+    margin-right: 10px;
+    width: 200px;
+  }
+
+  & > div {
+  }
+}

@@ -1,0 +1,183 @@
+---
+
+image: registry.usetech.ru/worldchess/tournament-bc/gitlab-runner:latest
+
+.base_variables: &base_variables
+  # When using dind, it's wise to use the overlayfs driver for
+  # improved performance:
+  DOCKER_DRIVER: overlay2
+  PROJECT_NAME: "world_chess_tournament_bc_frontend"
+  GROUP_NAME: "usetech.ru"
+
+stages:
+  - build
+  - deploy
+  - after_deploy
+
+.base_before_script: &base_before_script |
+  # Login into Docker registry:
+  docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY || true
+  # Debug information:
+  docker info && docker-compose --version && git --version
+
+.develop_before_script: &develop_before_script |
+  # Creating `.env` configuration file:
+  dump-env -t config/.env.template -p 'SECRET_' > config/.env
+
+.stage_before_script: &stage_before_script |
+  # Creating `.env` configuration file:
+  export SECRET_DOMAIN_NAME=chess3.usetech.ru
+  dump-env -t config/.env.template -p 'SECRET_' > config/.env
+
+.aws_master_before_script: &aws_master_before_script |
+  # Creating `.env` configuration file:
+  dump-env -t config/.env.template -p 'AWS_' > config/.env
+
+.aws_test_before_script: &aws_test_before_script |
+  # Creating `.env` configuration file:
+  dump-env -t config/.env.template -p 'AWSTEST_' > config/.env
+
+.build_frontend: &build_frontend
+  stage: build
+  script:
+    - docker pull $CI_REGISTRY_IMAGE/frontend:$IMAGE_TAG-latest || true
+    - docker build
+      --cache-from $CI_REGISTRY_IMAGE/frontend:$IMAGE_TAG-latest
+      --target builder
+      --build-arg NODE_ENV=$ENVIRONMENT
+      -f $FRONT_DOCKERFILE
+      -t "frontend:$IMAGE_TAG-latest"
+      -t "$CI_REGISTRY_IMAGE/frontend:$IMAGE_TAG-latest" .
+    - docker push $CI_REGISTRY_IMAGE/frontend:$IMAGE_TAG-latest
+    - docker build
+      --build-arg IMAGE_TAG=$IMAGE_TAG
+      --build-arg DOMAIN_NAME=$DOMAIN_NAME
+      -f docker/nginx/Dockerfile
+      -t "$CI_REGISTRY_IMAGE/nginx:$IMAGE_TAG-latest" .
+    - docker push $CI_REGISTRY_IMAGE/nginx:$IMAGE_TAG-latest
+
+build:front:develop:
+  before_script:
+    - *base_before_script
+    - *develop_before_script
+  <<: *build_frontend
+  variables:
+    <<: *base_variables
+    IMAGE_TAG: develop
+    FRONT_DOCKERFILE: Dockerfile
+    DOMAIN_NAME: chess.usetech.ru
+    ENVIRONMENT: dev
+  only:
+    - develop
+
+build:front:stage:
+  before_script:
+    - *base_before_script
+    - *stage_before_script
+  <<: *build_frontend
+  variables:
+    <<: *base_variables
+    IMAGE_TAG: stage
+    FRONT_DOCKERFILE: Dockerfile
+    DOMAIN_NAME: chess3.usetech.ru
+    ENVIRONMENT: stage
+  only:
+    - stage
+
+build:front:aws_master:
+  before_script:
+    - *base_before_script
+    - *aws_master_before_script
+  <<: *build_frontend
+  variables:
+    <<: *base_variables
+    IMAGE_TAG: aws
+    FRONT_DOCKERFILE: Dockerfile
+    DOMAIN_NAME: worldchess.com
+    ENVIRONMENT: prod
+  only:
+    - master
+
+build:front:aws_test:
+  before_script:
+    - *base_before_script
+    - *aws_test_before_script
+  <<: *build_frontend
+  variables:
+    <<: *base_variables
+    IMAGE_TAG: awstest
+    FRONT_DOCKERFILE: Dockerfile
+    DOMAIN_NAME: chessaws.usetech.ru
+    ENVIRONMENT: stage
+  only:
+    - master
+  when: manual
+
+.base_deploy: &base_deploy |
+  # Install deps for ssh
+  which ssh-agent || apk add --update openssh-client &&
+  eval $(ssh-agent -s)
+  echo "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+  mkdir -p ~/.ssh
+  chmod 700 ~/.ssh
+  ssh-keyscan -t rsa gitlab.usetech.ru >> ~/.ssh/known_hosts
+
+.develop_deploy_before_script: &develop_deploy_before_script |
+  echo "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null &&
+  ssh-keyscan -t rsa 192.168.100.166 >> ~/.ssh/known_hosts
+
+.stage_deploy_before_script: &stage_deploy_before_script |
+  echo "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null &&
+  ssh-keyscan -t rsa 192.168.100.164 >> ~/.ssh/known_hosts
+
+.base_deploy_job: &base_deploy_job
+  script:
+    - ssh -p $SSH_PORT $SSH_OPTIONS $USER_HOST "docker login -u gitlab -p "$GITLAB_REGISTRY_PASSWORD" registry.usetech.ru"
+    - ssh -p $SSH_PORT $SSH_OPTIONS $USER_HOST "docker pull $CI_REGISTRY_IMAGE/nginx:$IMAGE_TAG-latest || true"
+    - ssh -p $SSH_PORT $SSH_OPTIONS $USER_HOST "docker rm -f frontend-nginx || true"
+    - ssh -p $SSH_PORT $SSH_OPTIONS $USER_HOST "docker run -d --name frontend-nginx --restart unless-stopped --network=tournament-bc_webnet $CI_REGISTRY_IMAGE/nginx:$IMAGE_TAG-latest"
+
+.base_deploy_variables: &base_deploy_variables
+  SSH_PORT: 8022
+  SSH_OPTIONS: -o StrictHostKeyChecking=no
+
+deploy:develop:
+  stage: deploy
+  variables:
+    <<: *base_deploy_variables
+    USER_HOST: root@192.168.100.166
+    IMAGE_TAG: develop
+  before_script:
+    - *base_deploy
+    - *develop_deploy_before_script
+  <<: *base_deploy_job
+  environment:
+    name: dev
+    url: https://chess.usetech.ru
+  only:
+    - develop
+
+deploy:stage:
+  stage: deploy
+  variables:
+    <<: *base_deploy_variables
+    USER_HOST: root@192.168.100.164
+    IMAGE_TAG: stage
+  before_script:
+    - *base_deploy
+    - *stage_deploy_before_script
+  <<: *base_deploy_job
+  environment:
+    name: stage
+    url: https://chess3.usetech.ru
+  only:
+    - stage
+
+notify_slack:
+  stage: after_deploy
+  script: >
+    http --ignore-stdin POST $SLACK_GITLAB_URL text="> <$CI_PROJECT_URL|$CI_PROJECT_PATH>: Pipeline <$CI_PIPELINE_URL|#$CI_PIPELINE_ID> of branch <$CI_PROJECT_URL/commits/$CI_COMMIT_REF_NAME|$CI_COMMIT_REF_NAME> by $GITLAB_USER_NAME ($GITLAB_USER_LOGIN) succeeded"
+  only:
+    - master
+    - develop
+    - stage

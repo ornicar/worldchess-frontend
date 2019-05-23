@@ -1,0 +1,163 @@
+@import "settings";
+@import "mixins";
+@import "../../../../../html/css/variables";
+@import "../../../../../html/css/media";
+
+:host {
+  height: 100%;
+  display: block;
+}
+
+.block-schedule {
+  display: flex;
+  flex: 1;
+}
+
+.block-statistics__head {
+  padding: 21px;
+  border-bottom: 1px solid #f6f6f6;
+  min-height: 83px;
+
+  @include phones() {
+    padding: 16px 20px;
+    min-height: 59px;
+  }
+}
+
+.block-statistics__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 10px 20px 20px;
+  height: calc(100% - 83px);
+}
+
+.block-statistics__title {
+  margin-bottom: 30px;
+  font: 300 33px/33px $gerbera-font;
+
+  @include phones() {
+    font-size: 22px;
+  }
+}
+
+
+.filters__list {
+  display: flex;
+}
+
+.filters__elem {
+  margin-right: 22px;
+
+  &:last-child {
+    margin-right: 0px;
+  }
+}
+
+.filters__icon {
+  opacity: 0.3;
+  cursor: pointer;
+
+  @include phones() {
+    height: 33px;
+  }
+
+  &:hover, &--active {
+    opacity: 1;
+  }
+
+  img {
+    @include phones() {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+.filters__link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+
+  &--active,
+  &:hover {
+    .filters__icon {
+      opacity: 1;
+    }
+  }
+
+  @include phones() {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.block-chart {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+
+  @include phones() {
+    flex-direction: column-reverse;
+  }
+}
+
+.block-chart__aside {
+  @include phones() {
+    align-self: flex-start;
+  }
+}
+
+.block-chart__chart {
+  flex: 1;
+  align-self: stretch;
+  max-height: 385px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include phones() {
+    height: 135px;
+    width: 135px;
+    position: absolute;
+    top: -58px;
+    right: 0;
+  }
+}
+
+.block-chart__list {
+  margin-right: 15px;
+}
+
+.block-chart__elem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 23px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @include phones() {
+    margin-bottom: 15px;
+  }
+}
+
+.block-chart__marker {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-right: 19px;
+}
+
+.block-chart__value {
+  letter-spacing: 1.5px;
+  color: #5e5e5e;
+  width: 82px;
+  text-transform: uppercase;
+  font: 400 13px/11px $gerbera-font;
+}

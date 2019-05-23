@@ -1,0 +1,11 @@
+<ul class="nav">
+    <li class="nav__elem" *ngIf="showBasic$ | async">
+      <a class="nav__link" (click)="selectPlan('basic')" [class.active]="active === 'basic'">Basic</a>
+    </li>
+    <li class="nav__elem" *ngIf="showPro$ | async">
+      <a class="nav__link" (click)="selectPlan('pro')"  [class.active]="active === 'pro'">Pro</a>
+    </li>
+    <li class="nav__elem" *ngIf="showPremium$ | async">
+      <a class="nav__link" (click)="selectPlan('premium')" [class.active]="active === 'premium'">Premium</a>
+    </li>
+</ul>

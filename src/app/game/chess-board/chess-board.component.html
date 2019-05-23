@@ -1,0 +1,122 @@
+<div class="chess-board">
+  <div class="chess-board__wrapper">
+    <div class="chess-board__numbering">
+      <ul class="chess-board__numbers" [class.reverse]="isBottomWhite">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+      </ul>
+      <ul class="chess-board__letters" [class.reverse]="!isBottomWhite">
+        <li>a</li>
+        <li>b</li>
+        <li>c</li>
+        <li>d</li>
+        <li>e</li>
+        <li>f</li>
+        <li>g</li>
+        <li>h</li>
+      </ul>
+    </div>
+    <div style="width: 100%; height: 100%" class="merida light-brown default whole layout-top" tabindex="0">
+      <wc-chessground
+        class="outerBoard"
+        [orientation]="bottomPlayerColor"
+        [canMove]="!readOnly"
+        [canCreateMove]="canCompleteMove"
+        [position]="position"
+        (positionChange)="changePosition($event)"
+        (triedToMove)="onCancelMove()"
+      ></wc-chessground>
+    </div>
+
+    <div [class.result--active]="isResultShown" class="result">
+      <a (click)="hideResult()" class="result__close"></a>
+
+      <div *ngIf="gameResult === GameResult.LOST && endReason === EndReason.CLASSIC" class="result__title">
+        <span>You lost</span> by mate<br />But you were so close!
+      </div>
+      <div *ngIf="gameResult === GameResult.WON && endReason === EndReason.CLASSIC" class="result__title">
+        <span>You won</span> by mate<br />
+      </div>
+
+      <div *ngIf="gameResult === GameResult.DRAW" class="result__title">Its a <span>draw</span></div>
+
+      <div *ngIf="gameResult === GameResult.LOST && endReason === EndReason.TIME_CONTROL" class="result__title">
+        <span>You lost</span> on time<br />But you were so close!
+      </div>
+      <div *ngIf="gameResult === GameResult.WON && endReason === EndReason.TIME_CONTROL" class="result__title">
+        <span>You won</span> on time<br />
+      </div>
+
+      <div *ngIf="gameResult === GameResult.LOST && endReason === EndReason.RESIGN" class="result__title">
+        <span>You</span> resigned<br />
+      </div>
+      <div *ngIf="gameResult === GameResult.WON && endReason === EndReason.RESIGN" class="result__title">
+        <span>You won</span> Opponent resigned<br />
+      </div>
+
+      <div *ngIf="endReason === EndReason.ABORT" class="result__title">
+        <span>Opponent</span> disconnected. Game canceled<br />
+      </div>
+
+      <div *ngIf="endReason === EndReason.DISCONNECT" class="result__title">
+        <span>You won</span> by abandon<br />
+      </div>
+
+      <div class="result__count">
+        <div class="result__count-block  result__count-block--rating" *ngIf="ratingChange && ratingChange !== 0">
+          <div class="result__count-cell" [class.result__count-cell--red]="ratingChange < 0">
+            <div class="result__score">{{ ratingChange }}</div>
+            <div class="result__score-text">Rating {{ ratingChange > 0 ? 'obtained' : 'loss' }}</div>
+          </div>
+          <div class="result__count-cell">
+            <div class="result__score">{{ player.rating }}</div>
+            <div class="result__score-text">
+              Your new rating
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result__text">Want to save your results? <a
+          [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]">Log in</a> or join us</div>
+
+      <div class="result__buttons">
+        <div class="result__cell" *ngIf="!isAuthorized">
+          <a [routerLink]="['', { outlets: { p: ['paygate', 'register'] } }]" class="result__register">register</a>
+        </div>
+        <div class="result__cell">
+          <a (click)="findAnotherGame($event)" href="#" class="result__find-game"
+            ><span class="result__find-game-icon"></span> Find another game</a
+          >
+        </div>
+      </div>
+
+      <div *ngIf="endReason !== EndReason.ABORT" class="result__footer">
+        <a [href]="pgnUrl" class="result__save" target="_blank" *ngIf="pgnUrl; else preloader">
+          <svg class="icon">
+            <use xlink:href="#download"></use>
+          </svg>
+          Save PGN
+        </a>
+        <ng-template #preloader>
+          <div class="preloader_wrapper">
+            <span class="result__save">Please wait, PGN is forming...</span>
+            <wc-preloader class="preloader"></wc-preloader>
+          </div>
+        </ng-template>
+        <a *ngIf="canCallAnArbiter" class="result__save abuse" (click)="onCallAnArbiter()">
+          <svg class="icon">
+            <use xlink:href="#arbiter-icon"></use>
+          </svg>
+          Call an arbiter</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

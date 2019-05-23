@@ -1,0 +1,100 @@
+<div class="chess-board">
+  <div class="chess-board__wrapper">
+    <div
+      class="chess-board__player chess-board__player--top"
+      [class.chess-board__player--white]="bottomPlayerColor !== 'white'"
+    >
+      <svg class="icon">
+        <use xlink:href="#hexagon" />
+      </svg>
+    </div>
+    <div
+      class="chess-board__player chess-board__player--bottom"
+      [class.chess-board__player--white]="bottomPlayerColor === 'white'"
+    >
+      <svg class="icon">
+        <use xlink:href="#hexagon" />
+      </svg>
+    </div>
+    <div style="width: 100%; height: 100%" class="merida dark-brown default whole layout-top" tabindex="0">
+      <wc-chessground
+        class="outerBoard"
+        [orientation]="bottomPlayerColor"
+        [canMove]="canMove"
+        [canCreateMove]="canCompleteMove"
+        [position]="position"
+        (positionChange)="moveCompleted.next($event)"
+        (triedToMove)="onTriedToMove()"
+      ></wc-chessground>
+    </div>
+    <div *ngIf="moveReaction" class="chess-board__reaction">
+      <wc-move-icon [reaction]="moveReaction"></wc-move-icon>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="viewMode !== ChessBoardViewMode.OnlyBoard">
+  <ng-container *ngIf="board">
+    <div class="black-player">
+      <wc-chess-player
+        [isMinimalViewMode]="isMinimalViewModeForPlayer"
+        [board]="board"
+        [playerColor]="'black'"
+      ></wc-chess-player>
+    </div>
+
+    <div class="black-player-timer">
+      <wc-move-timer
+        *ngIf="!myGameIsActive && board.status === BoardStatus.GOES"
+        [isMinimalViewMode]="isMinimalViewModeForTimer"
+        [board]="board"
+        [playerColor]="'black'"
+      ></wc-move-timer>
+    </div>
+
+    <div class="black-player-result">
+      <wc-chess-player-result
+        *ngIf="board.status === BoardStatus.COMPLETED"
+        [position]="!isPlayersSwitched ? 'top' : 'bottom'"
+        [board]="board"
+        [playerColor]="'black'"
+      >
+      </wc-chess-player-result>
+    </div>
+
+    <div class="white-player">
+      <wc-chess-player
+        [isMinimalViewMode]="isMinimalViewModeForPlayer"
+        [board]="board"
+        [playerColor]="'white'"
+      ></wc-chess-player>
+    </div>
+
+    <div class="white-player-timer">
+      <wc-move-timer
+        *ngIf="!myGameIsActive && board.status === BoardStatus.GOES"
+        [isMinimalViewMode]="isMinimalViewModeForTimer"
+        [board]="board"
+        [playerColor]="'white'"
+      ></wc-move-timer>
+    </div>
+
+    <div class="white-player-result">
+      <wc-chess-player-result
+        *ngIf="board?.status === BoardStatus.COMPLETED"
+        [position]="!isPlayersSwitched ? 'bottom' : 'top'"
+        [board]="board"
+        [playerColor]="'white'"
+      >
+      </wc-chess-player-result>
+    </div>
+  </ng-container>
+
+  <div class="score-line">
+    <wc-chess-score-line
+      [moveScore]="moveScore"
+      [myGameIsActive]="myGameIsActive"
+      [bottomPlayerColor]="bottomPlayerColor"
+    ></wc-chess-score-line>
+  </div>
+</ng-container>

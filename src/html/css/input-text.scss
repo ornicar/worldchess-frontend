@@ -1,0 +1,71 @@
+@import 'variables';
+@import 'media';
+
+.input-text {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin-bottom: 22px;
+  @include phones-small() {
+    margin-bottom: 10px;
+  }
+}
+
+.input-text__wparrer {
+  position: relative;
+  border-bottom: 1px solid #999;
+  padding: 19px 0;
+  @include phones-small() {
+    padding: 10px 0;
+  }
+}
+
+.input-text__elem {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  color: #fff;
+  font: 300 22px/27px $gerbera-font;
+  border: 0;
+
+  &--active,
+  &:focus {
+    & + .input-text__placeholder {
+      top: 5px;
+      left: 0;
+      font: 300 15px/20px $gerbera-font;
+      color: #999;
+      @include phones-small() {
+        font: 300 12px/15px $gerbera-font;
+      }
+    }
+  }
+  @include phones-small() {
+    font: 300 18px/17px $gerbera-font;
+  }
+}
+
+.input-text__placeholder {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  color: #fff;
+  font: 300 22px/22px $gerbera-font;
+  transform: translate(0, -50%);
+  transition: 0.3s;
+  @include phones-small() {
+    font: 300 18px/18px $gerbera-font;
+  }
+}
+
+.input-text__error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font: 300 15px/23px $gerbera-font;
+  color: #ff7070;
+
+  a {
+    color: #fff;
+  }
+}

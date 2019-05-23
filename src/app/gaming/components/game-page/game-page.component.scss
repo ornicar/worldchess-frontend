@@ -1,0 +1,136 @@
+@import '../../../../html/css/variables';
+@import '../../../../html/css/media';
+@import '../../../../scss/settings';
+@import '../../../../html/css/title.scss';
+
+wc-chess-page-layout {
+  background-color: $black-bg;
+}
+
+h1.wc-title {
+  display: block;
+  padding: 16px 25px;
+}
+
+.chess-page__history-moves {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  height: auto;
+
+  @include phones() {
+    height: 200px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.field__body {
+  justify-content: center;
+
+  @include phones() {
+    flex-direction: column;
+  }
+}
+
+.board {
+  display: flex;
+  width: 417px;
+  flex-direction: column;
+  flex: 0 0 auto;
+  min-height: 600px;
+  justify-content: center;
+
+  @include tablets-big() {
+    width: 340px;
+  }
+
+  @include phones() {
+    width: 275px;
+  }
+}
+
+.board-wrapper {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  position: relative;
+
+  &__aside {
+    flex: 1;
+    padding: 41px 20px;
+    padding-bottom: 110px;
+
+    &--left {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+
+      @include phones() {
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    @include phones() {
+      padding: 20px;
+    }
+  }
+
+  @include phones() {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.board__center {
+  position: relative;
+}
+
+
+.field {
+
+  &__body {
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__footer {
+    display: block;
+    z-index: z-index(base);
+
+    @include phones() {
+      min-height: 0;
+    }
+  }
+
+  &__center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 auto;
+  }
+}
+
+.game-actions {
+  border-top: solid 1px #d9d9d9;
+  padding: 15px 3px;
+  display: flex;
+  justify-content: center;
+}
+
+.game-action {
+  cursor: pointer;
+  height: 35px;
+  text-align: center;
+  color: #000;
+  font: 300 15px/35px $gerbera-font;
+  border: none;
+  background-color: white;
+  padding: 0 25px;
+  box-shadow: 0 0 15px #63FFA4;
+  display: inline-block;
+  margin: 0;
+}

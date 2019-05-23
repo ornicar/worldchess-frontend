@@ -1,0 +1,3 @@
+<wc-mini-banner *ngIf="showFirst && (firstBanner$ | async)" [type]="miniBannerType.Normal" [content]="firstBanner$ | async"></wc-mini-banner>
+<wc-mini-banner *ngIf="showSecond && (secondBanner$ | async)" [type]="miniBannerType.Glow" [content]="secondBanner$ | async"></wc-mini-banner>
+<wc-mini-banner *ngIf="thirdBanner$ | async" [type]="miniBannerType.Focus" [content]="thirdBanner$ | async"></wc-mini-banner>

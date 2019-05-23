@@ -1,0 +1,48 @@
+<div class="board-wrapper">
+  <player-panel
+    [position]="playerPanelPositions.Top"
+    [name]="(opponentName$ | async)"
+    [rank]="(opponent$ | async)?.rank"
+    [rating]="(opponent$ | async)?.rating"
+    [fideId]="(opponent$ | async)?.fide_id"
+    [avatarUrl]="(opponent$ | async)?.avatar?.full"
+    >
+    <move-timer
+      #opponentTimer
+      *ngIf="gameReady$ | async"
+      [startTime]="opponentTimer$ | async"
+      [isActive]="isActiveCompetitorTimer$ | async"
+      ></move-timer>
+  </player-panel>
+  <chess-board class="chess-board-play"
+    [readOnly]="readOnly$ | async"
+    [bottomPlayerColor]="playerColor$ | async"
+    [position]="activeMove$ | async"
+    [isResultShown]="isResultShown$ | async"
+    [gameResult]="gameResult$ | async"
+    [endReason]="endReason$ | async"
+    [ratingChange]="ratingChange$ | async"
+    [player]="player$ | async"
+    [isAuthorized]="!!(account$ | async)"
+    [pgnUrl]="pgnUrl$ | async"
+    [canCallAnArbiter]="canCallAnArbitter$ | async"
+    (move)="move($event)"
+    (newGame)="startNewGame()"
+    (callAnArbiter)="onCallAnArbier()"
+    ></chess-board>
+  <player-panel
+    [position]="playerPanelPositions.Bottom"
+    [name]="(playerName$ | async)"
+    [rank]="(player$ | async)?.rank"
+    [rating]="(player$ | async)?.rating"
+    [fideId]="(player$ | async)?.fide_id"
+    [avatarUrl]="(player$ | async)?.avatar?.full"
+    >
+    <move-timer
+      #playerTimer
+      *ngIf="gameReady$ | async"
+      [startTime]="playerTimer$ | async"
+      [isActive]="isActiveMyTimer$ | async"
+      ></move-timer>
+  </player-panel>
+</div>

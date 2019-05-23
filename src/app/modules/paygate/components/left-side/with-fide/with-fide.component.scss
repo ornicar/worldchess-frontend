@@ -1,0 +1,165 @@
+@import 'variables.scss';
+@import 'media.scss';
+
+:host {
+  display: block;
+  padding: 25px;
+  background-color: #fff;
+  z-index: 999;
+
+  @include tablets() {
+    padding: 15px;
+  }
+  @include phones-small() {
+    padding: 15px;
+    height: auto;
+  }
+}
+
+.lazy-load-footer__row {
+  display: flex;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  label {
+    display: flex;
+  }
+
+  &--hidden-mobile {
+    @include phones-small() {
+      display: none;
+    }
+  }
+
+  &--open-mobile {
+    display: none;
+    @include phones-small() {
+      display: block;
+    }
+  }
+}
+
+.logo-block {
+  display: flex;
+  flex: 0 0 auto;
+
+  .fide-checkbox {
+    display: none;
+  }
+}
+
+.logo-block__check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 39px;
+  height: 41px;
+  background-color: #ececec;
+  border-radius: 4px;
+  margin-right: 23px;
+  padding: 7px;
+  flex: 0 0 auto;
+  @include phones-small() {
+    margin-right: 5px;
+  }
+
+  .icon {
+    fill: transparent;
+
+    &.checked {
+      fill: #000;
+    }
+  }
+}
+
+.logo-block__title {
+  display: flex;
+  align-items: center;
+  font: 300 23px/25px $gerbera-font;
+
+  span {
+    @include phones-small() {
+      display: none;
+    }
+  }
+
+  .icon {
+    width: 42px;
+    height: 30px;
+    flex: 0 0 auto;
+    margin: 0 10px;
+    @include phones-small() {
+      width: 36px;
+      height: 26px;
+      margin: 0 7px;
+    }
+  }
+  @include tablets() {
+    font: 300 18px/22px $gerbera-font;
+  }
+  @include phones-small() {
+    font: 300 15px/19px $gerbera-font;
+  }
+}
+
+.lazy-load-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.lazy-load-footer__list {
+  display: flex;
+}
+
+.lazy-load-footer__elem {
+  padding: 10px 21px;
+  font: 400 15px/20px $gerbera-font;
+  color: #999;
+  border-right: 1px solid #d9d9d9;
+
+  &:last-child {
+    border-right: 0;
+  }
+}
+
+.price {
+  font: 400 15px/20px $gerbera-font;
+  color: #999;
+  margin-left: auto;
+  @include phones-small() {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  span {
+    white-space: nowrap;
+  }
+
+  &__price {
+    font: 300 33px/41px $gerbera-font;
+    color: #000;
+    @include phones-small() {
+      font: 300 27px/27px $gerbera-font;
+    }
+  }
+}
+
+.lazy-load-footer__btn {
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  width: 100%;
+  font: 300 18px/18px $gerbera-font;
+  border-radius: 3px;
+  border: 0;
+  cursor: pointer;
+  margin-top: 10px;
+}

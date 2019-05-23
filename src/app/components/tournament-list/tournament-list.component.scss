@@ -1,0 +1,182 @@
+@import "../../../html/css/variables";
+@import "../../../html/css/media";
+
+:host {
+  color: $black;
+}
+
+.list__wrap {
+  display: flex;
+  justify-content: center;
+  background-color: $gray;
+  max-height: 600px;
+  overflow-y: auto;
+  padding: 40px 0px;
+}
+
+.list__content {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: $gray;
+  max-width: 1880px;
+}
+
+.tournament-item {
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 23px 19px;
+  min-height: 159px;
+  width: 270px;
+
+  &:after {
+    order: 2;
+    content: '';
+    display: block;
+    flex: 1 0 100%;
+  }
+
+  @include phones() {
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  &__date {
+    width: 100%;
+    flex: 0 0 auto;
+    margin-top: -18px;
+    text-align: center;
+    font: 300 50px/55px $gerbera-font;
+    min-height: 23px;
+    margin-bottom: 20px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    height: 232px;
+    border-radius: 10px;
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    cursor: pointer;
+
+    &.live {
+      box-shadow: 0px 0px 20px #58F19B;
+      .watch-now {
+        display: block;
+      }
+    }
+  }
+
+  &__date-center {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    color: $light-gray;
+    font: 400 18px/23px $gerbera-font;
+    text-align: center;
+   
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    font: 400 26px/36px $gerbera-font;
+    color: #000000;
+    margin-bottom: 8px;
+    text-align: center;
+
+    @include phones() {
+      font: 400 25px/37px $gerbera-font;
+    }
+  }
+
+  &__location {
+    display: flex;
+
+    @include phones() {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+  &__place {
+    flex: 0 0 auto;
+    font: 300 15px $gerbera-font;
+    color: #000;
+    display: flex;
+
+    @include tablets() {
+      justify-content: flex-start;
+    }
+
+    @include phones() {
+      justify-content: center;
+    }
+  }
+
+  &__state {
+    order: 4;
+    flex: 0 0 auto;
+    font: 400 15px/23px $gerbera-font;
+    color: #000000;
+
+    @include phones {
+      font: 400 15px/20px $gerbera-font;
+    }
+  }
+
+  &__buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    min-height: 75px;
+  }
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 66px;
+  background-color: #EEEEEE;
+  font-weight: normal;
+  text-transform: lowercase;
+  margin-top: 30px;
+  cursor: pointer;
+  font: 400 15px/22px $gerbera-font;
+
+  &:after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    margin-left: 6px;
+    border: solid #9E9E9E;
+    display: inline-block;
+    border-width: 0 1px 1px 0;
+    transform: rotate(-45deg);
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 130px;
+    background: linear-gradient(180deg, #EEEEEE 22.57%, rgba(235, 235, 235, 0.0001) 98.2%);
+    transform: rotate(-180deg);
+  }
+}

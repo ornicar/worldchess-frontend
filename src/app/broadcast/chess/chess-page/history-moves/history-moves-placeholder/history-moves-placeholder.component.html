@@ -1,0 +1,18 @@
+<div class="history-moves" [class.my-game]="myGameIsActive">
+  <div class="scroll-element" [class.scroll-element--hide-line-number]="hideMoveNumbers" wcHideScrollbar>
+    <div class="scroll-section">
+      <div class="moves-message">
+        <div class="moves-message-text">
+          This is the {{tour.tour_number}} Round of {{ tournament?.title }} {{ tournament?.additional_title }}.<br>
+        </div>
+      </div>
+      <div class="moves-line">
+        <div *ngIf="!hideMoveNumbers" class="moves-line-number"></div>
+        <div class="moves-line-content">
+          <wc-move-placeholder [selected]="true"></wc-move-placeholder>
+          <wc-move-placeholder></wc-move-placeholder>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

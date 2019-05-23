@@ -1,0 +1,24 @@
+<div *ngFor="let moves of variationMoves;" class="move-group">
+  <div class="cell number">
+    {{ moves[0] ? moves[0].move_number : moves[1].move_number }}
+  </div>
+  <ng-container *ngFor="let move of moves; trackBy: trackByVariationMove;">
+    <div
+      *ngIf="move; else moveEmpty"
+      class="move"
+      [class.select]="move === selectedVariationMove"
+      (click)="onChange(move)"
+    >
+      <div class="cell figure">
+        <wc-figure [san]="move.san" [isWhite]="move.is_white_move"></wc-figure>
+      </div>
+      <div class="cell san">
+        {{ move.san | wcRemoveFigureNotation }}
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #moveEmpty>
+    <div class="move-empty">...</div>
+  </ng-template>
+</div>

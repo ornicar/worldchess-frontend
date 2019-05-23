@@ -1,0 +1,14 @@
+
+<p mat-dialog-title>Bug report</p>
+<div mat-dialog-content>
+    <h3>
+        We try to make better our product every day and your opinion is very important to us.
+        Please describe your problem:
+    </h3>
+
+    <textarea [(ngModel)]="report" rows="10"></textarea>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-white" mat-button (click)="cancel()">Cancel</button>
+  <button class="btn btn-blue" mat-button (click)="send()">Send</button>
+</div>

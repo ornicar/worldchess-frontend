@@ -1,0 +1,54 @@
+@import '../../../html/css/variables.scss';
+@import '../../../html/css/media.scss';
+
+:host {
+  @include phones-big() {
+    display: none;
+  }
+}
+
+.logo-block {
+  display: flex;
+  border-top: 1px solid #979797;
+  border-bottom: 1px solid #979797;
+  padding: 8px 0;
+}
+
+.logo-block__ligo-wrap {
+  width: 65px;
+  padding: 5px 20px 5px 0;
+  border-right: 1px solid #979797;
+
+  .icon {
+    width: 46px;
+    height: 34px;
+    fill: #000;
+  }
+}
+
+.logo-block__text {
+  display: flex;
+  align-items: center;
+  padding: 0 27px;
+  font: 300 13px/17px $cofo-sans-font;
+}
+
+.notification {
+  padding: 13px 0;
+  font: 400 28px/37px $gerbera-font;
+}
+
+.logo-block__stub {
+  position: relative;
+  top: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: #fff;
+  background-color: #b96cfd;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font: 400 10px/14px "Gerbera", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+  flex: 0 0 auto;
+}

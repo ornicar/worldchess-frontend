@@ -1,0 +1,12 @@
+<wc-tournament-list
+  [tournaments]="tournamentsList$ | async"
+  [isDisplayShowMoreBtn]="displayShowMoreBtn"
+  (clickShowMore)="showMore()"
+  (clickItem)="onClickItem($event)">
+  <ng-template #buttons let-tournament>
+    <button *ngIf="canWatch(tournament) | async" class="btn btn-green" [routerLink]="['/tournament', tournament.id]">watch</button>
+    <button *ngIf="canBuy(tournament) | async" class="btn btn-blue" (click)="buyBroadcast($event, tournament)">buy</button>
+    <button *ngIf="canAddToWishList(tournament) | async" class="btn btn-transparent" (click)="addToWishList($event, tournament)">add to wish list</button>
+    <button *ngIf="canRemoveFromWishList(tournament) | async" class="btn btn-grey" (click)="removeFromWishList($event, tournament)">added to wish list</button>
+  </ng-template>
+</wc-tournament-list>

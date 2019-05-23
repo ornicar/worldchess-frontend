@@ -1,0 +1,6 @@
+<wc-screen-slider>
+  <app-nav *ngIf="(showNav$ | async)"></app-nav>
+  <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
+</wc-screen-slider>
+
+<router-outlet name="p" (activate)="onActivatePopup($event)" (deactivate)="onDeactivatePopup($event)"></router-outlet>

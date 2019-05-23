@@ -1,0 +1,78 @@
+@import '../../../../../html/css/variables';
+@import '../../../../../html/css/media';
+
+:host {
+    background-color: #d2d2d2;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    padding: 11px 13px;
+    font: 300 15px/20px $gerbera-font;
+    color: #383838;
+    font-weight: normal;
+    border-bottom: 1px solid #b1b1b1;
+
+    &__between {
+      max-width: calc(100% - 28px);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &__left,
+    &__right {
+      display: flex;
+      align-items: center;
+    }
+    &__left {
+      max-width: calc(100% - 80px);
+      width: 100%;
+    }
+
+    &__color {
+        flex: 0 0 auto;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background-color: #fff;
+
+        &--white {
+            background-color: #fff;
+        }
+
+        &--black {
+            background-color: #3B3B3B;
+        }
+    }
+
+    &__country {
+        width: 18px;
+        flex: 0 0 auto;
+        margin-right: 10px;
+    }
+
+    &__name {
+        margin-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__rank {
+        //width: 26px;
+        flex: 0 0 auto;
+        font: bold 11px/15px $gerbera-font;
+        text-align: center;
+        margin-right: 10px;
+        background-color: #333;
+        padding: 0 4px;
+        color: #fff;
+    }
+
+    &__rating {
+        color: #757575;
+    }
+}

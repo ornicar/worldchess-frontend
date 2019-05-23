@@ -1,0 +1,17 @@
+<div class="wc-container wc-container--header">
+  <wcd-header
+    [event]="event"
+    [tournament]="tournament"
+    [tour]="tour"
+    [match]="match"
+    [board]="board"
+    [isReadOnly]="isReadOnly"
+    (selectedItemChange)="onChangeNavigation($event)">
+  </wcd-header>
+</div>
+<wcd-chess-page
+  [tournament]="tournament"
+  [tour]="tour"
+  [board]="board"
+  [withoutBoard]="withoutBoard">
+</wcd-chess-page>

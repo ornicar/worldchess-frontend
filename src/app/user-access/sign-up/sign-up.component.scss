@@ -1,0 +1,145 @@
+@import "../../../html/css/variables";
+@import "../../../html/css/media";
+
+.sign-up__page-wrapper {
+    padding: 80px 116px; 
+    background: radial-gradient(1407.70px at 149.68% 100%, rgba(255, 105, 105, 0.466853) 0%, rgba(255, 105, 105, 0.0001) 100%), radial-gradient(1124.93px at -22.78% 42.73%, rgba(140, 83, 255, 0.42) 0%, rgba(140, 83, 255, 0.0001) 100%), radial-gradient(1397.54px at 121.19% -3.49%, rgba(72, 146, 255, 0.5) 0%, rgba(72, 146, 255, 0.0340768) 91.1%, rgba(72, 146, 255, 0.00938977) 100%, rgba(72, 146, 255, 0.0001) 100%), #000000;
+
+    @include ipad() {
+        padding: 20px; 
+    }
+}
+
+.sign-up__header {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    @include phones() {
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+            text-align: center;
+        }
+    }
+
+    span {
+        color: #fff;
+        margin-left: 24px; 
+        font: 300 50px/59px $gerbera-font;
+    }
+}
+
+.account-info-form {
+    margin-bottom: 56px;
+}
+
+.account-info-form__container {
+    display: flex;
+    align-items: flex-start;
+
+    @include phones() {
+        flex-direction: column;
+    }
+}
+
+.account-info-form__body {
+    background: #2D2D2D;
+    border-radius: 10px;
+    padding: 30px 32px;
+    flex: 1;
+    color: #fff;
+
+    @include phones() {
+        padding: 20px;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+}
+
+.account-info-form__row {
+    display: flex;
+
+    @include phones() {
+        flex-direction: column;
+    }
+}
+
+.account-info-form__col {
+    display: flex;
+    justify-content: stretch;
+    flex: 1;
+    margin-right: 30px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    @include phones() {
+        margin-right: 0;
+    }
+}
+
+.account-info-form__title {
+    font: 300 34px/34px $gerbera-font;
+    color: #fff;
+    margin-bottom: 50px;
+    text-align: center;
+
+    @include phones() {
+        font: 300 22px/34px $gerbera-font;
+        margin-bottom: 18px;
+    }
+}
+
+.account-info-form__input {
+    width: 100%;
+}
+
+.account-info-form__subscribe-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.account-info-form__subscribe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 177px;
+    height: 55px;
+    background-color: #5184FF;
+    border: 0;
+    font: 400 22px/29px $gerbera-font;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 2px;
+
+    @include phones() {
+        margin-right: auto;
+        font: 400 15px/20px $gerbera-font;
+        width: 129px;
+        height: 35px;
+    }
+}
+
+.account-info-form__subscribe-icon {
+    position: relative;
+    top: 3px;
+    width: 21px;
+    height: 20px;
+    fill: #FF8585;
+    margin-right: 15px;
+
+    @include phones() {
+        width: 18px;
+        height: 17px;
+        margin-right: 5px;
+    }
+}
+
+.account-info-form__error {
+    color: #D0021B;
+}

@@ -1,0 +1,21 @@
+<div class="chat__move"
+     [class.black-move]="!message?.move.is_white_move"
+     [class.white-move]="message?.move.is_white_move">
+  <div class="chat__move--header">
+    <span class="chat__move--header-number">{{message?.move.move_number}}</span>
+    <span class="chat__move--header-time">{{message?.created | date : 'HH:mm'}}</span>
+  </div>
+  <div class="chat__move--content">
+    <span class="chat__move--color">{{message?.move.is_white_move ? 'White moves' : 'Black moves'}}</span>
+    <span class="chat__move--vote">
+      <span class="chat__move--vote-like">
+        <span class="icon" [class.disabled]="!showLikes" (click)="toggleLikeMessage()"></span>
+        <span class="count">{{message?.likes > 0 ? message?.likes : ''}}</span>
+      </span>
+      <span class="chat__move--vote-dislike">
+        <span class="icon" [class.disabled]="!showLikes" (click)="toggleDislikeMessage()"></span>
+        <span class="count">{{message?.dislikes > 0 ? message?.dislikes : ''}}</span>
+      </span>
+    </span>
+  </div>
+</div>

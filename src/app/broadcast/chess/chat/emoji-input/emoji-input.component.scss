@@ -1,0 +1,161 @@
+@import '../../../../../html/css/variables';
+@import '../../../../../html/css/media';
+
+:host {
+  display: block;
+  position: relative;
+}
+:host .emoji-search {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+  height: auto;
+  line-height: 1.5;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: z-index(modal);
+}
+:host .emoji-search[hidden] {
+  display: none;
+}
+:host .emoji-search.bottom {
+  top: -202px;
+}
+:host .emoji-search input {
+  border-radius: 4px;
+  font-size: 10px;
+  padding: 4px 8px;
+  margin: 0;
+  height: 30px;
+}
+:host .emoji-search .search-header {
+  background-color: #eee;
+  border-bottom: 1px solid #ccc;
+  border-radius: 4px 4px 0 0;
+  padding: 4px 8px;
+  width: 100%;
+}
+:host .emoji-search .emojis-container {
+  border-radius: 0 0 4px 4px;
+  max-height: 160px;
+  padding: 5px 12px;
+  overflow: auto;
+  overflow-x: hidden;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+:host .emoji-search span {
+  cursor: pointer;
+  padding: 4px 3px 2px 4px;
+  font-size: 24px;
+}
+:host .emoji-search span:hover {
+  background-color: #ccc;
+}
+
+.my-emoji {
+  height: 300px !important;
+  width: 231px !important;
+  background: #fff;
+  padding: 8px 8px 0;
+  font-size: 20px;
+  bottom: 35px;
+  left: 0 !important;
+  overflow: hidden;
+
+  & .search-header {
+    background: none !important;
+    border: none !important;
+    width: 100% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-top: 0 !important;
+
+    & input {
+      padding: 2px 8px !important;
+      border: 1px solid gray;
+      width: 100% !important;
+      font-size: 14px !important;
+    }
+  }
+
+  & .emojis-container {
+    overflow: auto;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: flex-start !important;
+    min-height: 0;
+    border-radius: 5px !important;
+    max-height: 250px !important;
+    flex: none !important;
+
+    & span {
+      padding: 5px !important;
+      width: 20%;
+      font-size: 20px !important;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      &:nth-child(5) {
+        display: none;
+      }
+    }
+  }
+}
+
+textarea {
+  overflow: hidden;
+  resize: none;
+  height: 30px;
+  margin-bottom: -5px;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    margin-right: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+    border-radius: 20px;
+    padding-right: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 20px;
+  }
+}
+
+.input{
+  align-items: flex-end;
+}
+.text {
+  background: #fff;
+  max-height: 98px;
+  border-radius: 15px;
+  padding-right: 3px;
+}
+/*Should be equal textarea text style*/
+.text .textarea_behavior{
+  border:0;
+  width:100%;
+  word-wrap: break-word;
+  padding: 3px 13px;
+  font-size: 15px;
+  line-height: 20px;
+}
+.text .comment_text_hidden{
+  position: relative;
+}
+.text #comment_text_hidden{
+  visibility:hidden;
+  position: absolute;
+}

@@ -1,0 +1,43 @@
+@import "../html/css/variables";
+
+body {
+  font-family: $gerbera-font;               
+  font-weight: 300;
+}
+
+h1 {
+  font-family: $gerbera-font;               
+  font-weight: 300;
+  font-size: 29px;
+
+  @include media-breakpoint-up(sm) {
+    font-family: $gerbera-font;
+    font-size: 32px;
+    font-weight: 400;
+  }
+
+  &.block-header {
+    margin-bottom: 50px;
+
+    @include media-breakpoint-up(sm) {
+      margin-bottom: 60px;
+    }
+  }
+}
+
+
+a {
+  display: inline-block;
+  color: $blue;
+
+  &:focus, &:active, &:hover, &:visited {
+    color: $blue;
+  }
+
+  &.as-text {
+    color: black;
+    &:focus, &:active, &:hover, &:visited {
+      color: black;
+    }
+  }
+}

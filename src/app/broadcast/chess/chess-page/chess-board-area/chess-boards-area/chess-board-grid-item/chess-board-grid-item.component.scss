@@ -1,0 +1,272 @@
+@import '../../../../../../../html/css/variables';
+@import '../../../../../../../html/css/media';
+
+:host {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.chess-page-link {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  svg {
+    display: block;
+  }
+
+  span {
+    font: 400 15px/20px $gerbera-font;
+    height: 20px;
+    width: 20px;
+    color: #000;
+    z-index: z-index(base, 12);
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+  }
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+
+  &__info {
+    min-height: 28px;
+  }
+}
+
+.board-wrapper {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+
+  &__aside {
+    flex: 1;
+    padding: 41px 20px;
+    padding-bottom: 110px;
+
+    &--left {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+
+      @include phones() {
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    @include phones() {
+      padding: 20px;
+    }
+  }
+
+  @include phones() {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.board__center {
+  position: relative;
+}
+
+.board-buttons {
+  position: absolute;
+  left: calc(100% + 20px);
+  bottom: 0;
+  min-width: 33.5px;
+
+  @include phones() {
+    left: calc(100% + 5px);
+  }
+
+  &__elem {
+    margin-top: 15px;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    color: $black-light;
+    fill: $black-light;
+    transition: 0.3s;
+
+    @include phones() {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &:hover,
+    &--active {
+      color: $gray;
+      fill: $gray;
+
+      & .board-buttons__icon .icon {
+        fill: $gray;
+      }
+    }
+  }
+
+  &__icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 11px;
+    flex: 0 0 auto;
+
+    @include phones() {
+      margin-right: 0;
+    }
+  }
+
+  &__text {
+    font: 400 12px/17px $gerbera-font;
+
+    @include phones() {
+      text-align: center;
+    }
+
+  }
+
+  &__list {
+    @include phones() {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.field {
+  display: flex;
+  position: relative;
+  flex: 1 1 auto;
+  flex-direction: column;
+
+  &__header {
+    padding: 16px 25px;
+    min-height: 130px;
+    flex: 0 0 auto;
+  }
+
+  &__title {
+    display: block;
+    .wc-title__img {
+      display: inline-block;
+    }
+  }
+
+  &__body {
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__footer {
+    display: block;
+    z-index: z-index(base);
+
+    @include phones() {
+      min-height: 0;
+    }
+  }
+
+  &__aside {
+    max-width: 210px;
+    flex:0 0 auto;
+  }
+
+  &__center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 auto;
+  }
+}
+
+wc-game-favorite-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  width: 18px;
+  height: 18px;
+}
+
+:host(.hover) .board-container {
+  background: #2F2F2F;
+}
+
+:host(.grid-view-mode--normal) {
+  width: multiboard-grid-size(normal);
+  height: multiboard-grid-size(normal);
+
+  @include phones {
+    width: multiboard-grid-size(normal-mobile);
+    height: multiboard-grid-size(normal-mobile);
+  }
+
+  .board {
+    width: 263px;
+  }
+}
+
+:host(.grid-view-mode--medium) {
+  width: multiboard-grid-size(medium);
+  height: multiboard-grid-size(medium);
+
+  .board {
+    width: 182px;
+  }
+}
+
+:host(.selected:not(.grid-view-mode--normal)) {
+  $size: multiboard-grid-size(normal);
+
+  .board-container {
+    position: absolute;
+    width: $size;
+    height: $size;
+    background: #2F2F2F;
+    z-index: z-index(base-dropdown, 20);
+
+    &--position-x {
+      &--left {
+        left: 0;
+      }
+      &--right {
+        right: 0;
+      }
+      &--center {
+        left: calc(50% - #{($size / 2)});
+      }
+    }
+
+    &--position-y {
+      &--top {
+        top: 0;
+      }
+      &--bottom {
+        bottom: 0;
+      }
+      &--center {
+        top: calc(50% - #{($size / 2)});
+      }
+    }
+  }
+
+  .board {
+    width: 260px;
+  }
+}

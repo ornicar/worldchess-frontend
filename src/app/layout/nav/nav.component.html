@@ -1,0 +1,68 @@
+<div class="indent"></div>
+<div wcScreenFixed class="navbar" [class.navbar--fixed]="isFixed">
+  <div class="wc-container wc-container--header">
+    <nav class="d-flex justify-content-between">
+      <div class="d-flex align-items-center menu-block">
+        <a routerLink=""><img class="nav-icon" src="assets/images/logo.svg"/></a>
+        <a (click)="openMobileSubNav()" class="menu-block__mobile-nav">
+          <svg width="21" height="13" viewBox="0 0 21 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.5 0.5H19.5263" stroke="#979797" stroke-linecap="square" />
+            <path d="M0.5 6.5H19.5263" stroke="#979797" stroke-linecap="square" />
+            <path d="M0.5 12.5H19.5263" stroke="#979797" stroke-linecap="square" />
+          </svg>
+        </a>
+        <div class="sub-nav d-sm-flex align-items-center d-flex" [class.sub-nav--open]="isOpenSubNav" wcScreenFixed>
+          <div class="sub-nav__list d-flex justify-content-between">
+            <div class="nav-item nav-item--back">
+              <a class="as-text" (click)="closeMobileSubNav()">
+                <wc-arrow-down></wc-arrow-down>
+                Back</a
+              >
+            </div>
+            <div *ngIf="tournamentLondonSlug" class="nav-item" routerLinkActive="active">
+              <a class="as-text" [routerLink]="['/tournament', tournamentLondonSlug]" (click)="closeMobileSubNav()"
+                >london</a
+              >
+            </div>
+            <div class="nav-item" routerLinkActive="active">
+              <a class="as-text" routerLink="/news" (click)="closeMobileSubNav()">news</a>
+            </div>
+            <div class="nav-item" routerLinkActive="active">
+              <a class="as-text" routerLink="/ratings" (click)="closeMobileSubNav()">ratings</a>
+            </div>
+            <div class="nav-item">
+              <a class="as-text" href="https://shop.worldchess.com" (click)="closeMobileSubNav()" target="_blank"
+                >shop</a
+              >
+            </div>
+            <div class="nav-item" routerLinkActive="active">
+              <a class="as-text" routerLink="/armageddon" (click)="closeMobileSubNav()">armageddon</a>
+            </div>
+            <!-- <div class="nav-item" routerLinkActive="active">
+              <a class="as-text" routerLink="/tv" (click)="closeMobileSubNav()">tv</a>
+            </div> -->
+            <div class="nav-item" routerLinkActive="active">
+              <a class="as-text" routerLink="/arena" (click)="closeMobileSubNav()"
+                >arena
+                <div class="nav-item__beta">beta</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav__paygate" *ngIf="!(isAuthorized$ | async)">
+        <button
+          class="nav__paygate-btn"
+          [routerLink]="['', { outlets: { p: ['paygate', 'register'] } }]"
+        >
+          become a member
+        </button>
+        or <a [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]"> login</a>
+      </div>
+      <div class="nav__account align-items-center d-sm-flex d-flex" *ngIf="(isAuthorized$ | async)">
+        <wc-notifications></wc-notifications>
+        <wc-user-nav></wc-user-nav>
+      </div>
+    </nav>
+  </div>
+</div>

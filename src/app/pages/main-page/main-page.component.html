@@ -1,0 +1,26 @@
+<div class="bg-black block">
+  <ng-container [ngSwitch]="(banner$ | async)?.banner_type">
+    <wc-main-page-news-banner *ngSwitchCase="BannerType.News" [banner]="banner$ | async"></wc-main-page-news-banner>
+    <wc-main-page-shop-banner *ngSwitchCase="BannerType.Shop" [banner]="banner$ | async"></wc-main-page-shop-banner>
+    <wc-main-page-video-banner *ngSwitchCase="BannerType.Video" [banner]="banner$ | async"></wc-main-page-video-banner>
+    <wc-main-page-tournament-banner *ngSwitchCase="BannerType.Tournament" [banner]="banner$ | async"></wc-main-page-tournament-banner>
+    <wc-main-page-widget-banner *ngSwitchCase="BannerType.Widget" [banner]="banner$ | async"></wc-main-page-widget-banner>
+  </ng-container>
+  <wc-paygate-fixed-handler></wc-paygate-fixed-handler>
+  <wc-second-banners></wc-second-banners>
+</div>
+<app-nav></app-nav>
+<wc-main-broadcast-nav></wc-main-broadcast-nav>
+<wc-tournament-list-title>
+  <ng-template #title>
+    <span>Watch</span> other chess events
+  </ng-template>
+</wc-tournament-list-title>
+<wc-main-broadcast-list (onBuyBroadcast)="onBuyBroadcast($event)" [isNoneFide]="true"></wc-main-broadcast-list>
+<wc-paygate-embedded></wc-paygate-embedded>
+<wc-own-event-button></wc-own-event-button>
+<app-news-group [isNewsPage]="false"></app-news-group>
+<app-rating></app-rating>
+<wc-purchases-banner></wc-purchases-banner>
+<!--<wc-mates-popup></wc-mates-popup>-->
+<app-footer></app-footer>

@@ -1,0 +1,15 @@
+<div #player class="video-player" *ngIf="video">
+  <ng-container [ngSwitch]="video.video_type">
+    <div class="youtube-player" *ngSwitchCase="VideoType.Youtube">
+      <wc-youtube-player
+        playerId="video-banner-player"
+        [videoId]="youtubeVideoId"
+        [params]="youtubeParams"
+        [mouseEvents]="mouseEvents"
+        (playerReady)="onYoutubePlayerReady()"
+      ></wc-youtube-player>
+    </div>
+    <div class="livestream-player" *ngSwitchCase="VideoType.Livestream"></div>
+    <div class="html-video-player" *ngSwitchCase="VideoType.Uploaded"></div>
+  </ng-container>
+</div>

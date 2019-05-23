@@ -1,0 +1,16 @@
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+
+:host {
+    display: block;
+    width: 58px;
+    text-align: right;
+
+    @include phones() {
+        width: 47px;
+    }
+}
+
+:host-context(.move-time) {
+    text-align: center;
+}

@@ -1,0 +1,6 @@
+<wc-layout>
+  <app-checkout [selectedPlan]="selectedPlan" [isAuthorized]="isAuthorized$ | async" (hideCheckout)="hideCheckout()" *ngIf="checkoutShowed"></app-checkout>
+  <app-premium-features></app-premium-features>
+  <app-paygate-subscriptions [plans]="plans" [profile]="profile$ | async" [isAuthorized]="isAuthorized$ | async" (selectPlan)="selectPlan($event)"></app-paygate-subscriptions>
+  <app-subscriptions></app-subscriptions>
+</wc-layout>

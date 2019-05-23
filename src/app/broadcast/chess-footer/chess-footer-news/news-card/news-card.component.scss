@@ -1,0 +1,103 @@
+@import '../html/css/media.scss';
+@import '../html/css/variables.scss';
+
+.news-card {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  height: 100%;
+  color: initial;
+  min-height: 160px;
+
+  &:hover {
+    .news-card__content {
+      background-color: white;
+    }
+  }
+
+  &__img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40%;
+    flex: 0 1 auto;
+    @include phones() {
+      display: none;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background-color: $gray;
+    padding: 20px 160px 40px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    min-width: 50%;
+    @include tablets-big() {
+      padding: 20px 40px 40px 20px;
+    }
+    @include phones() {
+      padding: 20px;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    word-break: break-word;
+    padding-bottom: 10px;
+
+    .text {
+      font: 400 18px/18px $gerbera-font;
+      margin-bottom: 20px;
+      color: #9E9E9E;
+      @include tablets-big() {
+        font: 400 15px/15px $gerbera-font;
+      }
+    }
+
+    .wc-title {
+      font: 300 28px/38px $gerbera-font;
+      @include tablets-big() {
+        font: 300 22px/32px $gerbera-font;
+      }
+    }
+  }
+
+  &-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.news-tag {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__elem {
+    display: flex;
+    margin-right: 15px;
+    margin-top: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__link {
+    white-space: nowrap;
+    border: solid 1px #e5e5e5;
+    color: $black-light;
+    padding: 2px 11px;
+    font: 400 11px/16px $gerbera-font;
+
+    &:hover {
+      transition: all .4s ease;
+      border: 1px solid #000;
+    }
+  }
+}

@@ -1,0 +1,91 @@
+@import '../../../../html/css/variables';
+@import '../../../../html/css/media';
+@import '../../../../scss/settings';
+
+wc-chess-page-layout {
+  background-color: #242424;
+}
+
+.chess-page__history-moves {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  height: auto;
+
+  @include phones() {
+    height: 200px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.field__header {
+  @include phones() {
+    display: none;
+  }
+}
+
+.field__body {
+  justify-content: center;
+
+  @include phones() {
+    flex-direction: column;
+  }
+
+  &--switched {
+    min-height: 512px;
+
+    @include phones() {
+      min-height: 0;
+    }
+  }
+}
+
+.to-chess-game-page {
+  width: 100%;
+  height: 40px;
+  background: #59F19B;
+  font: 400 15px/40px $gerbera-font;
+  color: #000;
+  text-align: center;
+  cursor: pointer;
+}
+
+.choose-game {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font: 300 22px/29px $gerbera-font;
+  color: #727272;
+
+  svg {
+    margin-bottom: -5px;
+  }
+
+  @include phones {
+    display: none;
+  }
+}
+
+.tournament-info {
+    padding: 17px;
+    background-color: #d2d2d2;
+    border-bottom: 1px solid #b1b1b1;
+    font: 300 15px/22px $gerbera-font;
+    color: #383838;
+    font-weight: normal;
+}
+
+.tournament-info__title {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.tournament-info__about {
+  font: 300 11px/15px $gerbera-font;
+}

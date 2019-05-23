@@ -1,0 +1,55 @@
+<wc-layout>
+  <div class="bg-black block partnership">
+    <div class="d-flex justify-content-start partnership__head align-items-center">
+      <img class="icon" src="assets/images/logo-fide-white.svg" alt="logo--fide">
+      <span class="text-fide">FIDE</span>
+      <img class="logo" src="assets/images/logo-white.svg" alt="logo--fide">
+      <span class="text-chess">World chess</span>
+      <span class="text-tour">Championship cycle official partners</span>
+    </div>
+
+    <!--временное решение для преключателей-->
+    <!--предполагается сделать их динамическими-->
+    <div class="d-flex justify-content-start partnership__tabs">
+      <div (click)="onClick($event)" id="official" class="tab d-flex align-items-center">Official sponsors</div>
+    </div>
+
+    <div *ngIf="activeTab === 'official' " class="partnership__official">
+      <div class="partnership__box partnership-header">
+
+        <div *ngFor="let partner of partners" class="partnership-header__item" (click)="goTo(lowerCase(partner.partner.name))">
+          <div class="logo partnership-header__logo"
+            [class.partnership-header__logo--additional]="partner.partner_cat === 2"
+            [class.partnership-header__logo--mass-media]="partner.partner_cat === 3">
+            <img [src]="partner.partner.description_logo">
+          </div>
+          <div class="partnership-header__label">{{partner.partner.label}}</div>
+        </div>
+      </div>
+
+
+      <div class="partnership__list partners">
+
+        <div *ngFor="let partner of partners" class="partners__item" [id]="partner.partner.name.toLowerCase()">
+          <div class="partners__header">
+            <div class="logo partners__logo">
+              <img [src]="partner.partner.description_logo">
+            </div>
+            <div class="name partners__data">
+              <a [href]="partner.partner.url" target="_blank">{{partner.partner.url}}</a>
+              <div class="partners__name">{{partner.partner.name}}</div>
+            </div>
+          </div>
+
+          <p class="partnership__text partnership__text-white">
+            {{partner.partner.main_text}}
+          </p>
+
+          <p class="partnership__text partnership__text-gray">
+            {{partner.partner.additional_text}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</wc-layout>

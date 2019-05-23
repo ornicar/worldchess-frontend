@@ -1,0 +1,139 @@
+@import "settings";
+@import "mixins";
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+.rating {
+
+  h1 {
+    font-family: $gerbera-font;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  .block-header {
+    color: #000;
+    font: 300 38px/48px $gerbera-font;
+    min-height: 217px;
+    padding: 20px;
+
+    @include tablets-big() {
+      font: 300 33px/32px $gerbera-font;
+    }
+    
+
+    @include phones() {
+      min-height: 132px;
+      font: 300 22px/22px $gerbera-font;
+    }
+  }
+
+  .rating-wrapper {
+    overflow: auto;
+    counter-reset: rating;
+  }
+
+  .rating-item {
+    width: 100%;
+    counter-increment: rating;
+    position: relative;
+
+    &:before {
+      content: counter(rating);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      font: 400 38px/48px $gerbera-font;
+
+      @include tablets-big() {
+        font: 400 33px/33px $gerbera-font;
+      }
+    }
+
+    .photo {
+      width: 270px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+
+      @include media-breakpoint-up(lg) {
+        width: 365px;
+      }
+    }
+
+    .info {
+      padding-left: 20px;
+      padding-right: 17px;
+      padding-bottom: 18px;
+      align-items: flex-start;
+
+      @include media-breakpoint-up(lg) {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 29px;
+      }
+
+      .name {
+        flex-grow: 1;
+        padding: 0 18px;
+        font: 300 28px/34px $gerbera-font;
+
+        @include tablets-big() {
+          font: 300 22px/28px $gerbera-font;
+        }
+
+        @include phones() {
+          font: 300 17px/27px $gerbera-font;
+        }
+      }
+
+      .flag {
+        width: 24px;
+        height: 17px;
+        margin-right: 9px;
+        min-width: 24px;
+        margin-top: 3px;
+
+        @include media-breakpoint-up(lg) {
+          margin-top: 9px;
+        }
+      }
+
+      .country,
+      .sex,
+      .year {
+        text-transform: uppercase;
+        color: #5e5e5e;
+        display: inline-block;
+        letter-spacing: 1.3px;
+        font: 400 13px/36px $gerbera-font;
+
+        @include tablets-big() {
+          font: 400 11px/35px $gerbera-font;
+        }
+
+        @include phones() {
+          font: 400 11px/26px $gerbera-font;
+        }
+      }
+
+      .sex {
+        color: white;
+        background-color: #333333;
+        margin-right: 3px;
+        line-height: 18px;
+        height: 17px;
+        margin-top: 4px;
+        width: 26px;
+        padding: 0;
+        text-align: center;
+        min-width: 26px;
+        padding-left: 2px;
+
+        @include media-breakpoint-up(lg) {
+          margin-top: 9px;
+        }
+      }
+    }
+  }
+}

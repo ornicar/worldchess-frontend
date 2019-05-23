@@ -1,0 +1,97 @@
+@import "settings";
+@import "mixins";
+@import "../../../../../html/css/variables";
+.container {
+  padding: 14px 19px 14px 19px;
+
+  @include media-breakpoint-up(lg) {
+    padding: 21px 23px 21px 20px;
+  }
+}
+
+h1 {
+  width: 100%;
+  color: $gray-550;
+  display: flex;
+  font: 300 22px/29px $gerbera-font;
+
+  @include media-breakpoint-up(lg) {
+    font-size: 33px;
+    line-height: 43px;
+    max-width: 210px;
+  }
+}
+
+.block {
+  flex-wrap: wrap;
+
+  @include media-breakpoint-up(lg) {
+    flex-wrap: nowrap;
+  }
+}
+
+.header {
+  width: 100%;
+
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    margin-right: auto;
+  }
+
+  &-number {
+    color: $black;
+    margin-right: 16px;
+
+    @include media-breakpoint-up(lg) {
+      margin-right: 27px;
+    }
+  }
+}
+
+.form {
+  padding: 10px 17px 10px 16px;
+  width: 100%;
+
+  @include media-breakpoint-up(lg) {
+    max-width: 508px;
+    padding: 0 34px;
+    margin-top: -10px;
+  }
+}
+
+.social {
+  margin-top: 8px;
+  padding-right: 1px;
+  letter-spacing: 0.1px;
+}
+
+.submit {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 1px;
+}
+
+.toggle, .forgot, .form-error-text, .form-status-text {
+  margin-top: 10px;
+  cursor: pointer;
+  font: 400 15px/22px $gerbera-font;
+
+  @include media-breakpoint-up(lg) {
+    margin-top: 8px;
+    letter-spacing: -0.1px;
+  }
+}
+
+.toggle {
+  color: $gray-550;
+
+  &-link {
+    color: $blue;
+    cursor: pointer;
+  }
+}
+
+.forgot {
+  color: $blue;
+}

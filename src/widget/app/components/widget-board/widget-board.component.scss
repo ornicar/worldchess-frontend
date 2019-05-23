@@ -1,0 +1,68 @@
+@import "settings";
+@import "mixins";
+@import '../../../../html/css/variables.scss';
+@import '../../../../html//css/media.scss';
+
+.widget {
+  &__timer {
+    font: 300 26px/37px $gerbera-font;
+    text-align: center;
+
+    & wc-timer {
+      font-weight: 400;
+      display: block;
+      font-size: 36px;
+    }
+  }
+
+  &__end {
+    font: 300 26px/37px $gerbera-font;
+    text-align: center;
+  }
+
+  &__face {
+    position: absolute;
+    width: 98px;
+    height: auto;
+
+    &--magnus {
+      left: 20px;
+      top: -30px;
+      transform: scale(-1, 1);
+    }
+
+    &--fabiano {
+      right: 0;
+      bottom: -48px;
+      transform: scale(-1, 1);
+    }
+  }
+
+  &__board {
+    margin-left: 10px;
+    position: relative;
+    width: 250px;
+
+    &--main-page {
+      width: 350px;
+
+      @include media-breakpoint-down(sm) {
+        width: 250px;
+      }
+    }
+  }
+}
+
+.main-page__column {
+  .widget__board {
+    width: 392px;
+
+    @include tablets-big() {
+      width: 340px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      width: 250px;
+    }
+  }
+}
