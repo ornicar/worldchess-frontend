@@ -4,16 +4,12 @@
       <label>
         <input class="fide-checkbox" type="checkbox" (change)="toggleFide()" />
         <div class="logo-block__check">
-          <svg class="icon" [class.checked]="fideSelected$ | async">
-            <use xlink:href="#check"></use>
-          </svg>
+          <svg-check class="icon" [class.checked]="fideSelected$ | async"></svg-check>
         </div>
         <div class="logo-block__title">
           Get BETA<br />
-          World Chess Passport
-          <!-- <svg class="icon">
-            <use xlink:href="#logo-fide"></use>
-          </svg> -->
+          FIDE&nbsp;ID
+          <!-- <svg-logo-fide class="icon"></svg-logo-fide> -->
         </div>
       </label>
     </div>

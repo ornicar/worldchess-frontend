@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Data } from '@angular/router/src/config';
+import { ActivatedRoute, Data } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { pluck, switchMap } from 'rxjs/operators';
 import { IBoard } from '../../core/board/board.model';

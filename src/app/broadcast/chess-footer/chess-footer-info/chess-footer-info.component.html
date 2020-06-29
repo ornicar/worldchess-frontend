@@ -1,42 +1,35 @@
-<ul *ngIf="tournament$ | async as tournamentInfo" class="footer-info">
+<ul *ngIf="tournament" class="footer-info">
   <li class="footer-info__elem">
     <div class="footer-info__title footer-info__title--white">
-      <div class="footer-info__title__geosl-medium">FIDE</div>
-      {{tournamentInfo.title}} {{tournamentInfo.additional_title}}
+      <div class="footer-info__title__geosl-medium" *ngIf="tournament.organized_by === EventOrganizer.FIDE">FIDE</div>
+      {{tournament.title}} {{tournament.additional_title}}
     </div>
   </li>
-
   <ng-container *ngIf="!tournament.isOnline">
-
-    <li class="footer-info__elem" *ngIf="tournamentInfo.location && tournamentInfo.location.length">
+    <li class="footer-info__elem" *ngIf="tournament.location && tournament.location.length">
       <div class="footer-info__text footer-info__text--small">Place</div>
       <div class="footer-info__title footer-info__title--white">
-        {{tournamentInfo.location}}
-        <!--<span *ngIf="tournamentInfo.place.address" class="footer-info__title&#45;&#45;gray">{{tournamentInfo.place.address}}</span>-->
-        <!--<p>{{tournamentInfo.place.city}}</p>-->
+        {{ tournament.location }}
       </div>
     </li>
-    <li class="footer-info__elem" *ngIf="tournamentInfo.datetime_of_tournament">
+    <li class="footer-info__elem" *ngIf="tournament.datetime_of_tournament">
       <div class="footer-info__text footer-info__text--small">Dates</div>
       <div class="footer-info__title footer-info__title--white">
-        {{tournamentInfo.datetime_of_tournament | date : 'MMMM d' }}
-        <span *ngIf="tournamentInfo.datetime_of_finish"> — {{tournamentInfo.datetime_of_finish | date : 'MMMM d, y'}}</span>
+        {{tournament.datetime_of_tournament | date : 'MMMM d' }}
+        <span *ngIf="tournament.datetime_of_finish"> — {{tournament.datetime_of_finish | date : 'MMMM d, y'}}</span>
       </div>
     </li>
-    <li class="footer-info__elem" *ngIf="tournamentInfo.prize_fund">
+    <li class="footer-info__elem" *ngIf="tournament.prize_fund">
       <div class="footer-info__text footer-info__text--small">Prize</div>
-      <div class="footer-info__title footer-info__title--white">{{tournamentInfo.prize_fund | currency:tournamentInfo.prize_fund_currency}}</div>
+      <div class="footer-info__title footer-info__title--white">{{tournament.prize_fund | currency:tournament.prize_fund_currency}}</div>
     </li>
     <div class="related-media"
          *ngIf="showMedia"
-         (click)="goToMedia.emit()">
+         (click)="goToMediaTab($event)">
       <div class="related-media__btn">
         View related photos
-        <svg class="related-media__btn-icon"><use xlink:href="#arrow-down" /></svg>
+        <svg-arrow-down class="icon related-media__btn-icon"></svg-arrow-down>
       </div>
     </div>
-
   </ng-container>
-
-
 </ul>

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ChessFooterInfoComponent} from './chess-footer-info/chess-footer-info.component';
-import {ChessFooterNewsComponent} from './chess-footer-news/chess-footer-news.component';
-import {ChessFooterComponent} from './chess-footer.component';
-import {NewsCardComponent} from './chess-footer-news/news-card/news-card.component';
-import {NewsLastComponent} from './chess-footer-news/news-last/news-last.component';
+import { ChessFooterInfoComponent } from './chess-footer-info/chess-footer-info.component';
+import { ChessFooterNewsComponent } from './chess-footer-news/chess-footer-news.component';
+import { ChessFooterComponent } from './chess-footer.component';
+import { NewsCardComponent } from './chess-footer-news/news-card/news-card.component';
+import { NewsLastComponent } from './chess-footer-news/news-last/news-last.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ChessFooterInformationComponent } from './chess-footer-information/chess-footer-information.component';
 import { InfoPlayersComponent } from './chess-footer-information/info-players/info-players.component';
@@ -19,7 +19,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { ScheduleEffects } from './schedule/schedule.effects';
 import { TeamPlayerEffects } from './team-players/team-players.effects';
 import * as fromTeamPlayers from './team-players/team-players.reducer';
-import { CoreModule } from '../core/core.module';
 import { ChessFooterMediaComponent } from './chess-footer-media/chess-footer-media.component';
 import { MediaListComponent } from './media-list/media-list.component';
 import { MediaFileEffects } from './media-files/media-files.effects';
@@ -28,20 +27,25 @@ import { MediaFilesResourceService } from './media-files/media-files-resource.se
 import { MediaModalComponent } from './media-modal/media-modal.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { NewsResourceService } from './news/news-resource.service';
-import {NewsEffects} from './news/news.effects';
+import { NewsEffects } from './news/news.effects';
 import * as fromNews from './news/news.reducer';
 import { ResultsMainComponent } from './results-main/results-main.component';
 import { ChessFooterResultsComponent } from './chess-footer-results/chess-footer-results.component';
 import { ResultsListComponent } from './results-list/results-list.component';
-import {NewsPaginationService} from './news/news-pagination.service';
+import { NewsPaginationService } from './news/news-pagination.service';
 import { ResultsListSwissComponent } from './results-list-swiss/results-list-swiss.component';
 import { ChessFooterPlayersComponent } from './chess-footer-players/chess-footer-players.component';
 import { ResultsCardsComponent } from './results-cards/results-cards.component';
 import { ResultsListCircularComponent } from './results-list-circular/results-list-circular.component';
+import { ResultsByPlayerComponent } from '@app/broadcast/chess-footer/results-by-player/results-by-player.component';
+import { SvgModule } from '@app/modules/svg/svg.module';
+import { ResultsListPlayoffComponent } from '@app/broadcast/chess-footer/results-list-playoff/results-list-playoff.component';
+import { NguCarouselModule } from '@ngu/carousel';
+import { ResultsListPopupComponent } from './results-list-popup/results-list-popup.component';
+
 @NgModule({
   imports: [
     CommonModule,
-    CoreModule,
     SharedModule,
     NgxSmartModalModule,
     StoreModule.forFeature('schedule', fromSchedule.reducer),
@@ -54,6 +58,8 @@ import { ResultsListCircularComponent } from './results-list-circular/results-li
       MediaFileEffects,
       NewsEffects
     ]),
+    SvgModule,
+    NguCarouselModule,
   ],
   declarations: [
     ChessFooterComponent,
@@ -76,6 +82,9 @@ import { ResultsListCircularComponent } from './results-list-circular/results-li
     ResultsCardsComponent,
     ResultsListSwissComponent,
     ResultsListCircularComponent,
+    ResultsByPlayerComponent,
+    ResultsListPlayoffComponent,
+    ResultsListPopupComponent,
   ],
   providers: [
     ScheduleResourceService,
@@ -85,7 +94,7 @@ import { ResultsListCircularComponent } from './results-list-circular/results-li
     NewsPaginationService,
   ],
   exports: [
-    ChessFooterComponent
+    ChessFooterComponent,
   ]
 })
 export class ChessFooterModule { }

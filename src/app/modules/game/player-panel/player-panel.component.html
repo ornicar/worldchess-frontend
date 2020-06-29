@@ -1,0 +1,21 @@
+<div class="player-panel" [class.player-panel--bottom]="position === positions.Bottom">
+  <div class="player-panel__photo">
+    <img [src]="avatarUrl || defaultAvatarUrl" alt="Player avatar" />
+  </div>
+  <!--<div class="player-panel__aside"></div>-->
+  <div class="player-panel__content">
+    <!--<div class="player-panel__flag"></div>-->
+    <div class="player-panel__name">{{ name || 'Nobody here yet' }}</div>
+    <div class="player-panel__count">
+      <span>{{ rank }}</span
+      >{{ rating }}
+    </div>
+    <div *ngIf="fideId" class="player-panel__logo">
+      <svg-logo-fide class="icon player"></svg-logo-fide>
+    </div>
+  </div>
+  <div class="player-panel__aside">
+    <ng-content></ng-content>
+    <!-- <div class="player-panel__time">9:35</div> -->
+  </div>
+</div>

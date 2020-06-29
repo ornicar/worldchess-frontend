@@ -1,0 +1,32 @@
+@import 'variables-new';
+@import 'media-new';
+
+.tournament-list {
+  .tournament-card-container {
+    display: inline-block;
+    margin-right: 30px;
+    margin-top: 10px;
+    @include birman-media {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 5px;
+    }
+  }
+
+  ::ng-deep {
+    .tournament-card--bullet {
+      margin: 0 30px;
+
+      @include birman-media {
+        margin: 0;
+        width: calc(100% - 25px) !important;
+      }
+    }
+  }
+}
+
+.time-title {
+  font: 300 15px/20px $gerbera-font;
+  color: rgba(#fff, 0.4);
+  margin-top: 5px;
+}

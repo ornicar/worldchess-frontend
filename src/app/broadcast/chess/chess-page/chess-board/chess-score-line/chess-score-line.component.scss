@@ -19,6 +19,22 @@
   }
 }
 
+:host-context(.chess-layout--switched) {
+  .scale-progress {
+    @include height-650() {
+      width: 15px;
+    }
+
+    &__divisions-elem {
+      &--zero {
+        @include height-650() {
+          width: 20px
+        }
+      }
+    }
+  }
+}
+
 :host-context(.grid-size--medium) {
   .scale-progress {
     width: 10px;

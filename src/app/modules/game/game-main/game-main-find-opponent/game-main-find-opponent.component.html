@@ -1,0 +1,14 @@
+<div class="root">
+  <div class="left-column">
+    <div class="tournaments-row">{{playersCount$ | async}} {{ 'MESSAGES.PLAYERS' | translate}}</div>
+  </div>
+  <div class="right-column desctop">
+    <wc-btn-with-loading 
+      class="btn-new--brown-border find-opponent-btn" 
+      routerLink="/singlegames"
+      (click)="window['dataLayerPush']('wchEvent', 'Main', 'Button', 'Find opponent', '', '');"
+    >
+      {{ 'BUTTONS.FIND_OPPONENT' | translate}}...
+    </wc-btn-with-loading>
+  </div>
+</div>

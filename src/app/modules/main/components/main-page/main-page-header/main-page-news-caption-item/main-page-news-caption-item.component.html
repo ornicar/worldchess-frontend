@@ -1,0 +1,11 @@
+<div class="page-news-caption-item" (click)="goToNews($event)">
+  <div class="page-news-caption-item__container">
+    <div class="page-news-caption-item__img">
+      <img [src]="image$ | async"/>
+    </div>
+    <div class="page-news-caption-item__text">
+      <span>{{newsTime$ | async}}</span>
+      {{newsTitle$ | async}}
+    </div>
+  </div>
+</div>

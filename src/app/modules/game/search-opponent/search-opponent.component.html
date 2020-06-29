@@ -1,0 +1,55 @@
+<div class="start-new-game">
+  <div class="start-new-game__head">
+    <div class="start-new-game__title">Start a new game</div>
+  </div>
+
+  <div class="start-new-game__table start-new-game__table--purple" *ngIf="!onlyButton">
+    <div class="start-new-game__table-wrapper">
+      <div
+        *ngFor="let item of timeControlItems"
+        class="start-new-game__table-elem"
+        [class.active]="item.model?.id === selectedTimeControl?.id"
+        (click)="onSelectTimeControl(item.model)"
+      >
+        <ng-container *ngIf="item.increment === 0; else fractional">
+          <div class="start-new-game__table-nimber">{{ item.startTime }}</div>
+          <div class="start-new-game__table-text">min</div>
+        </ng-container>
+
+        <ng-template #fractional>
+          <div class="start-new-game__table-fraction">
+            <span>{{ item.startTime }}</span>
+            <span>{{ item.increment }}</span>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="start-new-game__table-elem start-new-game__table-elem--button">
+        <div class="start-new-game__other">other
+          <svg-arrow-right class="icon"></svg-arrow-right>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="start-new-game__tabs" *ngIf="!onlyButton">
+    <a class="start-new-game__tab active">any player</a>
+    <a class="start-new-game__tab">invite a friend</a>
+  </div>
+
+  <div class="start-new-game__footer">
+    <a
+      *ngIf="(waitingOpponent$ | async); else searchButton"
+      class="start-new-game__btn active"
+      (click)="stopSearch($event)">
+      Stop search
+      <svg id="progressBar" class="start-new-game__progress">
+          <circle cy=10 cx=10 r=8 fill="transparent" stroke="transparent" stroke-width="2" ></circle>
+          <circle cy=10 cx=10 r=8 fill="transparent" stroke="#97CDFF" stroke-width="2" stroke-dasharray="35" stroke-dashoffset=0 ></circle>
+      </svg>
+    </a>
+    <ng-template #searchButton>
+      <a class="start-new-game__btn" (click)="searchOpponent($event)">Find opponent</a>
+    </ng-template>
+  </div>
+</div>

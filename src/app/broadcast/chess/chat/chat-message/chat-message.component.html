@@ -1,32 +1,59 @@
-<div class="chat__elem" [class.chat__elem--answer]="message.my">
+<div class="chat__elem" [class.chat__elem--answer]="message.my" [class.chat__elem--paid-user]="message.user.paid">
   <div class="chat__avatar" [style.backgroundColor]="color">
     <span class="chat__avatar-text">{{userPrefix}}</span>
   </div>
-  <div class="chat__text">
-  <span class="chat__text--header">
-    <span class="chat__text--header-min_name_line">{{message?.user?.full_name}}</span>
-    <span class="chat__text--header-name">{{message?.user?.full_name}}</span>
-    <span class="chat__text--header-time">{{message.created | date : 'HH:mm'}}</span>
-  </span>
-    <span class="message" [innerHtml]="message.text | wcBackLightReplyMessage | wcSanitizeHtml"></span>
+  <div class="chat__text" [style.backgroundColor]="backgroundColorPaid">
+    <span class="chat__text--header">
+      <span class="chat__text--header-min_name_line">{{message?.user?.full_name}}</span>
+      <span class="chat__text--header-name" [style.color]="colorPaid"><span>{{message?.user?.full_name}}</span>
+        <svg-crown *ngIf="message.user.paid" [style.fill]="colorPaid" class="icon"></svg-crown>
+      </span>
+      <span class="chat__text--header-time" [style.color]="colorPaid">{{message.created | date : 'HH:mm'}}</span>
+    </span>
+    <span *ngIf="!message.user.paid; else sticker" class="message"
+      [innerHtml]="message.text | wcBackLightReplyMessage | wcSanitizeHtml"></span>
+    <ng-template #sticker>
+      <ng-container [ngSwitch]="message.text">
+        <span class="chat__icon-paid" *ngSwitchCase="'😞'">
+          <svg-stiker-black-6 class="icon"></svg-stiker-black-6>
+        </span>
+        <span class="chat__icon-paid" *ngSwitchCase="'🤔'">
+          <svg-stiker-black-5 class="icon"></svg-stiker-black-5>
+        </span>
+        <span class="chat__icon-paid" *ngSwitchCase="'😍'">
+          <svg-stiker-black-4 class="icon"></svg-stiker-black-4>
+        </span>
+        <span class="chat__icon-paid" *ngSwitchCase="'😏'">
+          <svg-stiker-black-3 class="icon"></svg-stiker-black-3>
+        </span>
+        <span class="chat__icon-paid" *ngSwitchCase="'😇'">
+          <svg-stiker-black-2 class="icon"></svg-stiker-black-2>
+        </span>
+        <span class="chat__icon-paid" *ngSwitchCase="'😢'">
+          <svg-stiker-black-1 class="icon"></svg-stiker-black-1>
+        </span>
+        <span *ngSwitchDefault class="message"
+          [innerHtml]="message.text | wcBackLightReplyMessage | wcSanitizeHtml"></span>
+      </ng-container>
+    </ng-template>
     <span class="likes-block" *ngIf="message.likes">
-  <span class="likes">
-    <span class="likes-icon"></span>
-    <span class="likes-counter">{{message.likes}}</span>
-  </span>
-  </span>
+      <span class="likes">
+        <svg-heart [style.fill]="colorPaid" class="icon"></svg-heart>
+        <!-- <span class="likes-icon"></span> -->
+        <span class="likes-counter" [style.color]="colorPaid">{{message.likes}}</span>
+      </span>
+    </span>
     <div class="chat__message-hover" *ngIf="showLikes">
       <div class="chat__btns">
-      <span class="reply" (click)="reply.next(message)">
-        <span class="reply-icon chat__btns-icon"></span>
-        <span class="btn-text">reply</span>
-      </span>
-      <span class="like" (click)="toggleLikeMessage()">
-        <span class="like-icon chat__btns-icon"></span>
-        <span class="btn-text">{{message.current_user_vote !== 1 ? 'like' : 'unlike'}}</span>
-      </span>
+        <span class="reply" (click)="reply.next(message)">
+          <span class="reply-icon chat__btns-icon"></span>
+          <span class="btn-text">reply</span>
+        </span>
+        <span class="like" (click)="toggleLikeMessage()">
+          <span class="like-icon chat__btns-icon"></span>
+          <span class="btn-text">{{message.current_user_vote !== 1 ? 'like' : 'unlike'}}</span>
+        </span>
       </div>
     </div>
   </div>
 </div>
-

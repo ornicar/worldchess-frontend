@@ -1,36 +1,50 @@
-<wc-layout>
-  <div class="wc-container wc-container--header">
-    <wc-header
-      [isMultiboard]="isMultiboard"
-      [event]="event"
+ <app-nav>
+  <wc-header
+     mobile-content
+     [compact]="true"
+     [isMultiboard]="isMultiboard"
+     [event]="event"
+     [tournament]="tournament"
+     [tour]="tour"
+     [match]="match"
+     [board]="board"
+     (selectedItemChange)="onChangeNavigation($event)">
+   </wc-header>
+</app-nav>
+  <div class="main-page">
+    <div class="wc-container wc-container--header">
+      <wc-header
+        [isMultiboard]="isMultiboard"
+        [event]="event"
+        [tournament]="tournament"
+        [tour]="tour"
+        [match]="match"
+        [board]="board"
+        (selectedItemChange)="onChangeNavigation($event)">
+      </wc-header>
+    </div>
+    <wc-chess-page
+      *ngIf="!isMultiboard"
       [tournament]="tournament"
       [tour]="tour"
-      [match]="match"
       [board]="board"
-      (selectedItemChange)="onChangeNavigation($event)">
-    </wc-header>
+      [withoutBoard]="withoutBoard">
+    </wc-chess-page>
+    
+    <wc-chess-pages
+      *ngIf="isMultiboard"
+      [tournament]="tournament"
+      [tour]="tour"></wc-chess-pages>
   </div>
-  <wc-chess-page
-    *ngIf="!isMultiboard"
-    [tournament]="tournament"
-    [tour]="tour"
-    [board]="board"
-    [withoutBoard]="withoutBoard">
-  </wc-chess-page>
-
-  <wc-chess-pages
-    *ngIf="isMultiboard"
-    [tournament]="tournament"
-    [tour]="tour"></wc-chess-pages>
 
   <wc-chess-footer
     *ngIf="tournament"
     [tournament]="tournament"
+    [board]="board"
     [tour]="tour"
   ></wc-chess-footer>
 
   <wc-chat-info-modal *ngIf="chatInfoModalIsOpen$ | async"></wc-chat-info-modal>
-  <wc-go-premium-modal *ngIf="premiumModalIsOpen$ | async" [tournament]="tournament" (checkout)="showCheckout($event)"></wc-go-premium-modal>
   <wc-get-embedded-widget
     *ngIf="embeddedWidgetModalIsOpen$ | async"
     [tournament]="tournament"
@@ -38,5 +52,4 @@
     [boardId]="board?.id"
   >
   </wc-get-embedded-widget>
-  <app-checkout *ngIf="checkoutShowed" [selectedPlan]="selectedPlan" [isAuthorized]="isAuthorized$ | async" (hideCheckout)="hideCheckout()"></app-checkout>
-</wc-layout>
+<app-footer [sponsorsVisible]="true"></app-footer>

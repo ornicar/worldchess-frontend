@@ -1,0 +1,66 @@
+@import 'variables-new';
+@import 'media-new';
+
+.anti-cheating__wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 18px 20px;
+  background-color: #FC594F;
+  min-height: 222px;
+  color: #fff;
+}
+
+.anti-cheating__camera-container {
+  position: fixed;
+  width: 34px;
+  height: 20px;
+  top: 50%;
+  left: 0;
+  margin-top: -10px;
+  color: #fff;
+}
+.anti-cheating__header {
+  font: 300 24px/26px $gerbera-font;
+  margin-bottom: auto;
+}
+
+.anti-cheating__footer {
+
+  span {
+    display: block;
+    font: 300 15px/18px $gerbera-font;
+    margin-bottom: 7px;
+  }
+
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 125px;
+    height: 30px;
+    border-radius: 3px;
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 0;
+    font: 300 15px/18px $gerbera-font;
+    transition: 0s;
+
+    &:hover,
+    &:active {
+      background-color: #fff;
+      color: #000;
+    }
+
+    &[disabled] {
+      opacity: 0.33;
+
+      &:hover,
+      &:active {
+        background-color: transparent;
+        color: #fff;
+      }
+    }
+  }
+}

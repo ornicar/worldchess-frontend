@@ -1,0 +1,32 @@
+version: '3.5'
+
+# volumes:
+#   media: {}
+
+services:
+  frontend-2:
+    image: "registry.usetech.ru/worldchess/tournament-bc-frontend/frontend-node/main-page:latest"
+    networks:
+      - webnet
+    restart: always
+    logging:
+      options:
+        max-size: 512m
+
+  game-app-2:
+    image: "registry.usetech.ru/worldchess/tournament-bc-frontend/game/main-page:latest"
+    networks:
+      - webnet
+    restart: always
+    logging:
+      options:
+        max-size: 512m
+
+  frontend-nginx-2:
+    image: "registry.usetech.ru/worldchess/tournament-bc-frontend/nginx/main-page:latest"
+    networks:
+      - webnet
+    restart: always
+    logging:
+      options:
+        max-size: 512m

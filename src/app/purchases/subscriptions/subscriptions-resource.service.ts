@@ -6,7 +6,6 @@ import { IPaginationResponse, IPaginationParams } from '../../broadcast/chess-fo
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-
 @Injectable()
 export class SubscriptionsResourceService {
 
@@ -36,4 +35,7 @@ export class SubscriptionsResourceService {
     return this.http.post<{}>(`${environment.endpoint}/subscriptions/${stripe_id}/cancel/`, { notify });
   }
 
+  resubscribe(stripe_id: string, notify: boolean = true): Observable<any> {
+    return this.http.post(`${environment.endpoint}/subscriptions/${stripe_id}/reactivate/`, { notify });
+  }
 }

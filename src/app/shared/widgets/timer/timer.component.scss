@@ -3,14 +3,20 @@
 
 :host {
     display: block;
-    width: 58px;
+    min-width: 58px;
     text-align: right;
+    font-feature-settings: "tnum" 1;
 
     @include phones() {
-        width: 47px;
+        min-width: 47px;
     }
 }
 
 :host-context(.move-time) {
     text-align: center;
+}
+:host-context(.chess-layout) {
+    @include height-650() {
+        width: 40px;
+    } 
 }

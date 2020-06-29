@@ -1,9 +1,19 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output, SimpleChanges} from '@angular/core';
-import {fromEvent} from 'rxjs';
-import {throttleTime} from 'rxjs/operators';
-import {MousetrapHelper} from '../../../../../shared/helpers/mousetrap.helper';
-import {SubscriptionHelper, Subscriptions} from '../../../../../shared/helpers/subscription.helper';
-import {IPredictPosition} from '../../../../move/move.model';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges
+} from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
+import { MousetrapHelper } from '@app/shared/helpers/mousetrap.helper';
+import { SubscriptionHelper, Subscriptions } from '@app/shared/helpers/subscription.helper';
+import { IPredictPosition } from '../../../../move/move.model';
 
 @Component({
   selector: 'wc-prediction',

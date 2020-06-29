@@ -1,0 +1,460 @@
+@import "settings";
+@import "mixins";
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+.post {
+  background-color: $gray-280;
+  .tags-wrapper {
+    border: 1px dotted red;
+  }
+
+  .tags {
+    display: flex;
+    flex-flow: row wrap;
+    left: 25px;
+    bottom: 100px;
+    margin-left: -10px;
+
+    @include media-breakpoint-down(md) {
+      margin: 0;
+    }
+
+    .tag {
+      font: 400 15px/16px $gerbera-font;
+      color: $color-grey;
+      border: 1px solid $gray-250;
+      margin: 10px;
+
+      @include media-breakpoint-up(lg) {
+        padding: 10px;
+      }
+
+      @include media-breakpoint-down(md) {
+        padding: 7px 10px;
+        margin: 8px;
+      }
+
+      &:hover {
+        transition: all .4s ease;
+        border: 1px solid #000;
+      }
+    }
+  }
+
+  .social {
+    display: flex;
+
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #dcdcdc;
+      border-radius: 50%;
+      -webkit-transition: all .4s ease;
+      transition: all .4s ease;
+      width: 40px;
+      height: 40px;
+      position: relative;
+      margin-right: 15px;
+
+      &:hover {
+        cursor: pointer;
+        border: 1px solid black;
+      }
+
+      @include tablets-big {
+        width: 30px;
+        height: 30px;
+      }
+
+      img {
+        transform: scale(1.2, 1.2);
+
+        @include tablets-big() {
+          transform: scale(1, 1);
+        }
+      }
+    }
+
+  }
+
+  &--box {
+    display: flex;
+    height: calc(50vh - 50px);
+    flex-direction: row;
+    @include media-breakpoint-down(md) {
+      min-height: calc(100vh - 50px);
+      height: auto;
+      flex-direction: column;
+    }
+
+
+    .image {
+      width: 50%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+
+      @include media-breakpoint-down(md) {
+        min-height: calc((100vh - 50px) /2);
+        width: 100%;
+      }
+    }
+    .description {
+      display: flex;
+      align-items: stretch;
+      width: 50%;
+      height: 50%;
+      background-color: #000;
+      flex: 1 0 auto;
+
+      @include media-breakpoint-down(md) {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+      }
+
+      @include media-breakpoint-up(lg) {
+        padding: 20px;
+        height: 100%;
+      }
+
+      position: relative;
+      //border-top: 1px solid $gray-250;
+      //border-bottom: 1px solid $gray-250;
+      &--title {
+        display: flex;
+        flex-direction: column;
+
+        @include media-breakpoint-down(md) {
+          width: 100%;
+          padding: 20px;
+        }
+
+        .date {
+          font: 400 18px/23px $gerbera-font;
+          letter-spacing: 0.3px;
+          margin-bottom: 20px;
+          color: $black-light;
+
+          @include tablets-big {
+            font: 400 11px/16px $gerbera-font;
+          }
+
+          @include media-breakpoint-down(md) {
+            font-size: 14px;
+            line-height: 16px;
+            letter-spacing: 0.38px;
+            color: #656565;
+          }
+
+        }
+
+        .title {
+          font: 400 55px/68px $gerbera-font;
+          display: inline-block;
+          width: 100%;
+          margin-bottom: auto;
+          overflow: hidden;
+          color: #fff;
+
+          @include tablets-big {
+            font: 400 44px/48px $gerbera-font;
+          }
+
+          @include media-breakpoint-down(md) {
+            letter-spacing: 1.32px;
+            font: 400 33px/43px $gerbera-font;
+            height: auto;
+          }
+
+          &-sub {
+            display: inline;
+            font: 400 44px/48px $gerbera-font;
+
+            @include media-breakpoint-down(md) {
+              letter-spacing: 1.32px;
+              font: 400 29px/36px $gerbera-font;
+            }
+          }
+        }
+        .tags {
+          @include media-breakpoint-down(md) {
+            margin-top: 25px;
+          }
+          @include media-breakpoint-up(lg) {
+            position: absolute;
+          }
+        }
+
+        .icon{
+          img {
+            filter: invert(70%) grayscale(0);
+            transition: filter 0.3s;
+          }
+
+          &:hover {
+            border: 1px solid #fff;
+
+            img {
+              filter: invert(100%) grayscale(0);
+            }
+          }
+        }
+      }
+
+    }
+  }
+  &--content {
+    display: flex;
+    flex-flow: column wrap;
+    font: 400 18px/28px $gerbera-font;
+
+    @include tablets-big() {
+      font: 400 15px/23px $gerbera-font;
+    }
+
+    @include media-breakpoint-up(lg) {
+      //padding: 55px 0;
+    }
+    @include media-breakpoint-down(md) {
+      //padding: 20px 0;
+    }
+
+    .sidebar {
+      @include media-breakpoint-up(lg) {
+        width: 25%;
+      }
+      @include media-breakpoint-down(md) {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+    }
+
+    .content {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+
+      & .text {
+        //white-space: pre-line;
+        word-break: break-word;
+        margin-bottom: 20px;
+      }
+
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+      @include media-breakpoint-up(lg) {
+        //width: 75%;
+      }
+
+      p {
+        font-family: $gerbera-font;
+        margin: 0 0 30px 0;
+
+        @include media-breakpoint-down(md) {
+          font-size: 16px;
+          line-height: 25px;
+
+          &:first-child {
+            margin-top: 20px;
+          }
+
+          &:last-child {
+            margin-bottom: 10px;
+          }
+        }
+        @include media-breakpoint-up(lg) {
+          font-size: 22px;
+          line-height: 32px;
+        }
+      }
+
+      .postscriptum {
+        width: 100%;
+        height: 20px;
+        position: relative;
+
+        @include media-breakpoint-up(lg) {
+          margin: 50px 0;
+        }
+      }
+    }
+  }
+}
+
+.hexagon {
+  width: 18px;
+  height: 10.39px;
+  margin: 5.20px 0;
+  position: absolute;
+
+  @include media-breakpoint-up(lg) {
+    right: 50%;
+    background-color: $color-grey;
+  }
+  @include media-breakpoint-down(md) {
+    right: 50%;
+    background-color: $black;
+  }
+
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+  }
+
+  &:before {
+    bottom: 100%;
+    @include media-breakpoint-up(lg) {
+      border-bottom: 5.20px solid $color-grey;
+    }
+    @include media-breakpoint-down(md) {
+      border-bottom: 5.20px solid $black;
+    }
+  }
+
+  &:after {
+    top: 100%;
+    width: 0;
+    @include media-breakpoint-up(lg) {
+      border-top: 5.20px solid $color-grey;
+    }
+    @include media-breakpoint-down(md) {
+      border-top: 5.20px solid $black;
+    }
+  }
+}
+
+.news-footer {
+  display: flex;
+  margin-top: 40px;
+  width: 100%;
+
+  @include phones(){
+    flex-direction: column;
+  }
+
+  .description--about {
+    display: flex;
+    flex: 1 0 auto;
+
+    @include phones() {
+      flex-direction: column;
+    }
+
+    .author {
+      height: 76px;
+      display: flex;
+      align-items: center;
+
+      @include phones() {
+        width: 100%;
+      }
+
+      @include media-breakpoint-up(lg) {
+        padding: 15px 0 17px 15px;
+      }
+
+      @include media-breakpoint-down(md) {
+        padding: 0 20px;
+        height: auto;
+
+        &:first-child {
+          margin-bottom: 20px;
+        }
+      }
+
+      &--img {
+        width: 44px;
+        height: 44px;
+        background-position: center;
+        background-size: cover;
+        border-radius: 50%;
+        margin-right: 10px;
+        flex: 0 0 auto;
+
+      }
+      &__coll {
+        margin-right: 110px;
+
+        @include tablets-big() {
+          margin-right: 110px;
+        }
+      }
+    }
+  }
+
+  .info-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding-left: 20px;
+
+    @include media-breakpoint-down(md) {
+      > div {
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+
+      @include media-breakpoint-up(lg) {
+        height: 50px;
+      }
+
+      .title {
+        color: $color-grey;
+        margin-right: 25px;
+        font: 400 11px/13px $gerbera-font;
+
+        @include media-breakpoint-down(md) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+
+.title {
+  font: 400 18px/21px $gerbera-font;
+
+  @include tablets-big() {
+    font: 400 15px/18px $gerbera-font;
+  }
+
+  @include phones() {
+    font: 400 14px/18px $gerbera-font;
+  }
+
+  &-sup {
+    font: 400 18px/21px $gerbera-font;
+    letter-spacing: 0.3px;
+    color: $color-grey;
+    margin-bottom: 10px;
+
+    @include tablets-big() {
+      font: 400 15px/15px $gerbera-font;
+      letter-spacing: 0.27px;
+    }
+
+    @include phones() {
+      font: 400 13px/13px $gerbera-font;
+    }
+  }
+}

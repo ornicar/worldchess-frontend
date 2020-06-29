@@ -1,0 +1,57 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  padding-top: 10px;
+
+  @include birman-media {
+    margin: 0 -10px;
+    display: block;
+    padding-top: 0;
+  }
+  .root {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $grey-dark-new;
+    padding: 8px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #202020;
+    }
+
+
+    @include birman-media {
+      border-radius: 0;
+      min-height: 100px;
+      padding-top: 8px;
+      margin-bottom: 13px;
+    }
+
+    .title {
+      color:$brown-2;
+      font: 300 15px/20px $gerbera-font;
+    }
+
+    .message {
+      flex-grow: 1;
+      font: 300 18px/24px $gerbera-font;
+      color: #fff;
+
+      a {
+        color: $brown-2;
+
+        &:hover {
+          color: #fff;
+        }
+      }
+
+      span {
+        white-space: nowrap;
+      }
+    }
+  }
+}

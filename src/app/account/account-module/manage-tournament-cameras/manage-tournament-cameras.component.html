@@ -1,0 +1,144 @@
+<form *ngIf="cameraForm" [formGroup]="cameraForm" class="main-form tournament-form">
+
+  <label class="tournament-form__input" *ngIf="tours$ | async as tours">
+    <span>Round link</span>
+    <select formControlName="tour">
+      <option value="null" disabled selected>Choose round</option>
+      <option *ngFor="let tour of tours" [ngValue]="tour.id">
+        Round {{ tour.tour_number }}
+      </option>
+    </select>
+  </label>
+  <ng-container *ngIf="(formErrors$ | async)?.tour as errors">
+    <span class="tournament-form__error" *ngIf="errors['required']">Round link is required</span>
+    <span class="tournament-form__error" *ngIf="errors['response']">{{ errors['response'] }}</span>
+  </ng-container>
+
+
+  <label class="tournament-form__input">
+    <span>Broadcast URL</span>
+    <input type="text" formControlName="link">
+  </label>
+
+  <ng-container *ngIf="(formErrors$ | async)?.link as errors">
+    <span class="tournament-form__error" *ngIf="errors['required']">Broadcast URL is required</span>
+    <span class="tournament-form__error" *ngIf="errors['response']">{{ errors['response'] }}</span>
+  </ng-container>
+
+  <label class="tournament-form__input">
+    <span>Camera name</span>
+    <input type="text" formControlName="name">
+  </label>
+
+  <ng-container *ngIf="(formErrors$ | async)?.name as errors">
+    <span class="tournament-form__error" *ngIf="errors['required']">Camera name is required</span>
+    <span class="tournament-form__error" *ngIf="errors['response']">{{ errors['response'] }}</span>
+  </ng-container>
+
+  <label class="tournament-form__input">
+    <div class="tournament-form__checkbox-wrapper">
+      <input class="tournament-form__checkbox" type="checkbox" formControlName="is_default">
+      <span>Default camera</span>
+    </div>
+  </label>
+
+  <label class="tournament-form__input">
+    <div class="tournament-form__checkbox-wrapper">
+      <input class="tournament-form__checkbox" type="checkbox" formControlName="is_free">
+      <span>Available without subscription</span>
+    </div>
+  </label>
+
+  <label class="tournament-form__input">
+    <span>Operation mode</span>
+    <select formControlName="operation_mode">
+      <option [ngValue]="OperationMode.ONLINE">Online</option>
+      <option [ngValue]="OperationMode.OFFLINE">Offline</option>
+    </select>
+  </label>
+
+  <label class="tournament-form__input">
+    <span>Broadcasting type</span>
+    <select formControlName="broadcasting_type">
+      <option [ngValue]="BroadcastingType.YOUTUBE">Youtube</option>
+      <option [ngValue]="BroadcastingType.LIVESTREAM">Livestream</option>
+    </select>
+  </label>
+
+  <div class="controls">
+    <button type="button" class="btn btn-blue" [disabled]="loading$ | async" (click)="onSave()">Save</button>
+    <button type="button" class="btn btn-blue" [disabled]="loading$ | async" (click)="onSaveAndAdd()">Save and add
+      new</button>
+  </div>
+</form>
+
+<div class="saved-cameras">
+  <form *ngFor="let savedCameraForm of savedCamerasForms; let i = index" [formGroup]="savedCameraForm"
+    class="main-form tournament-form">
+    <label class="tournament-form__input" *ngIf="tours$ | async as tours">
+      <span>Round link</span>
+      <select formControlName="tour">
+        <option value="null" disabled>Choose round</option>
+        <option *ngFor="let tour of tours" [selected]="tour.id === savedCameraForm.value.tour" [ngValue]="tour.id">
+          Round {{ tour.tour_number }}
+        </option>
+      </select>
+    </label>
+
+    <label class="tournament-form__input">
+      <span>Broadcast URL</span>
+      <input type="text" formControlName="link">
+    </label>
+
+    <label class="tournament-form__input">
+      <span>Camera name</span>
+      <input type="text" formControlName="name">
+    </label>
+
+    <label class="tournament-form__input">
+      <div class="tournament-form__checkbox-wrapper">
+        <input class="tournament-form__checkbox" type="checkbox" formControlName="is_default">
+        <span>Default camera</span>
+      </div>
+    </label>
+
+    <label class="tournament-form__input">
+      <div class="tournament-form__checkbox-wrapper">
+        <input class="tournament-form__checkbox" type="checkbox" formControlName="is_free">
+        <span>Available without subscription</span>
+      </div>
+    </label>
+
+    <label class="tournament-form__input">
+      <span>Operation mode</span>
+      <select formControlName="operation_mode">
+        <option [selected]="savedCameraForm.value.operation_mode === OperationMode.ONLINE" [ngValue]="OperationMode.ONLINE">
+          Online</option>
+        <option [selected]="savedCameraForm.value.operation_mode === OperationMode.OFFLINE" [ngValue]="OperationMode.OFFLINE">Offline
+        </option>
+      </select>
+    </label>
+
+    <label class="tournament-form__input">
+      <span>Broadcasting type</span>
+      <select formControlName="broadcasting_type">
+        <option [selected]="savedCameraForm.value.broadcasting_type === BroadcastingType.YOUTUBE"
+          [ngValue]="BroadcastingType.YOUTUBE">Youtube</option>
+        <option [selected]="savedCameraForm.value.broadcasting_type === BroadcastingType.LIVESTREAM"
+          [ngValue]="BroadcastingType.LIVESTREAM">Livestream</option>
+      </select>
+    </label>
+
+    <div>
+      <button *ngIf="i === 0 && !cameraForm" class="btn btn-blue" [disabled]="loading$ | async" (click)="add()">Add
+        new</button>
+    </div>
+  </form>
+</div>
+
+<div class="controls">
+  <button class="btn btn-blue" (click)="onClose()">Close</button>
+  <button class="btn btn-blue" [disabled]="cameraForm.pristine" *ngIf="ableToSave()" (click)="onSave()">Save</button>
+  <button class="btn btn-blue" [disabled]="!!isNextDisabled" *ngIf="ableToNext()" (click)="onNext()">Next</button>
+  <button class="btn btn-blue" [disabled]="cameraForm.pristine" *ngIf="ableToSend()" (click)="onSendToApprove()">Send to approve</button>
+</div>

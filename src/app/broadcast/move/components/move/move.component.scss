@@ -13,6 +13,10 @@
   font-family: $gerbera-font;
   border-top: solid 1px $gray-dark;
 
+  @include height-650() {
+    height: 35px;
+  }
+
   @include phones() {
     height: 43px;
   }
@@ -73,6 +77,10 @@
   width: 28px;
   white-space: nowrap;
   font: 700 12px/16px $gerbera-font;
+
+  @include height-650() {
+    font: 300 12px/12px $gerbera-font;
+  }
 
   @include phones() {
     font: 400 13px/13px $gerbera-font;

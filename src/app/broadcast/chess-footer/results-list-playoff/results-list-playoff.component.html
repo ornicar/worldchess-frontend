@@ -1,0 +1,133 @@
+<ng-container *ngIf="list$ | async as rounds">
+  <ul class="rounds-pagination">
+    <li *ngFor="let point of carousel.pointNumbers" class="rounds-pagination__elem"
+      [class.active]="carousel.activePoint === point">
+      <a href="javascript:void(0)" class="rounds-pagination__btn"></a>
+    </li>
+  </ul>
+  <div class="position-status">
+    <div class="position-status__text">
+      <a href="#">Drag</a> to see the results
+    </div>
+    <div class="position-status__block">
+      <div style="
+        width: 18px;
+        height: 14px;
+        top: 4px;
+        left: 5px;
+      "></div>
+    </div>
+  </div>
+  <ngu-carousel [inputs]="carouselConfig" [dataSource]="rounds" #carousel (onMove)="carouselMove($event)"
+    (swiperight)="onSwipeRight()"
+    (swipeleft)="onSwipeLeft()"
+  >
+
+    <div class="rounds-main" *nguCarouselDef="let round; let i = index" [style.maxHeight]="maxHeight">
+
+      <div #rounds class="rounds">
+
+        <div class="rounds__title">Round {{round.number}}</div>
+        <div class="rounds-wrapper">
+          <div class="rounds-wrapper-scroll" wcHideScrollbar [wcForceHideVerticalScrollBar]="true"
+            (scroll)="onRoundScroll($event)">
+            <div class="round rounds__round" #pairs *ngFor="let pair of round.pairs">
+              <div class="round__content">
+                <div class="round__title">
+                  <div class="round__name" [class.round__name--through]="!pair.playerOne.win && pair.playerOne.lose"
+                    (click)="showPlayerPopup(pair.playerOne.player, pair.playerOne.name)">
+                    {{pair.playerOne.name}}
+                  </div>
+                  <ng-container *ngIf="pair.playerOne.player">
+                    <wc-country-flag *ngIf="pair.playerOne.player.federation" class="flag-icon"
+                      [countryId]="pair.playerOne.player.federation"></wc-country-flag>
+                    <div class="rank">
+                      <span *ngIf="pair.playerOne.player.rank">{{pair.playerOne.player.rank}}</span>
+                      <ng-container *ngIf="pair.playerOne.player.rating">{{pair.playerOne.player.rating}}</ng-container>
+                    </div>
+                  </ng-container>
+                </div>
+                <table class="round__table">
+                  <tr>
+                    <td *ngFor="let r of pair.playerOne.results">
+                      <span *ngIf="r === 0.5" class="round__count-elem-half">
+                        <span>1</span><span>2</span>
+                      </span>
+                      <ng-container *ngIf="r !== 0.5  && r !== '0'">{{r}}</ng-container>
+                      <span *ngIf="r === '0'" class="round__table-dash"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td *ngFor="let r of pair.playerTwo.results">
+                      <span *ngIf="r === 0.5" class="round__count-elem-half">
+                        <span>1</span><span>2</span>
+                      </span>
+                      <ng-container *ngIf="r !== 0.5 && r !== '0'">{{r}}</ng-container>
+                      <span *ngIf="r === '0'" class="round__table-dash"></span>
+                    </td>
+                  </tr>
+                </table>
+                <div class="round__title">
+                  <div class="round__name" [class.round__name--through]="!pair.playerTwo.win && pair.playerTwo.lose"
+                    (click)="showPlayerPopup(pair.playerTwo.player, pair.playerTwo.name)">
+                    {{pair.playerTwo.name}}
+                  </div>
+                  <ng-container *ngIf="pair.playerTwo.player">
+                    <wc-country-flag class="flag-icon" *ngIf="pair.playerTwo.player.federation"
+                      [countryId]="pair.playerTwo.player.federation"></wc-country-flag>
+                    <div class="rank">
+                      <span *ngIf="pair.playerTwo.player.rank">{{pair.playerTwo.player.rank}}</span>
+                      <ng-container *ngIf="pair.playerTwo.player.rating">{{pair.playerTwo.player.rating}}</ng-container>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="round__content-boint"></div>
+              </div>
+              <div class="round__count">
+                <div class="round__count-boint"></div>
+                <div class="round__count-elem">
+                  <svg-crown-2 class="icon" *ngIf="pair.playerOne.win"></svg-crown-2>
+                  <span
+                    *ngIf="pair.playerOne.result || (!pair.playerOne.half && pair.playerOne.result === 0 && pair.playerTwo.result > 0)"
+                  >{{pair.playerOne.result}}</span>
+                  <span class="round__count-elem-half" *ngIf="pair.playerOne.half">
+                    <span>1</span><span>2</span>
+                  </span>
+                </div>
+                <div class="round__count-elem">
+                  <svg-crown-2 class="icon" *ngIf="pair.playerTwo.win"></svg-crown-2>
+                  <span
+                    *ngIf="pair.playerTwo.result || (!pair.playerTwo.half && pair.playerTwo.result === 0 && pair.playerOne.result > 0)"
+                  >{{pair.playerTwo.result}}</span>
+                  <span class="round__count-elem-half" *ngIf="pair.playerTwo.half">
+                    <span>1</span><span>2</span>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button NguCarouselPrev class="ngu-button" [hidden]="carousel.isFirst">Previous</button>
+    <button NguCarouselNext class="ngu-button" [hidden]="carousel.isLast">Next</button>
+
+  </ngu-carousel>
+</ng-container>
+
+<div class="popup-wrapper" [ngStyle]="{ 'display': showPopup ? 'flex' : 'none'}">
+  <wc-results-list-popup [player]="popupPlayer" [playerName]="popupPlayerName" [results]="popupResults"
+    (close)="closePlayerPopup()"></wc-results-list-popup>
+</div>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="curve"
+  *ngFor="let curve of curves"
+  [style.top]="curve.style.top + 'px'"
+  [style.left]="curve.style.left + 'px'"
+  [style.height]="curve.style.height + 'px'"
+>
+    <path [attr.d]="curve.d" stroke-width="1" fill="transparent" />
+</svg>

@@ -30,6 +30,10 @@ wcd-widget-layout.light-mode {
   }
 }
 
+::ng-deep wc-chess-board {
+  margin-bottom: 30px;
+}
+
 ::ng-deep wc-chess-board-title {
   min-height: auto !important;
 }

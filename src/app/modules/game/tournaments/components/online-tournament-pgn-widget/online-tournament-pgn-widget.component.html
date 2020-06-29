@@ -1,0 +1,25 @@
+<ul class="png-wiget">
+  <li class="png-wiget__elem">
+    <div class="png-wiget__name">
+      {{blackPlayer?.full_name === '' ? 'Anonymous' : blackPlayer?.full_name}}
+    </div>
+    <div class="png-wiget__rating">
+      {{blackPlayer?.rating}} <ng-container *ngIf="blackCountry">∙ {{blackCountry}}</ng-container>
+    </div>
+  </li>
+  <li class="png-wiget__elem">
+    <div class="png-wiget__name">
+      {{whitePlayer?.full_name === '' ? 'Anonymous' : whitePlayer?.full_name}}
+    </div>
+    <div class="png-wiget__rating">
+      {{whitePlayer?.rating}} <ng-container *ngIf="whiteCountry">∙ {{whiteCountry}}</ng-container>
+    </div>
+  </li>
+  <li *ngIf="boardID" class="png-wiget__elem">
+    <a href="javascript:void(0)"
+       class="png-wiget__button" (click)="downloadPGN()">
+       <svg-download-my-games class="png-wiget__button-icon"></svg-download-my-games>
+       PGN
+    </a>
+  </li>
+</ul>

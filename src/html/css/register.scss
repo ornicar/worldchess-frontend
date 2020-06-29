@@ -1,0 +1,802 @@
+@import 'variables-new';
+@import 'media-new';
+
+.register {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1;
+}
+
+.register__error {
+  font: 300 15px/20px $gerbera-font;
+  max-width: 655px;
+  color: #fff;
+}
+
+.register__close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 19px;
+  height: 19px;
+  cursor: pointer;
+
+  &:after,
+  &:before {
+    content: '';
+    display: block;
+    width: 25px;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background-color: #999;
+  }
+
+  &:before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+.register__labels {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.register__head {
+  display: flex;
+  justify-content: space-between;
+  min-height: 85px;
+  margin-top: 9px;
+  margin-bottom: 20px;
+  flex: 0 0 auto;
+  @include phones() {
+    flex-direction: column-reverse;
+  }
+}
+
+.register__footer {
+  height: 160px;
+  display: flex;
+  margin: 0 -5px;
+  padding-top: 10px;
+  margin-top: auto;
+  @include phones() {
+    flex: 0 0 auto;
+    height: auto;
+    flex-direction: column;
+  }
+}
+
+.register__footer-coll {
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+  padding: 0 5px;
+  @include phones() {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.register__body {
+  display: flex;
+}
+
+.register__title {
+  font: 300 29px/37px $gerbera-font;
+  color: #fff;
+  max-width: 75%;
+  @include phones() {
+    font: 400 22px/25px $gerbera-font;
+    min-height: 50px;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    max-width: 100%;
+  }
+
+  .register__name {
+    color: #fff;
+  }
+}
+
+.register__text {
+  font: 400 15px/20px $gerbera-font;
+
+  &--small {
+    font: 400 11px/13px $gerbera-font;
+    width: 266px;
+    margin-left: auto;
+    flex: 0 0 auto;
+    @include phones() {
+      margin-left: 0;
+    }
+  }
+
+  &--width {
+    max-width: 200px;
+    flex: 0 0 auto;
+    @include phones() {
+      max-width: 300px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.register__text-nowrap {
+  white-space: nowrap;
+}
+
+.register__title-text {
+  display: inline-block;
+  margin-right: 5px;
+
+  &--width {
+    width: calc(75% + 60px);
+    @include phones() {
+      width: 100%;
+    }
+  }
+}
+
+.register__step {
+  display: flex;
+  justify-content: flex-end;
+  font: 300 29px/37px $gerbera-font;
+  width: 100px;
+  flex: 0 0 auto;
+  color: #fff;
+
+  @include phones() {
+    font: 400 15px/18px $gerbera-font;
+    margin-bottom: 39px;
+    justify-content: flex-start;
+  }
+
+  .icon {
+    display: block;
+    position: relative;
+    top: 8px;
+    width: 14px;
+    height: 24px;
+    margin-right: 15px;
+    fill: #fff;
+    cursor: pointer;
+    @include phones() {
+      display: none;
+      top: 5px;
+    }
+
+    &--mobile {
+      display: none;
+
+      @include phones() {
+        display: block;
+      }
+    }
+
+    &:hover {
+      fill: #000;
+    }
+
+    svg {
+      display: block;
+    }
+    @include phones() {
+      width: 7px;
+      height: 11px;
+      margin-right: 8px;
+      top: 4px;
+    }
+  }
+}
+
+.input-text {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin-bottom: 22px;
+  @include phones-small() {
+    margin-bottom: 10px;
+  }
+}
+
+.register__form-wrapper {
+  margin-top: auto;
+}
+
+.register__form {
+  display: flex;
+  align-items: flex-end;
+  margin: 0 -40px;
+  @include phones() {
+    flex-direction: column;
+    margin: 0;
+  }
+}
+
+.register__form-col {
+  padding: 0 40px;
+  flex: 1 0 auto;
+  height: 100%;
+
+  &--flex {
+    display: flex;
+    margin: 0 -10px;
+    @include phones() {
+      flex-direction: column;
+      margin: 0;
+    }
+  }
+  @include phones() {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 0;
+    margin-bottom: 0;
+  }
+}
+
+.register__options {
+  display: flex;
+  margin: 0 -10px 5px;
+  flex: 0 0 auto;
+  @include phones() {
+    flex-direction: column;
+    margin: 0 -10px 20px;
+  }
+
+  &--padding-top {
+    padding-top: 39px;
+    @include phones() {
+      padding-top: 45px;
+    }
+  }
+}
+
+.register__options-col {
+  padding: 0 10px;
+  flex: 1;
+  @include phones() {
+    margin-bottom: 36px;
+    flex: 0 0 auto;
+  }
+}
+
+.register__options-link {
+  font: 400 15px/20px $gerbera-font;
+  color: $brown-2;
+
+  &:visited {
+    color: $brown-2;
+  }
+
+  &:hover {
+    color: $brown-2-hover;
+  }
+}
+
+.register-form__gift {
+  flex: 1;
+  padding: 0 10px;
+  @include phones() {
+    padding: 0;
+  }
+}
+
+.register-form__privacy-text {
+  font: 400 11px/13px $gerbera-font;
+  color: #fff;
+}
+
+.register-form__privacy-link {
+  display: inline-flex;
+  align-items: center;
+  font: 400 11px/13px $gerbera-font;
+  color: #fff;
+  fill: #fff;
+  flex: 0 0 auto;
+
+  .icon {
+    position: relative;
+    top: 1px;
+    margin-left: 5px;
+    width: 5px;
+  }
+}
+
+.register-form__submit {
+  display: flex;
+  align-items: center;
+  margin-top: 31px;
+
+  @include phones() {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  @include phones-small() {
+    margin-top: 21px;
+  }
+}
+
+.register-form__submit-free {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  font: 300 22px/25px $gerbera-font;
+  color: #fff;
+  padding: 5px 0 5px 20px;
+
+  @include phones() {
+    padding: 0;
+    margin-top: 8px;
+    height: 40px;
+  }
+
+  &--small {
+    font: 300 15px/20px $gerbera-font;
+    @include phones() {
+      display: none;
+    }
+  }
+}
+
+.logo-fide {
+  width: 42px;
+  height: 45px;
+  margin-left: auto;
+  fill: #fff;
+  flex: 0 0 auto;
+
+  &--desctop {
+    @include phones() {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    display: none;
+    @include phones() {
+      display: block;
+      margin-left: 5px;
+    }
+  }
+}
+
+.register__form-privacy {
+  flex: 1;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  @include phones() {
+    padding: 0;
+    
+  }
+}
+
+.register__form-big-text {
+  font: 300 29px/29px $gerbera-font;
+  color: #fff;
+
+  @include phones() {
+    font: 300 22px/25px $gerbera-font;
+  }
+}
+
+.register__form-privacy-link-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 134px;
+  @include phones() {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.register__form-gift-btn {
+  width: 100%;
+  height: 32px;
+  border: 1px solid $brown-2;
+  border-radius: 3px;
+  background-color: transparent;
+  padding: 5px 10px;
+  color: $brown-2;
+  font: 300 15px/20px $gerbera-font;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.register__form-gift-text {
+  color: #fff;
+  font: 400 11px/13px $gerbera-font;
+}
+
+.register__form-privacy-text {
+  font: 400 11px/13px $gerbera-font;
+  color: #fff;
+  width: 134px;
+  margin-left: auto;
+  @include phones() {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.register__form-privacy-link {
+  display: inline-flex;
+  align-items: center;
+  font: 400 11px/13px $gerbera-font;
+  color: #fff;
+  fill: #fff;
+  flex: 0 0 auto;
+  margin-right: 7px;
+
+  &:visited {
+    color: #fff;
+  }
+
+  .icon {
+    margin-left: 3px;
+    width: 5px;
+    height: 10px;
+  }
+
+  &:hover {
+    color: #000;
+    fill: #000;
+
+    &:visited {
+      color: #000;
+    }
+  }
+}
+
+.register__name {
+  color: #fff;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.register-input__wrapper {
+  position: relative;
+  cursor: text;
+  // @include phones-small() {
+  //   padding: 10px 0;
+  // }
+
+  &--code {
+    padding: 0;
+    position: relative;
+
+    @include phones() {
+      margin-bottom: 50px;
+    }
+
+    .register-input__elem {
+      font: 400 170px/140px $gerbera-font;
+      height: 190px;
+      padding: 0px;
+      margin-top: -10px;
+      @include phones() {
+        font: 400 80px/80px $gerbera-font;
+        height: 130px;
+      }
+    }
+
+    .register-input__placeholder {
+      font: 300 170px/170px $gerbera-font;
+      color: rgba(#fff, 0.5);
+      top: 50%;
+      transition: 0s;
+      @include phones() {
+        font: 300 80px/80px $gerbera-font;
+      }
+    }
+
+    .register-input__elem:focus + .register-input__placeholder {
+      font: 300 170px/170px $gerbera-font;
+      transform: translate(0, -50%);
+      top: 50%;
+      color: rgba(#fff, 0.5) !important;
+
+      @include phones() {
+        font: 300 80px/80px $gerbera-font;
+      }
+    }
+
+    .register-input__elem--active + .register-input__placeholder {
+      visibility: hidden;
+    }
+
+    .register-input__error {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+
+      &:before {
+        display: none;
+      }
+
+      @include phones() {
+        bottom: auto;
+        top: 170px;
+      }
+    }
+
+
+
+  }
+
+  &--error {
+    .register-input__elem {
+      border-bottom: 1px solid $red-new;
+    }
+
+    .register-input__placeholder {
+      color: $red-new !important;
+      top: 10px;
+      left: 0;
+      font: 300 15px/20px $gerbera-font;
+      @include phones-small() {
+        font: 300 12px/15px $gerbera-font;
+      }
+    }
+    
+  }
+}
+
+.register-input {
+  margin-bottom: 10px;
+
+  &--width {
+    max-width: 342px;
+  }
+}
+
+.register-input__elem {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  color: #fff;
+  font: 300 22px/27px $gerbera-font;
+  border: 0;
+  padding: 19px 0 6px;
+  border-bottom: 1px solid rgba(#fff, 0.5);
+  cursor: text;
+  border-radius: 0;
+
+  &--big {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  &--active,
+  &:focus {
+    border-bottom: 1px solid#fff;
+
+    &+.register-input__placeholder {
+      top: 10px;
+      left: 0;
+      font: 300 15px/20px $gerbera-font;
+      color: #999;
+      @include phones-small() {
+        font: 300 12px/15px $gerbera-font;
+      }
+    }
+  }
+  @include phones-small() {
+    font: 300 18px/17px $gerbera-font;
+  }
+}
+
+.register-input__placeholder {
+  position: absolute;
+  top: 59%;
+  left: 0;
+  color: #fff;
+  font: 300 22px/22px $gerbera-font;
+  transform: translate(0, -50%);
+  transition: .15s;
+  @include phones-small() {
+    font: 300 18px/18px $gerbera-font;
+  }
+
+  &--error {
+    color: $red-new !important;
+  }
+}
+
+.register-input__error {
+  color: $red-new;
+  display: flex;
+  align-items: center;
+
+  a {
+    color: #fff;
+  }
+}
+
+.register-input__input {
+  display: block;
+  flex: 1;
+  &--red {
+    .register-input__placeholder {
+      color: $red-new !important;
+    }
+    .register-input__elem {
+      border-bottom: 1px solid $red-new;
+    }
+    
+  }
+
+  &:hover {
+    .register-input__elem {
+      border-bottom: 1px solid #fff;
+    }
+  }
+
+}
+
+.register-input__placeholder {
+  display: flex;
+  color: rgba(#fff, 0.5);
+  font: 300 22px/25px $gerbera-font;
+}
+
+.register-input__error-text {
+  display: flex;
+  align-items: center;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 2px;
+    background-color: $red-new;
+    margin: 0 10px;
+  }
+}
+
+.register-input__elem.register-input__elem--active + .register-input__placeholder,
+.register-input__elem:focus + .register-input__placeholder {
+  top: 10px;
+  font: 300 15px/18px $gerbera-font;
+  color: #fff;
+}
+
+.register-input__resend {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  bottom: 15px;
+  color: rgba(#fff, 0.5);
+  font: 400 15px/18px $gerbera-font;
+  opacity: 0.5;
+
+  &--opacity {
+    opacity: 1;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    width: 13px;
+    height: 15px;
+    margin-right: 5px;
+    fill: rgba(#fff, 0.5);
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    cursor: default;
+    color: rgba(#fff, 0.5);
+
+    span {
+      font-feature-settings: 'tnum' 1;
+    }
+
+    &:hover {
+      color: rgba(#fff, 0.5);
+    }
+
+    &.active {
+      cursor: pointer;
+      fill: rgba(#fff, 0.5);
+
+      span {
+        color: #fff;
+      }
+      .icon
+      {
+        fill: #fff !important;
+      }
+
+      &:hover {
+        span {
+          color: #000;
+        }
+        .icon
+        {
+          fill: #000 !important;
+        }
+      }
+    }
+  }
+  @include phones() {
+    bottom: -30px;
+  }
+}
+
+i {
+  font-size: .5em;
+}
+
+.register__img {
+  width: 100%;
+  margin-bottom: 12px;
+
+  &.hide-image {
+    height: 0;
+    margin-bottom: 0;
+  }
+}
+
+.register__img-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .register__options-control--label:hover {
+    .toggle-label input {
+ 
+      & + .toggle-label__btn {
+        border: 1px solid #fff;
+      }
+
+      &:checked + .toggle-label__btn {
+        border: 1px solid #E9E9E9;
+        background-color: #E9E9E9;
+      }
+    }   
+  }
+}
+
+.register__options-control--disabled {
+  cursor: default;
+}
+
+.register__options-text {
+  display: flex;
+  font: 400 15px/20px $gerbera-font;
+  color: #fff;
+
+  li {
+    margin-bottom: 6px;
+  }
+
+}
+
+.mobile-none {
+  @include phones() {
+    display: none;
+  }
+}

@@ -1,17 +1,12 @@
-import {Injectable, OnDestroy} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Subject, Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import * as fromBoard from '../broadcast/core/board/board.reducer';
-import {SubscriptionHelper, Subscriptions} from '../shared/helpers/subscription.helper';
-import {SocketConnection, SocketStatus} from '../shared/socket/socket-connection';
-
-import {
-  ISocketSubscribeMessage,
-  ISocketUnsubscribeMessage,
-  } from '../board/board-socket/board-socket.model';
-import {ISocketMessage, BoardNotificationSocketAction, ISocketSendMessage} from './auth.model';
+import { SubscriptionHelper, Subscriptions } from '../shared/helpers/subscription.helper';
+import { SocketConnection, SocketStatus } from '../shared/socket/socket-connection';
+import { BoardNotificationSocketAction } from './auth.model';
 import { ISocketBaseMessage } from '../shared/socket/socket-base-message.model';
 
 @Injectable()
@@ -77,7 +72,6 @@ export class SocketConnectionService<
 
   private onMessage(message) {
     // const data = JSON.parse(response.data) as SocketMessage;
-
     switch (message.action) {
       case BoardNotificationSocketAction.SUBSCRIBE:
         this.waitSubscribe--;

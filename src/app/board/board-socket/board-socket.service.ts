@@ -19,7 +19,7 @@ export enum BoardSubscribeStatus {
 
 @Injectable()
 export class BoardSocketService implements OnDestroy {
-  private boardsStatuses = new Map<number, BoardSubscribeStatus>();
+  private boardsStatuses = new Map<number,BoardSubscribeStatus>();
 
   private reconnectSub: Subscription;
   private messagesSub: Subscription;

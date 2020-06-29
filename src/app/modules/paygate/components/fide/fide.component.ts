@@ -1,156 +1,200 @@
-import { Component, ChangeDetectorRef, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
-import { BehaviorSubject, of, Observable, interval } from 'rxjs';
-import { take, map, merge, delay } from 'rxjs/operators';
+import { Validators } from '@angular/forms';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { take, map, takeUntil, withLatestFrom } from 'rxjs/operators';
 import * as moment from 'moment';
 import { PaygatePopupService } from '../../services/paygate-popup.service';
-import { environment } from '../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { PaygateForm } from '@app/modules/paygate/_shared/paygate-form.class';
+import { PaygateFormControl } from '@app/modules/paygate/_shared/paygate-form-control.class';
+import { PlayerResourceService } from '@app/broadcast/core/player/player-resource.service';
+import { IPlayer } from '@app/broadcast/core/player/player.model';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '@app/reducers';
+import { AccountRefresh } from '@app/account/account-store/account.actions';
+import { selectMyAccount } from '@app/account/account-store/account.reducer';
+import { ICountry } from '@app/broadcast/core/country/country.model';
 
+enum FideFormMode {
+  CREATE_FIDE,
+  ADD_FIDE,
+  SEARCH_PROFILE
+}
+
+const numberRegex =  /^\d+$/i;
 
 @Component({
   selector: 'wc-fide',
   templateUrl: './fide.component.html',
   styleUrls: ['./fide.component.scss'],
 })
-export class FideFormComponent implements OnInit {
+export class FideFormComponent implements OnInit, OnDestroy {
 
-  @ViewChild('birthdate_day') birthdateDay: ElementRef;
-  @ViewChild('birthdate_month') birthdateMonth: ElementRef;
-  @ViewChild('birthdate_year') birthdateYear: ElementRef;
+  history = window.history;
 
-  fideError$ = new BehaviorSubject<{ [key: string]: string[] }>({});
-  countries$ = this.paygatePopupService.countries$.pipe(
-    map(countries => countries ? countries.map(c => ({ label: c.name, value: c.id })) : null),
-  );
-
-  form = new FormGroup({
-    step1: new FormGroup({
-      full_name: new FormControl('', [Validators.required]),
-      fide_id: new FormControl(''),
-      date_of_birth: new FormControl(null, [Validators.required]),
-      gender: new FormControl('female', [Validators.required]),
-      place_of_birth: new FormControl(null, [Validators.required]),
-      nationality: new FormControl(null, [Validators.required]),
-    }),
-
-    step2: new FormGroup({
-      federation: new FormControl(null, [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      photo: new FormControl(null, [Validators.required]),
-    }),
+  years = [...(new Array(100)).keys()].map(x => {
+    const year = moment().year() + (x - 99);
+    return { label: year, value: year };
   });
 
-  formErrors$ = this.form.valueChanges.pipe(
-    merge(this.fideError$),
-    map(() => {
-      const responseErrors = this.fideError$.getValue();
-      const errors = {};
-      const formControls = Object.values(this.form.controls)
-        .reduce((result, fg: FormGroup) => Object.assign(result, fg.controls), {});
-      Object.keys(formControls).forEach((control) => {
-        if (formControls[control].touched) {
-          const controlErrors = {
-            ...formControls[control].errors,
-            ...(responseErrors[control] && responseErrors[control].length ? { response: responseErrors[control][0] } : {})
-          };
-          errors[control] = controlErrors;
-        }
-      });
-      return errors;
+  FideFormMode = FideFormMode;
+  mode = FideFormMode.CREATE_FIDE;
+  searchResults$: BehaviorSubject<IPlayer[]> = new BehaviorSubject(null);
+  isSearchLoading$ = new BehaviorSubject(null);
+
+  maxSteps$ = this.paygatePopupService.maxSteps$;
+  imagePreLoaded$ = new BehaviorSubject(null);
+
+  fideError$ = new BehaviorSubject<{ [key: string]: string[] }>(null);
+
+  countries$ = this.paygatePopupService.countries$.pipe(
+    map((countries: ICountry[]) => {
+      if (!countries) {
+        return null;
+      }
+
+      const countriesWithNoFederation = countries.slice();
+      countriesWithNoFederation.unshift({
+        name: '',
+        id: 193
+      } as ICountry);
+
+      return countriesWithNoFederation.map(c => {
+        return {
+          label: c.name,
+          value: c.id
+        };
+      }).filter(c => (c.label !== 'No Federation'));
     }),
   );
 
-  step = 1;
-  preview = null;
+  form = new PaygateForm({
+    name: new PaygateFormControl('', [Validators.required]),
+    surname: new PaygateFormControl('', [Validators.required]),
+    year_of_birth: new PaygateFormControl(null, [Validators.required]),
+    place_of_birth: new PaygateFormControl(null, [Validators.required]),
+    nationality: new PaygateFormControl(null, [Validators.required]),
+    federation: new PaygateFormControl(null, [Validators.required]),
+    photo: new PaygateFormControl(null, [Validators.required]),
+    is_male: new PaygateFormControl(null, [Validators.required]),
+    email: new PaygateFormControl('') // , [Validators.required])
+  });
+
+  searchForm = new PaygateForm({
+    full_name: new PaygateFormControl('', [Validators.required]),
+    birth_year: new PaygateFormControl(null),
+  }, [
+    (form: PaygateForm) => {
+      const { full_name, birth_year } = form.value;
+      if (full_name.match(numberRegex)) {
+        this.isBirthYearDisabled = true;
+        form.controls['birth_year'].setErrors(null);
+      } else {
+        this.isBirthYearDisabled = false;
+        if (!birth_year) {
+          form.controls['birth_year'].setErrors({ required: true });
+        } else {
+          form.controls['birth_year'].setErrors(null);
+        }
+      }
+
+      return null;
+    }
+  ]);
+
+  isBirthYearDisabled = false;
+
+  destroy$ = new Subject();
+
+  email = '';
+  email$ = this.store$.select(selectMyAccount).pipe(
+    map((account) => account.email)
+  );
 
   constructor(private paygatePopupService: PaygatePopupService,
               private router: Router,
               private cd: ChangeDetectorRef,
               private http: HttpClient,
-              ) {}
+              private store$: Store<fromRoot.State>,
+              private playerService: PlayerResourceService
+              ) {
+    this.form.submit$
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => this.submit());
+    this.searchForm.submit$
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => this.searchSubmit());
+    this.store$.dispatch(new AccountRefresh());
+  }
 
   ngOnInit() {
-    // TODO kostyl' ebanii
-    setTimeout(() => {
-      this.http.get(`${environment.endpoint}/me/`)
-          .subscribe((me) => {
-            this.form.controls['step2']['controls']['email'].patchValue(me['email']);
-          });
-    }, 2000);
-  }
-
-  onFileChanged(event) {
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        this.form.get('step2.photo').patchValue(reader.result);
-        this.preview = reader.result;
-      };
-    }
-  }
-
-  onDateChanged() {
-    const day = this.birthdateDay.nativeElement.value;
-    const month = this.birthdateMonth.nativeElement.value;
-    const year = this.birthdateYear.nativeElement.value;
-    const date = moment(`${month}-${day}-${year}`, 'MM-DD-YYYY', true);
-    if (date.isValid()) {
-      this.form.get('step1.date_of_birth').patchValue(date.format('YYYY-MM-DD'));
-      const fideErrors = this.fideError$.getValue();
-      delete fideErrors.date_of_birth;
-      this.fideError$.next(fideErrors);
-    } else {
-      this.form.get('step1.date_of_birth').patchValue(null);
-      this.fideError$.next({ date_of_birth: ['Invalid date']});
-    }
-  }
-
-  private forceMarkTouched(formName: string) {
-    const form = <FormGroup>this.form.get(formName);
-    Object.values(form.controls).forEach(control => control.markAsTouched({ onlySelf: true }));
-  }
-
-  goToStep(step: 1 | 2) {
-    this.forceMarkTouched(`step${this.step}`);
-    if (this.form.controls[`step${this.step}`].invalid) {
-      return;
-    }
-
-    this.step = step;
+    this.paygatePopupService.state$.pipe(
+      withLatestFrom(this.email$),
+      takeUntil(this.destroy$)
+    ).subscribe(([state, email]) => {
+      this.form.patchValue({
+        ...state.fideForm,
+        email
+      });
+      Object.keys(this.form.controls).forEach((key) => {
+        if (this.form.controls[key].value) {
+          this.form.controls[key].markAsDirty();
+        }
+      });
+      if (state.fideForm && state.fideForm.photo) {
+        this.imagePreLoaded$.next(state.fideForm.photo);
+      }
+    });
   }
 
   submit() {
-    Object.values(this.form.controls).forEach((fg: FormGroup) => {
-      Object.values(fg.controls).forEach(control => control.markAsTouched({ onlySelf: true }));
+    this.fideError$.next(null);
+    this.paygatePopupService.setState({
+      fideForm: this.form.value,
+      fideFormFilled: true
     });
+    this.paygatePopupService.navigateNextStep('fide');
+  }
 
-    this.fideError$.next({});
-
-    if (this.form.valid) {
-      const data = Object.values(this.form.controls).reduce((result, fg) => Object.assign(result, fg.value), {});
-      if (data.fide_id === '') {
-        delete data.fide_id;
-      } else {
-        data.fide_id = +data.fide_id;
-      }
-      this.paygatePopupService.submitFide(data).pipe(
-        take(1),
-      ).subscribe(() => {
-        this.paygatePopupService.navigateNextStep('fide');
-      }, ({ error }) => {
-        this.fideError$.next(error);
-      });
+  searchSubmit() {
+    this.isSearchLoading$.next(true);
+    const searchParam: any = {};
+    if (this.searchForm.value.full_name.match(numberRegex)) {
+      searchParam.fide_id = this.searchForm.value.full_name;
     } else {
-      this.fideError$.next({ error: ['Invalid data'] });
+      searchParam.full_name = this.searchForm.value.full_name;
+      searchParam.birth_year = this.searchForm.value.birth_year;
     }
+    this.playerService.search(searchParam)
+      .pipe(take(1))
+      .subscribe((searchResults: IPlayer[]) => {
+        this.searchResults$.next(searchResults);
+        this.isSearchLoading$.next(false);
+        this.mode = FideFormMode.SEARCH_PROFILE;
+      }, (error) => {
+        this.isSearchLoading$.next(false);
+      });
+  }
+
+  setCreateMode() {
+    this.mode = FideFormMode.CREATE_FIDE;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   closePopup() {
+    this.paygatePopupService.setState({
+      fideForm: this.form.value
+    });
+
     this.paygatePopupService.closePopup();
   }
 }

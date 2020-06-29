@@ -1,0 +1,24 @@
+<div>
+  <div class="block">
+    <div class="row cup-row">
+      <div class="svg-icon svg-cup-icon">
+        <svg-cup></svg-cup>
+      </div>
+      <div class="cup-number">{{tournamentCount$ | async}}</div>
+    </div>
+    <div class="tour-count-title">
+      {{ 'MESSAGES.TOURNAMENTS_MNTH' | translate}}
+    </div>
+    <div class="today">
+      <a class="today__link" [routerLink]="['/tournaments']" (click)="window['dataLayerPush']('wchEvent', 'Main', 'Link', 'today', '', '');">{{tournamentCount$Today$ | async}} {{ 'OTHER.TODAY' | translate}} <span class="arrow"><svg-arrow-right class="icon"></svg-arrow-right></span></a>
+    </div>
+  </div>
+  <div class="block">
+    <div class="row cup-row">
+      <div class="cup-number">{{onlinePlayersCount$ | async}}</div>
+    </div>
+    <div class="tour-count-title">
+      {{ 'MESSAGES.PLAYERS' | translate}}
+    </div>
+  </div>
+</div>

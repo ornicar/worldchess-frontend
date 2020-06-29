@@ -58,3 +58,33 @@
     font-style: normal;
 
 }
+
+@font-face {
+    font-family: 'CliftonTrial_Italic';
+    src: url('assets/fonts/CliftonTrial-Italic.woff2') format('woff2'),
+         url('assets/fonts/CliftonTrial-Italic.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Herr-Von-Muellerhoff';
+    src: url('assets/fonts/HerrVonMuellerhoff-Regular.woff2') format('woff2'),
+        url('assets/fonts/HerrVonMuellerhoff-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BebasNeue_Regular';
+    src: url('assets/fonts/BebasNeue-Regular.woff2') format('woff2'),
+        url('assets/fonts/BebasNeue-Regular.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Chess_Type';
+    src: url('assets/fonts/Chess_Type.otf') format('woff2');
+}

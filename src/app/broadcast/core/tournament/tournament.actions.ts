@@ -1,7 +1,14 @@
 import { Update } from '@ngrx/entity';
 import { Action } from '@ngrx/store';
 import { IDefaultEntities } from '../models/default-entities';
-import { OnlineTournament, FounderTournament, Tournament, TournamentWishListEntry, IGetTournamentsOptions, CommonTournament } from './tournament.model';
+import {
+  OnlineTournament,
+  FounderTournament,
+  TournamentWishListEntry,
+  IGetTournamentsOptions,
+  CommonTournament,
+  TournamentResourceType,
+} from './tournament.model';
 import { IMyTournamentErrors } from './tournament.reducer';
 import { IResultsLists } from '../result/result.model';
 
@@ -39,6 +46,7 @@ export enum TournamentActionTypes {
   SignupToTournamentSuccess = '[Tournament] Success signup to tournament',
   SignupToTournamentError = '[Tournament] Error has occurred on signup to tournament',
   SignupToTournamentErrorClear = '[Tournament] Clear error message that has occurred on signup to tournament',
+  LeaveFromTournament = '[Tournament] Leave from tournament',
   ClearSignedTournament = '[Tournament] Clear signed tournament',
   TournamentWishListSuccess = '[Tournament] Tournament wish list success',
   TournamentWishListError = '[Tournament] Tournament wish list error',
@@ -69,7 +77,7 @@ export class LoadTournaments implements Action {
 export class GetTournament implements Action {
   readonly type = TournamentActionTypes.GetTournament;
 
-  constructor(public payload: { id: number }) {}
+  constructor(public payload: { id: number; resourcetype?: TournamentResourceType }) {}
 }
 
 export class GetTournaments implements Action {
@@ -81,7 +89,7 @@ export class GetTournaments implements Action {
 export class AddTournamentDefaultEntities implements Action {
   readonly type = TournamentActionTypes.AddTournamentDefaultEntities;
 
-  constructor(public payload: { id: number, defaults: IDefaultEntities }) {}
+  constructor(public payload: { id: number; defaults: IDefaultEntities }) {}
 }
 
 export class AddTournament implements Action {
@@ -140,12 +148,12 @@ export class CreateMyTournament implements Action {
 export class PatchMyTournament implements Action {
   readonly type = TournamentActionTypes.PatchMyTournament;
 
-  constructor(public payload: { changes: Partial<FounderTournament>, id: number}) { }
+  constructor(public payload: { changes: Partial<FounderTournament>; id: number }) {}
 }
 export class PatchMyTournamentAndNavigate implements Action {
   readonly type = TournamentActionTypes.PatchMyTournamentAndNavigate;
 
-  constructor(public payload: { changes: Partial<FounderTournament>, id: number, route: string}) {}
+  constructor(public payload: { changes: Partial<FounderTournament>; id: number; route: string }) {}
 }
 
 export class DeleteMyTournament implements Action {
@@ -220,6 +228,12 @@ export class SignupToTournamentErrorClear implements Action {
   readonly type = TournamentActionTypes.SignupToTournamentErrorClear;
 }
 
+export class LeaveFromTournament implements Action {
+  readonly type = TournamentActionTypes.LeaveFromTournament;
+
+  constructor(public payload: { id: number }) {}
+}
+
 export class TournamentWishListSuccess implements Action {
   readonly type = TournamentActionTypes.TournamentWishListSuccess;
 }
@@ -253,38 +267,38 @@ export class LoadTournamentWishList implements Action {
 }
 
 export type TournamentActions =
-  SetSelectedTournament
- | ClearSelectedTournament
- | GetTournament
- | GetTournaments
- | AddTournamentDefaultEntities
- | LoadTournaments
- | AddTournament
- | AddTournaments
- | UpdateTournament
- | UpdateTournaments
- | DeleteTournament
- | DeleteTournaments
- | ClearTournaments
- | GetMyTournaments
- | CreateMyTournament
- | PatchMyTournament
- | PatchMyTournamentAndNavigate
- | DeleteMyTournament
- | SendToApproveMyTournament
- | SetMyTournamentErrors
- | ClearMyTournamentErrors
- | GetFideTournamentResults
- | LoadTournamentResults
- | SignupToTournament
- | SignupToTournamentSuccess
- | SignupToTournamentError
- | ClearSignedTournament
- | SignupToTournamentErrorClear
- | UpdateOnlineTournaments
- | TournamentWishListSuccess
- | TournamentWishListError
- | AddTournamentToWishList
- | RemoveTournamentFromWishList
- | GetTournamentWishList
- | LoadTournamentWishList;
+  | SetSelectedTournament
+  | ClearSelectedTournament
+  | GetTournament
+  | GetTournaments
+  | AddTournamentDefaultEntities
+  | LoadTournaments
+  | AddTournament
+  | AddTournaments
+  | UpdateTournament
+  | UpdateTournaments
+  | DeleteTournament
+  | DeleteTournaments
+  | ClearTournaments
+  | GetMyTournaments
+  | CreateMyTournament
+  | PatchMyTournament
+  | PatchMyTournamentAndNavigate
+  | DeleteMyTournament
+  | SendToApproveMyTournament
+  | SetMyTournamentErrors
+  | ClearMyTournamentErrors
+  | GetFideTournamentResults
+  | LoadTournamentResults
+  | SignupToTournament
+  | SignupToTournamentSuccess
+  | SignupToTournamentError
+  | ClearSignedTournament
+  | SignupToTournamentErrorClear
+  | UpdateOnlineTournaments
+  | TournamentWishListSuccess
+  | TournamentWishListError
+  | AddTournamentToWishList
+  | RemoveTournamentFromWishList
+  | GetTournamentWishList
+  | LoadTournamentWishList;

@@ -4,7 +4,7 @@ input::placeholder {
     color: $black;
 }
 
-/deep/ .mat-form-field {
+.mat-form-field { // TODO was deep, remove by upgrade to Angular 8
     div.mat-form-field-wrapper {
         div.mat-form-field-underline {
             background-color: $black !important;

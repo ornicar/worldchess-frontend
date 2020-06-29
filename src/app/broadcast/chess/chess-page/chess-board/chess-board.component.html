@@ -4,26 +4,34 @@
       class="chess-board__player chess-board__player--top"
       [class.chess-board__player--white]="bottomPlayerColor !== 'white'"
     >
-      <svg class="icon">
-        <use xlink:href="#hexagon" />
-      </svg>
+      <svg-hexagon class="icon"></svg-hexagon>
     </div>
     <div
       class="chess-board__player chess-board__player--bottom"
       [class.chess-board__player--white]="bottomPlayerColor === 'white'"
     >
-      <svg class="icon">
-        <use xlink:href="#hexagon" />
-      </svg>
+      <svg-hexagon class="icon"></svg-hexagon>
     </div>
-    <div style="width: 100%; height: 100%" class="merida dark-brown default whole layout-top" tabindex="0">
+    <div
+      style="width: 100%; height: 100%"
+      class="merida dark-brown default whole layout-top"
+      tabindex="0"
+      [class.merida]="!viewModeIsGamingNormal"
+      [class.dark-brown]="!viewModeIsGamingNormal"
+      [class.birman-chesspieces]="viewModeIsGamingNormal"
+      [class.birman-gray]="viewModeIsGamingNormal"
+      [class.black-king-slay]="getCheckmate('black')"
+      [class.white-king-slay]="getCheckmate('white')"
+    >
       <wc-chessground
         class="outerBoard"
         [orientation]="bottomPlayerColor"
         [canMove]="canMove"
+        [enableAnimation]="false"
         [canCreateMove]="canCompleteMove"
         [position]="position"
         (positionChange)="moveCompleted.next($event)"
+        (isCheckmate)="setCheckmate($event)"
         (triedToMove)="onTriedToMove()"
       ></wc-chessground>
     </div>

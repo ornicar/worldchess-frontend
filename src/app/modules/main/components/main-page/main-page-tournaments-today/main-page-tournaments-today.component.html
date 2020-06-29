@@ -1,0 +1,14 @@
+<div class="tournaments-today">
+  <div class="tournaments-today__head">
+    <div  class="tournaments-today__title">{{data.length}} online tournaments today</div>
+    <div class="tournaments-today__sub-title">You can play. FIDE rating is not needed</div>
+  </div>
+  <div class="tournaments-today__lines-area">
+    <main-page-tournaments-today-row [move]="'right'"  [tournaments]="tournamentsRowOne$ | async"></main-page-tournaments-today-row>
+    <main-page-tournaments-today-row [move]="'left'" [hidden]="(tournamentsRowTwo$|async).length===0"
+                                     [tournaments]="tournamentsRowTwo$|async"></main-page-tournaments-today-row>
+  </div>
+  <div class="tournaments-today__footer">
+    <a href="#" class="tournaments-today__button">Select & join</a>
+  </div>
+</div>

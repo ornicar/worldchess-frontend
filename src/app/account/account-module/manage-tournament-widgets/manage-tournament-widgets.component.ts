@@ -31,7 +31,7 @@ export class ManageTournamentWidgetsComponent extends ManageTournamentTabLinked<
 
   tours = [];
 
-  public mainUrl = environment.backendUrl;
+  public mainUrl = environment.applicationUrl;
 
   constructor(protected route: ActivatedRoute,
     protected router: Router,

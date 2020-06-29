@@ -1,0 +1,12 @@
+<div class="main-page-news-bar-item" [routerLink]="['/news', value.slug || value.id]">
+  <div class="main-page-news-bar-item__container">
+    <div class="main-page-news-bar-item__img"
+    [style.background-image]="
+          'url(' + value.featured_image + ')'
+        "
+    ></div>
+    <div class="main-page-news-bar-item__content">
+      <span>{{value.pub_date | newsTime}}</span> {{value.title}}
+    </div>
+  </div>
+</div>

@@ -1,15 +1,28 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, isDevMode} from '@angular/core';
-import {Router} from '@angular/router';
-import { Store, select } from '@ngrx/store';
-import {fromEvent} from 'rxjs';
-import {distinctUntilChanged, map, throttleTime} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
-import {EventTextKeys} from '../../broadcast/core/event/event.model';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  isDevMode,
+  ViewChildren, QueryList,
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { Store, select, createSelector } from '@ngrx/store';
+import { fromEvent } from 'rxjs';
+import { distinctUntilChanged, filter, first, map, take, tap, throttleTime } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { environmentMenu } from '../../../environments/environment.menu';
 import * as fromRoot from '../../reducers/index';
-import {DomHelper} from '../../shared/helpers/dom.helper';
-import {SubscriptionHelper, Subscriptions} from '../../shared/helpers/subscription.helper';
-import {ScreenStateService} from '../../shared/screen/screen-state.service';
-import { selectIsAuthorized } from '../../auth/auth.reducer';
+import { DomHelper } from '../../shared/helpers/dom.helper';
+import { SubscriptionHelper, Subscriptions} from '../../shared/helpers/subscription.helper';
+import { ScreenSlideState, ScreenStateService } from '../../shared/screen/screen-state.service';
+import { selectAuth, selectIsAuthorized, selectRefreshLoading, selectToken } from '../../auth/auth.reducer';
+import { IPaygatePopupState, PaygatePopupService } from '@app/modules/paygate/services/paygate-popup.service';
+import { PaygatePopupManagerService } from '@app/shared/services/paygate-popup-manager.service';
 
 @Component({
   selector: 'app-nav',
@@ -29,9 +42,23 @@ export class NavComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public isOpenSubNav = false;
 
+  private isMobile = false;
+
   isAuthorized$ = this.store$.pipe(
     select(selectIsAuthorized),
   );
+
+  menu = environmentMenu['mainMenu'];
+
+  token$ = this.store$.pipe(
+    select(selectToken),
+    map(t => t ? '?t=' + t : ''),
+    first(),
+  );
+
+  window = window;
+
+  @ViewChildren('mustBeFixed', {read: ElementRef}) mustBeFixed: QueryList<ElementRef>;
 
   constructor(
     private ngZone: NgZone,
@@ -40,17 +67,33 @@ export class NavComponent implements OnInit, AfterViewInit, OnDestroy {
     private elementRef: ElementRef<HTMLElement>,
     private cd: ChangeDetectorRef,
     private screenState: ScreenStateService,
+    private paygatePopupService: PaygatePopupService,
+    public paygatePopupManagerService: PaygatePopupManagerService
   ) {
   }
+
+  currentStep$ = this.paygatePopupService.state$.pipe(
+    map((state: IPaygatePopupState) => {
+      return state.currentStep;
+    }));
 
   ngOnInit() {
     this.subs.onMatchMobile = this.screenState.matchMediaMobile$
       .subscribe(matches => this.onMatchMediaMobile(matches));
 
     this.subs.isMainPage = this.router.events.subscribe((event) => {
-      window.scrollTo(0, 0);
       this.isMainPage = this.router.url === '/';
       this.cd.markForCheck();
+    });
+
+    this.subs.slideLeftBack = this.screenState.slideState$.subscribe((state: ScreenSlideState) => {
+      if (this.isOpenSubNav && state === ScreenSlideState.Normal) {
+        this.isOpenSubNav = false;
+      }
+    });
+
+    this.subs.isMobile = this.screenState.matchMediaMobile$.subscribe((isMobile) => {
+      this.isMobile = isMobile;
     });
   }
 
@@ -73,6 +116,9 @@ export class NavComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+
+    this.mustBeFixed.forEach(el => this.screenState.addFixedElement(el.nativeElement));
+
     this.isFixed = false;
     this.cd.detectChanges();
 
@@ -87,9 +133,9 @@ export class NavComponent implements OnInit, AfterViewInit, OnDestroy {
           map(() => this.getOffsetTop() <= 0),
           distinctUntilChanged()
         )
-        .subscribe(isFixed =>
+        .subscribe((isFixed) =>
           this.ngZone.run(() => {
-            this.isFixed = isFixed;
+            this.isFixed = this.isOpenSubNav ? this.isMobile : isFixed;
             this.cd.markForCheck();
           })
         );
@@ -99,19 +145,30 @@ export class NavComponent implements OnInit, AfterViewInit, OnDestroy {
   openMobileSubNav() {
     if (!this.isOpenSubNav) {
       this.isOpenSubNav = true;
-      this.screenState.slideLeft();
+      this.screenState.slideLeft().subscribe(() => {
+        if (this.isMobile) {
+          this.isFixed = true;
+        }
+        this.cd.markForCheck();
+      });
     }
   }
 
-  closeMobileSubNav() {
+  closeMobileSubNav(gtagParams?: any[]) {
     if (this.isOpenSubNav) {
       this.screenState.slideLeftBack()
-        .subscribe(() => this.isOpenSubNav = false);
+        .subscribe(() => {
+          this.isOpenSubNav = false;
+          this.isFixed = this.getOffsetTop() <= 0;
+          this.cd.markForCheck();
+        });
     }
+    window['dataLayerPush'](...gtagParams);
   }
 
   ngOnDestroy() {
     SubscriptionHelper.unsubscribe(this.subs);
+    this.mustBeFixed.forEach(el => this.screenState.removeFixedElement(el.nativeElement));
   }
 
   get isDevMode(): boolean {

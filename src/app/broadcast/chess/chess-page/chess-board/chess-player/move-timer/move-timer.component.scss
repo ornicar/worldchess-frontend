@@ -1,5 +1,5 @@
-@import '../../../../../../../html/css/variables';
-@import '../../../../../../../html/css/media';
+@import 'variables';
+@import 'media';
 
 :host {
   display: flex;
@@ -32,7 +32,7 @@
 
   span {
     position: absolute;
-    font: 400 9px/22px $gerbera-font;
+    font: 400 9px/17px $gerbera-font;
     color: $green;
     bottom: 100%;
     left: 50%;
@@ -94,5 +94,39 @@
   .move-time,
   .left-time {
     font: 500 12px/16px $gerbera-font;
+  }
+}
+
+:host-context(.chess-layout--switched) {
+  .move-time {
+    font: 400 12px/16px $gerbera-font;
+    min-width: 50px;
+    max-width: 50px;
+
+    span {
+      font: 400 7px/16px $gerbera-font;
+    }
+  }
+
+  .left-time {
+    font: 400 12px/16px $gerbera-font;
+  }
+}
+
+:host-context(wc-chess-page) {
+  .left-time {
+    @include height-650() {
+      font: 300 12px/16px $gerbera-font;
+      min-width: 40px;
+    }
+  }
+
+  .move-time {
+    @include height-650() {
+      padding: 4px;
+      font-size: 12px;
+      margin-right: 6px;
+      min-width: 50px;
+    }
   }
 }

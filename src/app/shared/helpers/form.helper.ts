@@ -1,5 +1,4 @@
-import {FormGroup} from '@angular/forms';
-import {ValidationErrors} from '@angular/forms/src/directives/validators';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 
 
 export interface ControlValidationError {

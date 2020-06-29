@@ -1,0 +1,86 @@
+<div class="board" #boardcontainer [class.board--align-right]="false" *ngIf="(gameSettings$ | async)">
+  <ng-container *ngIf="size$ | async as size">
+    <div class="board__wrapper"
+         [style.width.px]="size"
+         [style.height.px]="size"
+         [class.flipped]="boardIsFlipped$ | async">
+      <ul class="board__numbers" [style.fontSize.px]="size / 45"
+          [class.reverse]="(playerColor$ | async) === ChessColors.Black">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+      </ul>
+      <div *ngIf="(_gameInProgress$ | async) && ((isLastTour$ | async) || !(isResultShown$ | async))">
+      <div class="chat-game-button" *ngIf="(ready$ | async) && (getNewMessage$ | async)?.isFirst === false"  [class.chat-game-button--new]="(getNewMessage$ | async)?.isNew"
+      >
+        <a href="javascript:void(0)" (click)="showChat()" class="chat-game-button__btn">
+          <div class="chat-game-button__icon">
+            <svg-chat-game class="icon"></svg-chat-game>
+          </div>
+        </a>
+      </div>
+      </div>
+
+        <div class="menu-game-button" *ngIf="!(ready$ | async) && !isTournamentBoard && !hideMenu">
+          <a href="javascript:void(0)" (click)="settings()" class="menu-game-button__btn">
+            <div class="menu-game-buttons__icon">
+              <svg-settings class="icon"></svg-settings>
+            </div>
+          </a>
+        </div>
+
+      <ul class="board__letters" [style.fontSize.px]="size / 45"
+          [class.reverse]="(playerColor$ | async) === ChessColors.Black">
+        <li>a</li>
+        <li>b</li>
+        <li>c</li>
+        <li>d</li>
+        <li>e</li>
+        <li>f</li>
+        <li>g</li>
+        <li>h</li>
+      </ul>
+      <wc-chessground
+        class="birman-chesspieces birman-gray default whole layout-top"
+        tabindex="0"
+        [class.editable]="selectedMove$ | async"
+        [class.world-chess-board]="(gameSettings$ | async).board_style === 'world_chess_board'"
+        [class.textbook]="(gameSettings$ | async).board_style === 'textbook'"
+        [class.white-king-slay]="(_checkMateColor$ | async) === ChessColors.White"
+        [class.black-king-slay]="(_checkMateColor$ | async) === ChessColors.Black"
+        [orientation]="boardOrientation$ | async"
+        [canMove]="!(readOnly$ | async)"
+        [canCreateMove]="true"
+        [position]="lastMove$ | async"
+        [selectedMove]="selectedMove$ | async"
+        (positionChange)="move($event)"
+        (captured)="onCaptureFigures($event)"
+        (forceChange)="setForce($event)"
+        (isCheck)="setCheck($event)"
+        (isCheckmate)="setCheckmate($event)"
+        (isCheckmateReview)="setCheckmateReview($event)"
+        (promotionActive)="promotionActivated($event)"
+        [redraw]="redraw$ | async"
+        [reviewMode]="isReviewModeActive$ | async"
+        [boardIsFlipped]="boardIsFlipped$ | async"
+        [soundEnabled]="(gameSettings$ | async).is_sound_enabled"
+        [legalMove]="(gameSettings$ | async).board_legal_move_style === 'show_with_dots' ? true : false"
+        [lastMove]="(gameSettings$ | async).board_last_move_style"
+      ></wc-chessground>
+      <div class="flip-lines">
+        <svg-flip-line class="flip-line flip-line--top"></svg-flip-line>
+        <svg-flip-line class="flip-line flip-line--right"></svg-flip-line>
+        <svg-flip-line class="flip-line flip-line--bottom"></svg-flip-line>
+        <svg-flip-line class="flip-line flip-line--left"></svg-flip-line>
+      </div>
+      <tournament-countdown class="board__timer" *ngIf="!(_gameReady$ | async) && !(isResultShown$ | async) && isTournamentBoard"
+        [timer]="this.countdownTimer$ | async">
+      </tournament-countdown>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,490 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.settings {
+  display: flex;
+  flex-direction: row;
+  padding: 27px 20px 20px;
+  height: 100%;
+  background-color: #000;
+  overflow: hidden;
+  @include birman-media {
+    padding: 20px 10px;
+    width: 100%;
+
+  }
+}
+
+.settings__block {
+  width: 100%;
+}
+
+.settings__table {
+  ::ng-deep {
+    .settings-table__content,
+    .settings-table__cell,
+    .settings-table__title {
+      width: 53px;
+
+      @include birman-media {
+        width: 100%;
+      }
+    }
+
+    .settings-table__cell:first-child {
+      width: 105px !important;
+
+      @include birman-media {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+.settings__buttons {
+  display: block;
+  ::ng-deep {
+    .toggle-buttons-game {
+      width: 100%;
+    }
+
+    .toggle-buttons-game__elem {
+      width: calc(100% / 3);
+      flex: 1;
+    }
+  }
+}
+
+.settings__selector {
+  margin-bottom: 48px;
+}
+
+.settings__message {
+  display: flex;
+  background-color: $yellow-new;
+  border-radius: 3px;
+  padding: 10px;
+  font: 300 22px/27px $gerbera-font;
+}
+
+.settings__form {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  @include birman-media {
+    padding-bottom: 0;
+  }
+}
+
+.settings__head {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  flex: 0 0 auto;
+  color: #fff;
+  fill: #fff;
+}
+
+.text-no-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+
+  @include birman-media {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+}
+
+.logo-no-wrap {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.logo-fide-wrap {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  margin-right: 15px;
+}
+
+.settings__title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font: 300 29px/30px $gerbera-font;
+  @include birman-media {
+    flex-wrap: wrap;
+    font: 300 30px/42px $gerbera-font;
+  }
+}
+
+.logo-fide {
+  position: relative;
+  top: 2px;
+  width: 44px;
+  height: 35px;
+  margin-right: 10px;
+  margin-left: 0;
+  flex: 0 0 auto;
+}
+
+.logo {
+  display: block;
+  width: 31px;
+  height: 35px;
+  margin-right: 10px;
+  flex: 0 0 auto;
+}
+
+.settings__wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  margin-bottom: auto;
+}
+
+.settings__body {
+  display: flex;
+  flex: 1 0 auto;
+}
+
+.settings__body-content {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.settings__board {
+  padding-left: 30px;
+  @include birman-media {
+    display: none;
+  }
+
+  ::ng-deep {
+    .board__numbers,
+    .board__letters {
+      display: none;
+    }
+  }
+}
+
+.settings__body-row {
+  margin-bottom: 20px;
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: 465px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @include birman-media {
+    max-width: 100%;
+  }
+
+  &--max-width {
+    max-width: 385px;
+
+    @include birman-media {
+      max-width: 100%;
+    }
+  }
+
+  &--mb-40 {
+    margin-bottom: 40px;
+  }
+
+  &--mb-36 {
+    margin-bottom: 36px;
+  }
+
+  &--mb-10 {
+    margin-bottom: 10px;
+  }
+
+  &--mb-9 {
+    margin-bottom: 9px;
+  }
+
+  &--min-height {
+    min-height: 192px;
+  }
+}
+
+.settings__text-title {
+  font: 300 22px/30px $gerbera-font;
+  color: #fff;
+  margin-bottom: 3px;
+  letter-spacing: 0.1px;
+}
+
+.invite-link {
+  display: flex;
+  background-color: $yellow-new;
+  border-radius: 3px;
+  padding: 5px;
+
+}
+
+.invite-link__input {
+  font: 300 22px/22px $gerbera-font;
+  background-color: transparent;
+  border: 0;
+  flex: 1 1 auto;
+}
+
+.invite-link__btn {
+  fill: #000;
+  background-color: transparent;
+  border: 0;
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+
+
+.settings__text {
+  font: 300 15px/20px $gerbera-font;
+  color: #fff;
+  letter-spacing: 0.1px;
+
+  br {
+    @include birman-media {
+      display: none;
+    }
+  }
+}
+
+.buttons-in-line {
+  display: flex;
+  align-items: flex-start;
+  margin: 0 -5px;
+
+  ::ng-deep {
+    wc-btn-with-loading {
+      .btn-new {
+        min-width: 200px;
+        padding: 2px 3px 4px;
+      }
+    }
+  }
+  @include tablets {
+    flex-wrap: wrap;
+  }
+}
+
+.buttons-in-line__col {
+  padding: 0 5px;
+
+  ::ng-deep {
+    wc-btn-with-loading {
+      width: 100%;
+
+      .btn-new {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  }
+  @include tablets {
+    flex: 1;
+  }
+
+  &:first-child {
+    @include tablets {
+      flex: 0 0 100%;
+      margin-bottom: 20px;
+    }
+
+  }
+}
+
+.games-time {
+  color: #fff;
+}
+
+.games-time__title {
+  font: 300 15px/20px $gerbera-font;
+
+  margin-bottom: 5px;
+}
+
+.games-time__edit {
+  font: 300 15px/20px $gerbera-font;
+}
+
+.games-time__dot {
+  margin: 0 6px 0 5px;
+}
+
+.games-time__btn {
+  display: inline-flex;
+  align-items: center;
+  fill: $brown-2;
+  color: $brown-2;
+
+  .icon {
+    position: relative;
+    top: 1px;
+    margin-left: 5px;
+    width: 8px;
+    height: 5px;
+  }
+}
+
+.settings__sublights {
+  display: none; // временно убрали подсветку
+}
+
+.settings__sublight-1 {
+  position: absolute;
+  left: -15.92%;
+  top: 48.78%;
+  background: rgba(182, 199, 178, 0.3);
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(250px);
+}
+
+.settings__sublight-2 {
+  position: absolute;
+  left: 18.75%;
+  top: 7.33%;
+  background: rgba(163, 156, 140, 0.3);
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(250px);
+}
+
+.settings__sublight-3 {
+  position: absolute;
+  left: 54.39%;
+  top: 22.11%;
+  background: rgba(190, 161, 151, 0.3);
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(250px);
+}
+
+.settings__button-settings {
+  display: none;
+  fill: #fff;
+  color: #fff;
+  margin-bottom: 10px;
+
+  @include birman-media {
+    display: block;
+  }
+
+  &:hover {
+    fill: $brown-2;
+    color: $brown-2;
+
+    .settings__button-settings-text {
+      color: $brown-2;
+    }
+  }
+}
+
+.settings__button-settings-btn {
+  display: flex;
+  align-items: center;
+}
+
+.settings__button-settings-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.settings__button-settings-text {
+  position: relative;
+  top: -2px;
+  font: 300 12px/12px $gerbera-font;
+  color: #fff;
+}
+
+.settings__footer {
+  color: #fff;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  flex: 0 0 auto;
+
+  @include birman-media {
+    padding-bottom: 75px;
+  }
+}
+
+.searching-mobile {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #000;
+  z-index: z-index(modal);
+  padding: 10px;
+
+  position: fixed;
+  top: 0px;
+  padding-top: 69px;
+  height: 100%;
+  // padding-bottom: 30px; - отступ должен быть типа 10 пикселей снизу
+}
+
+.searching-mobile__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+}
+
+.searching-mobile__button {
+  flex: 0 0 auto;
+
+  wc-btn-with-loading {
+    width: 100%;
+
+    ::ng-deep {
+      .btn-new {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+.searching-mobile__loader {
+  width: 57px;
+  height: 57px;
+  opacity: 0.25;
+  margin-bottom: 15px;
+}
+
+.searching-mobile__text {
+  font: 300 30px/38px $gerbera-font;
+  color: #fff;
+  text-align: center;
+}

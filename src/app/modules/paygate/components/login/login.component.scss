@@ -1,5 +1,5 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
+@import 'variables';
+@import 'media';
 
 .login {
   display: flex;
@@ -7,7 +7,7 @@
   position: relative;
   height: 100%;
   padding: 25px;
-  background-color: #525252;
+  background-color: $gray-bg-new;
 }
 
 .login__close {
@@ -129,6 +129,7 @@
   border-radius: 3px;
   border: 0;
   font: 300 22px/22px $gerbera-font;
+  cursor: pointer;
 }
 
 .login__text {

@@ -87,11 +87,13 @@ export class WidgetPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   async onChangeNavigation(item: ISelectedModel) {
-
-    window['gtag']('event', 'navigation', {
-      event_category: 'widget',
-      event_label: this.tournament.title,
-    });
+    const gtag = window['gtag'];
+    if (gtag) {
+      gtag('event', 'navigation', {
+        event_category: 'widget',
+        event_label: this.tournament.title,
+      });
+    }
 
     switch (item.type) {
 

@@ -1,0 +1,159 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  background: $grey-dark-new;
+  border-radius: 3px;
+  padding: 8px 10px;
+  height: 460px;
+  width: 100%;
+  .header {
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    align-items: center;
+    margin-bottom: 14px;
+    height: 53px; 
+    @include birman-media {
+      margin-bottom: 20px;
+    }
+    .title {
+      flex: 1;
+      font: 300 22px/25px $gerbera-font;
+      max-width: 300px;
+
+      @include birman-media {
+        font: 300 18px/24px $gerbera-font;
+        max-width: 280px;
+      }
+    }
+    .logo {
+       fill: #FFFFFF;
+       width: 65px;
+       position: relative;
+       top: 5px;
+
+       @include birman-media {
+         width: 52px;
+         top: 3px;
+       }
+    }
+  }
+
+  .body{
+      width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .avatar {
+      width: 193px;
+      height: 193px;
+      overflow: hidden;
+      border-radius:50%;
+      margin-bottom: 3px;
+    }
+    .avatar__img {
+      width: 100%;
+      display: block;
+    }
+    .player-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .player-name {
+        color:$brown-2;
+        font: 400 22px/30px $gerbera-font;
+        min-height: 30px;
+      }
+      .player-details {
+        color:#FFF;
+        opacity: 0.4;
+        font: 300 15px/15px $gerbera-font;
+        margin-bottom: 14px;
+        min-height: 15px;
+        @include birman-media {
+          margin-bottom: 13px;
+        }
+      }
+    }
+  }
+  .stat {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+
+
+    @include birman-media {
+      flex: 1 0 auto;
+      height: 108px;
+    }
+    .col {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width:calc(50% - 20px);
+      flex:1 1 auto;
+      margin-right: 20px;
+      padding: 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @include birman-media {
+        margin-right: 10px;
+        padding: 0;
+      }
+    }
+    .item {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      .item-title {
+        color:#FFFFFF;
+        font: 300 15px/24px $gerbera-font;
+        margin-right: 4px;
+      }
+      .item-spaces {
+        flex: 1;
+        overflow: hidden;
+      }
+      .item-value {
+        font: 300 30px/36px $gerbera-font;
+        font-feature-settings: "tnum" 1;
+      }
+
+      .item-value-stat {
+        min-width: 37px;
+        text-align: right;
+        margin-left: 5px;
+        font: 300 15px/24px $gerbera-font;
+        font-feature-settings: "tnum" 1;
+      }
+      .item-value-percentage {
+        color: #FFFFFF;
+        opacity: 0.4;
+        font: 300 15px/24px $gerbera-font;
+        font-feature-settings: "tnum" 1;
+      }
+    }
+    .item-spaces {
+       border-bottom-color: #FFFFFF;
+       opacity: 0.4;
+
+       &:before {
+         white-space: pre;
+         font-size: 12px;
+         content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+       };
+
+    }
+  }
+
+  .desctop {
+    display: inline-block;
+    @include birman-media {
+      display: none;
+    }
+  }
+}

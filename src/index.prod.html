@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>World Chess - Official FIDE Broadcasting</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <style type="text/css">
+    @keyframes rotation {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .site-preloader {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1 1 auto;
+    }
+    .site-preloader .icon {
+      animation: rotation 1s linear infinite;
+    }
+  </style>
+  <script>
+    function dataLayerPush(event, eventCategory, eventAction, eventLabel, eventContent, eventContext) {
+      if (window['dataLayer']) {
+        window['dataLayer'].push({
+          event, eventCategory, eventAction, eventLabel, eventContent, eventContext
+        });
+      }
+    }
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script', 'dataLayer','GTM-P2G4788');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Asayer Tracking Code for arena.myfide.net -->
+  <script>
+    (function(A,s,a,y,e,r){
+      r=window.asayer=[s,r,e,[y-1]];
+      s=document.createElement('script');s.src=a;s.async=!A;
+      document.getElementsByTagName('head')[0].appendChild(s);
+      r.start=function(v){r.push([0])};
+      r.stop=function(v){r.push([1])};
+      r.userID=function(id){r.push([2,id])};
+      r.userAnonymousID=function(id){r.push([3,id])};
+      r.metadata=function(k,v){r.push([4,k,v])};
+      r.event=function(k,p){r.push([5,k,p])};
+      r.active=function(){return false};
+      r.sessionID=function(){};
+    })(0,5869596968111120,'//static.asayer.io/tracker.js',1,29);
+  </script>
+  <script>var w=window;var p = w.location.protocol;if(p.indexOf("http") < 0){p = "http"+":";}var d = document;var f = d.getElementsByTagName('script')[0],s = d.createElement('script');s.type = 'text/javascript'; s.async = false; if (s.readyState){s.onreadystatechange = function(){if (s.readyState=="loaded"||s.readyState == "complete"){s.onreadystatechange = null;try{loadwaprops("24a24198012aefe5186d36268fdd646a8","2e2eb142bb5f2b5c98be569e85fc87b58","2621b5d267503630977e7398f90e71f7eb84e975421c17899","2b7c3f7945f3c51afdb4e63de90124b746a73058460b2a736","0.0");}catch(e){}}};}else {s.onload = function(){try{loadwaprops("24a24198012aefe5186d36268fdd646a8","2e2eb142bb5f2b5c98be569e85fc87b58","2621b5d267503630977e7398f90e71f7eb84e975421c17899","2b7c3f7945f3c51afdb4e63de90124b746a73058460b2a736","0.0");}catch(e){}};};s.src =p+"//mh.zoho.eu/hub/js/WebsiteAutomation.js";f.parentNode.insertBefore(s, f);</script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2G4788"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <app-root>
+    <div class="site-preloader">
+      <svg class="icon" style="width: 52px; height: 52px; fill: #D2D2D2;">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52 57">
+          <path d="M.741 14.024v28.288l25.77 14.72 24.748-14.72V14.024L26.512.57z" fill-rule="evenodd" />
+        </svg>
+      </svg>
+      <svg-preloader></svg-preloader>
+    </div>
+  </app-root>
+</body>
+</html>

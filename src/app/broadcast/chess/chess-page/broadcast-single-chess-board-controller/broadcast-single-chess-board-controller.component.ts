@@ -3,10 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { Color } from 'chessground/types';
 import { BehaviorSubject, combineLatest, Observable, of, zip } from 'rxjs';
 import { map, shareReplay, switchMap, take } from 'rxjs/operators';
-import { IProfile } from '../../../../auth/auth.model';
-import { selectProfile } from '../../../../auth/auth.reducer';
 import * as fromRoot from '../../../../reducers';
-import { OnChangesInputObservable, OnChangesObservable } from '../../../../shared/decorators/observable-input';
+import { OnChangesInputObservable, OnChangesObservable } from '@app/shared/decorators/observable-input';
 import { BoardStatus, IBoard } from '../../../core/board/board.model';
 import { selectBoard } from '../../../core/board/board.reducer';
 import { IMove, IMovePosition, IPredictPosition } from '../../../move/move.model';
@@ -16,9 +14,11 @@ import { IVariationMove } from '../../../variation-move/variation-move.model';
 import { selectSelectedVariationMoveOfBoard, selectVariationMovesIsActive } from '../../../variation-move/variation-move.reducer';
 import { ChessBoardViewMode } from '../chess-board/chess-board.component';
 import { PaygatePopupManagerService } from '@app/shared/services/paygate-popup-manager.service';
-import { BroadcastType, Tournament } from '@app/broadcast/core/tournament/tournament.model';
-import { selectUserPurchase } from '@app/purchases/user-purchases/user-purchases.reducer';
-import { IUserPurchase } from '@app/purchases/user-purchases/user-purchases.model';
+import { Tournament } from '@app/broadcast/core/tournament/tournament.model';
+import { IAccount } from '@app/account/account-store/account.model';
+import * as fromAccount from '@app/account/account-store/account.reducer';
+import { selectActivePlanSubscription } from '@app/purchases/subscriptions/subscriptions.reducer';
+import { ISubscription } from '@app/purchases/subscriptions/subscriptions.model';
 
 @Component({
   selector: 'wc-broadcast-single-chess-board-controller',
@@ -46,6 +46,9 @@ export class BroadcastSingleChessBoardControllerComponent implements OnInit, OnC
   @OnChangesInputObservable()
   tournament$ = new BehaviorSubject<Tournament>(this.tournament);
 
+  @Input()
+  embedded = false;
+
   private selectBoard = selectBoard();
   private selectSelectedMove = selectSelectedMove();
   private selectSelectedVariationMoveOfBoard = selectSelectedVariationMoveOfBoard();
@@ -69,12 +72,16 @@ export class BroadcastSingleChessBoardControllerComponent implements OnInit, OnC
     shareReplay(1)
   );
 
-  private profile$: Observable<IProfile> = this.store$.pipe(
-    select(selectProfile)
+  private account$: Observable<IAccount> = this.store$.pipe(
+    select(fromAccount.selectMyAccount),
   );
 
-  private isPremium$: Observable<boolean> = this.profile$.pipe(
-    map((profile) => profile && profile.premium),
+  private activeSubscription$: Observable<ISubscription> = this.store$.pipe(
+    select(selectActivePlanSubscription),
+  );
+
+  private isPremium$: Observable<boolean> = combineLatest([this.account$, this.activeSubscription$]).pipe(
+    map(([account, subscription]) => !!account && !!subscription),
     shareReplay(1)
   );
 
@@ -87,10 +94,7 @@ export class BroadcastSingleChessBoardControllerComponent implements OnInit, OnC
   );
 
   private selectedPredictMove$: Observable<IPredictPosition> = this.boardId$.pipe(
-    switchMap(boardId => boardId
-      ? this.store$.pipe(select(selectedPredictPosition))
-      : of(null)
-    ),
+    switchMap(() => this.store$.pipe(select(selectedPredictPosition))),
     shareReplay(1)
   );
 
@@ -109,13 +113,13 @@ export class BroadcastSingleChessBoardControllerComponent implements OnInit, OnC
 
   public canMove$: Observable<boolean> = zip(this.isLoading$, this.isNotExpected$).pipe(
     // When all moves is loaded.
-    map(([isLoading, isNotExpected]) => !isLoading && isNotExpected),
+    map(([isLoading, isNotExpected]) => !isLoading && isNotExpected && !this.embedded),
     // When the my game mode is active or has selected move.
     switchMap(canMove => canMove
       ? this.myGameIsActive$.pipe(
         switchMap(myGameIsActive => myGameIsActive
           ? of(canMove)
-          : combineLatest(this.selectedMove$, this.selectedPredictMove$).pipe(
+          : combineLatest([this.selectedMove$, this.selectedPredictMove$]).pipe(
             map(([selectedMove, selectedPredictMove]) => Boolean(!selectedPredictMove && selectedMove))
           )
         )
@@ -123,10 +127,6 @@ export class BroadcastSingleChessBoardControllerComponent implements OnInit, OnC
       : of(canMove)
     ),
     shareReplay(1)
-  );
-
-  public userPurchase$: Observable<IUserPurchase> = this.store$.pipe(
-    select(selectUserPurchase),
   );
 
   public canCompleteMove$ = this.canMove$.pipe(
@@ -137,25 +137,11 @@ export class BroadcastSingleChessBoardControllerComponent implements OnInit, OnC
     shareReplay(1)
   );
 
-  public position$: Observable<IMovePosition> = zip(this.isLoading$, this.isNotExpected$).pipe(
-    // When all moves is loaded.
-    switchMap(([isLoading, isNotExpected]) => !isLoading && isNotExpected
-      ? this.myGameIsActive$.pipe(
-        // Load variation move
-        switchMap(myGameIsActive => myGameIsActive
-          ? this.selectedVariationMove$
-          : of(null)
-        ),
-        switchMap(variationMove => variationMove
-          ? of(variationMove)
-          : combineLatest(this.selectedMove$, this.selectedPredictMove$).pipe(
-            map(([selectedMove, selectedPredictMove]) => selectedPredictMove || selectedMove)
-          )
-        )
-      )
-      : of(null)
-    ),
-    shareReplay(1)
+  public position$: Observable<IMovePosition> = this.myGameIsActive$.pipe(
+        switchMap(myGameIsActive => myGameIsActive ? this.selectedVariationMove$ : of(null)),
+        switchMap(variationMove => variationMove ? of(variationMove) : combineLatest([this.selectedMove$, this.selectedPredictMove$]).pipe(
+          map(([selectedMove, selectedPredictMove]) => selectedPredictMove || selectedMove || null),
+        )),
   );
 
   public moveScore$: Observable<number> = zip(this.isLoading$, this.isNotExpected$).pipe(
@@ -200,7 +186,6 @@ export class BroadcastSingleChessBoardControllerComponent implements OnInit, OnC
   }
 
   onMoveCancelled() {
-
     this.isPremium$
       .pipe(take(1))
       .subscribe(isPremium => {
@@ -209,5 +194,4 @@ export class BroadcastSingleChessBoardControllerComponent implements OnInit, OnC
         }
       });
   }
-
 }

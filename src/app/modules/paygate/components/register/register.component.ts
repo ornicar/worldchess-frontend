@@ -1,102 +1,167 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { map, merge, finalize, take } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
+import {
+  map,
+  take,
+  takeUntil,
+  filter,
+  withLatestFrom,
+  catchError,
+  mergeMap,
+  tap,
+  delay,
+} from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { PaygatePopupService } from '../../services/paygate-popup.service';
-import { AuthResourceService } from '../../../../auth/auth-resource.service';
+import { AuthResourceService } from '@app/auth/auth-resource.service';
 import * as fromRoot from '../../../../reducers';
-import { AuthSetTokenDirty } from '../../../../auth/auth.actions';
+import { AuthSetTokenDirty } from '@app/auth/auth.actions';
+import { PaygateFormControl } from '@app/modules/paygate/_shared/paygate-form-control.class';
+import { PaygateForm } from '@app/modules/paygate/_shared/paygate-form.class';
+import { PaygateService } from '@app/modules/paygate/services/paygate.service';
 
+const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 @Component({
   selector: 'wc-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
-  private registerError$ = new BehaviorSubject<{ [key: string]: string[] }>({});
+export class RegisterComponent implements OnDestroy {
 
-  form = new FormGroup({
-    full_name: new FormControl('', [
-      Validators.required,
-    ]),
-    email: new FormControl('', [
-      Validators.email,
-      Validators.required,
-    ]),
+  popupState$ = this.paygatePopupService.state$;
+
+  proSelected$ = this.paygatePopupService.proSelected$;
+  proProduct$ = this.paygatePopupService.proProduct$;
+  fideSelected$ = this.paygatePopupService.fideSelected$;
+  fideProduct$ = this.paygatePopupService.fideProduct$;
+
+  form = new PaygateForm({
+    email: new PaygateFormControl(
+      this.paygatePopupService.email$.value,
+      [
+        Validators.email,
+        Validators.required,
+        Validators.pattern(emailRegex),
+      ],
+      ),
   });
 
-  formErrors$ = this.form.valueChanges.pipe(
-    merge(this.registerError$),
-    map(() => {
-      const responseErrors = this.registerError$.getValue();
-      const errors = {};
-      Object.keys(this.form.controls).forEach((control) => {
-        if (this.form.controls[control].dirty) {
-          const controlErrors = {
-            ...this.form.controls[control].errors,
-            ...(responseErrors[control] && responseErrors[control].length ? { response: responseErrors[control][0] } : {})
-          };
-          errors[control] = controlErrors;
-        }
-      });
-      return errors;
-    }),
+  showProFeatures = false;
+  showFideFeatures = false;
+
+  resultPrice$ = combineLatest([this.proSelected$, this.proProduct$, this.fideSelected$, this.fideProduct$]).pipe(
+    map(([proSelected, proProduct, fideSelected, fideProduct]) => {
+      return (proSelected && proProduct ? proProduct.amount : 0) + (fideSelected && fideProduct ? fideProduct.amount : 0 );
+    })
   );
 
   loading$ = new BehaviorSubject<boolean>(false);
+  destroy$ = new Subject();
 
-  product$ = this.paygatePopupService.products$;
+  constructor(
+    private paygatePopupService: PaygatePopupService,
+    private paygateService: PaygateService,
+    private store$: Store<fromRoot.State>,
+    private authResource: AuthResourceService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.paygatePopupService.setState({ currentStep: 'register' });
+    this.form.statusChanges.pipe(
+      takeUntil(this.destroy$),
+      withLatestFrom(this.loading$),
+      map(([status, loading]) => {
+        if (status === 'PENDING' && !loading) {
+          return true;
+        } else if (status !== 'PENDING' && loading) {
+          return false;
+        } else {
+          return null;
+        }
+      }),
+      filter(state => state !== null),
+    ).subscribe(this.loading$);
 
-  constructor(private paygatePopupService: PaygatePopupService,
-              private store$: Store<fromRoot.State>,
-              private authResource: AuthResourceService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              ) { }
-
-  ngOnInit() {
-    this.activatedRoute.queryParams.pipe(take(1)).subscribe((queryParams) => {
-      if (!this.activatedRoute.snapshot.fragment) {
-        this.router.navigate([], {fragment: 'basic', queryParams });
-      }
+    this.form.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((formValue) => {
+      this.paygatePopupService.email$.next(formValue.email);
     });
-  }
 
-  submit() {
-    Object.values(this.form.controls).forEach(control => control.markAsDirty());
-    this.registerError$.next({});
-
-    if (this.form.valid) {
-      const { full_name, email} = this.form.value;
-      this.loading$.next(true);
-      this.authResource.signUpCode({ full_name, email }).pipe(
-        finalize(() => this.loading$.next(false)),
-      ).subscribe(({ token }) => {
-        this.paygatePopupService.email$.next(email);
+    this.form.submit$.pipe(
+      tap(() => this.loading$.next(true)),
+      map(() => this.form.value.email),
+      withLatestFrom(this.fideSelected$, this.proSelected$),
+      mergeMap(([email, fideSelected, proSelected]) => {
+        return this.authResource.checkEmail(email).pipe(
+          map(() => false),
+          catchError(response => {
+            if (response.status === 409) {
+              this.form.controls['email'].setErrors({exists: true});
+              return of(false);
+            } else {
+              window['dataLayerPush']('wchReg', 'Become a member', 'Become a member', this.paygateService.calcTotalForGtag(), '1', null);
+              this.paygatePopupService.email$.next(email);
+              return this.authResource.signUpCode({
+                email,
+                is_paid: fideSelected || proSelected
+              }).pipe(map(({token}) => token));
+            }
+          }),
+        );
+      }),
+      filter(v => !!v),
+      tap((token: string) => {
         this.store$.dispatch(new AuthSetTokenDirty({ token }));
+        this.paygatePopupService.setState({
+          token,
+          email: this.paygatePopupService.email$.value,
+        });
         this.paygatePopupService.navigateNextStep('register');
-      }, ({ error }) => {
-        this.registerError$.next(error);
-      });
-    } else {
-      this.registerError$.next({
-        'form': [
-          'Invalid data',
-        ],
-      });
-    }
-  }
-
-  closePopup() {
-    this.paygatePopupService.closePopup();
+      }),
+      delay(1000),
+    ).subscribe(
+      () => {
+        this.loading$.next(false);
+      },
+      (error) => {
+        console.warn(error);
+        this.form.controls['email'].setErrors({ response: true });
+        this.loading$.next(false);
+      },
+    );
   }
 
   goToLogin() {
     this.activatedRoute.queryParams.pipe(take(1)).subscribe((queryParams) => {
       this.router.navigate(['', { outlets: { p: ['paygate', 'login'] } }], { queryParams });
     });
+    window['dataLayerPush']('wchReg', 'Become a member', 'popup buttons', 'Sing in', null, null);
+  }
+
+  onProSelectionChanged(e) {
+    this.paygatePopupService.setState({ proSelected: e.target.checked });
+    window['dataLayerPush']('wchReg', 'Become a member', 'popup buttons', 'Access to all video streams', null, null);
+  }
+
+  onFideSelectionChanged(e) {
+    this.paygatePopupService.setState({ fideSelected: e.target.checked });
+    window['dataLayerPush']('wchReg', 'Become a member', 'popup buttons', 'FIDE&nbsp;ID Online rating', null, null);
+  }
+
+  toggleProFeatures() {
+    this.showProFeatures = !this.showProFeatures;
+  }
+
+  toggleFideFeatures() {
+    this.showFideFeatures = !this.showFideFeatures;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

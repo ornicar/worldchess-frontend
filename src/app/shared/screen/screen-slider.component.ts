@@ -6,7 +6,7 @@ import {ScreenSlideState, ScreenStateService} from './screen-state.service';
 @Component({
   selector: 'wc-screen-slider',
   template: `<ng-content></ng-content>`,
-  styles: [`:host { display: block; }`],
+  styles: [`:host { display: flex; flex-direction: column; flex: 1 1 auto;}`],
   animations: [
     trigger('slide', [
       state(ScreenSlideState.Normal, style({ transform: 'none' })),

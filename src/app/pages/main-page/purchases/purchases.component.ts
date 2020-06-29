@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { selectProfile } from '../../../auth/auth.reducer';
-import * as forRoot from '../../../reducers/index';
-import { UserPurchasesService } from '../../../purchases/user-purchases/user-purchases.service';
-import { selectMainSelling } from '../../../purchases/selling/selling.reducer';
-import { IMainSelling } from '../../../purchases/selling/selling.model';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { IPlan } from '../../../purchases/plan/plan.model';
+import * as forRoot from '../../../reducers/index';
+import { UserPurchasesService } from '@app/purchases/user-purchases/user-purchases.service';
+import { selectMainSelling } from '@app/purchases/selling/selling.reducer';
+import { IMainSelling } from '@app/purchases/selling/selling.model';
+import { IPlan } from '@app/purchases/plan/plan.model';
 import { IProductWithExpand } from '@app/purchases/product/product.model';
 import { PaygatePopupManagerService } from '@app/shared/services/paygate-popup-manager.service';
+
 
 @Component({
   selector: 'wc-purchases-banner',
@@ -22,12 +22,6 @@ export class PurchasesComponent implements OnInit {
     private userPurchases: UserPurchasesService,
     private paygatePopupManagerService: PaygatePopupManagerService) {
   }
-
-  userPurchase$ = this.userPurchases.userPurchase$;
-
-  profile$ = this.store$.pipe(
-    select(selectProfile)
-  );
 
   availableSelling$: Observable<IMainSelling> = this.store$.pipe(
     select(selectMainSelling)

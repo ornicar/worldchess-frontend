@@ -63,7 +63,6 @@
 .cg-board square.selected {
   background-color: rgba(20, 85, 30, 0.5);
 }
-
 .cg-board square.check {
   background: radial-gradient(ellipse at center, rgba(255, 0, 0, 1) 0%, rgba(231, 0, 0, 1) 25%, rgba(169, 0, 0, 0) 89%, rgba(158, 0, 0, 0) 100%);
 }
@@ -181,4 +180,50 @@
 
 .cg-board-wrap coords.ranks coord {
   transform: translateY(39%);
+}
+
+.birman-chesspieces .cg-board square.selected {
+  background-color: #FF9E58;
+}
+
+.birman-chesspieces .cg-board square.last-move {
+  background-color: #9BCFFF;
+  opacity: 0.2;
+}
+
+.birman-chesspieces .cg-board square.last-move.move-dest {
+  opacity: 1;
+}
+
+.birman-chesspieces .cg-board square.move-dest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  z-index: 100;
+}
+
+.birman-chesspieces .cg-board square.check  {
+  background: #FC594F;
+}
+
+.birman-chesspieces.white-king-slay .cg-board piece.white.king,
+.birman-chesspieces.black-king-slay .cg-board piece.black.king {
+  transition: margin-left 0s 1s;
+  margin-left: 4%;
+}
+
+.birman-chesspieces.white-king-slay .cg-board piece.white.king:before,
+.birman-chesspieces.black-king-slay .cg-board piece.black.king:before {
+  transition: transform 0s 1s;
+  transform: rotate(60deg);
+}
+
+
+.birman-chesspieces .cg-board square.move-dest:after {
+  content: '';
+    background-color: #fff;
+    width: 7%;
+    height: 7%;
+    border-radius: 50%;
 }

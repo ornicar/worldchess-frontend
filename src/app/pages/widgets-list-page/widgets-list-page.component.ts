@@ -23,7 +23,7 @@ export class WidgetsListPageComponent implements OnInit, OnDestroy {
   public widgetsList: IWidget[] = [];
   public selectedWidget: IWidget = null;
 
-  public mainUrl = environment.backendUrl;
+  public mainUrl = environment.applicationUrl;
 
   constructor(
     private store$: Store<fromRoot.State>,

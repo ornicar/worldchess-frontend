@@ -1,0 +1,77 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  width: 100%;
+}
+
+.phones {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  max-width: 857px;
+  margin: 0 auto;
+  overflow: hidden;
+
+  @include birman-media {
+    height: 230px;
+    max-width: 450px;
+  }
+}
+
+.phone {
+  position: absolute;
+  bottom: 0;
+  width: 285px;
+
+  @include birman-media {
+    width: 157px;
+    bottom: -12px;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.phone-1 {
+  left: 5%;
+}
+
+.phone-2 {
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: z-index(base);
+}
+
+.phone-3 {
+  right: 5%;
+}
+
+.phones__wrap {
+  display: none;
+}
+
+
+/*--------------локализация-------------*/
+
+.lang-en {
+  .phones__wrap--lang-en {
+    display: block;
+  }
+
+  .phones__wrap--lang-ru {
+    display: none;
+  }
+}
+
+.lang-ru {
+  .phones__wrap--lang-en {
+    display: none;
+  }
+
+  .phones__wrap--lang-ru {
+    display: block;
+  }
+}

@@ -1,11 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { PaygatePopupService } from '../../../services/paygate-popup.service';
 import { ISpecialPlanProduct } from '../../../models';
-import { Observable } from 'rxjs';
-import { ISubscription } from '@app/purchases/subscriptions/subscriptions.model';
-import { Store, select } from '@ngrx/store';
-import * as fromSubscription from '../../../../../purchases/subscriptions/subscriptions.reducer';
+import { environment } from '../../../../../../environments/environment';
+
+const PRO_PLAN = environment.pro_plan_stripe_id;
 
 @Component({
   selector: 'wc-pro',
@@ -15,10 +14,12 @@ import * as fromSubscription from '../../../../../purchases/subscriptions/subscr
 export class ProComponent {
   proPrice$ = this.paygatePopupSertvice.products$.pipe(
     map((products: ISpecialPlanProduct[]) => {
-      const proProduct = products ? products.find(p => p.name === 'PRO') : null;
+      const proProduct = products ? products.find(p => p.stripe_id === PRO_PLAN) : null;
       return proProduct ? proProduct.amount : null;
     })
   );
+
+  showFideId$ = this.paygatePopupSertvice.showFideId$;
 
   @Output() mobileShowForm = new EventEmitter<boolean>();
 

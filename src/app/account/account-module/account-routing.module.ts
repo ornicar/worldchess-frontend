@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AccountRatingResolveGuard} from './account-rating-resolve.guard';
+import { AccountRatingResolveGuard } from './account-rating-resolve.guard';
 import { AccountComponent } from './account.component';
 import { MembershipComponent } from './membership/membership.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -14,9 +14,9 @@ import { ManageTournamentAddedComponent } from './manage-tournament-added/manage
 import { ManageTournamentRoundsComponent } from './manage-tournament-rounds/manage-tournament-rounds.component';
 import { ManageTournamentPartnersComponent } from './manage-tournament-partners/manage-tournament-partners.component';
 import { ManageTournamentPlayersComponent } from './manage-tournament-players/manage-tournament-players.component';
-import { ManageTournamentPaymentsComponent } from './manage-tournament-payments/manage-tournament-payments.component';
 import { ManageTournamentWidgetsComponent } from './manage-tournament-widgets/manage-tournament-widgets.component';
 import { AccountResolveGuard } from './account-resolve.guard';
+import { ManageTournamentCamerasComponent } from './manage-tournament-cameras/manage-tournament-cameras.component';
 
 
 const tournamentManagerChildren = [
@@ -46,12 +46,12 @@ const tournamentManagerChildren = [
     component: ManageTournamentPlayersComponent
   },
   {
-    path: 'payments',
-    component: ManageTournamentPaymentsComponent
-  },
-  {
     path: 'widgets',
     component: ManageTournamentWidgetsComponent
+  },
+  {
+    path: 'video_broadcast',
+    component: ManageTournamentCamerasComponent,
   }
 ];
 
@@ -59,7 +59,8 @@ const routes: Routes = [
   {
     path: '',
     resolve: [
-      AccountResolveGuard
+      AccountResolveGuard,
+      AccountRatingResolveGuard,
     ],
     component: AccountComponent,
     children: [
@@ -78,9 +79,6 @@ const routes: Routes = [
       },
       {
         path: 'profile-fide-id',
-        resolve: [
-          AccountRatingResolveGuard
-        ],
         component: ProfileFideIdComponent
       },
       {

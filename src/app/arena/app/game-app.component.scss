@@ -1,0 +1,12 @@
+@import 'variables';
+@import 'media';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  background-color: #f6f6f6;
+  flex: 1 0 auto;
+}
+

@@ -1,6 +1,6 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
-@import '../html/css/settings.scss';
+@import 'variables.scss';
+@import 'media.scss';
+@import 'settings.scss';
 
 .media-main {
   display: flex;
@@ -130,5 +130,52 @@ body.dialog-open {
     @include ipad() {
       display: flex;
     }
+  }
+}
+
+
+.container {
+  margin: 0 auto;
+  position: relative;
+  min-width: 320px;
+
+  &--flex {
+    display: flex;
+    // min-height: 617px;
+  }
+}
+
+.information-aside {
+  position: relative;
+  flex: 0 0 auto;
+  width: 425px;
+  background-color: $black;
+  padding: 20px;
+  overflow: hidden;
+  min-height: 610px;
+
+  &--portable {
+    display: flex;
+    @include phones() {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    display: none;
+    @include phones() {
+      display: flex;
+    }
+  }
+
+  &--media {
+    padding-bottom: 16px;
+  }
+  @include phones() {
+    width: 100%;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0;
   }
 }

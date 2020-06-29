@@ -30,6 +30,7 @@ export interface IBoard {
   date_of_board?: string;
   status: BoardStatus;
   result?: BoardResult;
+  desk_number?: number;
   white_player?: number | IPlayer;
   white_player_name?: string;
   black_player?: number | IPlayer;
@@ -48,6 +49,7 @@ export interface IBoardWithExpandAll {
   date_of_board?: string;
   status: BoardStatus;
   result?: BoardResult;
+  desk_number?: number;
   white_player?: IPlayer;
   white_player_name?: string;
   black_player?: IPlayer;

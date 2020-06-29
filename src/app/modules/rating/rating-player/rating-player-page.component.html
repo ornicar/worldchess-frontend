@@ -1,0 +1,353 @@
+<div class="rating-player">
+  <div class="rating-player__container">
+    <div *ngIf="player">
+      <div class="rating-player__head">
+        <span [style.color]="playerLight" class="rating-player__arrow rating-player__arrow--prew" routerLink="/ratings"></span>
+        <div [style.color]="playerLight" *ngIf="!hideRank"
+             [style.border-color]="playerBorder"
+             class="rating-player__position">{{ getRank() }}</div>
+        <div [style.color]="playerLight" class="rating-player__name">{{ getFullName() }}</div>
+        <button class="rating-player__button" *ngIf="userID && (myAccount$ | async) && !isFriend"
+          (click)="addFriend()">Add friend</button>
+        <button class="rating-player__button" *ngIf="userID && (myAccount$ | async) && isFriend"
+          (click)="deleteFriend()">Delete friend</button>
+        <!--@todo: uncomment after resolve nav-->
+        <!--<span class="rating-player__arrow rating-player__arrow&#45;&#45;next"></span>-->
+      </div>
+      <!--First row-->
+      <div class="rating-player__blocks-wrap-main">
+        <div class="rating-player__blocks rating-player__blocks--mobile">
+          <div class="rating-player__blocks-sub-wrap">
+            <!--Portrait-->
+            <div *ngIf="getAvatar()"
+                [style.box-shadow]="'0 0 15px 0 ' + playerBorder"
+                class="rating-player__block rating-player__block--main">
+              <div class="rating-player__photo">
+                <div class="rating-player__photo-wrapper">
+                  <img [src]="getAvatar()" alt="">
+                  <wc-player-labels [labels]="getLabels()"></wc-player-labels>
+                </div>
+              </div>
+              <wc-player-portrait-footer [player]="getPlayerFooterData()"></wc-player-portrait-footer>
+            </div>
+
+          <!--Fide-->
+            <div class="rating-player__block rating-player__block--statistics">
+              <ng-container *ngIf="getFide().rating && getFide().blitz_rating && getFide().rapid_rating; then fide; else noFide"></ng-container>
+              <ng-template #fide>
+                  <div class="rating-player__blocks-title">
+                      <h4 class="rating-player__blocks-title-text">FIDE Official Rating</h4>
+                      <div class="rating-player__blocks-title-icon">
+                          <svg-logo-fide class="icon"></svg-logo-fide>
+                      </div>
+                  </div>
+                  <div class="statistics">
+                      <ul class="statistics__list">
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Classic</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count">{{getFide().rating}}</div>
+                          </div>
+                        </li>
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Blitz</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count">{{getFide().blitz_rating}}</div>
+                          </div>
+                        </li>
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Rapid</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count">{{getFide().rapid_rating}}</div>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul *ngIf="getFide().ranks" class="statistics__list">
+                          <li class="statistics__row">
+                              <div class="statistics__col statistics__col--name">
+                                <div class="statistics__name">World rank</div>
+                              </div>
+                              <div class="statistics__col">
+                                <div class="statistics__count">{{getFide().ranks?.world}}</div>
+                              </div>
+                            </li>
+                            <li class="statistics__row">
+                              <div class="statistics__col statistics__col--name">
+                                <div class="statistics__name">Continent rank</div>
+                              </div>
+                              <div class="statistics__col">
+                                <div class="statistics__count">{{getFide().ranks?.continent}}</div>
+                              </div>
+                            </li>
+                            <li class="statistics__row">
+                              <div class="statistics__col statistics__col--name">
+                                <div class="statistics__name">National rank</div>
+                              </div>
+                              <div class="statistics__col">
+                                <div class="statistics__count">{{getFide().ranks?.national}}</div>
+                              </div>
+                            </li>
+                        </ul>
+                    </div>
+              </ng-template>
+              <ng-template #noFide>
+                  <div class="rating-player__blocks-title rating-player__blocks-title--no-fide">
+                    <h4 class="rating-player__blocks-title-text">FIDE Official Rating</h4>
+                    <div class="rating-player__blocks-title-icon rating-player__blocks-title-icon--hexagon">
+                        <svg-logo-fide class="icon"></svg-logo-fide>
+                    </div>
+                  </div>
+                  <div class="rating-player__content-center rating-player__content-center--no-fide">
+                      <span>No data</span>
+                  </div>
+                  <div class="rating-player__content-bottom" *ngIf="isEvents">
+                      Play FIDE-rated<br>
+                      games over the<br>
+                      board<br>
+                      <a>FIDE Events (Soon)</a>
+                  </div>
+              </ng-template>
+            </div>
+          </div>
+          <div class="rating-player__blocks-sub-wrap" *ngIf="IsFidePlayery('worldchess') || IsFidePlayery('fide-online')">
+          <!--Fide Online-->
+            <div class="rating-player__block rating-player__block--statistics"
+            *ngIf="IsFidePlayery('fide-online')">
+              <ng-container *ngIf="getFideOnline()?.fide_bullet; then fideOnline; else noFideOnline"></ng-container>
+              <ng-template #fideOnline>
+                  <div class="rating-player__blocks-title">
+                      <h4 class="rating-player__blocks-title-text">FIDE Online Rating</h4>
+                      <div class="rating-player__blocks-title-icon rating-player__blocks-title-icon--hexagon">
+                          <svg-hexagon class="icon"></svg-hexagon>
+                      </div>
+                  </div>
+                  <div class="statistics">
+                      <ul class="statistics__list">
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Rapid</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count">{{ getFideOnline().fide_rapid }}</div>
+                          </div>
+                        </li>
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Blitz</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count">{{ getFideOnline().fide_blitz }}</div>
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="statistics__table">
+                          <div class="statistics__table-head">
+                              <div class="statistics__table-row">
+                                  <div class="statistics__table-position">Rank</div>
+                                  <div class="statistics__table-text">Player</div>
+                                  <div class="statistics__table-count">Rating</div>
+                              </div>
+                          </div>
+                          <div class="statistics__table-bidy">
+                              <ng-container *ngFor="let item of getFideOnline().fide_competitors;">
+                                  <ng-container *ngTemplateOutlet="fideOnlineTable;context:{item: item}"></ng-container>
+                              </ng-container>
+                          </div>
+                      </div>
+                    </div>
+              </ng-template>
+              <ng-template #noFideOnline>
+                  <div class="rating-player__blocks-title rating-player__blocks-title--no-fide">
+                      <h4 class="rating-player__blocks-title-text">FIDE Online Rating</h4>
+                      <div class="rating-player__blocks-title-icon rating-player__blocks-title-icon--hexagon">
+                          <svg-hexagon class="icon"></svg-hexagon>
+                      </div>
+                    </div>
+                    <div class="rating-player__content-center rating-player__content-center--no-fide">
+                        <span>No data</span>
+                    </div>
+                    <div class="rating-player__content-bottom" *ngIf="isEvents">
+                        Play FIDE-rated<br>
+                        online games<br>
+                        <a>
+                            €<span style="font-size: 0.5em"></span>25<span style="font-size: 0.5em"></span>/<span style="font-size: 0.5em"></span>year (Soon)
+                        </a>
+
+
+                    </div>
+              </ng-template>
+            </div>
+            <!--World Chess Rating-->
+            <div class="rating-player__block rating-player__block--statistics" *ngIf="IsFidePlayery('worldchess')">
+              <ng-container *ngIf="getWorldChess()?.worldchess_bullet; then worldChess; else noWorldChess"></ng-container>
+              <ng-template #worldChess>
+                  <div class="rating-player__blocks-title">
+                      <h4 class="rating-player__blocks-title-text">World Chess Internal Rating</h4>
+                      <div class="rating-player__blocks-title-icon rating-player__blocks-title-icon--hexagon">
+                          <svg-hexagon-empty-thin class="icon"></svg-hexagon-empty-thin>
+                      </div>
+                  </div>
+                  <div class="statistics">
+                      <ul class="statistics__list">
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Overall rating</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count">{{ getWorldChessAverage()}}</div>
+                          </div>
+                        </li>
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Classic</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count statistics__count--small">{{getWorldChess().worldchess_bullet}}</div>
+                          </div>
+                        </li>
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Blitz</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count statistics__count--small">{{getWorldChess().worldchess_blitz}}</div>
+                          </div>
+                        </li>
+                        <li class="statistics__row">
+                          <div class="statistics__col statistics__col--name">
+                            <div class="statistics__name">Rapid</div>
+                          </div>
+                          <div class="statistics__col">
+                            <div class="statistics__count statistics__count--small">{{getWorldChess().worldchess_rapid}}</div>
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="statistics__table">
+                          <div class="statistics__table-head">
+                              <div class="statistics__table-row">
+                                  <div class="statistics__table-position">Rank</div>
+                                  <div class="statistics__table-text">Player</div>
+                                  <div class="statistics__table-count">Rating</div>
+                              </div>
+                          </div>
+                          <div class="statistics__table-bidy">
+                              <ng-container *ngFor="let item of getWorldChess().worldchess_competitors;">
+                                  <ng-container *ngTemplateOutlet="worldchessTable;context:{item: item}"></ng-container>
+                              </ng-container>
+                          </div>
+                      </div>
+                    </div>
+              </ng-template>
+              <ng-template #noWorldChess>
+                  <h4>World Chess Internal Rating</h4>
+                  <span>No data</span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="classicPie && IsFidePlayery()">
+        <h2 class="rating-player__title">FIDE Official game statistics</h2>
+        <div class="rating-player__blocks-wrap">
+          <div class="rating-player__blocks">
+            <div class="block-statistics" *ngIf="classicPie['classic']">
+              <wc-game-statistic-pie-chart [title]="'Bullet'" [data]="classicPie['classic']"></wc-game-statistic-pie-chart>
+            </div>
+            <div class="block-statistics" *ngIf="classicPie['blitz']">
+              <wc-game-statistic-pie-chart [title]="'Blitz'" [data]="classicPie['blitz']"></wc-game-statistic-pie-chart>
+            </div>
+            <div class="block-statistics" *ngIf="classicPie['rapid']">
+              <wc-game-statistic-pie-chart [title]="'Rapid'" [data]="classicPie['rapid']"></wc-game-statistic-pie-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="classicPieFideOnline && IsFidePlayery('fide')">
+        <h2 class="rating-player__title">FIDE Online game statistics</h2>
+        <div class="rating-player__blocks-wrap">
+          <div class="rating-player__blocks">
+            <div class="block-statistics" *ngIf="classicPieFideOnline['bullet']">
+              <wc-game-statistic-pie-chart [title]="'Classic'" [data]="classicPieFideOnline['bullet']"></wc-game-statistic-pie-chart>
+            </div>
+            <div class="block-statistics" *ngIf="classicPieFideOnline['blitz']">
+              <wc-game-statistic-pie-chart [title]="'Blitz'" [data]="classicPieFideOnline['blitz']"></wc-game-statistic-pie-chart>
+            </div>
+            <div class="block-statistics" *ngIf="classicPieFideOnline['rapid']">
+              <wc-game-statistic-pie-chart [title]="'Rapid'" [data]="classicPieFideOnline['rapid']"></wc-game-statistic-pie-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="classicPieWorldChess && IsFidePlayery('worldchess')">
+        <h2 class="rating-player__title">World Chess game statistics</h2>
+        <div class="rating-player__blocks-wrap">
+          <div class="rating-player__blocks">
+            <div class="block-statistics" *ngIf="classicPieWorldChess['bullet']">
+              <wc-game-statistic-pie-chart [title]="'Classic'" [data]="classicPieWorldChess['bullet']"></wc-game-statistic-pie-chart>
+            </div>
+            <div class="block-statistics" *ngIf="classicPieWorldChess['blitz']">
+              <wc-game-statistic-pie-chart [title]="'Blitz'" [data]="classicPieWorldChess['blitz']"></wc-game-statistic-pie-chart>
+            </div>
+            <div class="block-statistics" *ngIf="classicPieWorldChess['rapid']">
+              <wc-game-statistic-pie-chart [title]="'Rapid'" [data]="classicPieWorldChess['rapid']"></wc-game-statistic-pie-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="ratingChartData || ratingChartDataFide || ratingChartDataWS">
+        <h2 class="rating-player__title">Rating chart</h2>
+        <div class="rating-player__blocks-wrap">
+          <div class="rating-player__blocks rating-player__blocks--width">
+            <div class="block-statistics block-statistics--graph">
+              <wc-rating-line-chart
+              [data]="ratingChartData"
+              [dataFide]="ratingChartDataFide"
+              [dataWS]="ratingChartDataWS"></wc-rating-line-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #fideOnlineTable let-item="item">
+  <ng-container *ngIf="item.player_id == player_id; then fideOnlineTableLink; else fideOnlineTableHref"></ng-container>
+  <ng-template #fideOnlineTableLink>
+    <div class="statistics__table-position">{{item.fide_rank}}</div>
+    <div class="statistics__table-text">{{item.profile.full_name}}</div>
+    <div class="statistics__table-count">{{item.fide_bullet}}</div>
+  </ng-template>
+  <ng-template #fideOnlineTableHref>
+    <a [href]="'/ratings/' + item.player_id" class="statistics__table-row">
+      <div class="statistics__table-position">{{item.fide_rank}}</div>
+      <div class="statistics__table-text">{{item.profile.full_name}}</div>
+      <div class="statistics__table-count">{{item.fide_bullet}}</div>
+    </a>
+  </ng-template>
+</ng-template>
+
+<ng-template #worldchessTable let-item="item">
+  <ng-container *ngIf="item.player_id == player_id; then worldchessTableLink; else worldchessTableHref"></ng-container>
+  <ng-template #worldchessTableLink>
+      <div class="statistics__table-position">{{item.worldchess_rank}}</div>
+      <div class="statistics__table-text">{{(this.ownPlayer) ? 'You' : item.profile.full_name}}</div>
+      <div class="statistics__table-count">{{item.worldchess_bullet}}</div>
+  </ng-template>
+  <ng-template #worldchessTableHref>
+    <a [href]="'/ratings/' + item.player_id" class="statistics__table-row">
+      <div class="statistics__table-position">{{item.worldchess_rank}}</div>
+      <div class="statistics__table-text">{{item.profile.full_name}}</div>
+      <div class="statistics__table-count">{{item.worldchess_bullet}}</div>
+    </a>
+  </ng-template>
+</ng-template>

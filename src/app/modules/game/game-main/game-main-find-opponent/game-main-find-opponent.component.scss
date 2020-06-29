@@ -1,0 +1,65 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  .root {
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+    line-height: 23px;
+    width: 100%;
+
+    @include birman-media {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  .left-column {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tournaments-row {
+    color: #FFFFFF;
+
+    @include birman-media {
+      text-align: left;
+      font: 300 22px/30px $gerbera-font;
+      margin-bottom: 10px;
+    }
+  }
+
+  .chess-rated-row {
+    color:#B4966E;
+  }
+
+  .find-opponent-btn{
+    .btn-new {
+      font-size: 22px;
+      line-height: 50px;
+    }
+  }
+
+  ::ng-deep {
+    .btn-new {
+      width: 210px;
+    }
+  }
+}
+
+
+.desctop {
+  display: block;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}

@@ -1,4 +1,6 @@
 @import 'nouislider/nouislider';
+@import 'variables';
+@import 'media';
 
 wc-moves-navigation-slider {
   display: block;
@@ -21,10 +23,16 @@ wc-moves-navigation-slider {
     top: -37px;
     transform: translateX(-50%);
     cursor: pointer;
-
     color: white;
     background: #59f19b;
     padding: 1px 3px;
+
+    @include height-650() {
+      top: -31px;
+      padding: 0px 3px;
+      font-size: 12px;
+      line-height: 17px;
+    }
   }
 
   &__live-circle {

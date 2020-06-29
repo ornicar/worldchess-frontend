@@ -1,5 +1,4 @@
-import { NgClass } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core';
 import { Tournament, TournamentState } from '../tournament.model';
 import { OnChangesInputObservable, OnChangesObservable } from '../../../../shared/decorators/observable-input';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -11,9 +10,6 @@ import * as moment from 'moment';
   selector: 'wc-tournament-state',
   templateUrl: './tournament-state.component.html',
   styleUrls: ['./tournament-state.component.scss'],
-  providers: [
-    NgClass
-  ]
 })
 export class TournamentStateComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tournament: Tournament;
@@ -26,8 +22,7 @@ export class TournamentStateComponent implements OnInit, OnChanges, OnDestroy {
   public monthCount: number;
 
   private tournamentSs: Subscription;
-
-  constructor(@Self() private ngClass: NgClass) {}
+  private _className: string;
 
   ngOnInit(): void {
     this.tournamentSs = this.tournament$
@@ -39,8 +34,12 @@ export class TournamentStateComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private setComponentClass(className) {
-    this.ngClass.ngClass = className;
-    this.ngClass.ngDoCheck();
+    this._className = className;
+  }
+
+  @HostBinding('class')
+  get className(): string {
+    return this._className;
   }
 
   ngOnDestroy(): void {

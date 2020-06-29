@@ -1,11 +1,9 @@
 <div *ngIf="name" class="name">{{name}}</div>
-
 <div (click)="canChange && onSelectClick()" [class.select-option--can-change]="canChange" class="select-option">
   <ng-container *ngIf="isAutocomplete && isOpen && !isMobile; else selectHeader">
     <img src="/assets/icons/search-icon.svg" class="search-icon">
     <input #autocomplete class="search-input" type="text" [placeholder]="autocompletePlaceholder" [formControl]="autocompleteFormControl" />
   </ng-container>
-
   <ng-template #selectHeader>
     <ng-container *ngIf="selectedOption; else dafaultSelected">
       <ng-container *ngTemplateOutlet="titleSelectedTemplate; context: {$implicit: selectedOption}"></ng-container>
@@ -15,20 +13,17 @@
     </ng-template>
   </ng-template>
 </div>
-
 <ng-container *ngIf="canChange">
-
-  <wc-arrow-down class="arrow" (click)="toggleDropdown()"></wc-arrow-down>
-
+  <svg-arrow-down class="icon arrow" (click)="toggleDropdown()"></svg-arrow-down>
   <div #dropdown class="dropdown"
        [class.dropdown--left]="alignLeft"
-       [style.margin-right.px]="-marginLedtDropdown"
-       wcScreenFixed>
+       #mustBeFixed>
     <div class="dropdown-content">
       <ng-container *ngIf="isMobile">
+        <div *ngIf="showPreloader" class="preloader"><wc-preloader></wc-preloader></div>
         <div class="dropdown-link dropdown-link--mobile-header">
-          <div class="select-option select-option--back" (click)="closeDropdown()">
-            <wc-arrow-down class="back"></wc-arrow-down>
+          <div class="select-option select-option--back" (click)="simpleClose()">
+            <svg-arrow-down class="icon back-main-page"></svg-arrow-down>
             <span>Main page</span>
           </div>
         </div>

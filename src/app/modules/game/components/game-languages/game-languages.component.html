@@ -1,0 +1,15 @@
+  <div class="select-language">
+  <div class="select-language__button">
+    <div href="#" class="select-language__link" (click)="onSelectLanguage($event)"><span>{{showSelecteLanguage()}}</span>
+      <svg-arrow-down class="icon"></svg-arrow-down></div>
+  </div>
+  <ul class="select-language__list" *ngIf="selectLanguage">
+    <li class="select-language__elem" *ngFor="let language of languages">
+      <div class="select-language__list-button" 
+        (click)="changeLanguage(language)"
+      >
+        {{language.viewValue}}
+      </div>
+    </li>
+  </ul>
+</div>

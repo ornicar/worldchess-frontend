@@ -1,0 +1,83 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  @include birman-media() {
+    height: 420px;
+  }
+}
+
+.shop-banner {
+  position: relative;
+ height: 100%;
+ width: 100%;
+}
+
+.shop-banner__background {
+  background-color: $white-bg;
+  height: 100%;
+  width: 100%;
+}
+.shop-banner__img {
+ position: absolute;
+ left: -20px;
+ left: 50%;
+ transform: translate(-50%, 0);
+ max-width: calc(100% + 40px);
+ max-height: calc(100% - 60px);
+ top:38px;
+
+ @include birman-media() {
+  max-width: calc(100% - 40px);
+  max-height: calc(100% - 70px);
+ }
+ 
+}
+.shop-banner__price{
+ top: 0px;
+ left: 20px;
+ color: $blue-new;
+ font: 300 125px/125px $chess-font;
+ position: absolute;
+
+ @include birman-media() {
+   top: 5px;
+  font: 300 70px/70px $chess-font;
+ }
+}
+.shop-banner__title {
+ color: #000;
+ font: 300 15px/20px $gerbera-font;
+ margin-bottom: 9px;
+ width: 120px;
+}
+
+.shop-banner__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  min-height: 32px;
+  cursor: pointer;
+  font: 300 15px/20px $gerbera-font;
+  color: #fff;
+  padding: 5px 25px;
+  border-radius: 3px;
+  background-color: $blue-new;
+  border: none;
+}
+
+.shop-banner__content {
+  position: absolute;
+  right: 20px;
+  bottom: 30px;
+
+  @include birman-media() {
+    right: 10px;
+  }
+}

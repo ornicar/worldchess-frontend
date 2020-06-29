@@ -1,0 +1,33 @@
+<div class="next-opponent" *ngIf="nextTourId$ | async">
+  <div class="next-opponent__left">
+    <div class="next-opponent__title">{{'BUTTONS.NEXT' | translate }}</div>
+    <div class="next-opponent__timer">{{(duration$ | async) | wcDuration : 'mm:ss' : durationFormat}}</div>
+  </div>
+  <div class="next-opponent__right">
+    <div class="player">
+      <div class="player__avatar">
+        <img [src]="opponent?.avatar?.full" />
+      </div>
+      <div class="player__info">
+        <div class="player__name">{{opponent?.full_name}}</div>
+        <div class="player__statistics">
+          <span
+            *ngIf = "opponent?.rating"
+          >
+            {{opponent?.rating}} ∙
+          </span>
+          <span
+            *ngIf = "(getCountryCode(opponent?.nationality_id) | async)"
+          >
+            {{getCountryCode(opponent?.nationality_id) | async}} ∙
+          </span>
+          <a class="player__link" [routerLink]="['/tournament', 'pairing', nextBoardId$.value]">{{'BUTTONS.GO_TO_GAME' | translate }} <svg-arrow-right class="icon"></svg-arrow-right></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="waiting-next-opponent" *ngIf="!(nextTourId$ | async)">
+  <svg-preloader class="waiting-next-opponent__preloader"></svg-preloader>
+  <div class="waiting-next-opponent__text" >{{'OTHER.WAITING_FOR' | translate }}<br> {{'OTHER.NEXT_OPPONENT' | translate }}</div>
+</div>

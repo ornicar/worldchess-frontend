@@ -7,9 +7,7 @@
     <a href="#" class="prediction__arrow prediction__arrow--left"
        [ngClass]="{active: predictions[0] !== selectedPrediction}"
        (click)="onPrevMove($event)">
-      <svg class="arrow-down__icon">
-        <use xlink:href="#arrow-down" />
-      </svg>
+      <svg-arrow-down class="icon left"></svg-arrow-down>
     </a>
     <div class="gradient left-gradient"></div>
   </div>
@@ -62,9 +60,7 @@
     <a href class="prediction__arrow prediction__arrow--right"
        [ngClass]="{active: predictions[predictions.length - 1] !== selectedPrediction}"
        (click)="onNextMove($event)">
-      <svg class="arrow-down__icon">
-        <use xlink:href="#arrow-down" />
-      </svg>
+      <svg-arrow-down class="icon arrow-down__icon"></svg-arrow-down>
     </a>
     <div class="gradient right-gradient"></div>
   </div>

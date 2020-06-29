@@ -1,0 +1,8 @@
+<div class="partner-card" [ngClass]="isDragging?'partner-card__dragging':''"  (click)="gotoSite($event)">
+  <div class="partner-card__content">
+    <img class="partner-card__logo" [src]="partner.description_logo"/>
+  </div>
+  <div class="partner-card__text">
+    {{partner.label}}
+  </div>
+</div>

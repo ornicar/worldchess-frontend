@@ -1,0 +1,166 @@
+<div class="game-menu-wrapper lang-{{accountService.getLanguage() | async }}">
+
+  <game-menu-tournament-info *ngIf="isTournamentMenu"></game-menu-tournament-info>
+
+  <game-menu-logo [isTournamentMenu]="isTournamentMenu"></game-menu-logo>
+
+  <div class="menu-game-buttons-wrapper"
+       (mouseleave)="closeMenu()"
+       [class.menu-game-buttons-wrapper--active]="openmenu"
+       [class.menu-game-buttons-wrapper--game-is-over]="!(gameInProgress$ | async)"
+  >
+      <div class="menu-game-buttons">
+          <div class="menu-game-buttons__row">
+              <div class="menu-game-buttons__col">
+                  <a href="javascript:void(0)"
+                     (click)="playAgain()"
+                     [class.disabled]="isTournamentMenu"
+                     class="menu-game-buttons__btn"
+                  >
+                      <div class="menu-game-buttons__icon">
+                          <svg-plus-game class="icon"></svg-plus-game>
+                      </div>
+                      <div class="menu-game-buttons__signature">{{'BUTTONS.NEW_GAME' | translate}}</div>
+                  </a>
+              </div>
+              <div class="menu-game-buttons__col">
+                  <a href="javascript:void(0)"
+                  (click)="settings()"
+                  class="menu-game-buttons__btn">
+                      <div class="menu-game-buttons__icon">
+                          <svg-settings class="icon"></svg-settings>
+                      </div>
+                      <div class="menu-game-buttons__signature">{{'BUTTONS.SETTINGS' | translate}}</div>
+                  </a>
+              </div>
+          </div>
+
+          <div class="menu-game-buttons__row">
+              <div class="menu-game-buttons__col"
+                   *ngIf="!(boardIsFlipped$ | async)"
+              >
+                <a href="javascript:void(0)"
+                   class="menu-game-buttons__btn"
+                   [class.disabled]="(isMobile$ | async) && (selectedMove$ | async)"
+                   (click)="flipBoard()"
+                >
+                  <div class="menu-game-buttons__icon">
+                    <svg-flip-board class="icon"></svg-flip-board>
+                  </div>
+                  <div class="menu-game-buttons__signature">
+                    <span>
+                      {{'BUTTONS.FLIP_BOARD' | translate}}
+                      <span class="menu-game-buttons__signature-marker">F</span>
+                    </span>
+                  </div>
+                </a>
+              </div>
+              <div class="menu-game-buttons__col"
+                   *ngIf="(boardIsFlipped$ | async)"
+              >
+                <a href="javascript:void(0)"
+                   class="menu-game-buttons__btn"
+                   (click)="flipBack()"
+                >
+                  <div class="menu-game-buttons__icon">
+                    <svg-flip-board class="icon"></svg-flip-board>
+                  </div>
+                  <div class="menu-game-buttons__signature">
+                    <span>
+                      {{'MESSAGES.FLIP_BACK' | translate}}
+                      <span class="menu-game-buttons__signature-marker">F</span>
+                    </span>
+                  </div>
+                </a>
+              </div>
+              <div class="menu-game-buttons__col">
+                  <a href="javascript:void(0)" class="menu-game-buttons__btn disabled">
+                      <div class="menu-game-buttons__icon">
+                          <svg-share-game class="icon"></svg-share-game>
+                      </div>
+                      <div class="menu-game-buttons__signature">{{'BUTTONS.SHARE_GAME' | translate}}<br>({{'PART_OF_SPEECH.SOON' | translate}})</div>
+                  </a>
+              </div>
+          </div>
+
+          <div class="menu-game-buttons__row">
+              <div class="menu-game-buttons__col">
+                  <a href="javascript:void(0)" class="menu-game-buttons__btn"
+                     (click)="openBugReportDialog()">
+                      <div class="menu-game-buttons__icon">
+                          <svg-bug class="icon"></svg-bug>
+                      </div>
+                      <div class="menu-game-buttons__signature">{{ 'PROFILE.SUPPORT' | translate }}</div>
+                  </a>
+              </div>
+              <div class="menu-game-buttons__col" >
+                  <a class="menu-game-buttons__btn"
+                     *ngIf="(getOpponentUID$ | async) !== ''"
+                     (click)="showChat()">
+                      <div class="menu-game-buttons__icon"
+                           [class.menu-game-buttons__icon--new]="(getNewMessage$ | async)?.isNew === true">
+                          <div class="menu-game-buttons__chat-line" *ngIf="(getNewMessage$ | async)?.isFirst === false"></div>
+                          <svg-chat-game class="icon"></svg-chat-game>
+                      </div>
+                      <div class="menu-game-buttons__signature">{{ 'CHAT.CHAT' | translate}}</div>
+                  </a>
+              </div>
+          </div>
+          <div class="menu-game-buttons__row">
+            <div class="menu-game-buttons__col menu-game-buttons__col--desctop">
+              <div class="menu-game-buttons__center-col" *ngIf="!isTournamentMenu">
+                <button (click)="replayGame()" class="menu-game-buttons__paly-agan"
+                        *ngIf="isReplay() &&
+                        (!(gamegetIsReplay$ | async) || (getIsRematch$ | async))">
+                  {{ 'BUTTONS.PLAY_AGAIN' | translate}}
+                </button>
+                <button class="menu-game-buttons__paly-agan menu-game-buttons__paly-agan--red"
+                        *ngIf="(getRematchInvite$ | async)" (click)="cancelRematch()">
+                  {{ 'BUTTONS.CANCEL' | translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-game-buttons__rematch">
+            {{ getRematchNotfication$ | async }}
+          </div>
+          <!-- <div class="menu-game-buttons__row" *ngIf="isResultShown$ | async">
+              <a href="javascript:void(0)" (click)="playAgain()" class="menu-game-buttons__paly-agan">Play Again</a>
+          </div> -->
+
+      </div>
+
+      <div class="menu-game-footer">
+          <div class="menu-game-footer__buttons">
+              <div class="menu-game-footer__proress" [style.opacity.0]="resignProgress$ | async">
+                <div class="text">{{ 'MESSAGES.HOLD_RESIGN' | translate }}...</div>
+                <div class="progress" [style.width.%]="resignProgress$ | async"></div>
+              </div>
+              <div
+                 class="menu-game-footer__btn"
+                 [style.opacity]="1"
+                 *ngIf="!(playerOfferedDraw$ | async) && !(playerReadyToOfferDraw$ | async)"
+                 (click)="callForDraw()"
+                 [class.hidden]="resignProgress$ | async"
+              >{{ 'BUTTONS.OFFER_DRAW' | translate}}</div>
+              <div
+                 class="menu-game-footer__btn"
+                 [style.opacity]="1"
+                 *ngIf="(playerOfferedDraw$ | async) || (playerReadyToOfferDraw$ | async)"
+                 (click)="cancelDrawOffer()"
+                 [class.hidden]="resignProgress$ | async"
+              >{{ 'BUTTONS.CANCEL_DRAW' | translate}}</div>
+              <div
+                 class="menu-game-footer__btn"
+                 [style.opacity]="1"
+                 (mousedown)="resign$.next(true)"
+                 (touchstart)="resign$.next(true)"
+                 (mouseup)="resign$.next(false)"
+                 (touchend)="resign$.next(false)"
+                 [class.hidden]="resignProgress$ | async"
+              >{{ 'BUTTONS.RESIGN' | translate}}</div>
+          </div>
+      </div>
+  </div>
+</div>

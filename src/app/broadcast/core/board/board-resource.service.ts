@@ -1,10 +1,10 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {map} from 'rxjs/operators';
-import {environment} from '../../../../environments/environment';
-import {IPlayer} from '../player/player.model';
-import {IBoard, IBoardState, IBoardPGN, IBoardWithExpandAll} from './board.model';
-import {Observable, of} from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { IPlayer } from '../player/player.model';
+import { IBoard, IBoardState, IBoardWithExpandAll } from './board.model';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class BoardResourceService {
@@ -28,7 +28,9 @@ export class BoardResourceService {
     const board = {
       ...boardExpanded,
       white_player: white_player ? white_player.fide_id : null,
-      black_player: black_player ? black_player.fide_id : null
+      white_player_name: white_player ? white_player.full_name : boardExpanded.white_player_name,
+      black_player: black_player ? black_player.fide_id : null,
+      black_player_name: black_player ? black_player.full_name : boardExpanded.black_player_name,
     };
 
     return {
@@ -64,6 +66,12 @@ export class BoardResourceService {
           boards: []
         }
       )));
+  }
+
+  getByTour(id: number): Observable<IBoard[]> {
+    const params = new HttpParams().set('tour', id.toString());
+
+    return this.http.get<IBoard[]>(`${environment.endpoint}/boards/`, { params });
   }
 
   getState(id: number) {

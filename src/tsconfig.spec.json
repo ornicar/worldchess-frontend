@@ -1,13 +1,16 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
     "module": "commonjs",
     "types": [
-      "jasmine",
-      "node"
-    ]
+      "node",
+      "jest",
+    ],
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "allowJs": true
   },
   "files": [
     "test.ts"

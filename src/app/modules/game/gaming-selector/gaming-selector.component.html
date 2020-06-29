@@ -1,0 +1,23 @@
+<div class="toggle-buttons-game lang-{{accountService.getLanguage() | async }}">
+  <div class="toggle-buttons-game__elem"
+       [class.active]="mode === SelectorMode.MainPage"
+       (click)="goToMainPage()"
+  >
+    <div class="toggle-buttons-game__btn"></div>
+    {{ 'GAME.WELCOME_GAME' | translate }}
+  </div>
+  <div class="toggle-buttons-game__elem"
+       [class.active]="mode === SelectorMode.SingleGames"
+       (click)="goToSingleGames()"
+  >
+    <div class="toggle-buttons-game__btn"></div>
+    {{ 'GAME.SINGLE_GAME' | translate }}
+  </div>
+  <div class="toggle-buttons-game__elem"
+       [class.active]="mode === SelectorMode.Tournaments"
+       (click)="goToTournaments()"
+  >
+    <div class="toggle-buttons-game__btn"></div>
+    {{ 'TOURNAMENTS.TOURNAMENTS' | translate }}
+  </div>
+</div>

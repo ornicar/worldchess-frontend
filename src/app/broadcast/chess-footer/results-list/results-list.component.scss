@@ -1,5 +1,5 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
+@import 'variables.scss';
+@import 'media.scss';
 
 $rapidColor: #59F19B;
 $blitzColor: #7701ff;
@@ -141,7 +141,6 @@ $armageddonColor: #FF3828;
     min-width: 75px;
     max-width: 75px;
     font: 300 15px/15px $gerbera-font;
-
     @include tablets-big() {
       width: 75px;
       height: 52px;

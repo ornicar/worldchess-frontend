@@ -59,6 +59,12 @@
   }
 }
 
+@mixin height-650 {
+	@media screen and (orientation: landscape) and (max-height: $height-650) {
+		@content;
+	}
+}
+
 // @include screen-size-desktop() {
 //	...
 // }

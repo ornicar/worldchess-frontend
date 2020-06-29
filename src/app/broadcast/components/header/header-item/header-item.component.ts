@@ -10,7 +10,7 @@ export class HeaderItemComponent {
 
   @Input() selected: any;
 
-  @ContentChild('titleSelected', {read: TemplateRef}) titleSelectedTemplate;
+  @ContentChild('titleSelected', { read: TemplateRef, static: true }) titleSelectedTemplate;
 
   @Output() onClick = new EventEmitter();
 }

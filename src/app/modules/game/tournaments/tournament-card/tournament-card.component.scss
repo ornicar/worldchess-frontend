@@ -1,0 +1,300 @@
+@import "variables-new";
+@import "media-new";
+
+.tournament-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: $gray-bg-new;
+  border-radius: 3px;
+  height: 68px;
+  color: #fff;
+  padding: 5px 10px;
+  font: 300 15px/15px $gerbera-font;
+  min-width: 290px;
+  cursor: pointer;
+  &.full-width-mobile {
+    @include birman-media {
+      width: 100% !important;
+    }
+  }
+
+  &.fide-tournament {
+    background: $brown-2;
+    color: #000;
+
+    .tournament-stat__icon {
+      fill: #000;
+    }
+
+    &.tournament-card--blitz {
+      .tournament-card__trace {
+        border-right: 15px solid $brown-2;
+
+        &:after,
+        &:before {
+          border-right: 15px solid $brown-2;
+        }
+      }
+    }
+
+
+
+    &.tournament-card--bullet {
+      &:before {
+        background: $brown-2;
+      }
+
+      .tournament-card__trace {
+        border-left: 34px solid $brown-2;
+
+        &:after,
+        &:before {
+          border-left: 34px solid $brown-2;
+        }
+      }
+    }
+  }
+
+  &.empty-padding {
+    padding: 0;
+    min-width: 0;
+  }
+
+  &--bullet {
+    border-radius: 12px 100px 100px 12px;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 128px;
+      border-radius: 0px 50% 50% 0px;
+      right: -30px;
+      background: $gray-bg-new;
+    }
+
+    .tournament-card__trace {
+      display: block;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      left: -52px;
+      border-right: 0;
+      border-left: 34px solid $gray-bg-new;
+      border-top: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+
+      &:after,
+      &:before {
+        content: '';
+        position: absolute;
+        border-left: 0;
+        border-right: 0;
+        border-left: 34px solid $gray-bg-new;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+      }
+
+      &:after {
+        top: -14px;
+        left: -30px;
+      }
+
+      &:before {
+        top: 8px;
+        left: -25px;
+      }
+    }
+  }
+
+  &--blitz {
+    transform: skew(-8deg);
+    .tournament-card__trace {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -14px;
+      border-left: 0;
+      border-right: 15px solid $gray-bg-new;
+      border-top: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+
+      &:after,
+      &:before {
+        content: '';
+        position: absolute;
+        border-left: 0;
+        border-right: 15px solid $gray-bg-new;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+      }
+
+      &:after {
+        top: 10px;
+        left: 3px;
+      }
+
+      &:before {
+        top: 20px;
+        left: 6px;
+      }
+    }
+
+    &>div {
+      transform: skew(8deg);
+    }
+  }
+}
+
+.time-control,
+.tournament-stat {
+  opacity: 0.5;
+  display: flex;
+  position: relative;
+}
+
+.tournament-title,
+.time-control {
+  height: 15px;
+  position: relative;
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tournament-stat__icon {
+  width: 18px;
+  height: 16px;
+  margin-right: 2px;
+  fill: #fff;
+  opacity: 0.5;
+
+  .icon {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.tournament-stat__text {
+  margin-right: 8px;
+}
+
+
+.tournament-card__trace {
+  display: none;
+}
+
+
+.pie {
+  position: relative;
+  width: 14px; 
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  color: $gray-bg-new;
+  border: 1px solid #fff;
+  overflow: hidden;
+}
+
+.pie__bg {
+  display: block;
+  position: absolute;
+  margin-left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left;
+  background: $gray-bg-new;
+}
+
+.pie__bg-half-black {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: $gray-bg-new;
+}
+
+.pie__bg-half-white {
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: #fff;
+}
+
+.fide-tournament {
+  .pie {
+    background: #000;
+    border: 1px solid #000;
+  }
+
+  .pie__bg,
+  .pie__bg-half-black {
+    background: $brown-2;
+  }
+
+  .pie__bg-half-white {
+    background: #000;
+  }
+}
+
+/*----------спонсоры стилизуются-----------*/
+.mts-tournament {
+  &.tournament-card {
+    position: relative;
+    background-color: $red-mts !important;
+
+    &:before {
+      background-color: $red-mts !important;
+    }
+
+    &:after {
+      content: url('../../../../../assets/images/sponsor/logo-mts-small.svg');
+      display: block;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      width: 61px;
+      height: 15px;
+    }
+
+  }
+
+  .tournament-card__trace {
+    border-left: 34px solid $red-mts !important;
+    &:before, 
+    &:after {
+      border-left: 34px solid $red-mts !important;
+    }
+  }
+
+  .pie {
+    background-color: $red-mts;
+  }
+
+  .pie__bg-half-black,
+  .pie__bg {
+    background-color: #fff;
+  }
+
+  &.tournament-card--blitz {
+
+    &:after {
+      transform: skew(8deg);
+    }
+    .tournament-card__trace {
+      border-right: 15px solid $red-mts !important;
+      border-left: 0;
+
+      &:before, 
+      &:after {
+        border-right: 15px solid $red-mts !important;
+        border-left: 0;
+      }
+    }
+  }
+}

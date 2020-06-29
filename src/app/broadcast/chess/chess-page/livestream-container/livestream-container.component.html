@@ -1,17 +1,23 @@
-<div class="video-block" [class.livestream-main]="main">
+<div class="video-block"
+     [class.livestream-main]="main"
+     *ngIf="(isAuthorized$ | async) && !(isBenefitsBlockShown$ | async)">
   <div class="video-block__wrapper">
-    <iframe class="video-block__video" *ngIf="selectedCamera?.link_display" width="560" height="315"
-            [src]="selectedCamera.link_display | wcSafeUrl" frameborder="0" scrolling="no" allowfullscreen> </iframe>
+    <iframe class="video-block__video"
+            *ngIf="(selectedCamera$ | async)?.link_display"
+            width="560"
+            height="315"
+            [src]="(selectedCamera$ | async)?.link_display | wcSafeUrl"
+            frameborder="0" scrolling="no" allowfullscreen></iframe>
   </div>
 
-  <div class="video-block__cameras hovered" *ngIf="cameras?.length">
+  <div class="video-block__cameras hovered" *ngIf="(cameras$ | async)?.length">
     <wc-livestream-camera-list
       [main]="main"
       prefix="Camera"
       label="name"
       compare="id"
-      [list]="cameras"
-      [selectedItem]="selectedCamera"
+      [list]="cameras$ | async"
+      [selectedItem]="selectedCamera$ | async"
       (itemSelected)="selectCamera($event)"
       (goPremium)="openGoPremiumModal()"
     ></wc-livestream-camera-list>
@@ -19,7 +25,7 @@
   </div>
 </div>
 
-<div *ngIf="cameras?.length && !selectedCamera?.link_display" class="chess-product__buy">
+<div *ngIf="isBenefitsBlockShown$ | async" class="chess-product__buy">
   <div class="chess-product__buy-title">Want more benefits?</div>
   <ul class="chess-product__buy-list">
     <li class="chess-product__buy-elem">
@@ -41,8 +47,37 @@
 
   <div class="chess-product__buy-icon"
     (click)="openGoPremiumModal()">
-    <svg class="icon icon-open"><use xlink:href="#lock-open"/></svg>
-    <svg class="icon icon-lock"><use xlink:href="#lock"/></svg>
+    <svg-lock-open class="icon icon-lock livestream"></svg-lock-open>
+    <svg-lock class="icon icon-lock livestream"></svg-lock>
+    <div class="chess-product__buy-hint">
+      <div class="chess-product__buy-hint-wrapprer">
+        <div class="chess-product__buy-hint-text">
+                          <span>Multi-camera + <br>
+                          commentary</span> in your<br> subscription!
+        </div>
+        <div class="chess-product__buy-hint-icon">
+          <img src="assets/img/knight.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!(isAuthorized$ | async)" class="chess-product__buy">
+  <div class="chess-product__buy-title">Want more options?</div>
+  <ul class="chess-product__buy-list">
+    <li class="chess-product__buy-elem">
+      <div class="chess-product__buy-elem-text">please log in or register<br/> if you don’t have an account</div>
+    </li>
+  </ul>
+  <div class="chess-product__buy-buttons">
+    <button class="chess-product__buy-btn" (click)="openGoPremiumModal()">GO</button>
+  </div>
+
+  <div class="chess-product__buy-icon"
+    (click)="openGoPremiumModal()">
+    <svg-lock-open class="icon icon-open livestream"></svg-lock-open>
+    <svg-lock class="icon icon-lock livestream"></svg-lock>
     <div class="chess-product__buy-hint">
       <div class="chess-product__buy-hint-wrapprer">
         <div class="chess-product__buy-hint-text">

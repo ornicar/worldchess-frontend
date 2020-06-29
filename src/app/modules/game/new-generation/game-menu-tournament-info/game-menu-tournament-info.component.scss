@@ -1,0 +1,81 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tournament-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font: 300 12px/16px $gerbera-font;
+  margin-bottom: 60px;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.tournament-info__icon {
+  fill: $brown-2;
+  width: 30px;
+  height: 23px;
+  margin: 0 auto 9px;
+  
+
+  ::ng-deep {
+    svg {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.tournament-info__name {
+  color: $brown-2;
+  cursor: pointer;
+  display: block;
+  font: 300 22px/30px $gerbera-font;
+  margin-bottom: 6px;
+  padding: 0 10px;
+}
+
+.tournament-info__round {
+  color: rgba(#fff, 0.4);
+}
+
+@-webkit-keyframes flash {
+  from,
+  50%,
+  to {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes flash {
+  from,
+  50%,
+  to {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 0.4;
+  }
+}
+
+.flash {
+  -webkit-animation-name: flash;
+  animation-name: flash;
+  animation-duration: 2s;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+}

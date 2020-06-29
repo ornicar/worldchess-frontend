@@ -1,0 +1,10 @@
+<div class="bar-item-root">
+  <wc-game-main-player [value]="value.white_player"></wc-game-main-player>
+  <span class="bar-item-root__result" [hidden]="value.result!==1 && value.result!==3" *ngIf="value.result==1">
+    1—0
+  </span>
+  <span class="bar-item-root__result" [hidden]="value.result!==1 && value.result!==3" *ngIf="!(value.result==1)">
+    0—1
+  </span>
+  <wc-game-main-player [value]="value.black_player"></wc-game-main-player>
+</div>

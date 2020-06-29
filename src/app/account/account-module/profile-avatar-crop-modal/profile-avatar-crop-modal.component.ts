@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
 
 
@@ -15,8 +15,8 @@ export class ProfileAvatarCropModalComponent {
 
   constructor(private dialogRef: MatDialogRef<ProfileAvatarCropModalComponent>) {}
 
-  @ViewChild(ImageCropperComponent) imageCropper: ImageCropperComponent;
-  @ViewChild('upload') uploadInput: ElementRef;
+  @ViewChild(ImageCropperComponent, { static: true }) imageCropper: ImageCropperComponent;
+  @ViewChild('upload', { static: true }) uploadInput: ElementRef;
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;

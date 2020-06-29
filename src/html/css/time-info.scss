@@ -2,6 +2,14 @@
     padding: 9px 0;
     background-color: #d2d2d2;
 
+    @include height-650() {
+        padding: 5px 0;
+    }
+
+    @include phones() {
+        padding: 9px 0;
+    }
+
     &__list {
         display: flex;
     }
@@ -14,6 +22,14 @@
         &:last-child {
             border-right: 0;
         }
+
+        @include height-650() {
+            padding: 0px 14px;
+        }
+
+        @include phones() {
+            padding: 5px 14px;
+        }
     }
 
     &__text {
@@ -22,13 +38,24 @@
         margin-bottom: 5px;
         min-height: 32px;
 
+        font: 300 10/15 $gerbera-font;
+
         @include tablets-big() {
             font: 400 11px/16px $gerbera-font;
+        }
+
+        @include height-650() {
+            font: 300 10px/15px $gerbera-font;
+            margin-bottom: 0;
         }
     }
 
     &__value {
         font: 400 15px/22px $gerbera-font;
         color: #000;
+
+        @include height-650() {
+            font: 300 13px/20px $gerbera-font;
+        }
     }
 }

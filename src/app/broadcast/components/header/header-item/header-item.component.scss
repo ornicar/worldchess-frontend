@@ -36,7 +36,7 @@
     }
   }
 
-  wc-arrow-down.arrow {
+  svg-arrow-down.arrow {
     align-self: center;
 
     transform: rotate(180deg);
@@ -107,7 +107,7 @@
   padding: 0 13px;
 }
 
-wc-arrow-down.arrow {
+svg-arrow-down.arrow {
   flex: 0 0 auto;
   width: 40px;
   height: 40px;
@@ -117,13 +117,6 @@ wc-arrow-down.arrow {
   @include phones() {
     transform: rotate(-90deg);
   }
-}
-
-wc-arrow-down.back {
-  width: 40px;
-  height: 40px;
-  align-self: center;
-  transform: rotate(90deg);
 }
 
 .dropdown {
@@ -167,12 +160,7 @@ wc-arrow-down.back {
 
 .dropdown-content {
   overflow-y: auto;
-  max-height: 70vh;
-
-  @include phones() {
-    overflow: initial;
-    max-height: initial;
-  }
+  max-height: calc(100vh - 120px);
 }
 
 .dropdown-link {

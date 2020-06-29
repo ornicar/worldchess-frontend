@@ -27,7 +27,7 @@ export class MovesNavigationSliderComponent implements AfterContentChecked {
 
   @Output() sliderChanged = new EventEmitter();
 
-  @ViewChild('livePosition', { read: ElementRef }) livePosition: ElementRef;
+  @ViewChild('livePosition', { read: ElementRef, static: false }) livePosition: ElementRef;
 
   get value() {
     return (this.moves || []).indexOf(this.selectedMove);

@@ -1,0 +1,72 @@
+<div class="result-game__preloader" *ngIf="(isResultShown$ | async) && !(standing$ | async)">
+  <svg-preloader class="result-game__preloader-icon"></svg-preloader>
+</div>
+<ng-container *ngIf="(standing$ | async)">
+  <ng-container *ngIf="playerType$ | async as type">
+    <ng-container *ngIf="gameRatingMode$ | async as mode">
+      <div class="result-game__rating-total result-game__rating-total--block" *ngIf="standing$ | async">
+        {{(standing$ | async)?.rank}}{{tournamentService.rankOrderText((standing$ | async)?.rank) | async }}
+        <div class="result-game__rating-total-subtitle">
+          {{ 'PART_OF_SPEECH.PLACE_SOFA' | translate }},<br>{{ 'MESSAGES.ROUND' | translate }} {{ 'TEXT.IN_PROGRESS' | translate }}
+        </div>
+      </div>
+      <div class="result-game__rating-total result-game__rating-total--block" *ngIf="standing$ | async">
+        {{tournamentService.getFullValue((standing$ | async)?.points)}}
+        <div class="half-value" *ngIf="tournamentService.haveHalfValue((standing$ | async)?.points)"><span>1</span><span>2</span></div>
+        <div class="result-game__rating-total-subtitle">
+          {{ 'GAME.POINTS' | translate }} ({{resultDelta > 0 ? '+' : ''}}{{tournamentService.getFullValue(resultDelta)}}
+          <div class="half-value" *ngIf="tournamentService.haveHalfValue(resultDelta)"><span>1</span><span>2</span></div>)
+        </div>
+      </div>
+      <ng-container [ngSwitch]="type">
+        <ng-container *ngSwitchCase="PlayerType.WCPlayer">
+          <div class="result-game result-game--reverse"
+               *ngIf="mode === GameRatingMode.RATED">
+            <div class="result-game__rating">
+              <div class="result-game__rating-total result-game__rating-total--mb-0">
+                {{(player$ | async).rating}}
+                <svg-hexagon-empty class="icon-hexagon"></svg-hexagon-empty>
+              </div>
+              <div class="result-game__rating-total-subtitle">
+                {{ 'GAME.INTERNAL_RATING' | translate }}({{(ratingChange$ | async) > 0 ? '+' : ''}}{{(ratingChange$ | async) ? (ratingChange$ | async) : 0}})
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="PlayerType.FidePlayer">
+          <div class="result-game result-game--reverse"
+               *ngIf="mode === GameRatingMode.RATED">
+            <div class="result-game__rating">
+              <div class="result-game__rating-total">
+                {{(player$ | async).rating}}
+                <svg-hexagon-empty class="icon-hexagon"></svg-hexagon-empty>
+              </div>
+              <div class="result-game__rating-total-subtitle">
+                {{ 'GAME.INTERNAL_RATING' | translate }}({{(ratingChange$ | async) > 0 ? '+' : ''}}{{(ratingChange$ | async) ? (ratingChange$ | async) : 0}})
+              </div>
+            </div>
+          </div>
+          <div class="result-game"
+               *ngIf="mode === GameRatingMode.FIDERATED">
+            <div class="result-game__rating">
+              <div class="result-game__rating-total">
+                {{(player$ | async).rating}}
+                <svg-logo-fide class="icon icon--logo-fide"></svg-logo-fide>
+              </div>
+              <div class="result-game__rating-total-subtitle">
+                {{ 'OTHER.FIDE_ONLINE_RATING' | translate }}({{(ratingChange$ | async) > 0 ? '+' : ''}}{{(ratingChange$ | async) ? (ratingChange$ | async) : 0}})
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="isLastTour$ | async">
+        <div class="tournament-finish">
+          <div class="tournament-finish__all-played">{{ 'TEXT.PLAYED_ALL_YGAMES' | translate }}</div>
+            <a class="tournament-finish__go-to-tournament"
+            (click)="goToLobby()">{{ 'MESSAGES.SEE_RESULTS' | translate }} <svg-arrow-right class="icon"></svg-arrow-right></a>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

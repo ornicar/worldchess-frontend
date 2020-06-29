@@ -1,0 +1,81 @@
+:host-context(svg-preloader) svg {
+  width: 52px;
+  height: 52px;
+  fill: #D2D2D2;
+  animation: rotation 1s linear infinite;
+}
+
+:host-context(.site-preloader) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+  .icon {
+    height: auto;
+  }
+}
+
+:host-context(.settings__body-aside) {
+  fill: #fff;
+  opacity: 0.15;
+}
+
+
+:host-context(.icon_find-game){
+  width: 30px;
+  margin-left: 20px;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+:host-context(.icon_youtube){
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+:host-context(.btn-new){
+  svg {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+:host-context(.search-result){
+  svg {
+    width: 35px !important;
+    height: 35px !important;
+  }
+}
+
+
+:host-context(.icon_register){
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    width: 52px;
+    height: 52px;
+    fill: #D2D2D2;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

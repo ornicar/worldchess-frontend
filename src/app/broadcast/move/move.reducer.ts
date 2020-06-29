@@ -1,7 +1,7 @@
-import {EntityState, EntityAdapter, createEntityAdapter, Update} from '@ngrx/entity';
-import {CurrentMovesOnBoards, IMove, IMovePosition, IPredictPosition, SortedMovesOnBoards} from './move.model';
+import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/entity';
+import { CurrentMovesOnBoards, IMove, IMovePosition, IPredictPosition } from './move.model';
 import { MoveActions, MoveActionTypes } from './move.actions';
-import {createFeatureSelector, createSelector} from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface State extends EntityState<IMove> {
   enableAutoSelect: boolean;

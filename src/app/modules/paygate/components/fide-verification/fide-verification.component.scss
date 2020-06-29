@@ -1,0 +1,172 @@
+@import 'variables-new';
+@import 'media-new';
+
+.fide__body {
+  display: flex;
+  margin: 0 -15px;
+  flex: 0 0 auto;
+
+  @include phones() {
+    flex-direction: column;
+    padding-right: 0;
+  }
+}
+
+// .fide__photo-col {
+//   flex: 0 0 auto;
+//   width: 260px;
+//   padding: 6px 0 0;
+//   padding-left: 33px;
+
+//   @include phones() {
+//     padding: 0;
+//   }
+// }
+
+// .create-fide--error {
+//   margin: 0 0 10px 15px;
+//   color: #ff7070;
+//   width: 300px;
+// }
+
+.fide__footer-text {
+  font: 400 15px/20px $gerbera-font;
+  color: #fff;
+  margin-left: auto;
+
+  @include phones() {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+
+    &:hover {
+      color: #000;
+      .icon {
+        fill: #000;
+      }
+      &:visited {
+        color: #000;
+      }
+    }
+
+    .icon {
+      width: 5px;
+      height: 20px;
+      fill: #fff;
+      margin-left: 5px;
+    }
+
+    &:visited {
+      color: #fff;
+    }
+  }
+}
+
+.fide__footer {
+  display: flex;
+  margin: 0 -5px;
+  padding-top: 10px;
+  margin-top: auto;
+  @include phones() {
+    flex: 0 0 auto;
+    flex-direction: column-reverse;
+  }
+}
+
+.fide__footer-coll {
+  display: flex;
+  align-items: flex-end;
+  flex: 1 1 auto;
+  padding: 0 5px;
+  @include phones() {
+    width: 100%;
+  }
+}
+
+.fide__coll {
+  flex: 1 1;
+  padding: 0 15px;
+}
+
+.fide__placeholder-image {
+  display: none;
+  margin-bottom: 5px;
+  img {
+    width: 100%;
+  }
+}
+
+.fide__list {
+  margin-bottom: 15px;
+  li {
+    list-style: disc;
+    margin-left: 17px;
+    font: 300 15px/20px $gerbera-font;
+    margin-bottom: 6px;
+
+    a {
+      color: #fff;
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}
+
+.fide__pasport-selfie {
+  ::ng-deep {
+    .paygate-image-upload__handler {
+      width: 100%;
+      height: 348px;
+
+      &:before {
+        background-image: url('./../../../../../../src/assets/Rectangle-3.png');
+      }
+
+      @include phones() {
+        height: auto;
+      }
+    }
+
+    .paygate-image-upload__handler--height {
+      @include phones() {
+        height: 200px;
+      }
+    }
+
+
+    .paygate-image-upload__img--bg {
+      display: none;
+    }
+
+    .paygate-image-upload__img--circle {
+      border-radius: 0;
+    }
+  }
+}
+
+wc-btn-with-loading {
+  margin-right: 15px;
+  width: auto;
+}
+
+.register__head {
+  margin-bottom: 37px;
+}
+
+.register__title {
+  max-width: 65%;
+}
+
+.register__text--width {
+  max-width: 335px;
+  @include phones() {
+    flex: 1 1 auto;
+    margin-bottom: 0;
+  }
+}

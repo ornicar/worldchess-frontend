@@ -1,13 +1,13 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, ViewEncapsulation} from '@angular/core';
-import {select, Store} from '@ngrx/store';
-import {Color} from 'chessground/types';
-import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {filter, map, switchMap} from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Color } from 'chessground/types';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import * as fromRoot from '../../../../../reducers';
-import {OnChangesInputObservable, OnChangesObservable} from '../../../../../shared/decorators/observable-input';
-import {IBoard} from '../../../../core/board/board.model';
-import {IPlayer} from '../../../../core/player/player.model';
-import {selectPlayerById} from '../../../../core/player/player.reducer';
+import { OnChangesInputObservable, OnChangesObservable } from '../../../../../shared/decorators/observable-input';
+import { IBoard } from '../../../../core/board/board.model';
+import { IPlayer } from '../../../../core/player/player.model';
+import { selectPlayerById } from '../../../../core/player/player.reducer';
 
 @Component({
   selector: 'wc-chess-player',
@@ -37,6 +37,8 @@ export class ChessPlayerComponent implements OnChanges {
   player$: Observable<IPlayer> = combineLatest(this.board$, this.playerColor$).pipe(
     filter(([board, playerColor]) => Boolean(board && playerColor)),
     map(([board, playerColor]) => playerColor === 'white' ? board.white_player : board.black_player),
+    filter(player => !!player),
+    map(player => typeof player === 'number' ? player : player.id),
     switchMap(playerId =>
       this.store$.pipe(
         select(this.selectPlayerById, { playerId })

@@ -1,0 +1,167 @@
+<div class="wrapper">
+  <div class="menu-container">
+    <main-menu menu-section="mainMenu"></main-menu>
+  </div>
+  <div class="main-page">
+    <div class="main-page__row main-page__row--mb">
+      <div class="main-page__col main-page__col--mb">
+        <main-page-header [item]="(items$ | async)[0]" [barItem]="(items$ | async)[1]"></main-page-header>
+      </div>
+    </div>
+    <div class="main-page__row">
+      <div class="main-page__col">
+        <main-page-news [mainBannerItem]="(items$ | async)[2]" [newsBannerItem]="(items$ | async)[3]"></main-page-news>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[5]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[4]"></main-page-component-holder>
+        </div>
+      </div>
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[5]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[6]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder full="true" [item]="(items$ | async)[6]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[8]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[7]"></main-page-component-holder>
+        </div>
+      </div>
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[8]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[8]">
+      <div class="main-page__col">
+          <main-page-component-holder [item]="(items$ | async)[9]"></main-page-component-holder>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[11]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[10]"></main-page-component-holder>
+        </div>
+      </div>
+      <div class="main-page__col ">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[11]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[12]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder full="true" [item]="(items$ | async)[12]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[14]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[13]"></main-page-component-holder>
+        </div>
+      </div>
+      <div class="main-page__col ">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[14]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[14]">
+      <div class="main-page__col">
+        <main-page-component-holder [item]="(items$ | async)[9]"></main-page-component-holder>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[16]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[15]"></main-page-component-holder>
+        </div>
+      </div>
+      <div class="main-page__col ">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[16]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[17]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder full="true" [item]="(items$ | async)[17]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[19]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[18]"></main-page-component-holder>
+        </div>
+      </div>
+      <div class="main-page__col ">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[19]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row"  *ngIf="(items$ | async)[19]">
+      <div class="main-page__col">
+        <main-page-component-holder [item]="(items$ | async)[9]"></main-page-component-holder>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[21]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[20]"></main-page-component-holder>
+        </div>
+      </div>
+      <div class="main-page__col ">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[21]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row">
+      <div class="main-page__col">
+        <main-page-component-holder [item]="(items$ | async)[22]"></main-page-component-holder>
+      </div>
+    </div>
+    <div class="main-page__row" *ngIf="(items$ | async)[24]">
+      <div class="main-page__col">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[23]"></main-page-component-holder>
+        </div>
+      </div>
+      <div class="main-page__col ">
+        <div class="main-page__cell">
+          <main-page-component-holder [item]="(items$ | async)[24]"></main-page-component-holder>
+        </div>
+      </div>
+    </div>
+    <div class="main-page__row"  *ngIf="(items$ | async)[24]">
+      <div class="main-page__col">
+        <main-page-component-holder [item]="(items$ | async)[9]"></main-page-component-holder>
+      </div>
+    </div>
+    <div class="main-page__row">
+      <div class="main-page__col">
+        <div class="main-page-footer">
+          <wc-main-page-footer></wc-main-page-footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,9 +1,11 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
+@import 'variables.scss';
+@import 'media.scss';
 
 :host {
+  position: relative;
   display: flex;
   flex: 2;
+  z-index: z-index(base, 1);
 }
 
 .results-list-circular {
@@ -27,6 +29,7 @@
   display: flex;
   align-self: stretch;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .results-list-circular__elem {
@@ -89,6 +92,7 @@
 
 .results-list-circular__name {
   font: 300 28px/28px $gerbera-font;
+  overflow: hidden;
   word-wrap: break-word;
   @include tablets-big() {
     font: 300 22px/33px $gerbera-font;
@@ -96,7 +100,13 @@
 }
 
 .results-list-circular__name-text {
+  display: inline-block;
+  padding-bottom: 5px;
   margin-right: 20px;
+
+  @include phones() {
+    display: block;
+  }
 }
 
 .results-list-circular__flag {
@@ -114,6 +124,10 @@
     height: 100%;
     background-color: #ccc;
   }
+
+  @include phones() {
+    display: block;
+  }
 }
 
 .results-list-circular__count {
@@ -123,7 +137,8 @@
   align-items: center;
   height: 84px;
   margin-top: auto;
-  min-width: 98px;
+  min-width: 115px;
+  flex: 0 0 auto;
   color: #4a4a4a;
   font: 300 120px/120px $gerbera-font;
   @include tablets-big() {

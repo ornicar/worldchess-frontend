@@ -1,0 +1,131 @@
+@import 'variables-new';
+@import 'media-new';
+
+.select-new-wrapper {
+  display: flex;
+}
+
+.select-new-dash {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  margin-top: 18px;
+  flex: 0 0 auto;
+  margin-right: 9px;
+
+  &:after {
+    content: '';
+    display: block;
+    width: 45px;
+    height: 1px;
+    background-color: #000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  @include phones-small() {
+    display: none;
+  }
+}
+
+.select-new {
+  position: relative;
+  margin-right: 9px;
+  min-width: 70px;
+  width: 100%;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 14px;
+    right: 0px;
+    transform: rotate(-45deg);
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+  }
+
+  &.select-new--red {
+    &:before {
+      border-left: 1px solid #E30000;
+      border-bottom: 1px solid #E30000;
+    }
+
+    select {
+      border-bottom: 1px solid rgba(#E30000, 0.5);
+    }
+  }
+
+  select {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    color: #fff;
+    font: 300 22px/27px $gerbera-font;
+    border-bottom: 1px solid rgba(#fff, 0.5);
+    border-radius: 0;
+    appearance: none;
+    padding: 19px 0 6px;
+    cursor: pointer;
+    -webkit-appearance: none;
+
+    &:hover:not([disabled]) {
+      border-bottom: 1px solid #fff;
+    }
+
+    &:checked {
+      border-bottom: 1px solid rgba(#fff, 1);
+    }
+
+    &.ng-valid {
+      border-bottom: 1px solid #fff;
+    }
+
+  }
+
+  option {
+    color: #000;
+  }
+}
+
+.select-new {
+  select:focus,
+  select.ng-valid:not(.ng-pristine),
+  select.ng-dirty:disabled {
+      & + .select-new__placeholder {
+          top: 8px;
+          left: 0;
+          font: 300 15px/20px $gerbera-font;
+          color: #fff;
+
+          @include phones-small() {
+              font: 300 12px/15px $gerbera-font;
+          }
+      }
+  }
+}
+
+.select-new__placeholder {
+  position: absolute;
+  top: 60%;
+  left: 0;
+  color: #fff;
+  font: 300 22px/25px $gerbera-font;
+  transform: translate(0, -50%);
+  transition: 0.15s;
+  color: rgba(#fff, 0.5);
+
+  @include phones-small() {
+      font: 300 18px/18px $gerbera-font;
+  }
+
+  &--error {
+      color: #FF6F32 !important;
+  }
+}
+

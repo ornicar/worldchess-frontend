@@ -63,7 +63,7 @@ export class ChessBoardGridItemComponent implements OnChanges {
 
   canUseFavorites$ = this.store$.pipe(select(selectCanUseFavorites));
 
-  isFavorites$ = combineLatest(this.board$, this.store$.pipe(select(selectFavoriteBoardsIds))).pipe(
+  isFavorites$ = combineLatest([this.board$, this.store$.pipe(select(selectFavoriteBoardsIds))]).pipe(
     map(([board, ids]) => ids.includes(board.id))
   );
 
@@ -150,6 +150,13 @@ export class ChessBoardGridItemComponent implements OnChanges {
     this.isHovered = false;
     this.cd.markForCheck();
   }
+
+  @HostListener('touchend')
+  private onMouseClick() {
+    this.isHovered = true;
+    this.cd.markForCheck();
+  }
+
 
   onToggleFavorite(e) {
     this.isFavorites$.pipe(

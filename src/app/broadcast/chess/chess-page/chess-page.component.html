@@ -6,11 +6,17 @@
 
     <ng-container slot="main">
       <wc-livestream-board-swap-button *ngIf="!boardInCenter" (click)="toggleLivestreamBoard()"></wc-livestream-board-swap-button>
-      <wc-chess-single-game-container [isMinimalMode]="!boardInCenter" [tournament]="tournament" [tour]="tour" [board]="board" [withoutBoard]="withoutBoard"></wc-chess-single-game-container>
+      <wc-chess-single-game-container
+        [tournament]="tournament"
+        [tour]="tour"
+        [board]="board"
+        [withoutBoard]="withoutBoard"
+        [class.not-in-center]="!boardInCenter">
+      </wc-chess-single-game-container>
     </ng-container>
 
     <ng-container slot="predictions">
-      <wc-predictions *ngIf="gameState?.selectedMove?.prediction" [gameState]="gameState"></wc-predictions>
+      <wc-predictions [gameState]="gameState"></wc-predictions>
     </ng-container>
 
     <ng-container slot="livestream">
@@ -30,7 +36,7 @@
     </ng-container>
 
     <ng-container slot="aside">
-      <wc-chat [board]="gameState?.board"></wc-chat>
+      <wc-chat [board]="gameState?.board" [tour]="tour"></wc-chat>
     </ng-container>
   </wc-chess-page-layout>
 </ng-container>

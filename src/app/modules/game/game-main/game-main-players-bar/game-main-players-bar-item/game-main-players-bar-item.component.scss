@@ -1,0 +1,22 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  .bar-item-root {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 20px;
+  }
+}
+
+.bar-item-root__result {
+  display: flex;
+  color: #fff;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 43px;
+  font: 300 15px/20px $gerbera-font;
+  font-variant: all-small-caps;
+}

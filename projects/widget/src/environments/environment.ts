@@ -11,7 +11,7 @@ export const environment = {
   twitterAppId: buildEnvironments['DJANGO_SOCIAL_AUTH_TWITTER_KEY'],
   stripeKey: buildEnvironments['STRIPE_SECRET_KEY'],
   endpoint: 'https://chess.usetech.ru/api',
-  backendUrl: 'https://chess.usetech.ru',
+  applicationUrl: 'https://chess.usetech.ru',
   newsUrl: 'https://setka-chess.usetech.ru/wp-json/wp/v3',
   socket: 'wss://chess.usetech.ru/ws',
   tournamentOlympiadId: 6,

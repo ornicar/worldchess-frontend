@@ -1,0 +1,68 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  padding-top: 10px;
+
+  @include birman-media {
+    padding-top: 0;
+  }
+  .root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .lobby-button {
+      color: #FFFFFF;
+    }
+    .icon {
+      fill: #FFFFFF;
+
+      img {
+        display: block;
+        margin: -1px 0;
+      }
+    }
+    .icon-row {
+      display: flex;
+    }
+    .lobby {
+      padding-top:2px;
+      height: 24px;
+      display: block;
+    }
+  }
+
+  .btn-new--spall {
+    margin-bottom: 10px;
+
+    ::ng-deep {
+      .btn-new {
+        min-width: 100% !important;
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .btn-auto-height {
+    flex: 1 1 auto;
+  }
+}
+
+.btn-block {
+  display: flex;
+  border: 1px solid rgba(82, 82, 82, 0.5);
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 3px;
+  cursor: pointer;
+  flex: 1 1 auto;
+
+  &:hover {
+    border: 1px solid rgba(#fff, 1);
+  }
+}

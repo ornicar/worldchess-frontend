@@ -1,0 +1,147 @@
+@import "variables-new";
+@import "media-new";
+
+.tournament-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #F9F8E6;
+  border-radius: 3px;
+  height: 90px;
+  color: #000;
+  padding: 5px 10px;
+  min-width: 290px;
+  cursor: pointer;
+
+  .tournament-card-inner {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+
+  .tournament-card-inner__image {
+    max-width: 115px;
+    flex: 1 0 auto;
+    height: 100%;
+  }
+
+  .tournament-card-inner__content {
+    flex: 1;
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .tournament-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .flag-icon{
+    position: relative;
+    width: 14px;
+    height: 14px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 4px;
+
+    wc-country-flag {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 100%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .tournament-card-inner__bottom-row {
+    display: flex;
+    align-items: center;
+    font: 300 15px/23px $gerbera-font;
+  }
+
+  &.full-width-mobile {
+    @include birman-media {
+      width: 100% !important;
+    }
+  }
+
+  &.fide-tournament {
+    background: $brown-2;
+    color: #000;
+
+    .tournament-stat__icon {
+      fill: #000;
+    }
+
+    &.tournament-card--blitz {
+      .tournament-card__trace {
+        border-right: 15px solid $brown-2;
+
+        &:after,
+        &:before {
+          border-right: 15px solid $brown-2;
+        }
+      }
+    }
+
+
+    &.tournament-card--bullet {
+      &:before {
+        background: $brown-2;
+      }
+
+      .tournament-card__trace {
+        border-left: 34px solid $brown-2;
+
+        &:after,
+        &:before {
+          border-left: 34px solid $brown-2;
+        }
+      }
+    }
+  }
+
+  &.empty-padding {
+    padding: 0;
+    min-width: 0;
+  }
+}
+
+.tournament-card-inner__gender {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 13px;
+  margin-right: 4px;
+
+  ::ng-deep {
+    svg {
+      display: block;
+    }
+  }
+}
+
+.tournament-card-inner__count,
+.tournament-card-inner__country {
+  margin-right: 8px;
+}
+
+
+.tournament-title {
+  color: $blue-new;
+  font: 300 15px/16px $gerbera-font;
+  min-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.additional-title {
+  font: 300 15px/16px $gerbera-font;
+  min-height: 20px;
+}

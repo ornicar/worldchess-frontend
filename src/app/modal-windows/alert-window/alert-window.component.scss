@@ -1,25 +1,39 @@
-@import "../../../html/css/variables";
-@import "../../../html/css/media";
+@import "variables-new";
+@import "media-new";
 
-p.mat-dialog-title {
-  text-align: center;
-  font: 400 24px/34px $gerbera-font;
+.alert {
+  display: flex;
+  background-color: $blue-new;
+  padding: 6px 10px;
+  border-radius: 4px;
 }
 
-div.mat-dialog-content {
-  text-align: center;
-  margin: 60px 0;
-  font-size: 24px;
+.alert__text {
+  color: white;
+  font: 400 15px/20px $cofo-sans-font;
+  padding-right: 20px;
 }
 
-div.mat-dialog-actions {
+.alert__mat-dialog-actions {
+  display: flex;
+  align-items: center;
+}
+
+.alert__alert__button {
   display: flex;
   justify-content: center;
-  margin-bottom: 0;
+  align-items: center;
+  width: 64px;
+  height: 32px;
+  border-radius: 3px;
+  font: 400 15px/20px $cofo-sans-font;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  background-color: $yellow-new;
+  border: 0;
 
-  button {
-    background-color: white;
-    padding: 0 25px;
-    box-shadow: 0 0 45px #63FFA4;
+  &:hover {
+    background-color: $yellow-new-hover;
   }
 }
+

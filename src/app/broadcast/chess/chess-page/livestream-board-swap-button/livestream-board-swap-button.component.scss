@@ -12,11 +12,16 @@
   border-radius: 50%;
   padding: 7px;
   fill: $blue;
-  z-index: z-index(base);
+  z-index: z-index(base, 1);
   cursor: pointer;
-  transition: 0.3s;
+  transition: .3s;
+
   &:hover {
     transform: scale(1.1, 1.1);
+  }
+
+  @include height-650() {
+    top: 63px;
   }
   @include phones() {
     display: none;

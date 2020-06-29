@@ -1,0 +1,32 @@
+<div class="root lang-{{accountService.getLanguage() | async }}">
+  <table class="champion-table">
+    <thead class="champion-table__head">
+      <tr>
+        <td class="champion-table__title" style="position: relative; top: 1px;">{{ 'GAME.CHAMPIONS' | translate }}</td>
+        <td class="champion-table__rapid">{{ 'GAME.RAPID' | translate }}</td>
+        <td class="champion-table__blitz">{{ 'GAME.BLITZ' | translate }}</td>
+        <td class="champion-table__bullet">{{ 'GAME.BULLET' | translate }}</td>
+        <td class="champion-table__country desctop">{{ 'PROFILE.FROM' | translate }}</td>
+        <td class="champion-table__age desctop">{{ 'PROFILE.AGE' | translate }}</td>
+      </tr>
+    </thead>
+    <tbody class="champion-table__body" wcHideScrollbar>
+      <tr *ngFor="let item of bestPlayers$ | async">
+        <td class="avatar desctop">
+          <div class="avatar__icon">
+            <img [src]="item.profile && item.profile.avatar && item.profile.avatar.full || ''"/>
+          </div>
+        </td>
+        <td class="champion-table__title">{{item.profile && item.profile.full_name}}</td>
+        <td class="champion-table__rapid">{{item.worldchess_rapid}}</td>
+        <td class="champion-table__blitz">{{item.worldchess_blitz}}</td>
+        <td class="champion-table__bullet">{{item.worldchess_bullet}}</td>
+        <td class="champion-table__country champion-table__country--letter-spacing desctop">{{(item.profile && item.profile.country) | country_code | async}}</td>
+        <td class="champion-table__age desctop">{{(item.profile && item.profile.birth_date) | age}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="champion-table__footer">
+    <a href="#" class="champion-table__button">{{ 'GAME.VIEW_TOP_TEN' | translate }}</a>
+  </div>
+</div>

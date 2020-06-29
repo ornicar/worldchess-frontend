@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ScreenFixedDirective} from './screen-fixed.directive';
 import {ScreenStateService} from './screen-state.service';
 import { ScreenSliderComponent } from './screen-slider.component';
 
@@ -12,12 +11,26 @@ import { ScreenSliderComponent } from './screen-slider.component';
     ScreenStateService
   ],
   declarations: [
-    ScreenFixedDirective,
     ScreenSliderComponent
   ],
   exports: [
-    ScreenFixedDirective,
     ScreenSliderComponent
   ]
 })
-export class ScreenModule { }
+export class ScreenModule {
+  constructor (@Optional() @SkipSelf() parentModule: ScreenModule) {
+    if (parentModule) {
+      throw new Error(
+        'ScreenModule is already loaded. Import it in the AppModule only');
+    }
+  }
+
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: ScreenModule,
+      providers: [
+        ScreenStateService,
+      ],
+    };
+  }
+}

@@ -1,0 +1,152 @@
+<div class="game-settings">
+  <div class="game-settings__popup">
+    <h2 class="game-settings__title">{{ 'SETTINGS.APPEARANCE' | translate }}</h2>
+    <div class="game-settings__content">
+      <div class="game-settings__btn-close">
+        <button mat-button mat-dialog-close class="btn"></button>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <h3 class="game-settings__sub-title">{{ 'SETTINGS.BOARD' | translate }}</h3>
+          <mat-button-toggle-group name="board_and_pieces" aria-label="Board and pieces"
+            [(ngModel)]="data.board_style">
+            <mat-button-toggle value="standard" aria-label="Standard">
+              <div class="game-settings__board">
+                <img class="game-settings__board-img mobile-hidden"
+                  src="../../../assets/images/game-settings-boards/standard.png" alt="standard.png" />
+                <img class="game-settings__board-img desktop-hidden"
+                  src="../../../assets/images/game-settings-boards-mobile/standard.png"
+                  alt="standard.png" />
+                <div class="game-settings__board-text">{{ 'SETTINGS.STANDARD' | translate }}</div>
+                <div class="game-settings__board-checked">
+                  <svg-done class="icon"></svg-done>
+                </div>
+              </div>
+            </mat-button-toggle>
+            <mat-button-toggle value="world_chess_board" aria-label="World Chess board">
+              <div class="game-settings__board">
+                <img class="game-settings__board-img mobile-hidden"
+                  src="../../../assets/images/game-settings-boards/world-chess-board.png"
+                  alt="world-chess-board.png" />
+                <img class="game-settings__board-img desktop-hidden"
+                  src="../../../assets/images/game-settings-boards-mobile/world-chess-board.png"
+                  alt="world-chess-board.png" />
+                <div class="game-settings__board-text">{{ 'SETTINGS.WC_BOARD' | translate }}</div>
+                <div class="game-settings__board-checked">
+                  <svg-done class="icon"></svg-done>
+                </div>
+              </div>
+            </mat-button-toggle>
+            <mat-button-toggle value="textbook" aria-label="Textbook">
+              <div class="game-settings__board">
+                <img class="game-settings__board-img mobile-hidden"
+                  src="../../../assets/images/game-settings-boards/textbook.png" alt="textbook.png" />
+                <img class="game-settings__board-img desktop-hidden"
+                  src="../../../assets/images/game-settings-boards-mobile/textbook.png"
+                  alt="textbook.png" />
+                <div class="game-settings__board-text">{{ 'SETTINGS.TEXTBOOK' | translate }}</div>
+                <div class="game-settings__board-checked">
+                  <svg-done class="icon"></svg-done>
+                </div>
+              </div>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="col-sm mobile-hidden">
+          <h3 class="game-settings__sub-title">{{ 'SETTINGS.SOUNDS' | translate }}</h3>
+          <mat-checkbox [(ngModel)]="data.is_sound_enabled">{{ 'SETTINGS.SOUND' | translate }}</mat-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <h3 class="game-settings__sub-title">{{ 'SETTINGS.LAST_MOVE' | translate }}</h3>
+          <mat-button-toggle-group name="last_move" aria-label="Last move"
+            [(ngModel)]="data.board_last_move_style">
+            <mat-button-toggle value="non_showing" aria-label="Don't show">
+              <div class="game-settings__board">
+                <img class="game-settings__board-img mobile-hidden"
+                  src="../../../assets/images/game-settings-boards/don-t-show.png"
+                  alt="don-t-show.png" />
+                <img class="game-settings__board-img desktop-hidden"
+                  src="../../../assets/images/game-settings-boards-mobile/don-t-show.png"
+                  alt="don-t-show.png" />
+                <div class="game-settings__board-text">{{ 'SETTINGS.DON_SHOW' | translate }}</div>
+                <div class="game-settings__board-checked">
+                  <svg-done class="icon"></svg-done>
+                </div>
+              </div>
+            </mat-button-toggle>
+            <mat-button-toggle value="highlight" aria-label="Highlight">
+              <div class="game-settings__board">
+                <img class="game-settings__board-img mobile-hidden"
+                  src="../../../assets/images/game-settings-boards/highlight.png"
+                  alt="highlight.png" />
+                <img class="game-settings__board-img desktop-hidden"
+                  src="../../../assets/images/game-settings-boards-mobile/highlight.png"
+                  alt="highlight.png" />
+                <div class="game-settings__board-text">{{ 'SETTINGS.HIGHLIGHT' | translate }}</div>
+                <div class="game-settings__board-checked">
+                  <svg-done class="icon"></svg-done>
+                </div>
+              </div>
+            </mat-button-toggle>
+            <div class="game-settings__board game-settings__board--stub">
+            </div>
+            <!-- <mat-button-toggle value="arrow" aria-label="arrow">
+                <div class="game-settings__board">
+                  <img class="game-settings__board-img" src="../../../assets/images/game-settings-boards/arrow.png" alt="arrow.png" />
+                  <div class="game-settings__board-text">Arrow</div>
+                  <div class="game-settings__board-checed">
+                    <svg-done class="icon"></svg-done>
+                  </div>
+                </div>
+              </mat-button-toggle> -->
+          </mat-button-toggle-group>
+        </div>
+        <div class="col-sm">
+          <h3 class="game-settings__sub-title">{{ 'SETTINGS.LEGAL_MOVES' | translate }}</h3>
+          <mat-button-toggle-group name="legal-moves" aria-label="Legal moves"
+            [(ngModel)]="data.board_legal_move_style">
+            <mat-button-toggle value="non_showing" aria-label="Don't show">
+              <div class="game-settings__board">
+                <img class="game-settings__board-img mobile-hidden"
+                  src="../../../assets/images/game-settings-boards/don-t-show-moves.png"
+                  alt="don-t-show-moves.png" />
+                <img class="game-settings__board-img desktop-hidden"
+                  src="../../../assets/images/game-settings-boards-mobile/don-t-show-moves.png"
+                  alt="don-t-show-moves.png" />
+                <div class="game-settings__board-text">{{ 'SETTINGS.DON_SHOW' | translate }}</div>
+                <div class="game-settings__board-checked">
+                  <svg-done class="icon"></svg-done>
+                </div>
+              </div>
+            </mat-button-toggle>
+            <mat-button-toggle value="show_with_dots" aria-label="Show with dots">
+              <div class="game-settings__board">
+                <img class="game-settings__board-img mobile-hidden"
+                  src="../../../assets/images/game-settings-boards/show-with-dots.png"
+                  alt="show-with-dots.png" />
+                <img class="game-settings__board-img desktop-hidden"
+                  src="../../../assets/images/game-settings-boards-mobile/show-with-dots.png"
+                  alt="show-with-dots.png" />
+                <div class="game-settings__board-text">{{ 'SETTINGS.SHOW_DOTS' | translate }}</div>
+                <div class="game-settings__board-checked">
+                  <svg-done class="icon"></svg-done>
+                </div>
+              </div>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="row desktop-hidden">
+          <div class="col-sm col-sm--mobile">
+            <h3 class="game-settings__sub-title">{{ 'SETTINGS.SOUNDS' | translate }}</h3>
+            <mat-checkbox [(ngModel)]="data.is_sound_enabled">{{ 'SETTINGS.SOUND' | translate }}</mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <div mat-dialog-actions>
+        <button class="game-settings__btn" mat-button [mat-dialog-close]="data">{{ 'SETTINGS.DONE' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

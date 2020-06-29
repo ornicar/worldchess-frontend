@@ -23,4 +23,4 @@
   </div>
 </div>
 
-<wc-with-fide (mobileShowForm)="mobileShowForm.emit($event)"></wc-with-fide>
+<wc-with-fide *ngIf="showFideId$ | async" (mobileShowForm)="mobileShowForm.emit($event)"></wc-with-fide>

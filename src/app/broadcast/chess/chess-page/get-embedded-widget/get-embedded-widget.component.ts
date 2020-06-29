@@ -8,8 +8,8 @@ import { selectPlayersByIds } from '@app/broadcast/core/player/player.reducer';
 import { ITour } from '@app/broadcast/core/tour/tour.model';
 import * as fromTour from '@app/broadcast/core/tour/tour.reducer';
 import { createSelector, select, Store } from '@ngrx/store';
-import { BehaviorSubject, of } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, interval, of, combineLatest } from 'rxjs';
+import { delay, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
 import { Tournament } from '../../../../broadcast/core/tournament/tournament.model';
 import { OnChangesInputObservable, OnChangesObservable } from '../../../../shared/decorators/observable-input';
@@ -66,14 +66,31 @@ export class GetEmbeddedWidgetComponent implements OnInit, OnChanges, OnDestroy 
     switchMap(tournament => tournament
       ? this.store$.pipe(select(selectToursByTournament, {tournamentId: tournament.id}))
       : of([])
-    )
+    ),
+    map((tours: ITour[]) => {
+      const orderedTours = [...tours];
+      orderedTours.sort((a, b) => {
+        return a.tour_number - b.tour_number ||
+          new Date(a.datetime_of_round_finish).getTime() - new Date(b.datetime_of_round_finish).getTime();
+      });
+      return orderedTours;
+    }),
   );
 
-  boards$ = this.tour$.pipe(
-    switchMap(tour => {
-      return tour
+  allBoards$ = this.store$.pipe(
+    select(fromBoards.selectAll),
+  );
+
+  boards$ = combineLatest([this.tour$, this.allBoards$]).pipe(
+    switchMap(([tour, allBoards]) => {
+      return tour && allBoards
         ?  this.store$.pipe(select(selectBoardsByTour, { tourId: tour.id }))
         : of([]);
+    }),
+    tap(boards => {
+      if (boards && boards.length) {
+        this.boardId = boards[0].id;
+      }
     })
   );
 
@@ -88,7 +105,9 @@ export class GetEmbeddedWidgetComponent implements OnInit, OnChanges, OnDestroy 
   private selectPlayersByIds = selectPlayersByIds();
   private boardsPlayers: IPlayer[] = [];
 
-  @ViewChild('iframeCodeEl') iframeCodeEl: ElementRef<any>;
+  public showCopied$ = new BehaviorSubject(false);
+
+  @ViewChild('iframeCodeEl', { static: true }) iframeCodeEl: ElementRef<any>;
 
   constructor(
     private store$: Store<fromBoard.State>,
@@ -116,6 +135,13 @@ export class GetEmbeddedWidgetComponent implements OnInit, OnChanges, OnDestroy 
       ).subscribe(players => {
         this.boardsPlayers = players;
       });
+
+    this.subs.showCopied = this.showCopied$.pipe(
+      filter(show => !!show),
+      delay(2000),
+    ).subscribe(() => {
+      this.showCopied$.next(false);
+    });
   }
 
   @OnChangesObservable()
@@ -158,12 +184,15 @@ export class GetEmbeddedWidgetComponent implements OnInit, OnChanges, OnDestroy 
         case Size.Narrow:
           return 'width="580" height="885"';
 
+        case Size.Responsive:
+          return 'width="100%" height="700"';
+
         default:
           return '';
       }
     };
 
-    const baseUrl = `${environment.backendUrl}/embedded-widget/tournament/${this.tournament.id}`;
+    const baseUrl = `${environment.applicationUrl}/embedded-widget/tournament/${this.tournament.id}`;
     const gameUrl = !this.wholeTournament && this.boardId ? `/pairing/${this.boardId}` : '';
     const widgetOptions = `?style=${encodeURIComponent(this.selectedStyle)}`;
 
@@ -181,10 +210,13 @@ export class GetEmbeddedWidgetComponent implements OnInit, OnChanges, OnDestroy 
     window['gtag']('event', 'close', {event_category: 'embedding', event_label: this.tournament.title});
   }
 
-  public copyToClipboard() {
-    window['gtag']('event', 'copy', {event_category: 'embedding', event_label: this.tournament.title});
+  public copyToClipboard(e: Event) {
+    if (window['gtag']) {
+      window['gtag']('event', 'copy', {event_category: 'embedding', event_label: this.tournament.title});
+    }
     try {
       const el = this.iframeCodeEl.nativeElement;
+      el.style.fontSize = '19px';
       el.select();
       const oldContentEditable = el.contentEditable;
       const oldReadOnly = el.readOnly;
@@ -209,8 +241,29 @@ export class GetEmbeddedWidgetComponent implements OnInit, OnChanges, OnDestroy 
         console.error('Unable to copy.');
       }
 
+      el.style.fontSize = null;
+      (e.target as any).focus();
+
+      this.showCopied$.next(true);
+
     } catch (err) {
       console.error('Unable to copy.');
+    }
+  }
+
+  getRoundTitle(tour: ITour): string {
+    if (tour) {
+      if (tour.tour_round_name) {
+        if (isNaN(+tour.tour_round_name)) {
+          return `Round ${tour.tour_number} ${tour.tour_round_name}`
+        } else {
+          return `Round ${tour.tour_number}.${tour.tour_round_name}`;
+        }
+      } else {
+        return `Round ${tour.tour_number}`;
+      }
+    } else {
+      return '';
     }
   }
 }

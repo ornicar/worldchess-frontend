@@ -1,0 +1,124 @@
+@import 'variables.scss';
+@import 'media.scss';
+
+.table-swiss-mobile {
+  border-collapse: collapse;
+  font: 300 18px/22px $gerbera-font;
+  margin-top: 50px;
+  width: 100%;
+  background-color: #fff;
+  transition: left .3s;
+  border-top: 1px solid rgba(#9E9E9E, 0.5);
+}
+
+.table-swiss-mobile tbody {
+  display: block;
+  height: calc(100vh - 130px);
+  overflow: auto;
+  width: 100%;
+  padding-bottom: 120px;
+}
+
+.table-swiss-mobile tbody tr,
+.table-swiss-mobile thead tr {
+  display: flex;
+}
+
+.table-swiss-mobile__col {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  border-bottom: 1px solid rgba(#9E9E9E, 0.5);
+  border-right: 1px solid rgba(#9E9E9E, 0.5);
+  padding: 10px;
+  height: 80px;
+
+  &:last-child {
+    border-right: 0;
+    text-align: center;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+}
+
+.table-swiss-mobile__text-bold {
+  font-weight: 700;
+}
+
+.table-swiss-mobile__half {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-left: 10px;
+  width: 18px;
+  height: 25px;
+  font: 400 12px/13px $gerbera-font;
+
+  span {
+    &:last-child {
+      align-self: flex-end;
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    height: 25px;
+    width: 1px;
+    background-color: #000;
+  }
+}
+
+.table-swiss-mobile__count {
+  display: inline-flex;
+  align-items: center;
+}
+
+.table-swiss-mobile__player {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.table-swiss-mobile__flag {
+  display: block;
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: 23px;
+  height: 15px;
+
+  .flag-icon {
+    display: block;
+  }
+}
+
+.table-swiss-mobile__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+
+  &:after,
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) rotate(45deg);
+  }
+
+  &:before {
+    transform: translate(-50%,-50%) rotate(-45deg);
+  }
+}

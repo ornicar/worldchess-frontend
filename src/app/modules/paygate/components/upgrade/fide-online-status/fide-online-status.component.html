@@ -1,0 +1,192 @@
+<div class="register__options-control register__options-control--label">
+  <div class="register__img" [class.hide-image]="showFideFeatures">
+    <div class="register__img-wrapper">
+      <img src="../../../../../assets/img/image-2.jpg" alt="image.jpg">
+    </div>
+  </div>
+  <label class="toggle-label toggle-embedded">
+    <ng-container *ngIf="fidePurchased$ | async">
+      <div class="purchased" [ngSwitch]="fideIdState$ | async">
+        <ng-container *ngSwitchCase="2">
+          <ng-container *ngIf="fidePurchased?.cancel_at_period_end; else notCanceled">
+            <div class="purchased__icon canceled-check"
+                 *ngIf="!(isCancelRenewInProgress | async)">
+              <svg-applied class="icon" ></svg-applied>
+            </div>
+            <svg-preloader class="preloader"
+                           *ngIf="isCancelRenewInProgress | async"></svg-preloader>
+            <span class="toggle-label__content">
+              <span>FIDE Online Rating</span>
+              <span class="toggle-label__price"
+                    *ngIf="fideProduct$ | async as fideProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ fideProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+                style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+            </span>
+          </ng-container>
+          <ng-template #notCanceled>
+            <div class="purchased__icon"
+                 *ngIf="!(isCancelRenewInProgress | async)">
+              <svg-applied class="icon" ></svg-applied>
+          </div>
+            <svg-preloader class="preloader"
+                           *ngIf="isCancelRenewInProgress | async"></svg-preloader>
+            <span class="toggle-label__content">
+              <span>FIDE Online Rating</span>
+              <span class="toggle-label__price"
+                    *ngIf="fideProduct$ | async as fideProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ fideProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+                    style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+            </span>
+          </ng-template>
+        </ng-container>
+        <ng-container *ngSwitchCase="1">
+          <input type="checkbox" [checked]="fideSelected$ | async" (change)="onFideSelectionChanged($event)">
+          <div class="toggle-label__btn"></div>
+          <svg-preloader class="preloader"
+                         *ngIf="isCancelRenewInProgress | async"></svg-preloader>
+          <span class="toggle-label__content">
+            <span>FIDE Online Rating</span>
+            <span class="toggle-label__price"
+                  *ngIf="fideProduct$ | async as fideProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ fideProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+                  style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+          </span>
+        </ng-container>
+        <ng-container *ngSwitchCase="0">
+          <div class="purchased__icon canceled-subscription"
+               *ngIf="!(isCancelRenewInProgress | async)">
+            <svg-icon-question class="icon" ></svg-icon-question>
+          </div>
+          <svg-preloader class="preloader"
+                         *ngIf="isCancelRenewInProgress | async"></svg-preloader>
+          <span class="toggle-label__content">
+            <span>FIDE Online Rating</span>
+            <span class="toggle-label__price"
+                  *ngIf="fideProduct$ | async as fideProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ fideProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+                  style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+          </span>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="!(fideIdState$ | async) && (needFideIdAssign$ | async)">
+        <div class="purchased__icon canceled-subscription"
+             *ngIf="!(isCancelRenewInProgress | async)">
+          <svg-icon-question class="icon" ></svg-icon-question>
+        </div>
+        <svg-preloader class="preloader"
+                       *ngIf="isCancelRenewInProgress | async"></svg-preloader>
+        <span class="toggle-label__content">
+            <span>FIDE Online Rating</span>
+            <span class="toggle-label__price"
+                  *ngIf="fideProduct$ | async as fideProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ fideProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+              style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+          </span>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!(fidePurchased$ | async)">
+      <input type="checkbox" [checked]="fideSelected$ | async" (change)="onFideSelectionChanged($event)">
+      <div class="toggle-label__btn"></div>
+      <span class="toggle-label__content">
+        <span>FIDE Online Rating</span>
+        <ng-container *ngIf="false">
+          <span class="toggle-label__price"
+                *ngIf="fideProduct$ | async as fideProduct">€<span style="font-size: 0.5em">&nbsp;</span>
+            {{ fideProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}
+            <span style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+        </ng-container>
+        <span class="toggle-label__price">
+          <span class="toggle-label__price"
+                  *ngIf="fideProduct$ | async as fideProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ fideProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+              style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+        </span>
+      </span>
+      <!-- <span class="logo-fide">
+        <svg-hexagon class="icon"></svg-hexagon>
+      </span> -->
+    </ng-container>
+  </label>
+</div>
+<div class="register__options-control">
+
+  <div class="register__options-text"
+       *ngIf="!showFideFeatures"
+       [ngSwitch]="fideIdState$ | async">
+    <span *ngSwitchCase="2">
+      <ng-container *ngIf="fidePurchased?.cancel_at_period_end; else notCanceled">
+        <span class="status-subtitle">Will freeze on {{ nextPaymentTitle$ | async }} &nbsp;</span>
+        <a (click)="resubscribe()" class="resubscribe">Resubscribe&nbsp;</a>
+        <br class="mobile-none">
+        <span>Play for FIDE Official Online Rating.<br class="mobile-none"> Become an Arena Grandmaster or receive other official titles</span>
+      </ng-container>
+      <ng-template #notCanceled>
+        <ng-container *ngIf="fidePurchased?.status === 'active'">
+          <span class="status-subtitle">Next payment: {{ nextPaymentTitle$ | async }} &nbsp;</span>
+          <a (click)="cancelSubscription()" class="cancel-subscription">Cancel...&nbsp;</a>
+          <br class="mobile-none">
+          <span>Play for FIDE Official Online Rating.<br class="mobile-none"> Become an Arena Grandmaster or receive other official titles</span>
+        </ng-container>
+      </ng-template>
+    </span>
+    <span *ngSwitchCase="1">
+      <ng-container *ngIf="fidePurchased?.cancel_at_period_end; else notCanceled">
+        <span class="status-subtitle">Will freeze on {{ nextPaymentTitle$ | async }} &nbsp;</span>
+        <a (click)="resubscribe()" class="resubscribe">Resubscribe&nbsp;</a>
+        <br class="mobile-none">
+        <span>Play for FIDE Official Online Rating.<br class="mobile-none"> Become an Arena Grandmaster or receive other official titles</span>
+      </ng-container>
+      <ng-template #notCanceled>
+        <ng-container *ngIf="fidePurchased?.status === 'active'">
+          <span class="status-subtitle">Awaiting verification &nbsp;</span>
+          <a (click)="cancelSubscription()" class="cancel-subscription">Cancel...&nbsp;</a>
+          <br class="mobile-none">
+          <span>Play for FIDE Official Online Rating.<br class="mobile-none"> Become an Arena Grandmaster or receive other official titles</span>
+        </ng-container>
+      </ng-template>
+    </span>
+    <span *ngSwitchCase="0">
+      <span class="status-subtitle">Account not verified.&nbsp;</span>
+      <a (click)="cancelSubscription()" class="cancel-subscription">Cancel...&nbsp;</a>
+      <br class="mobile-none">
+    </span>
+  </div>
+  <div class="register__options-text"
+       *ngIf="!showFideFeatures && !(fideIdState$ | async) && (needFideIdAssign$ | async)">
+    <ng-container *ngIf="fidePurchased?.cancel_at_period_end; else notCanceled">
+      <span>
+        <span class="status-subtitle">Will freeze on {{ nextPaymentTitle$ | async }} &nbsp;</span>
+        <a (click)="resubscribe()" class="resubscribe">Resubscribe&nbsp;</a>
+        <br class="mobile-none">
+        <span>Play for FIDE Official Online Rating.<br class="mobile-none"> Become an Arena Grandmaster or receive other official titles</span>
+      </span>
+    </ng-container>
+    <ng-template #notCanceled>
+      <ng-container *ngIf="fidePurchased?.status === 'active'">
+        <span>
+          <span class="status-subtitle">FIDE Chess profile information is not filled&nbsp;</span>
+          <a (click)="cancelSubscription()" class="cancel-subscription">Cancel&nbsp;</a>
+          <br class="mobile-none">
+          <span>Play for FIDE Official Online Rating.<br class="mobile-none"> Become an Arena Grandmaster or receive other official titles</span>
+        </span>
+      </ng-container>
+    </ng-template>
+  </div>
+  <div class="register__options-text"
+       *ngIf="!(fidePurchased$ | async)">
+    <span>
+      <span>Play for FIDE Official Online Rating.<br class="mobile-none"> Become an Arena Grandmaster or receive other official titles</span>
+    </span>
+  </div>
+
+  <div class="register__options-text" *ngIf="showFideFeatures">
+    <ul>
+      <li>Play for&nbsp;FIDE Official Online Rating.</li>
+      <li>Become an&nbsp;Arena Grandmaster or&nbsp;receive other official titles</li>
+      <li>Professional certified anti-cheating</li>
+      <li>Anti-fraud: official ratings on&nbsp;blockchain</li>
+      <li>Official rated online tournaments</li>
+      <li>National Championships online <a class="register__options-link" target="_blank" href="https://www.notion.so/List-of-National-Federations-that-are-part-of-the-FIDE-Online-Arena-6121c0c57026466284506a7daea58ca3">(list of Federations)</a></li>
+      <li>Compete for&nbsp;cash prizes</li>
+      <li>Access to&nbsp;FIDE Members-only online events</li>
+      <li>Complete games archive and PGN download</li>
+      <li>Tournaments Certificate download</li>
+    </ul>
+  </div>
+</div>
+<a (click)="toggleFideFeatures()"
+   class="register__options-link">{{ showFideFeatures ? 'Show less' : 'See all included features...' }}</a>

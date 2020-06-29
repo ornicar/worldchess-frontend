@@ -1,0 +1,100 @@
+<div class="my-games-wrapper">
+  <div class="menu-container">
+    <game-main-menu class="gaming-menu"></game-main-menu>
+  </div>
+  <div class="my-games">
+    <div class="my-games__header-container">
+      <div class="my-games__title">
+        {{'TEXT.MY_PLAYED_GAMES' | translate }}
+      </div>
+      <div class="my-games__search-container">
+<!--        <label class="my-games__input">-->
+<!--          <svg-magnifier class="icon"></svg-magnifier>-->
+<!--          <input type="text" placeholder="Date, rating, opponent, etc">-->
+<!--        </label>-->
+      </div>
+    </div>
+    <div class="my-games__table-wrapper">
+      <div class="my-games__table">
+        <div class="my-games__table-header">
+          <div class="my-games__table-header-cell">{{'OTHER.DATE' | translate }}</div>
+          <div class="my-games__table-header-cell">{{'OTHER.GAME' | translate }}</div>
+          <div class="my-games__table-header-cell">{{'BUTTONS.RESULT' | translate }}</div>
+          <div class="my-games__table-header-cell">{{'OTHER.SET' | translate }}</div>
+          <div class="my-games__table-header-cell">{{'OTHER.OPPONENT' | translate }}</div>
+          <div class="my-games__table-header-cell my-games__table-header-cell--canter">
+            <span class="letter-spacing">PGN</span>
+
+          </div>
+        </div>
+        <infinite-scroll class="my-games__table-body"
+                         (scrolled)="onScroll()"
+                         wcHideScrollbar
+                         [wcForceHideVerticalScrollBar]="true">
+          <ng-container *ngFor="let groupedByMonth of gamesHistoryGrouped | async">
+            <div class="my-games__table-body-row" *ngIf="groupedByMonth.month">
+              <div class="my-games__table-body-cell my-games__table-body-cell--title">
+                {{groupedByMonth.month}} {{groupedByMonth.year ? groupedByMonth.year : ''}}
+              </div>
+            </div>
+            <div class="my-games__table-body-row" *ngFor="let result of groupedByMonth.results">
+              <div class="my-games__table-body-cell">{{moment(result.created).format('MMM DD, YYYY · hh:mm')}}</div>
+              <div class="my-games__table-body-cell">
+                <ng-container *ngIf="result.rating === GameRatingMode.RATED">
+                  <svg-hexagon-empty class="my-games__rated-logo"></svg-hexagon-empty>
+                </ng-container>
+                <ng-container *ngIf="result.rating === GameRatingMode.FIDERATED">
+                  <svg-logo-fide class="my-games__rated-logo my-games__rated-logo--fide-rated-logo"></svg-logo-fide>
+                </ng-container>
+                <ng-container *ngIf="result.time_control">
+                  <ng-container *ngIf="!moment.duration(result.time_control.increment).asMilliseconds()">
+                    {{moment.duration(result.time_control.start_time).asMilliseconds() | wcDuration:'m': durationFormat }} {{ 'TIME.MIN' | translate }}
+                  </ng-container>
+                  <ng-container *ngIf="moment.duration(result.time_control.increment).asMilliseconds()">
+                    {{moment.duration(result.time_control.start_time).asMilliseconds() | wcDuration:'h m s': durationFormat }}
+                    +{{moment.duration(result.time_control.increment).asMilliseconds() | wcDuration:'h m s': durationFormat }}
+                  </ng-container>
+                </ng-container>
+              </div>
+              <div class="my-games__table-body-cell">{{convertResult(result.result) | async }}</div>
+              <div class="my-games__table-body-cell">
+                <ng-container *ngIf="result.color === 'white'"><svg-pawn-white class="icom-pawn"></svg-pawn-white></ng-container>
+                <ng-container *ngIf="result.color === 'black'"><svg-pawn-black class="icom-pawn"></svg-pawn-black></ng-container>
+              </div>
+              <div class="my-games__table-body-cell" *ngIf="result.color === 'white'">
+                {{result.black_player_profile ? result.black_player_profile.full_name : 'Anonymous'}}
+              </div>
+              <div class="my-games__table-body-cell" *ngIf="result.color === 'black'">
+                {{result.white_player_profile ? result.white_player_profile.full_name : 'Anonymous'}}
+              </div>
+              <div class="my-games__table-body-cell my-games__table-body-cell--canter">
+                <a
+                  (click)="downloadPGN(result.board_pgn, result.pgn_download_name)"
+                >
+                  <svg-download-my-games class="icon-download"></svg-download-my-games>
+                </a>
+              </div>
+            </div>
+          </ng-container>
+          <div class="preloader-container" *ngIf="isLoading$ | async">
+            <svg-preloader></svg-preloader>
+          </div>
+        </infinite-scroll>
+       <div *ngIf="!(fidePurchased$ | async)">
+         <div class="upgrade-pro-title">
+          {{'TEXT.UPGRADE_TO_PRO_TO_SHOW_FULL_GAME_HISTORY' | translate }}
+         </div>
+         <wc-btn-with-loading
+          class="btn-new&#45;&#45;blue"
+          (click)="updateAccount($event)"
+          >
+            {{'BUTTONS.UPGRADE_NOW' | translate }}
+         </wc-btn-with-loading>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="my-games__footer">
+    <wc-game-footer-turnaments></wc-game-footer-turnaments>
+  </div>
+</div>

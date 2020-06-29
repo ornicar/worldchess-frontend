@@ -1,0 +1,244 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    background-color:$blue-new;
+    padding: 15px 10px 18px;
+    flex: 1 1 auto;
+    width: 150px;
+    border-radius: 3px;
+    min-height: 314px;
+
+    @include birman-media {
+        min-height: 160px;
+        width: 100%;
+    }
+}
+
+:host-context(.notifications-result) {
+    border-radius: 3px 3px 0 0;
+}
+
+.result-game {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+    flex: 1 1 auto;
+
+    @include birman-media {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+
+    &--reverse {
+        @include birman-media {
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+    }
+}
+
+.result-game__wrapper {
+    display: flex;
+}
+
+.result-game__big-head {
+    text-align: left;
+    color: #fff;
+    font: 300 22px/25px $gerbera-font;
+    margin-bottom: auto;
+
+    @include birman-media {
+        margin-bottom: 0;
+        flex: 0 0 50%;
+    }
+}
+
+
+
+.result-game__logos {
+    display: flex;
+    fill: #fff;
+    margin-bottom: 10px;
+}
+
+.result-game__logo-fide {
+    position: relative;
+    top: -2px;
+    width: 47px;
+    height: 43px;
+    margin-right: 9px;
+}
+
+.result-game__logo {
+    width: 39px;
+    height: 40px;
+}
+
+.result-game__text {
+    margin-top: auto;
+    width: 100%;
+    text-align: left;
+    color: #fff;
+    font: 300 14px/17px $gerbera-font;
+
+    a {
+        display: flex;
+        align-items: center;
+        color: $gold-new;
+        fill: $gold-new;
+
+        .icon {
+            position: relative;
+            top: -1px;
+            width: 5px;
+            height: 14px;
+            margin-left: 3px;
+        }
+    }
+
+    @include birman-media {
+        margin-top: 0;
+        flex: 0 0 50%;
+    }
+}
+
+.result-game__rating {
+    color: #fff;
+    font: 300 14px/17px $gerbera-font;
+    margin-bottom: auto;
+
+    @include birman-media {
+        margin-bottom: 0;
+        width: 50%;
+        flex: 0 0 auto;
+    }
+}
+
+.result-game__head {
+    @include birman-media {
+        width: 50%;
+        flex: 0 0 auto;
+    }
+}
+
+.result-game__rating-change {
+    margin-top: -8px;
+    font: 300 40px/40px $gerbera-font;
+}
+
+
+.result-game__rating-total {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    font: 300 40px/40px $gerbera-font;
+    fill: #fff;
+}
+
+
+.icon-hexagon {
+    fill: #fff;
+    width: 27px;
+    height: 29px;
+    margin-left: 6px;
+    flex: 0 0 auto;
+
+    ::ng-deep {
+        svg {
+            display: block;
+        }
+    }
+}
+
+.icon-logo-fide {
+    fill: #fff;
+    width: 35px;
+    height: 27px;
+    margin-left: 6px;
+    flex: 0 0 auto;
+
+    ::ng-deep {
+        svg {
+            display: block;
+        }
+    }
+}
+
+.icon--logo-fide {
+    position: relative;
+    top: 4px;
+    width: 48px;
+    height: 40px;
+    flex: 0 0 auto
+}
+
+.icon--logo {
+    width: 39px;
+    height: 46px;
+    flex: 0 0 auto 
+}
+
+.icon--hexagon {
+    width: 42px;
+    height: 46px;
+    margin-left: 5px;
+    flex: 0 0 auto
+}
+
+
+.half-value {
+    position: relative;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    font: 300 14px/14px $gerbera-font;
+  
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 12px;
+      height: 1px;
+      background-color: #000;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-60deg);
+    }
+  
+    span {
+      &:first-child {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+  
+      &:last-child {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+
+  .result-game__rating-total-subtitle {
+    .half-value {
+      font: 300 8px/8px $gerbera-font;
+    }
+  }
+
+
+  /*----------------локализация-------------*/
+
+  .lang-ru {
+      .result-game__big-head {
+        font: 300 18px/21px $gerbera-font;
+      }
+
+      .result-game__text {
+        font: 300 13px/16px $gerbera-font;
+      }
+  }

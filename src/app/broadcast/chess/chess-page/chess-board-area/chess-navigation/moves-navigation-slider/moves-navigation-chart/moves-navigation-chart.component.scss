@@ -1,6 +1,11 @@
+@import 'variables';
+@import 'media';
+
 :host {
   display: block;
   height: 70px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .chart {

@@ -1,9 +1,9 @@
 <div class="history-moves" [class.my-game]="myGameIsActive">
-  <div class="scroll-element" [class.scroll-element--hide-line-number]="hideMoveNumbers" #scrollWrap wcHideScrollbar [wcForceHideVerticalScrollBar]="true">
+  <div class="scroll-element" #scrollWrap wcHideScrollbar [wcForceHideVerticalScrollBar]="true">
     <div class="scroll-section">
       <ng-container *ngIf="groupedMoves$ | async as groupedMoves">
         <div *ngFor="let groupMoves of groupedMoves; trackBy: trackByMoveGroup; let number = index" class="moves-line">
-          <div *ngIf="!hideMoveNumbers" class="moves-line-number">{{ number + 1 }}</div>
+          <div class="moves-line-number">{{ number + 1 }}</div>
 
           <div class="moves-line-content">
             <ng-container *ngFor="let move of groupMoves; trackBy: trackByMove">
@@ -43,7 +43,7 @@
         </ng-template>
 
         <ng-template #variationMovesContainer>
-          <ng-container *ngIf="(variationMoves$ | async)[selectedMove?.id] as variationMoves">
+          <ng-container *ngIf="selectedVariationMoves$ | async as variationMoves">
             <wc-variation-moves [variationMoves]="variationMoves" [selectedVariationMove]="selectedVariationMove"></wc-variation-moves>
           </ng-container>
         </ng-template>

@@ -1,5 +1,5 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
+@import 'variables.scss';
+@import 'media.scss';
 
 :host {
   flex: 2;
@@ -66,7 +66,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
     @include ipad() {
       flex-direction: column;
     }
@@ -77,13 +76,10 @@
       .results__score {
         align-items: flex-start;
         padding: 20px 20px 20px 40px;
-
         @include phones() {
-          padding: 20px 20px 20px 30px;
-          padding-top: 0;
+          padding: 0 20px 20px 30px;
         }
       }
-
       @include ipad() {
         flex-direction: column;
       }
@@ -92,6 +88,7 @@
         @include ipad() {
           align-items: flex-end;
         }
+
         img {
           transform: scaleX(-1);
           @include ipad() {
@@ -115,7 +112,6 @@
       width: 66%;
       overflow: hidden;
       padding: 20px;
-
       @include ipad() {
         width: 100%;
       }
@@ -123,13 +119,12 @@
       img {
         height: auto;
         width: 100%;
-
         @include tablets() {
           height: 100%;
           width: auto;
           transform: translate(-50%, 0);
         }
-        
+
       }
     }
   }
@@ -147,7 +142,6 @@
     width: 33%;
     text-align: center;
     z-index: 1;
-
     @include tablets() {
       font: 300 150px/199px $gerbera-font;
       position: static;
@@ -157,8 +151,7 @@
       justify-content: flex-end;
       align-items: flex-end;
       font: 300 120px/120px $gerbera-font;
-      padding: 20px 30px 20px 20px;
-      padding-top: 0;
+      padding: 0 30px 20px 20px;
       flex: 0 0 auto;
       height: 220px;
     }
@@ -174,14 +167,12 @@
     align-items: center;
     position: relative;
     height: 220px;
-    
     @include ipad() {
       justify-content: flex-end;
       line-height: 1;
     }
 
     &--winner {
-
       @include phones() {
         justify-content: flex-end;
       }
@@ -195,7 +186,6 @@
         position: absolute;
         top: 0;
         left: calc(50% - 25px);
-
         @include ipad() {
           left: 50%;
           transform: translate(-50%, 0);
@@ -205,7 +195,6 @@
 
     &--less {
       color: #4A4A4A;
-
       @include phones() {
         justify-content: flex-start;
       }
@@ -229,7 +218,6 @@
 
     &.right {
       left: 0;
-
       @include phones() {
         padding: 20px 30px;
       }
@@ -247,16 +235,14 @@
       margin-left: 10px;
       flex: 0 0 auto;
     }
-
     @include ipad() {
       padding-top: 0;
       white-space: normal;
     }
-
     @include phones() {
       font-size: 14px;
       padding: 20px 30px 20px 20px;
-      
+
     }
 
     &.right {

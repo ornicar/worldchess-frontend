@@ -5,11 +5,15 @@ import {map} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {IDefaultEntities} from '../models/default-entities';
 import {IMatch, IMatchWithDefaults} from './match.model';
+import { TeamResourceService } from '@app/broadcast/core/team/team-resource.service';
 
 @Injectable()
 export class MatchResourceService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private teamResourceService: TeamResourceService,
+  ) { }
 
   getWithDefaults(id: number): Observable<{ match: IMatch, defaults: IDefaultEntities }> {
     return this.http.get<IMatchWithDefaults>(`${environment.endpoint}/matches/${id}/`).pipe(

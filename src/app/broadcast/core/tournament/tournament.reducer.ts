@@ -130,23 +130,23 @@ export function sortByStartStateAndDate(a: CommonTournament, b: CommonTournament
 }
 
 export const adapter: EntityAdapter<CommonTournament> = createEntityAdapter<CommonTournament>({
-  sortComparer: sortByStartDate
+  // sortComparer: sortByStartDate
 });
 
 export function deserializeTournament(tournament: ITournament): CommonTournament {
   if (!tournament) {
-    return plainToClass<Tournament, object>(Tournament, {});
+    return plainToClass(Tournament, {});
   }
 
   switch (tournament.resourcetype) {
     case TournamentResourceType.OnlineTournament:
-      return plainToClass<OnlineTournament, object>(OnlineTournament, tournament);
+      return plainToClass(OnlineTournament, tournament);
 
     case TournamentResourceType.FounderTournament:
-      return plainToClass<FounderTournament, object>(FounderTournament, tournament);
+      return plainToClass(FounderTournament, tournament);
 
     default:
-      return plainToClass<Tournament, object>(Tournament, tournament);
+      return plainToClass(Tournament, tournament);
   }
 }
 
@@ -168,7 +168,7 @@ export function reducer(
 
   switch (action.type) {
     case TournamentActionTypes.AddTournament: {
-      return adapter.addOne(action.payload.tournament, state);
+      return adapter.upsertOne(action.payload.tournament, state);
     }
 
     /*case TournamentActionTypes.UpsertTournament: {

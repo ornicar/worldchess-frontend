@@ -25,6 +25,16 @@
   &__title {
     margin-bottom: 16px;
   }
+
+  &__request {
+    background-color: #63ffa4;
+    color: #000;
+  }
+
+  &__discard {
+    background-color: #ff6969;
+    color: #fff;
+  }
 }
 
 .events-list {

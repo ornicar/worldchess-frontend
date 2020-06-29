@@ -42,6 +42,12 @@ export class GetLastMovesByBoards implements Action {
   constructor(public payload: { boardsIds: number[] }) {}
 }
 
+export class GetLastMovesByBoardsTournaments implements Action {
+  readonly type = MoveActionTypes.GetLastMovesByBoards;
+
+  constructor(public payload: { boardsIds: string[] }) {}
+}
+
 export class LoadMoves implements Action {
   readonly type = MoveActionTypes.LoadMoves;
 

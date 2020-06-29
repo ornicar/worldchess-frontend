@@ -36,6 +36,7 @@ import {
   GetTournamentWishList,
   LoadTournamentWishList,
   RemoveTournamentFromWishList,
+  LeaveFromTournament,
 } from './tournament.actions';
 import * as fromRoot from '../../../reducers';
 import { ApprovalStatus, Tournament, TournamentResourceType } from './tournament.model';
@@ -55,7 +56,7 @@ export class TournamentEffects {
   @Effect()
   getTournament$: Observable<Action> = this.actions$.pipe(
     ofType<GetTournament>(TournamentActionTypes.GetTournament),
-    switchMap((action) => this.tournamentResource.getTournament(action.payload.id).pipe(
+    switchMap((action) => this.tournamentResource.getTournament(action.payload.id, action.payload.resourcetype).pipe(
       map((tournament) => {
         return new AddTournament({ tournament });
       })
@@ -186,12 +187,24 @@ export class TournamentEffects {
     map((action) => action.payload.id),
     switchMap((id) => this.tournamentResource.signupToTournament(id).pipe(
       switchMap((tournament) => [
-        new UpdateTournament({ tournament: { id: tournament.id, changes: tournament } }),
+        new GetTournament({ id: tournament.id, resourcetype: TournamentResourceType.OnlineTournament }),
         new SignupToTournamentSuccess({ tournament }),
       ]),
       catchError(response => of(new SignupToTournamentError({
         message: response.error ? Object.values(response.error).toString() : 'Unknown error',
        })))
+    )
+    )
+  );
+
+  @Effect()
+  leaveFromTournament$: Observable<Action> = this.actions$.pipe(
+    ofType<LeaveFromTournament>(TournamentActionTypes.LeaveFromTournament),
+    map((action) => action.payload.id),
+    switchMap((id) => this.tournamentResource.leaveToTournament(id).pipe(
+      switchMap((tournamentId) => [
+        new GetTournament({ id: tournamentId, resourcetype: TournamentResourceType.OnlineTournament }),
+      ]),
     )
     )
   );

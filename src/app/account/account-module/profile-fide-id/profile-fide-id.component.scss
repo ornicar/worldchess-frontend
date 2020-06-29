@@ -176,6 +176,7 @@ div.block {
   height: 35px;
   background-color: $green;
   color: #000;
+  cursor: default;
   font: 300 20px/20px $gerbera-font;
   margin-left: auto;
   @include phones() {
@@ -183,3 +184,46 @@ div.block {
     height: 30px;
   }
 }
+
+.profile__view-row__value {
+  ::ng-deep {
+    .mat-list-item-content {
+      padding: 0 !important;
+      font: 300 22px/26px $gerbera-font;
+      justify-content: space-between;
+
+      @include phones() {
+        font: 300 15px/22px $gerbera-font;
+      }
+    }
+
+    .mat-list-item-content-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: calc(100% - 20px);
+    }
+
+    .mat-list-item {
+      height: 35px !important;
+      cursor: default;
+
+      @include phones() {
+        height: 30px !important;
+      }
+    }
+
+    .mat-list-item-button {
+      border: 0;
+      background-color: transparent;
+      cursor: pointer;
+      .icon {
+        display: block;
+        width: 30px;
+        height: 30px;
+        fill: #000;
+      }
+    }
+  }
+}
+

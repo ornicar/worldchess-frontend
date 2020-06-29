@@ -1,0 +1,130 @@
+@import 'variables-new';
+@import 'media-new';
+
+.toggle-buttons-game {
+  display: inline-flex;
+  align-self: flex-start;
+  height: 50px;
+  flex: 0 0 auto;
+  border-radius: 3px;
+  overflow: hidden;
+
+  &.toggle-buttons-game--active {
+    .toggle-buttons-game__elem {
+      &:not(.disabled) {
+        color: #fff;
+        cursor: pointer;
+
+        .icon {
+          fill: #fff;
+        }
+
+        &:hover {
+          background-color: rgba(#fff, 0.1);
+        }
+
+        &.active {
+          cursor: default;
+          border-color: #fff;
+          z-index: z-index(base);
+
+          &:hover {
+            background-color: transparent;
+          }
+
+          .toggle-buttons-game__btn {
+            &:after {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include birman-media() {
+    width: 100%;
+  }
+}
+
+.toggle-buttons-game__elem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 2px 20px 6px;
+  font: 300 15px/21px $gerbera-font;
+  color: rgba(#fff, 0.3);
+  fill: #fff;
+  margin-left: -1px;
+  border: 1px solid #4C4C4C;
+  white-space: nowrap;
+  min-width: 129px;
+  cursor: default;
+
+  @include birman-media() {
+    min-width: auto;
+    padding: 6px 16px;
+    flex: 1 1 33%;
+  }
+
+  @include phones-super-small() {
+    flex: 1 1 auto;
+  }
+
+  .icon {
+    flex: 0 0 auto;
+    max-width: 19px;
+    max-height: 15px;
+    margin-left: 5px;
+    position: relative;
+    fill: rgba(#fff, 0.3);
+
+    ::ng-deep {
+      svg {
+        display: block;
+      }
+    }
+
+    svg {
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -45%);
+    }
+  }
+
+  &:first-child {
+    border-radius: 3px 0 0 3px;
+    margin-left: 0;
+  }
+
+  &:last-child {
+    border-radius: 0 3px 3px 0;
+  }
+
+  &.active {
+    z-index: z-index(base);
+    color: #fff;
+    .icon {
+      fill: #fff;
+    }
+  }
+
+  &--hexagon {
+    .icon {
+      max-width: 12px;
+      max-height: 12px;
+      margin-left: 4px;
+    }
+  }
+
+  &--hexagon-2 {
+    .icon {
+      position: relative;
+      top: -1px;
+      max-width: 13px;
+      max-height: 13px;
+      margin-left: 4px;
+    }
+  }
+}

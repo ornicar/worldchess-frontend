@@ -43,6 +43,7 @@
   background-color: $black;
   padding: 20px;
   overflow: hidden;
+  min-height: 610px;
 
   &--portable {
     display: flex;
@@ -80,7 +81,7 @@
 
   &--flex {
     display: flex;
-    min-height: 617px;
+    min-height: 610px;
     @include phones() {
       flex-direction: column;
       min-height: auto;

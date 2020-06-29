@@ -1,0 +1,36 @@
+@import "variables-new";
+@import "media-new";
+
+:host{
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .h-image-banner{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    @include birman-media() {
+      min-height: 410px;
+    } 
+  }
+
+  .h-image-banner__content {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; 
+    flex: 1 1 auto;  
+  }
+
+}
+
+

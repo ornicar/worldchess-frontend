@@ -1,0 +1,39 @@
+<div class="settings-table lang-{{accountService.getLanguage() | async }}" *ngIf="(timeControls$ | async)?.length" [class.settings-table--active]="!disabled">
+  <div class="settings-table__row" [ngClass]="{
+          'settings-table__row--top-rounded': timeControlGrouped.topRounded,
+          'settings-table__row--bottom-rounded': timeControlGrouped.bottomRounded
+       }" *ngFor="let timeControlGrouped of timeControlGrouped">
+    <div class="settings-table__cell" (click)="onSelectTimeControl(timecontrolWithBorder.timecontrol)"
+      [class.settings-table__cell--active]="selectedTimeControl === timecontrolWithBorder.timecontrol"
+      [class.settings-table__cell--no-border-bottom]="timecontrolWithBorder.needBorderBottom"
+      *ngFor="let timecontrolWithBorder of timeControlGrouped.timeControls; let i = index">
+      <div class="settings-table__title " *ngIf="!i">
+        <span *ngIf="boardType[timeControlGrouped.board_type] === 'RAPID'">
+          {{'GAME.RAPID' | translate }}
+        </span>
+        <span *ngIf="boardType[timeControlGrouped.board_type] === 'BLITZ'">
+          {{'GAME.BLITZ' | translate }}
+        </span>
+        <span *ngIf="boardType[timeControlGrouped.board_type] === 'BULLET'">
+          {{'GAME.BULLET' | translate }}
+        </span>
+      </div>
+      <div class="settings-table__content" *ngIf="!moment.duration(timecontrolWithBorder.timecontrol.increment).asMilliseconds()">
+        <div class="settings-table__start-time">
+          {{moment.duration(timecontrolWithBorder.timecontrol.start_time).asMilliseconds() | wcDuration:'m': durationFormat }}
+        </div>
+        <div class="settings-table__increment">
+          {{'TIME.MIN' | translate }}
+        </div>
+      </div>
+      <div class="settings-table__content" *ngIf="moment.duration(timecontrolWithBorder.timecontrol.increment).asMilliseconds()">
+        <div class="settings-table__start-time">
+          {{moment.duration(timecontrolWithBorder.timecontrol.start_time).asMilliseconds() | wcDuration:'h m s': durationFormat }}
+        </div>
+        <div class="settings-table__increment">
+          +{{moment.duration(timecontrolWithBorder.timecontrol.increment).asMilliseconds() | wcDuration:'h m s': durationFormat }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="root lang-{{accountService.getLanguage() | async }}">
+  <wc-btn-with-loading 
+    (click)="quickStart($event)" 
+    class="btn-new--spall btn-new--blue-filled"
+  >
+    {{ 'BUTTONS.QUICK_GAME' | translate}}
+  </wc-btn-with-loading>
+  <wc-btn-with-loading 
+    (click)="playComputer($event)" 
+    class="btn-new--spall btn-new--brown-border"
+  >
+    {{ 'BUTTONS.COMPUTER' | translate}}
+  </wc-btn-with-loading>
+  <button 
+    (click)="lobby($event)" 
+    class="btn-block"
+  >
+    <div class="lobby-button">
+      <div class="icon-row">
+        <div class="icon">
+          <img src="../../../../../assets/images/lobby-button.svg" alt="lobby">
+        </div>
+      </div>
+    </div>
+  </button>
+</div>

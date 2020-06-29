@@ -1,0 +1,19 @@
+<div class="offline-tournament-block__wraopper">
+  <div class="offline-tournament-block">
+
+    <div class="offline-tournament-block__header">
+      <div class="offline-tournament-block__title">
+        <div class="offline-tournament-block__fide-logo">
+          <svg-logo-fide></svg-logo-fide>
+        </div>
+        <span>{{count}} over-the-board FIDE events</span>
+      </div>
+      <div class="offline-tournament-block__subtitle">You can watch them all on worldchess.com</div>
+
+    </div>
+    <div class="offline-tournament-block__content">
+      <offline-tournament-timeline [tournaments]="tournaments$ | async"></offline-tournament-timeline>
+    </div>
+  </div>
+  <button [routerLink]="['/watch']" *ngIf="!hideButton" class="read-new-button offline-tournament_show-all">Show all</button>
+</div>

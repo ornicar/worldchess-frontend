@@ -1,15 +1,15 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
-import {select, Store} from '@ngrx/store';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {distinctUntilChanged, map, shareReplay, switchMap, throttleTime} from 'rxjs/operators';
-import {OnChangesInputObservable, OnChangesObservable} from '../../../../../../shared/decorators/observable-input';
-import {SubscriptionHelper, Subscriptions} from '../../../../../../shared/helpers/subscription.helper';
-import {BoardStatus, IBoard} from '../../../../../core/board/board.model';
-import {SetSelectedMove} from '../../../../../move/move.actions';
-import {IMove} from '../../../../../move/move.model';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { distinctUntilChanged, map, shareReplay, switchMap, throttleTime } from 'rxjs/operators';
+import { OnChangesInputObservable, OnChangesObservable } from '../../../../../../shared/decorators/observable-input';
+import { SubscriptionHelper, Subscriptions } from '../../../../../../shared/helpers/subscription.helper';
+import { BoardStatus, IBoard } from '../../../../../core/board/board.model';
+import { SetSelectedMove } from '../../../../../move/move.actions';
+import { IMove } from '../../../../../move/move.model';
 import * as fromMove from '../../../../../move/move.reducer';
-import {DeactivateVariationMoves} from '../../../../../variation-move/variation-move.actions';
-import {selectVariationMovesIsActive} from '../../../../../variation-move/variation-move.reducer';
+import { DeactivateVariationMoves } from '../../../../../variation-move/variation-move.actions';
+import { selectVariationMovesIsActive } from '../../../../../variation-move/variation-move.reducer';
 
 @Component({
   selector: 'wc-moves-navigation-container',
@@ -60,6 +60,8 @@ export class MovesNavigationContainerComponent implements OnInit, OnChanges, OnD
         )
       : of([])
     ),
+    // @todo fix. ExpressionChangedAfterItHasBeenCheckedError
+    throttleTime(10, undefined, { leading: true, trailing: true }),
     shareReplay(1)
   );
 

@@ -3,7 +3,9 @@
     <ul class="footer-tabs__list">
       <li *ngFor="let tab of tabs" class="footer-tabs__elem" [class.footer-tabs__elem--active]="activeTab===tab.value">
         <span (click)="setActiveTab(tab.value)" class="footer-tabs__link">
-          {{tab.title}}
+          <span class="footer-tabs__link-text">
+              {{tab.title}}
+          </span>
         </span>
       </li>
     </ul>

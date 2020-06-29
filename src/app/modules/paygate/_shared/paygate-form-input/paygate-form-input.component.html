@@ -1,0 +1,17 @@
+<label class="register-input__input" [shake]="(paygateControl.errors$ | async)?.shake">
+  <div class="register-input__wrapper" [class.register-input__wrapper--error]="paygateControl.errors$ | async">
+    <input class="register-input__elem"
+           [class.paygate-input__elem--active]="!!value" type="text"
+           paygateFormControl
+           #paygateControl="paygateFormControl"
+            [(ngModel)]="value"/>
+    <div class="register-input__placeholder">
+      Name
+      <div *ngIf="paygateControl.errors$ | async as errors" class="register-input__error">
+        <div [hidden]="!errors?.name?.required">Invalid full name</div>
+        <div [hidden]="!errors?.full_name?.response">{{ errors?.full_name?.response }}</div>
+      </div>
+    </div>
+  </div>
+</label>
+

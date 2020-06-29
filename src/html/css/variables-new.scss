@@ -1,0 +1,55 @@
+$gray: #f6f6f6;
+$red-new: #E30000;
+$red-2-new: #FF5D53;
+$red-2-new-hover: #FF4A31;
+$red-3-new:#FF6C58;
+$orange-new: #FF6F32;
+$brown-2: #B4966E;
+$brown-2-hover: #C79E67;
+$gray-bg-new: #525252;
+$purple-new: #DCA4FF;
+$purple-2-new: #9D6CBC;
+$blue-new: #3C40C6;
+$blue-new-hover: #565BF4;
+$blue-new-disabled: #3C40C6;
+$green-new: #A2C91F;
+$green-new-hover: #B3E411;
+$brown-light-new: #F3E3C9;
+$gold-new: #F2C94C;
+$yellow-new: #FFDE32;
+$yellow-new-hover: #FFD705;
+$grey-dark-new: #191919;
+$violet: #8d73ff;
+$white-bg: #F9F1E4;
+$red-mts: #F12C2C;
+
+
+$chess-font: 'Chess_Type';
+$gerbera-font: 'Gerbera', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+$cofo-sans-font: 'Cofo_sans', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+$clifton-trial-italic: 'CliftonTrial_Italic', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+$herr-von-muellerhoff: 'Herr-Von-Muellerhoff', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+$BebasNeue-regular: 'BebasNeue_Regular', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+
+$tablets: 1280px;
+$ipad: 1023px;
+$birman-media: 999px;
+$phones: 768px;
+$phones-small: 415px;
+$phones-super-small: 320px;
+
+$z-layers: (
+  base: 100,
+  base-dropdown: 200,
+  sticky: 300,
+  overlay-right: 400,
+  overlay-left: 500,
+  modal: 600,
+);
+
+// // examples:
+// // z-index(modal);
+// // z-index(modal, 1); // for child elements if needed.
+@function z-index($layer, $sub-layer: 0) {
+    @return map_get($z-layers, $layer) + $sub-layer;
+  }

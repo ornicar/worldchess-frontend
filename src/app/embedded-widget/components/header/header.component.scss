@@ -56,13 +56,13 @@
   font: 300 22px/30px $gerbera-font;
 
   @include phones() {
-    min-height: 45px;
+    min-height: 40px;
     border-right: none;
     margin: 0;
     padding: 0 20px;
-
     font-size: 20px;
     line-height: 26px;
+    width: calc(100vw - 40px);
   }
 
   &--logo,
@@ -116,13 +116,13 @@
 }
 
 .select-item {
-  min-height: 56px;
+  height: 56px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
 
   @include phones() {
-    min-height: 45px;
+    height: 45px;
     max-width: 100%;
   }
 }

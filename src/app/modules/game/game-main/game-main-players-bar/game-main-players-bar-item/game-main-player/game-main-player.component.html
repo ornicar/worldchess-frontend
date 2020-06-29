@@ -1,0 +1,9 @@
+<div class="player-root">
+    <div class="player-root__portrait">
+       <img [src]="value.avatar.full"/>
+    </div>
+    <div class="player-root__name">{{value.full_name}}</div>
+    <div class="player-root__gm" *ngIf="value.rank" >{{value.rank}}</div>
+    <div class="player-root__nationality" [hidden]="value.nationality_id!==0 && !value.nationality_id" >{{value.nationality_id | country_code | async}}</div>
+    <div class="player-root__rating" [hidden]="value.rating!==0 && !value.rating" >{{value.rating || 0}}</div>
+</div>

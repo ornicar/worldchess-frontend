@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { AccountActions, AccountActionTypes, AccountReset } from './account.actions';
-import {IAccount, FounderStatus, IAccountRating} from './account.model';
+import { AccountActions, AccountActionTypes } from './account.actions';
+import { IAccount, FounderStatus, IAccountRating, IFriend, AccountVerification } from './account.model';
 
 
 export interface State {
@@ -14,9 +14,18 @@ export interface State {
       non_field_errors?: string
     }
   };
-  wannaBeOrgModalOpened: boolean;
+  accountDelete: {
+    loading: boolean,
+    errors: {
+      email?: string,
+      full_name?: string,
+      non_field_errors?: string
+    }
+  };
   fideId: number;
   fideIdErrorMsg: string;
+  founderStatusErrorMsg?: string;
+  friendList?: IFriend[];
 }
 
 export const initialState: State = {
@@ -26,9 +35,14 @@ export const initialState: State = {
     loading: false,
     errors: {}
   },
-  wannaBeOrgModalOpened: false,
+  accountDelete: {
+    loading: false,
+    errors: {}
+  },
   fideId: null,
   fideIdErrorMsg: null,
+  founderStatusErrorMsg: null,
+  friendList: null
 };
 
 const getErrorsMessages = (fields, errors) => {
@@ -80,7 +94,10 @@ export function reducer(state = initialState, action: AccountActions): State {
           loading: false,
           errors: {}
         },
-        wannaBeOrgModalOpened: state.wannaBeOrgModalOpened,
+        accountDelete: {
+          loading: false,
+          errors: {}
+        },
         fideId: state.fideId,
         fideIdErrorMsg: state.fideIdErrorMsg,
       };
@@ -103,16 +120,40 @@ export function reducer(state = initialState, action: AccountActions): State {
         }
       };
 
-    case AccountActionTypes.OpenWannaBeOrgModal:
-      return {
+    case AccountActionTypes.Delete:
+      return state = {
         ...state,
-        wannaBeOrgModalOpened: true
+        accountDelete: {
+          ...state.accountDelete,
+          loading: true
+        }
       };
 
-    case AccountActionTypes.CloseWannaBeOrgModal:
-      return {
+    case AccountActionTypes.DeleteSuccess:
+      return state = {
         ...state,
-        wannaBeOrgModalOpened: false
+        accountDelete: {
+          loading: false,
+          errors: {}
+        },
+      };
+
+    case AccountActionTypes.DeleteError:
+      return state = {
+        ...state,
+        accountDelete: {
+          loading: false,
+          errors: getErrorsMessages(['email', 'password', 'non_field_errors'], action.payload.errors)
+        }
+      };
+
+    case AccountActionTypes.DeleteClear:
+      return state = {
+        ...state,
+        accountDelete: {
+          loading: false,
+          errors: {}
+        }
       };
 
     case AccountActionTypes.CreateFideIdSuccess:
@@ -133,6 +174,14 @@ export function reducer(state = initialState, action: AccountActions): State {
         ...initialState
       };
 
+    case AccountActionTypes.FounderStatusError:
+      const { errorMessage: founderStatusErrorMsg } = action.payload;
+
+      return {
+        ...state,
+        founderStatusErrorMsg,
+      };
+
     default:
       return state;
   }
@@ -142,19 +191,21 @@ export const selectAccount = createFeatureSelector<State>('account');
 
 export const selectMyAccount = createSelector(selectAccount, ({ account }) => account);
 
+export const selectIsFideVerifiedUser = createSelector(
+  selectAccount,
+  ({ account }) => account.fide_id && account.fide_verified_status === AccountVerification.VERIFIED
+);
+
+export const selectMyAccountDelete = createSelector(selectAccount, ({ accountDelete: { errors } }) => errors);
+
 export const selectMyAccountRating = createSelector(selectAccount, ({ rating }) => rating);
-
-export const selectFideId = createSelector(selectAccount, ({ fideId }) => fideId);
-
-export const selectFideIdErrorMsg = createSelector(selectAccount, ({ fideIdErrorMsg }) => fideIdErrorMsg);
 
 export const selectMyAccountUpdateLoading = createSelector(selectAccount, ({ accountUpdate: { loading } }) => loading);
 
-export const  selectMyAccountUpdateErrors = createSelector(selectAccount, ({ accountUpdate: { errors } }) => errors);
+export const selectMyAccountUpdateErrors = createSelector(selectAccount, ({ accountUpdate: { errors } }) => errors);
+
+export const selectMyAccountFriendList = createSelector(selectAccount, ({ friendList }) => friendList);
 
 export const selectCanUserCreateEvent = createSelector(selectMyAccount, (account) => account ?
   account.founder_approve_status === FounderStatus.APPROVE : false);
 
-export const selectMyAccountId = createSelector(selectAccount, ({ account }) => account ? account.id : null);
-
-export const selectWannBeOrgModalIsOpened = createSelector(selectAccount, (account) => account.wannaBeOrgModalOpened);

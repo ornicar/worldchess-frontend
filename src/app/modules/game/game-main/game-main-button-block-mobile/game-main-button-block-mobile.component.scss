@@ -1,0 +1,43 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  width: 100%;
+}
+
+.button-block {
+  display: flex;
+  align-items: center;
+
+  ::ng-deep {
+    wc-btn-with-loading {
+      width: auto;
+    }
+    .btn-new {
+      width: 110px;
+      min-width: 110px;
+    }
+  }
+}
+
+.button-block__links-list {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.button-block__link {
+  font: 300 15px/20px $gerbera-font;
+  color: $brown-2;
+  margin-right: 20px;
+
+  &:hover,
+  &:active {
+    color: $brown-2-hover;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+}

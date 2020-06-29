@@ -1,5 +1,5 @@
-@import '../html/css/variables';
-@import '../html/css/media';
+@import 'variables';
+@import 'media';
 
 .information-aside {
   position: relative;
@@ -237,7 +237,7 @@
   }
 
   &:hover {
-    transition: all 0.4s ease;
+    transition: all .4s ease;
     border: 1px solid black;
   }
 }

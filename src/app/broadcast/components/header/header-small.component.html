@@ -1,8 +1,17 @@
-<div class="container-select container-select--logo">
+<div class="container-select container-select--logo" *ngIf="!compact">
   <wc-header-logo></wc-header-logo>
 </div>
 
-<wc-header-select *ngIf="(events$ | async)?.length" [name]="'cycle'" [options]="events$ | async" [selected]="selectedEvent$ | async" (selectedChange)="changeEvent($event)" class="container-select">
+<wc-header-select
+  *ngIf="!compact && (events$ | async)?.length"
+  [preloader]="true"
+  [name]="'cycle'"
+  [options]="events$ | async"
+  [selected]="selectedEvent$ | async"
+  (selectedChange)="changeEvent($event)"
+  [simpleAsRegular]="true"
+  class="container-select"
+>
   <ng-template #titleNonSelected>
     <div class="select-item">
       Choose cycle
@@ -20,8 +29,17 @@
   </ng-template>
 </wc-header-select>
 
-<ng-container *ngIf="enableTournamentDropdown; else headerItem">
-  <wc-header-select *ngIf="(tournaments$ | async)?.length" [hideSelected]="false" [name]="'tournament'" [options]="tournaments$ | async" [selected]="selectedTournament$ | async" (selectedChange)="changeTournament($event)" class="container-select">
+<ng-container *ngIf="enableTournamentDropdown && !compact; else headerItem">
+  <wc-header-select
+    *ngIf="(tournaments$ | async)?.length"
+    [hideSelected]="false"
+    [name]="'tournament'"
+    [options]="tournaments$ | async"
+    [selected]="selectedTournament$ | async"
+    (selectedChange)="changeTournament($event)"
+    [simpleAsRegular]="true"
+    class="container-select"
+  >
     <ng-template #titleNonSelected>
       Choose tournament
     </ng-template>

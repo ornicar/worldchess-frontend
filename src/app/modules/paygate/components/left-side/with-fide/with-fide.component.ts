@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { PaygatePopupService } from '../../../services/paygate-popup.service';
 import { ISpecialPlanProduct } from '../../../models';
+import { environment } from '../../../../../../environments/environment';
+
+const FIDE_PLAN = environment.fide_id_plan_stripe_id;
 
 @Component({
   selector: 'wc-with-fide',
@@ -14,7 +17,7 @@ export class WithFideComponent {
 
   fidePrice$ = this.paygatePopupService.products$.pipe(
     map((products: ISpecialPlanProduct[]) => {
-      const fideProduct = products ? products.find(p => p.name === 'FIDE-ID') : null;
+      const fideProduct = products ? products.find(p => p.stripe_id === FIDE_PLAN) : null;
       return fideProduct ? fideProduct.amount : null;
     }),
   );
@@ -24,8 +27,8 @@ export class WithFideComponent {
   constructor(private paygatePopupService: PaygatePopupService) { }
 
   toggleFide() {
-    const fideSelected = this.paygatePopupService.fideSelected$.getValue();
-    this.paygatePopupService.fideSelected$.next(!fideSelected);
+    // const fideSelected = this.paygatePopupService.fideSelected$.getValue();
+    // this.paygatePopupService.fideSelected$.next(!fideSelected);
   }
 
 }

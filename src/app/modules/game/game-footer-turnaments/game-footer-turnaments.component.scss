@@ -1,0 +1,234 @@
+@import 'variables-new';
+@import 'media-new';
+
+.footer__logo {
+  display: block;
+  fill: #fff;
+  width: 93px;
+  height: 16px;
+
+  &--usetech {
+    width: 83px;
+    position: relative;
+    top: -4px;
+  }
+
+  &:active,
+  &:hover {
+    fill: $brown-2;
+
+    ::ng-deep {
+      .st0,
+      .st1 {
+        fill: $brown-2;
+      }
+    }
+  }
+
+  ::ng-deep {
+    svg {
+      display: block;
+    }
+  }
+}
+
+.footer__row {
+  display: flex;
+
+  &--mb {
+    margin-bottom: 30px;
+
+    @include birman-media {
+      margin-bottom: 22px;
+    }
+  }
+
+  @include birman-media {
+    border-top: 1px solid rgba(#fff, 0.1);
+    padding-top: 10px;
+  }
+
+  &:first-child {
+    border-top: none;
+    padding-top: 0px;
+  }
+}
+
+.footer__col {
+  display: flex;
+  &--left {
+    margin-right: auto;
+    margin-top: 3px;
+
+    @include birman-media {
+      order: 1;
+      margin-top: 0;
+    }
+  }
+
+  &--center {
+    @include birman-media {
+      order: 1;
+      flex: 1;
+    }
+  }
+
+  &--right {
+    margin-right: 9px;
+    @include birman-media {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      order: 2;
+      margin-left: 0;
+    }
+  }
+}
+
+.footer__link-block {
+  margin-right: 13px;
+  @include birman-media {
+    margin-right: 18px;
+  }
+}
+
+.footer__link {
+  margin-bottom: 1px;
+}
+
+.footer__text {
+  font: 300 12px/15px $gerbera-font;
+  color: rgba(#fff, 0.4);
+  max-width: 130px;
+}
+
+
+.footer__social {
+  display: flex;
+  position: relative;
+  top: 9px;
+
+  @include birman-media {
+    top: 0;
+  }
+}
+
+.footer__social-icon {
+  display: block;
+  fill: #fff;
+  margin-right: 9px;
+  height: 26px;
+
+  @include birman-media {
+    margin-right: 11px;
+    height: 35px;
+  }
+
+  &:hover {
+    fill: $brown-2;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &--twitter {
+    width: 33px;
+    @include birman-media {
+      width: 27px;
+    }
+  }
+
+  &--facebook {
+    width: 14px;
+    position: relative;
+    top: -1px;
+    @include birman-media {
+      width: 11px;
+    }
+  }
+
+  &--instagram {
+    width: 26px;
+    @include birman-media {
+      width: 21px;
+    }
+  }
+}
+
+.links {
+  display: flex;
+
+  @include birman-media {
+    max-width: 393px;
+    flex: 1;
+  }
+}
+
+.links__block-wrapp {
+  display: flex;
+
+  @include birman-media {
+    flex-direction: column;
+    flex: 1;
+  }
+}
+
+.links__block {
+  padding-left: 22px;
+  @include birman-media {
+    padding-left: 0;
+    padding-right: 10px;
+  }
+}
+
+.links__elem {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+
+  @include birman-media {
+    min-height: 43px;
+    align-items: flex-start;
+    padding: 0 5px 5px 0;
+  }
+}
+
+.links__link {
+  display: flex;
+  font: 300 12px/16px $gerbera-font;
+  fill: #fff;
+  color: #fff;
+  min-height: 22px;
+
+  @include birman-media {
+    font: 300 15px/20px $gerbera-font;
+  }
+
+  &:active,
+  &:hover {
+    color: $brown-2;
+    fill: $brown-2;
+  }
+
+  .icon {
+    position: relative;
+    top: 2px;
+    width: 12px;
+    height: 6px;
+    margin-left: 4px;
+  }
+}
+
+.desctop {
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: flex;
+  }
+}

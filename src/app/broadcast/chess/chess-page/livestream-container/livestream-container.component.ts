@@ -11,21 +11,21 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { OnChangesInputObservable, OnChangesObservable } from '../../../../shared/decorators/observable-input';
-import { ScreenStateService } from '../../../../shared/screen/screen-state.service';
+import { OnChangesInputObservable, OnChangesObservable } from '@app/shared/decorators/observable-input';
+import { ScreenStateService } from '@app/shared/screen/screen-state.service';
 import * as fromRoot from '@app/reducers';
 import * as fromCamera from '@app/broadcast/core/camera/camera.reducer';
 import { ICamera } from '../../../core/camera/camera.model';
-import { SubscriptionHelper, Subscriptions } from '../../../../shared/helpers/subscription.helper';
+import { SubscriptionHelper, Subscriptions } from '@app/shared/helpers/subscription.helper';
 
-import { BehaviorSubject, merge } from 'rxjs';
-import { GetCameras } from '../../../core/camera/camera.actions';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { GetCameras, ClearCameras } from '../../../core/camera/camera.actions';
 import { Tournament } from '@app/broadcast/core/tournament/tournament.model';
-import { selectIsAuthorized } from '../../../../auth/auth.reducer';
+import { selectIsAuthorized } from '@app/auth/auth.reducer';
 import { PaygatePopupManagerService } from '@app/shared/services/paygate-popup-manager.service';
 import { selectUserPurchase } from '@app/purchases/user-purchases/user-purchases.reducer';
 import { environment } from '../../../../../environments/environment';
-
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'wc-livestream-container',
@@ -40,12 +40,12 @@ export class LivestreamContainerComponent implements OnInit, OnChanges, OnDestro
 
   @Input() tourId: number;
 
+  @Input() embedded = false;
+
   @OnChangesInputObservable()
   tourId$ = new BehaviorSubject<number>(this.tourId);
 
-  cameras: ICamera[] = [];
-  selectedCamera: ICamera = null;
-  hover = false;
+  selectedCamera$ = new BehaviorSubject<ICamera>(null);
 
   cameras$ = this.store$.pipe(
     select(fromCamera.selectAll)
@@ -59,6 +59,23 @@ export class LivestreamContainerComponent implements OnInit, OnChanges, OnDestro
     select(selectIsAuthorized),
   );
 
+  isBenefitsBlockShown$: Observable<boolean> = combineLatest(
+    this.isAuthorized$,
+    this.cameras$,
+    this.selectedCamera$,
+  ).pipe(
+    map(([isAuthorized, cameras, selectedCamera]) => {
+      if (!this.embedded) {
+        return isAuthorized && cameras && cameras.length
+                  && (selectedCamera && !selectedCamera.link_display || !selectedCamera);
+      } else {
+        return !isAuthorized || cameras && cameras.length
+                  && (selectedCamera && !selectedCamera.link_display || !selectedCamera);
+      }
+    }),
+  );
+
+  hover = false;
   subs: Subscriptions = {};
 
   @HostBinding('class.show-mobile')
@@ -73,21 +90,22 @@ export class LivestreamContainerComponent implements OnInit, OnChanges, OnDestro
   ) {}
 
   ngOnInit() {
-    this.subs.tour = merge(this.tourId$, this.purchases$).subscribe(() => {
-      const tourId = this.tourId$.getValue();
-      if (tourId) {
-        this.store$.dispatch(new GetCameras({ tourId }));
-      }
-    });
-
+    if (!this.embedded) {
+      this.subs.tour = combineLatest(this.isAuthorized$, this.tourId$, this.purchases$).subscribe(([isAuthorized, tourId, purchases]) => {
+        if (!isAuthorized) {
+          this.store$.dispatch(new ClearCameras());
+        } else if (tourId) {
+          this.store$.dispatch(new GetCameras({ tourId }));
+        }
+      });
+    }
     this.subs.cameras = this.cameras$.subscribe(
       cameras => {
-        this.cameras = cameras;
-        const availableCameras = this.cameras.filter(c => Boolean(c.link_display));
-        this.selectedCamera = availableCameras.length
+        const availableCameras = cameras.filter(c => Boolean(c.link_display));
+        const selectedCamera = availableCameras.length
           ? availableCameras.find(cam => cam.is_default) || availableCameras[0]
           : null;
-
+        this.selectedCamera$.next(selectedCamera);
         this.cd.markForCheck();
       }
     );
@@ -101,7 +119,7 @@ export class LivestreamContainerComponent implements OnInit, OnChanges, OnDestro
   }
 
   selectCamera(camera: ICamera) {
-    this.selectedCamera = camera;
+    this.selectedCamera$.next(camera);
     this.cd.markForCheck();
   }
 
@@ -131,13 +149,22 @@ export class LivestreamContainerComponent implements OnInit, OnChanges, OnDestro
   }
 
   openGoPremiumModal() {
-    if (!this.tournament || !this.tournament.product) {
-      return;
-    }
-    if (this.tournament.slug === environment.tournamentLondonSlug) {
-      this.paygatePopupManagerService.openPaygatePopupWithPlanPayment('pro');
+    if (!this.tournament) {
+      this.paygatePopupManagerService.openPaygatePopup('login');
     } else {
-      this.paygatePopupManagerService.openPaygatePopupWithPurchase(this.tournament.product);
+      this.isAuthorized$.pipe(take(1)).subscribe((isAuth) => {
+        if (!isAuth) {
+          this.paygatePopupManagerService.openPaygatePopup('login');
+        } else {
+          if (this.tournament.slug === environment.tournamentLondonSlug) {
+            this.paygatePopupManagerService.openPaygatePopupWithPlanPayment('pro');
+          } else if (!this.tournament.product) {
+            this.paygatePopupManagerService.openPaygateWithUpgrade();
+          } else {
+            this.paygatePopupManagerService.openPaygatePopupWithPurchase(this.tournament.product);
+          }
+        }
+      });
     }
   }
 }

@@ -1,0 +1,20 @@
+<div class="anti-cheating__wrapper"
+     (mouseleave)="closeAntiCheatPopup()">
+  <div class="anti-cheating__header">
+    24/7 Fair Play<br>Surveillance
+  </div>
+  <div class="anti-cheating__footer">
+    <span *ngIf="!(isReportSubmitted$ | async)">
+      Suspect cheating?
+    </span>
+    <button class="btn widgets-form__add"
+            (click)="sendReport()"
+            *ngIf="!(isReportSubmitted$ | async)"
+    >
+      Flag this game
+    </button>
+    <div class="anti-cheating__flagged" *ngIf="(isReportSubmitted$ | async)">
+      Game flagged.<br>We`ll check it for<br> cheating
+    </div>
+  </div>
+</div>

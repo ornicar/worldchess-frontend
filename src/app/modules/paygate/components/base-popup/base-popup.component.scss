@@ -1,0 +1,223 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+  width: 100%;
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  background-color: $gray-bg-new;
+  padding: 13px 30px 38px;
+  overflow: hidden;
+  @include ipad() {
+    overflow-y: auto;
+  }
+  @include phones() {
+    padding: 10px 15px 20px;
+  }
+
+  &.pro-container {
+    background-color: $purple-new;
+
+    ::ng-deep {
+      .popup-container__header-title {
+        color: #000;
+      }
+
+      .fide__footer-text,
+      .logo-fide,
+      .popup-container__sign-in,
+      .register-input__elem,
+      .register__error,
+      .register__form-gift-text,
+      .register__form-privacy-link,
+      .register__form-privacy-text,
+      .register__form-submit-free,
+      .register__name,
+      .register__options-text,
+      .register__step,
+      .register__title,
+      .register__title-text,
+      .toggle-label__content,
+      .register-form__submit-free,
+      .register__form-big-text,
+      .popup-container__header-title-small,
+      .popup-container__header-logo,
+      .cancel-subscription {
+        color: #000;
+        fill: #000;
+      }
+
+      .cancel-subscription {
+        &:before {
+          background-color: #000;
+        }
+      }
+
+      .register-input__error-text--email {
+        color: $red-new;
+      }
+
+      .toggle-label .purchased__icon {
+        &.canceled-subscription,
+        &.canceled-check {
+          border: 1px dashed #000;
+          .icon {
+            fill: #000 !important;
+          }
+        }
+      }
+
+      .resubscribe {
+        color: #fff;
+        fill: #fff;
+
+        &:before {
+          background-color: #000;
+        }
+      }
+
+      .popup-container__header-title-comment {
+        color: $purple-2-new;
+      }
+
+      .register__step {
+        .icon {
+          fill: #000;
+
+          &:hover {
+            fill: #fff;
+          }
+        }
+      }
+
+      .register__form-privacy-link {
+        &:hover {
+          color: #fff;
+          fill: #fff;
+
+          &:visited {
+            color: #fff;
+          }
+        }
+      }
+
+      .popup-container__header-title {
+        display: none;
+      }
+
+      .popup-container__header-title--pro {
+        display: block;
+      }
+
+      .register-input__elem.register-input__elem--active + .register-input__placeholder,
+      .register-input__elem:focus + .register-input__placeholder {
+        color: #000;
+      }
+
+      .select-new {
+        select.ng-valid,
+        select:focus {
+          & + .select-new__placeholder {
+            color: #000;
+          }
+        }
+      }
+
+      .register-input__placeholder {
+        color: rgba(#fff, 0.5);
+      }
+
+      .register-input__resend {
+        color: $purple-2-new;
+
+        a {
+          color: $purple-2-new;
+        }
+
+        .icon {
+          fill: $purple-2-new;
+        }
+      }
+
+      .toggle-label__price {
+        color: $purple-2-new;
+      }
+
+      .popup-container.purple-container {
+        .register-input__elem {
+          color: #000;
+        }
+      }
+
+      .register-form__gift-btn {
+        border: 1px solid #fff;
+        color: #fff;
+        fill: #fff;
+      }
+
+      .register-input__elem,
+      .register__options-link {
+        color: #fff;
+      }
+
+      .register__options-link {
+        &:hover {
+          color: #000;
+        }
+      }
+
+      .popup-container__sign-in-content {
+        a {
+          color: #fff;
+          fill: #fff;
+
+          &:hover {
+            color: #000;
+            fill: #000;
+          }
+        }
+      }
+
+      .register__pro-member {
+        background-color: #000;
+        color: #fff;
+        &:after {
+          border-right: 30px solid #000;
+        }
+      }
+
+
+      .purchased__icon {
+        background-color: #000;
+
+        .icon {
+          fill: #fff;
+        }
+      }
+    }
+  }
+}
+:host-context(.membership) {
+  .popup-container__custom-title {
+    width: 100%;
+  }
+}
+
+
+
+
+:host-context(wc-base-popup) {
+  .popup-container {
+    flex-direction: row;
+    justify-content: center;
+    @include phones() {
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  }
+}

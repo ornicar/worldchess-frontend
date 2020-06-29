@@ -1,0 +1,32 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+    width: 100%;
+}
+
+.rating-points {
+  height: 405px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url('../../../../../assets/images/rating-points/rating-points.svg');
+  @include birman-media {
+    width: 100%;
+    height: 315px;
+    background-image: url('../../../../../assets/images/rating-points/rating-points-mobile.svg');
+  }
+}
+
+
+/*----------локализация-----------*/
+
+.lang-ru {
+  &.rating-points {
+    background-image: url('../../../../../assets/images/rating-points/rating-points-ru.svg');
+
+    @include birman-media {
+      background-image: url('../../../../../assets/images/rating-points/rating-points-mobile-ru.svg');
+    }
+  }
+}

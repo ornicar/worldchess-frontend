@@ -1,15 +1,14 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {select, Store} from '@ngrx/store';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import * as moment from 'moment';
-import {timer} from 'rxjs';
-import {filter, map, mapTo, shareReplay, switchMap} from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { filter, map, mapTo, shareReplay, switchMap } from 'rxjs/operators';
 import * as fromRoot from '../reducers';
-import {SubscriptionHelper, Subscriptions} from '../shared/helpers/subscription.helper';
-import {MarkReadNotification} from './notifications.actions';
-import {ISocketGamingBoardCreatedMessage} from '../auth/auth.model';
-import {selectAllUnreadBoardCreatedNotifications} from './notifications.reducer';
-import ClickEvent = JQuery.ClickEvent;
+import { SubscriptionHelper, Subscriptions } from '../shared/helpers/subscription.helper';
+import { MarkReadNotification } from './notifications.actions';
+import { ISocketGamingBoardCreatedMessage } from '../auth/auth.model';
+import { selectAllUnreadBoardCreatedNotifications } from './notifications.reducer';
 
 @Component({
   selector: 'wc-notifications',
@@ -52,7 +51,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       .subscribe(action => this.store$.dispatch(action));
   }
 
-  public onClickNotification(e: ClickEvent, notification) {
+  public onClickNotification(e: Event, notification) {
     e.preventDefault();
 
     this.store$.dispatch(new MarkReadNotification({id: notification.id}));

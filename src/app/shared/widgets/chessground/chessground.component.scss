@@ -120,3 +120,94 @@ wc-chessground.movable {
     }
   }
 }
+
+
+.birman-chesspieces {
+
+  .shaded {
+    opacity: 0.5;
+  }
+  .promotion {
+    width: 50%;
+    height: calc(100% / 8);
+    left: 0; 
+    background-color: #8B8378;
+    border-radius: 3px;
+    padding: 0;
+    overflow: hidden;
+
+    &:after {
+      display: none;
+    }
+
+    &.promotion-leftside {
+      left: 0;
+      right: auto;
+    }
+
+    &.promotion-rightside {
+      left: auto;
+      right: 0;
+    }
+
+    &.white,
+    &.black {
+      top: auto;
+      bottom: calc(100% + 4px);
+    }
+
+    
+  }
+
+  .promotion__figure {
+    width: calc(100% / 4);
+    height: 100%;
+
+    &:hover {
+      background-color: #A49A8D;
+    }
+    &.white {
+      filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+      &.p {
+        background-image: url('src/assets/images/chess/birman-chesspieces/wP.svg');
+      }
+      &.b {
+        background-image: url('src/assets/images/chess/birman-chesspieces/wB.svg');
+      }
+      &.n {
+        background-image: url('src/assets/images/chess/birman-chesspieces/wN.svg');
+      }
+      &.r {
+        background-image: url('src/assets/images/chess/birman-chesspieces/wR.svg');
+      }
+      &.q {
+        background-image: url('src/assets/images/chess/birman-chesspieces/wQ.svg');
+      }
+      &.k {
+        background-image: url('src/assets/images/chess/birman-chesspieces/wK.svg');
+      }
+    }
+  
+    &.black {
+      filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+      &.p {
+        background-image: url('src/assets/images/chess/birman-chesspieces/bP.svg');
+      }
+      &.b {
+        background-image: url('src/assets/images/chess/birman-chesspieces/bB.svg');
+      }
+      &.n {
+        background-image: url('src/assets/images/chess/birman-chesspieces/bN.svg');
+      }
+      &.r {
+        background-image: url('src/assets/images/chess/birman-chesspieces/bR.svg');
+      }
+      &.q {
+        background-image: url('src/assets/images/chess/birman-chesspieces/bQ.svg');
+      }
+      &.k {
+        background-image: url('src/assets/images/chess/birman-chesspieces/bK.svg');
+      }
+    }
+  }
+}

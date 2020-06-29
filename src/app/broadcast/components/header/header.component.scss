@@ -8,7 +8,7 @@
   position: relative;
   background-color: $broadcast-menu-bg;
   border-top: 1px solid $broadcast-menu-border;
-  padding: 0 20px;
+  padding: 0 10px;
 
   &::after {
     content: '';
@@ -19,11 +19,31 @@
     bottom: 0;
     width: 100%;
   }
-
   @include phones() {
     flex-flow: column nowrap;
     align-items: stretch;
     padding: 0;
+  }
+
+  &.compact {
+    border-top: none;
+
+    .container-select {
+      font: 400 22px/30px $gerbera-font;
+      background-color: #ffffff;
+    }
+
+    .select-item {
+      min-height: 40px;
+    }
+
+    ::ng-deep wc-header-select:last-child {
+      color: #9e9e9e;
+
+      .dropdown {
+        color: #000000;
+      }
+    }
   }
 }
 
@@ -32,8 +52,11 @@
   height: 38px;
   width: 288px;
   margin-left: -5px;
-
   @include tablets() {
+    height: 33px;
+    width: 252px;
+  }
+  @include height-650() {
     height: 33px;
     width: 252px;
   }
@@ -45,8 +68,7 @@
   background-color: $broadcast-menu-bg;
   border-right: 1px solid $broadcast-menu-border;
   border-bottom: 1px solid $broadcast-menu-border;
-  padding-right: 20px;
-  margin-right: 20px;
+  padding: 0 20px;
   color: $broadcast-menu-color;
   box-sizing: content-box;
   user-select: none;
@@ -54,13 +76,19 @@
   display: flex;
   flex-flow: row nowrap;
   font: 300 22px/30px $gerbera-font;
-
   @include phones() {
-    min-height: 45px;
+    min-height: 40px;
     border-right: none;
     margin: 0;
     padding: 0 20px;
-
+    font-size: 20px;
+    line-height: 26px;
+    width: calc(100vw - 40px);
+  }
+  @include height-650() {
+    min-height: 40px;
+    margin: 0;
+    padding: 0 10px;
     font-size: 20px;
     line-height: 26px;
   }
@@ -75,7 +103,6 @@
       position: absolute;
       height: 1px;
       z-index: z-index(base, 0);
-
       @include phones() {
         display: none;
       }
@@ -83,7 +110,6 @@
   }
 
   &--logo {
-
     &::after {
       bottom: -1px;
       left: -20px;
@@ -99,7 +125,6 @@
     margin-right: 0;
     flex: 1 1 auto;
     justify-content: flex-end;
-
     @include phones() {
       padding: 0 20px;
     }
@@ -116,20 +141,22 @@
 }
 
 .select-item {
-  min-height: 56px;
+  height: 56px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-
+  @include height-650() {
+    height: 40px;
+    line-height: 40px;
+  }
   @include phones() {
-    min-height: 45px;
+    height: 45px;
     max-width: 100%;
   }
 }
 
 .item-text-overflow {
   display: inline-block;
-
   @include phones() {
     overflow: hidden;
     white-space: nowrap;

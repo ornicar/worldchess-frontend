@@ -2,14 +2,14 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ThrowReporter } from 'io-ts/lib/ThrowReporter';
 import * as jwtDecode from 'jwt-decode';
 import { AuthActions, AuthActionTypes } from './auth.actions';
-import { IProfile, ITokenData, TokenData } from './auth.model';
+import { ITokenData, TokenData } from './auth.model';
 
 export interface State {
   init: boolean;
   uid: string;
   token: string;
   isAuthorized: boolean;
-  profile: IProfile;
+  authSocketReconnecting: boolean;
   signIn: {
     loading: boolean,
     passwordBeenReset: boolean,
@@ -64,7 +64,7 @@ export const initialState: State = {
   uid: null,
   token: undefined,
   isAuthorized: false,
-  profile: null,
+  authSocketReconnecting: false,
   signIn: {
     loading: false,
     passwordBeenReset: false,
@@ -120,13 +120,10 @@ export const tokenRefreshTimeLeft = (token: string): number => {
 };
 
 const saveToken = (token: string, state: State): State => {
-  const tokenData = decodeToken(token);
-
   return {
     ...state,
     token: token,
     isAuthorized: true,
-    profile: tokenData.profile
   };
 };
 
@@ -241,6 +238,17 @@ export function reducer(state = initialState, action: AuthActions): State {
           loading: false,
           success: true,
           errors: {}
+        }
+      };
+
+    case AuthActionTypes.SignUpSuccessClear:
+      return {
+        ...state,
+        signUp: {
+          loading: false,
+          success: false,
+          errors: {
+          }
         }
       };
 
@@ -402,6 +410,7 @@ export function reducer(state = initialState, action: AuthActions): State {
       return {
         ...state,
         uid: action.payload.uid,
+        authSocketReconnecting: true,
         getUid: {
           loading: false
         }
@@ -414,6 +423,12 @@ export function reducer(state = initialState, action: AuthActions): State {
         getUid: {
           loading: false
         }
+      };
+
+    case AuthActionTypes.SetSocketReconnectingFlag:
+      return {
+        ...state,
+        authSocketReconnecting: action.payload.flag
       };
 
     case AuthActionTypes.RefreshToken:
@@ -456,7 +471,6 @@ export function reducer(state = initialState, action: AuthActions): State {
         ...state,
         token: null,
         isAuthorized: false,
-        profile: null
       };
 
     default:
@@ -478,8 +492,6 @@ export const selectSignUpLoading = createSelector(selectAuth, ({signUp: {loading
 
 export const selectSignUpErrors = createSelector(selectAuth, ({signUp: {errors}}) => errors);
 
-export const selectSignUpSuccess = createSelector(selectAuth, ({signUp: {success}}) => success);
-
 export const selectActivateLoading = createSelector(selectAuth, ({activate: {loading}}) => loading);
 
 export const selectActivateSuccess = createSelector(selectAuth, ({activate: {success}}) => success);
@@ -498,11 +510,11 @@ export const selectNewPasswordSuccess = createSelector(selectAuth, ({newPassword
 
 export const selectNewPasswordErrors = createSelector(selectAuth, ({newPassword: {errors}}) => errors);
 
-export const selectProfile = createSelector(selectAuth, ({profile}) => profile);
-
 export const selectToken = createSelector(selectAuth, ({token}) => token);
 
 export const selectUID = createSelector(selectAuth, ({uid}) => uid);
+
+export const selectIsAuthSocketReconnecting = createSelector(selectAuth, ({authSocketReconnecting}) => authSocketReconnecting);
 
 export const selectIsAuthorized = createSelector(selectAuth, ({isAuthorized}) => isAuthorized);
 

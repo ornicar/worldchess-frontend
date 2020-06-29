@@ -1,5 +1,5 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
+@import 'variables.scss';
+@import 'media.scss';
 
 .news-container {
   margin: 0 auto;
@@ -7,11 +7,11 @@
   min-width: 320px;
   width: 100%;
   min-height: 617px;
+  background-color: $black;
 
   &--flex {
     display: flex;
   }
-
   @include phones() {
     flex-direction: column;
     min-height: auto;
@@ -23,22 +23,19 @@
   flex: 0 1 auto;
   width: 425px;
   background-color: $black;
-  padding: 11px 11px;
-  padding-bottom: 110px;
+  padding: 11px 11px 110px;
   // @TODO use one style for the info block, move to :host style of the -info.component when styles become encapsulated
   overflow: hidden;
-
   @include phones() {
     width: 100%;
   }
 
   &::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
   }
 
   &--mobile {
     display: none;
-
     @include phones() {
       display: flex;
     }
@@ -46,7 +43,6 @@
 
   &--portable {
     display: flex;
-
     @include phones() {
       display: none;
     }
@@ -91,11 +87,11 @@
   flex-wrap: wrap;
   border-top: 1px solid #e0e0e0;
   width: 100%;
+  background-color: #f6f6f6;
 
   &__elem {
     width: 50%;
     flex: 0 0 auto;
-
     @include ipad() {
       width: 100%;
       min-height: auto;
@@ -117,7 +113,6 @@
   background-color: #f6f6f6;
   border-bottom: 1px solid #e0e0e0;
   z-index: z-index(base, 1);
-
   @include tablets-big() {
     font-size: 15px;
   }

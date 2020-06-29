@@ -1,0 +1,123 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+  height: 100vh;
+  width: 100vw;
+  display: block;
+}
+
+.tournaments__container {
+  max-width: 150vh;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 23px 0 23px;
+
+  @include tablets {
+    padding: 0;
+  }
+}
+
+.tournaments-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  color: #fff;
+  overflow-y: scroll;
+}
+
+.tournaments {
+  padding: 0 15px 20px;
+  flex: 1 1 auto;
+
+  @include birman-media {
+    padding: 0 10px;
+  }
+  .tournaments-header {
+    display: flex;
+  }
+}
+
+.tournaments__footer {
+  padding: 20px 0px;
+  @include tablets {
+    padding: 20px 15px;
+  }
+}
+
+.my-tournaments-title {
+  font: 300 22px/30px $gerbera-font;
+  margin-bottom: 7px;
+  margin-top: 48px;
+}
+
+.tournaments__head {
+  display: flex;
+  min-height: 123px;
+  padding-top: 28px;
+
+  @include birman-media {
+    min-height: 152px;
+  }
+}
+
+.tournaments__cup {
+  position: relative;
+  top: 8px;
+  fill: #fff;
+  width: 29px;
+  height: 25px;
+  margin-right: 10px;
+  flex: 0 0 auto;
+
+  @include birman-media {
+    top: 14px;
+  }
+}
+
+
+.tournaments__title {
+  font: 300 29px/30px $gerbera-font;
+  color: #fff;
+  fill: #fff;
+
+  @include birman-media {
+    font: 300 30px/42px $gerbera-font;
+  }
+}
+
+.desctop-visible {
+  display: inline;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.tournaments__title-main {
+  min-height: 36px;
+  margin-top: 4px;
+}
+
+.tournaments__subtitle {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  top: -5px;
+  opacity: 0.4;
+
+  span {
+    white-space: nowrap;
+  }
+}
+
+.return-lobby {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: z-index(sticky);
+}
+
+

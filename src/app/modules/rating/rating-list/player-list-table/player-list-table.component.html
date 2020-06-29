@@ -1,0 +1,91 @@
+<div *ngIf="(playersList$ | async) as players">
+  <table class="rating-table">
+    <thead class="rating-table-phones-hidden">
+    <tr>
+      <td (click)="onSort('rank')" [class.active]="sortField$.value.field === 'rank'">Rank</td>
+      <td (click)="onSort('full_name')" [class.active]="sortField$.value.field === 'full_name'">Player</td>
+      <td (click)="onSort('country_name')" [class.active]="sortField$.value.field === 'country_name'">
+        <span class="rating-table-ipad-hidden">Country</span>
+      </td>
+      <td (click)="onSort('rating')" [class.active]="sortField$.value.field === 'rating'">Bullet</td>
+      <td (click)="onSort('blitz_rating')" [class.active]="sortField$.value.field === 'blitz_rating'">Blitz</td>
+      <td (click)="onSort('rapid_rating')" [class.active]="sortField$.value.field === 'rapid_rating'">Rapid</td>
+      <td (click)="onSort('birth_year')" [class.active]="sortField$.value.field === 'birth_year'">Birth
+        <span class="rating-table-ipad-hidden">year</span>
+      </td>
+    </tr>
+    </thead>
+
+    <tbody class="box-shadow" *ngIf="showTop">
+        <ng-container *ngIf="(topPlayersList$ | async) as topPlayers">
+          <ng-container *ngFor="let player of topPlayers;">
+            <ng-container *ngTemplateOutlet="tr; context:{player: player}"></ng-container>
+          </ng-container>
+        </ng-container>
+    </tbody>
+
+    <tbody>
+      <ng-container *ngFor="let player of players;">
+        <ng-container *ngTemplateOutlet="tr; context:{player: player}"></ng-container>
+      </ng-container>
+    </tbody>
+  </table>
+
+</div>
+
+<ng-template #tr let-player="player">
+
+  <tr [routerLink]="'/ratings/' + player.fide_id"
+      class="rating-table__item"
+  >
+    <td class="rating-table__rank rating-table-phones-hidden">{{player.rank}}</td>
+    <td class="rating-table__name">
+      <div class="name-player" [class.name-player--active]="openPlayerId === player.fide_id">
+        <div class="name-player__button">
+              <span class="rating-table__name-portrait">
+                <img *ngIf="player.avatar" [src]="player.avatar">
+              </span>
+          <span class="rating-table__name-text">{{player.full_name}}</span>
+        </div>
+        <div class="name-player__button-drop" (click)="openPlayerRow($event, player)">
+          <div class="name-player__button-arrow"></div>
+        </div>
+        <div class="name-player__drop">
+          <div class="name-player__col">
+            <div class="name-player__score">
+              <span>rapid </span>{{player.rating}}
+            </div>
+            <div class="name-player__score">
+              <span>classic </span>{{player.blitz_rating}}
+            </div>
+            <div class="name-player__score">
+              <span>blitz </span>{{player.rapid_rating}}
+            </div>
+          </div>
+          <div class="name-player__col">
+            <div class="name-player__score">
+              <span>Birthday </span>{{player.birth_year}}
+            </div>
+            <div class="name-player__country">
+              <wc-country [federation]="player.federation"></wc-country>
+            </div>
+          </div>
+        </div>
+      </div>
+      <wc-player-labels [labels]="player.labels"></wc-player-labels>
+    </td>
+    <td class="rating-table__country rating-table-phones-hidden">
+      <wc-country [federation]="player.federation"></wc-country>
+    </td>
+    <td class="rating-table__score rating-table-phones-hidden">{{player.rating}}</td>
+    <td class="rating-table__score rating-table-phones-hidden">{{player.blitz_rating}}
+    </td>
+    <td class="rating-table__score rating-table-phones-hidden">{{player.rapid_rating}}
+    </td>
+    <td class="rating-table__age rating-table-phones-hidden">
+      {{player.birth_year}}
+      <wc-player-labels [labels]="player.labels"></wc-player-labels>
+    </td>
+  </tr>
+
+</ng-template>

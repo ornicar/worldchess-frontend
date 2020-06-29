@@ -2,16 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
+  EventEmitter, HostBinding,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 import { createSelector, select, Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest, EMPTY, Observable, of } from 'rxjs';
-import { delay, filter, map, switchMap, throttleTime } from 'rxjs/operators';
+import { delay, filter, map, switchMap, tap, throttleTime } from 'rxjs/operators';
 import * as fromRoot from '../../../reducers/index';
 import { OnChangesInputObservable, OnChangesObservable } from '../../../shared/decorators/observable-input';
 import { SubscriptionHelper, Subscriptions } from '../../../shared/helpers/subscription.helper';
@@ -114,6 +114,10 @@ export const selectBoardsByMatch = createSelector(
 })
 export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
+  @HostBinding('class.compact')
+  @Input()
+  compact = false;
+
   @Input()
   isMultiboard = false;
 
@@ -166,6 +170,8 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   private selectPlayersByIds = selectPlayersByIds();
   private selectCountriesByIds = selectCountriesByIds();
 
+  roundTitles: {[k: string]: string} = {};
+
   tournamentTypeIsMatch$ = this.selectedTournament$.pipe(
     map(tournament => tournament && tournament.tournament_type === TournamentType.MATCH)
   );
@@ -198,28 +204,35 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   tours$ = this.selectedTournament$.pipe(
     switchMap(tournament => tournament
-      ? this.store$.pipe(select(selectToursByTournament, {tournamentId: tournament.id}))
+      ? this.store$.pipe(select(selectToursByTournament, {tournamentId: tournament.id})).pipe(
+        map((tours: ITour[]) => {
+          const orderedTours = [...tours];
+          orderedTours.sort((a, b) => {
+            return a.tour_number - b.tour_number ||
+              new Date(a.datetime_of_round_finish).getTime() - new Date(b.datetime_of_round_finish).getTime();
+          });
+          return orderedTours;
+        }),
+      )
       : of([])
     ),
     // @todo fix. ExpressionChangedAfterItHasBeenCheckedError
     throttleTime(10, undefined, { leading: true, trailing: true }),
+    tap((tours) => {
+      tours.forEach(t => this.roundTitles[t.id] = this.getRoundTitle(t));
+    }),
   );
 
-  matches$ = this.tournamentTypeIsMatch$.pipe(
-    switchMap(isMatch => isMatch
-      ? this.selectedTour$.pipe(switchMap(tour => {
-          return tour
-            ? this.store$.pipe(select(selectMatchesByTour, {tourId: tour.id}))
-            : of([]);
-        }))
-      : of([])
-    ),
-    // @todo fix. ExpressionChangedAfterItHasBeenCheckedError
-    throttleTime(10, undefined, { leading: true, trailing: true }),
-  );
+  matches$ = this.selectedTour$.pipe(switchMap(tour => {
+    return tour
+      ? this.store$.pipe(select(selectMatchesByTour, { tourId: tour.id }))
+      : of([]);
+  }));
 
-  boards$ = this.tournamentTypeIsMatch$.pipe(
-    switchMap(isMatch => isMatch
+  public teamsCount$ = this.store$.pipe(select(fromTeam.selectTotal));
+
+  boards$ = this.teamsCount$.pipe(
+    switchMap(teamsCount => teamsCount > 0
       ? this.selectedMatch$.pipe(switchMap(match => {
           return match
             ?  this.store$.pipe(select(selectBoardsByMatch, { matchId: match.id }))
@@ -266,8 +279,6 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   selectBoard = selectBoard();
 
-  public teamsCount$ = this.store$.pipe(select(fromTeam.selectTotal));
-
   constructor(
     private cd: ChangeDetectorRef,
     private store$: Store<fromRoot.State>
@@ -295,15 +306,10 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
         this.store$.dispatch(new GetToursByTournament({ id: tournamentId }))
       );
 
-    this.subs.getMatches = this.tournamentTypeIsMatch$
-      .pipe(
-        switchMap(isMatch => isMatch
-          ? this.selectedTour$.pipe(map(tour => tour && tour.id))
-          : EMPTY
-        ),
-        filter(id => Boolean(id))
-      )
-      .subscribe(tourId =>
+    this.subs.getMatches = this.selectedTour$.pipe(
+      map(tour => tour && tour.id),
+        filter(id => Boolean(id)),
+      ).subscribe(tourId =>
         this.store$.dispatch(new GetMatchesByTour({ id: tourId }))
       );
 
@@ -401,5 +407,21 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
       type: HeaderModelType.Board,
       model: board
     });
+  }
+
+  getRoundTitle(tour: ITour): string {
+    if (tour) {
+      if (tour.tour_round_name) {
+        if (isNaN(+tour.tour_round_name)) {
+          return `Round ${tour.tour_number} ${tour.tour_round_name}`
+        } else {
+          return `Round ${tour.tour_number}.${tour.tour_round_name}`;
+        }
+      } else {
+        return `Round ${tour.tour_number}`;
+      }
+    } else {
+      return '';
+    }
   }
 }

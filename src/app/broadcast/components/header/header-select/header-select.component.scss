@@ -6,6 +6,29 @@
   align-items: center;
   align-self: stretch;
   position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: -20px;
+    height: 1px;
+    width: calc(100vw + 20px);
+    z-index: z-index(base, 0);
+    border-bottom: 1px solid $black;
+
+    @include phones() {
+      display: none;
+    }
+  }
+}
+
+:host-context(wcd-widget-page),
+:host-context(.main-page) {
+  &:after {
+    border-bottom: 1px solid $broadcast-menu-border;
+  }
 }
 
 :host(.open) {
@@ -21,22 +44,22 @@
       left: 100%;
     }
 
-     
+
       ::-webkit-scrollbar-track {
         background-color:transparent;
       }
-      
+
       ::-webkit-scrollbar-thumb {
         background-color:$black-light;
         border-radius: 5px;
       }
-      
+
       ::-webkit-scrollbar{
       width: 4px;
       }
   }
 
-  wc-arrow-down.arrow {
+  svg-arrow-down.arrow {
     align-self: center;
 
     transform: rotate(180deg);
@@ -107,7 +130,7 @@
   padding: 0 13px;
 }
 
-wc-arrow-down.arrow {
+svg-arrow-down.arrow {
   flex: 0 0 auto;
   width: 40px;
   height: 40px;
@@ -119,7 +142,7 @@ wc-arrow-down.arrow {
   }
 }
 
-wc-arrow-down.back {
+svg-arrow-down.back {
   width: 40px;
   height: 40px;
   align-self: center;
@@ -129,7 +152,7 @@ wc-arrow-down.back {
 .dropdown {
   position: absolute;
   top: -10000px;
-  left: -20px;
+  left: -1px;
   min-width: calc(100% + 20px);
   max-width: calc(100vw - 20px);
   background-color: inherit;
@@ -167,11 +190,14 @@ wc-arrow-down.back {
 
 .dropdown-content {
   overflow-y: auto;
-  max-height: 70vh;
+  max-height: calc(100vh - 120px);
 
-  @include phones() {
-    overflow: initial;
-    max-height: initial;
+  .preloader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%);
+    transform: translateY(-50%);
   }
 }
 
@@ -195,3 +221,4 @@ wc-arrow-down.back {
     border-bottom: 1px solid $broadcast-menu-small-border;
   }
 }
+

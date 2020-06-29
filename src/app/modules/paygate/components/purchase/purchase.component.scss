@@ -1,84 +1,6 @@
 @import 'variables';
 @import 'media';
 
-.register {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: 100%;
-    padding: 25px;
-    background-color: #525252;
-}
-
-.register__close {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    width: 19px;
-    height: 19px;
-    cursor: pointer;
-
-    &:after,
-    &:before {
-        content: '';
-        display: block;
-        width: 25px;
-        height: 1px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(45deg);
-        background-color: #999;
-    }
-
-    &:before {
-        transform: translate(-50%, -50%) rotate(-45deg);
-    }
-}
-
-.register__title {
-    font: 300 33px/43px $gerbera-font;
-    color: #fff;
-    height: 100px;
-    margin-bottom: 20px;
-    padding-right: 25px;
-
-    a {
-        color: #999;
-    }
-
-    @include laptop() {
-        font: 300 29px/29px $gerbera-font;
-        height: auto;
-    }
-
-    @include tablets() {
-        font: 300 29px/29px $gerbera-font;
-        height: auto;
-    }
-}
-
-.register__labels {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-
-    @include tablets() {
-        margin: 0 auto;
-    }
-
-    @include phones() {
-        margin: 0 auto;
-        padding: 0 50px;
-    }
-
-    @include phones-small() {
-        padding: 0;
-    }
-}
-
 .register__footer {
     height: 160px;
     display: flex;
@@ -194,7 +116,7 @@
     }
 
     &--premium {
-        background-color: #dca4ff;
+        background-color: $purple-new;
     }
 
     @include tablets() {
@@ -219,7 +141,7 @@
 }
 
 .register__steps {
-    font: 400 15px/20px $gerbera-font;
+    font: 300 15px/20px $gerbera-font;
     text-align: center;
     color: #999;
     margin-bottom: 10px;
@@ -323,6 +245,6 @@
     color: rgba(#fff, 0.4);
 }
 
-.input-text__wparrer {
+.input-text__wrapper {
     padding: 15px 0 5px;
 }

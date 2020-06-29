@@ -2,7 +2,6 @@
 @import "../../../../../html/css/variables";
 
 .prediction {
-  min-height: 117px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -19,7 +18,15 @@ wc-prediction{
     display: none;
   }
 
+  @include height-650() {
+    display: none;
+  }
+
   &.prediction-0 {
     display: block;
+
+    @include height-650() {
+      display: block;
+    }
   }
 }

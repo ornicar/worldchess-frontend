@@ -15,7 +15,8 @@ import {
   PatchMyTournamentAndNavigate,
   SendToApproveMyTournament
 } from '../../../broadcast/core/tournament/tournament.actions';
-import { FounderTournament, ApprovalStatus } from '../../../broadcast/core/tournament/tournament.model';
+import { FounderTournament, ApprovalStatus, BroadcastType } from '../../../broadcast/core/tournament/tournament.model';
+import { BroadcastingType } from '@app/broadcast/core/camera/camera.model';
 
 export const selectMode = (modeName) => {
   switch (modeName) {
@@ -35,15 +36,16 @@ export type TabValue = 'main'
   | 'payments'
   | 'players'
   | 'rounds'
+  | 'video_broadcast'
   | 'widgets';
 
 export const tournamentManagerTabs: ITournamentManagerTab[] = [
   { value: 'main', title: 'Main options' },
   { value: 'added', title: 'Added options' },
   // { value: 'partners', title: 'Partners' },
-  { value: 'payments', title: 'Payments' },
   { value: 'players', title: 'Players' },
   { value: 'rounds', title: 'Rounds' },
+  { value: 'video_broadcast', title: 'Video Broadcast' },
   // { value: 'widgets', title: 'Widget' }
 ];
 
@@ -161,6 +163,7 @@ export abstract class ManageTournamentTab {
   createNewTournament() {
     // add time validation!
     if (this.form.valid) {
+      this.changes['broadcast_type'] = this.changes['broadcast_type'] || BroadcastType.FREE;
       this.store$.dispatch(new CreateMyTournament({ tournament: this.changes }));
     } else {
       // @TODO when separete controls will be implemented, error would be in every component itself

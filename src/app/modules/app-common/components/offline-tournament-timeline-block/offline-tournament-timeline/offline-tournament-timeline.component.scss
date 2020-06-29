@@ -1,0 +1,231 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.tournament-timeline-container {
+  height: 800px;
+  width: 100%;
+  overflow: hidden;
+  flex: 1 0 auto;
+  margin-bottom: -17px;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  .group-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 2;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    color: #fff;
+    fill: #fff;
+    &.fiderated-label {
+      .icon {
+        width: 17px;
+        height: 14px;
+        margin-right: 10px;
+      }
+    }
+
+    ::ng-deep {
+      svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.wcrated-label {
+      .icon {
+        width: 12px;
+        height: 13px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.timeline-wrapper {
+  height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.tournament-timeline-background{
+  position: relative;
+  height: 100%;
+  &.mon {
+    &:before {
+      background-position-x: 0px !important;
+    }
+  }
+  &.tue {
+    &:before {
+      background-position-x: -60px !important;
+    }
+  }
+  &.wed {
+    &:before {
+      background-position-x: -120px !important;
+    }
+  }
+  &.thu {
+    &:before {
+      background-position-x: -180px !important;
+    }
+  }
+  &.fri {
+    &:before {
+      background-position-x: -240px !important;
+    }
+  }
+  &.sat {
+    &:before {
+      background-position-x: -300px !important;
+    }
+  }
+  &.sun {
+    &:before {
+      background-position-x: -360px !important;
+    }
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100%);
+    margin-top: 20px;
+    border-top: 1px solid rgba(#000, 0.1);
+
+    background: linear-gradient(to right,
+      rgba(0,0,0, 0) 0px,
+      rgba(0,0,0, 0) 299px,
+      rgba(213,0,0, 0.4) 300px, rgba(213,0,0, 0.4) 420px
+    );
+    background-size: 420px 420px;
+  }
+}
+
+.tournament-timeline {
+  height: 100%;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;
+
+
+  .tournament-timeline-grid {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding-top: 19px;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      margin-top: 20px;
+      height: 100%;
+      border-top: 1px solid rgba(#000, 0.1);
+      background:
+        linear-gradient(90deg,
+          rgba(0,0,0, 0) 59px, rgba(0, 0, 0, .1) 60px)
+        0 0;
+      background-size: 60px 60px;
+    }
+  }
+
+  .timeline-labels {
+    height: 30px;
+    width: 100%;
+    white-space: nowrap;
+    .timelabel {
+      font-family: $gerbera-font;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 22px;
+      color: #000000;
+      opacity: 0.4;
+      padding-left: 8px;
+      &.today {
+        opacity: 1 ;
+      }
+      display: inline-block;
+      position: absolute;
+      z-index:2;
+    }
+  }
+  .timeline-past-area {
+    height: 100%;
+    width: 300px;
+    background: #FF8B8B;
+    opacity: 0.75;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .timeline-past-area-right-border {
+    height: calc(100% - 15px);
+    margin-top: 20px;
+    width: 300px;
+    border-right: 1px solid #000000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+
+  .past-area-label-dot {
+    height: 5px;
+    width: 5px;
+    background-color: #000000;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+    z-index:2
+  }
+}
+
+.icon-logo {
+  position: absolute;
+  left: 50%;
+  bottom: 100px;
+  transform: translate(-50%, 0);
+  width: 165px;
+  height: 194px;
+  fill: #fff;
+  opacity: 0.3;
+
+  .icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include birman-media {
+    display: none;
+  }
+}

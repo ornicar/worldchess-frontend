@@ -1,0 +1,145 @@
+@import 'src/html/css/variables-new';
+@import 'src/html/css/media-new';
+
+.tournament-timeline-container {
+  height: 800px;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  .group-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 2;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    color: #fff;
+    fill: #fff;
+    &.fiderated-label {
+      .icon {
+        width: 17px;
+        height: 14px;
+        margin-right: 10px;
+      }
+    }
+
+    ::ng-deep {
+      svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.wcrated-label {
+      .icon {
+        width: 12px;
+        height: 13px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.timeline-wrapper {
+  height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.tournament-timeline {
+  height: 100%;
+  width: 100%;
+  top: 19px;
+  padding-top: 19px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 10px);
+    margin-top: 20px;
+    border-top: 1px solid rgba(#fff, 0.1);
+
+    background:
+    linear-gradient(90deg,
+      rgba(255,255,255, 0) 69px, rgba(255, 255, 255, .1) 70px)
+    0 0;
+    background-size: 70px 70px;
+  }
+
+  .timeline-labels {
+    height: 30px;
+    width: 100%;
+    white-space: nowrap;
+    .timelabel {
+      font-family: $gerbera-font;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 22px;
+      color: #FFFFFF;
+      opacity: 0.4;
+      display: inline-block;
+      position: absolute;
+      z-index:2;
+    }
+  }
+  .timeline-past-area {
+    height: 100%;
+    width: 300px;
+    background: #000;
+    opacity: 0.75;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .timeline-past-area-right-border {
+    height: calc(100% - 15px);
+    margin-top: 20px;
+    width: 300px;
+    border-right: 1px solid $red-3-new;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .past-area-label {
+    position: absolute;
+    color: $red-3-new;
+    top: -4px;
+    z-index:2;
+  }
+
+  .past-area-label-dot {
+    height: 5px;
+    width: 5px;
+    background-color: $red-3-new;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+    z-index:2
+  }
+}

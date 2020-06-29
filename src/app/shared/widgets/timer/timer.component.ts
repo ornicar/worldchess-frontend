@@ -1,7 +1,17 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import * as moment from 'moment';
-import {interval} from 'rxjs';
-import {SubscriptionHelper, Subscriptions} from '../../helpers/subscription.helper';
+import { interval } from 'rxjs';
+import { SubscriptionHelper, Subscriptions} from '../../helpers/subscription.helper';
 
 // @todo check that this timer is not working when have not subscribers.
 const timer$ = interval(300);
@@ -21,6 +31,8 @@ export class TimerComponent implements OnInit, OnDestroy {
   @Input() stopAfterZero = true;
 
   @Input() stopTrim: string = null;
+
+  @Output() countdownChange = new EventEmitter<number>();
 
   countdown = '';
 
@@ -44,6 +56,8 @@ export class TimerComponent implements OnInit, OnDestroy {
     } else {
       countdownMs = Math.abs(countdownMs);
     }
+
+    this.countdownChange.emit(countdownMs);
 
     const countdown = moment.duration(countdownMs).format(this.format, this.settings);
 

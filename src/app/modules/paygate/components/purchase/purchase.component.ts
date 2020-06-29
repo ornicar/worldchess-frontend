@@ -5,11 +5,11 @@ import { finalize, map, switchMap, take, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
-import { PaygateService } from '../../../../client/paygate.service';
 import { PaygatePopupService } from '@app/modules/paygate/services/paygate-popup.service';
 import * as fromUserPurchases from '@app/purchases/user-purchases/user-purchases.reducer';
 import { GetUserPurchases } from '@app/purchases/user-purchases/user-purchases.actions';
 import { AuthRefreshCurrentToken } from '@app/auth/auth.actions';
+import { PaygateService } from '@app/modules/paygate/services/paygate.service';
 
 
 @Component({

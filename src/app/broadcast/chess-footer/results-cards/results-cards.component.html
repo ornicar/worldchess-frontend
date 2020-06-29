@@ -11,9 +11,9 @@
           <span class="results-list-circular__name-text">
             {{ playerResults?.player?.full_name | wcReplace: ',':'' }}
           </span>
-          <div class="results-list-circular__flag">
+          <span class="results-list-circular__flag">
             <wc-country-flag [countryId]="playerResults?.player?.federation"></wc-country-flag>
-          </div>
+          </span>
         </div>
       </div>
       <div class="results-list-circular__count">

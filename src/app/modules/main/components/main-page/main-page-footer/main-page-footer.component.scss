@@ -1,0 +1,352 @@
+@import "variables-new";
+@import "media-new";
+
+.main-page-footer {
+    padding: 5px 0 100px;
+
+    @include birman-media() {
+      padding: 0px 10px 32px;
+    }
+}
+
+.main-page-footer__elem {
+    position: relative;
+    @include birman-media() {
+      width: 180px;
+      margin-bottom: 18px;
+    }
+}
+
+.main-page-footer__list {
+    display: flex;
+
+    @include birman-media() {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+}
+
+.main-page-footer__sub-link {
+    display: flex;
+    align-items: flex-end;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 35px;
+    white-space: nowrap;
+    fill: $yellow-new;
+    color: $yellow-new;
+    font: 400 12px/15px $gerbera-font;
+
+    &--brown {
+        fill: $brown-2;
+        color: $brown-2; 
+        left: 42px; 
+
+        .main-page-footer__arrow-mobile {
+          width: 68px;
+          &:after {
+            background-color: $brown-2;
+          }
+        }
+    }
+
+    .icon--desctop {
+        width: 40px;
+        height: 34px;
+        margin-right: 8px;
+
+        @include birman-media() {
+          display: none;
+        }
+
+        ::ng-deep {
+            svg {
+                display: block;
+            }
+        }
+    }
+
+    @include birman-media() {
+      width: 120px;
+      left: 100%;
+      top: 13px;
+      white-space: normal;
+    }
+}
+
+.main-page-footer__sub-link-text {
+  position: relative;
+}
+
+.main-page-footer__arrow-mobile {
+  display: none;
+  position: absolute;
+  top: 2px;
+  right: calc(100% + 9px);
+  width: 46px;
+  height: 12px;
+
+  @include birman-media() {
+    display: block;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: $yellow-new;
+  }
+
+  .icon--mobile{
+    width: 5px;
+    height: 8px;
+    position: absolute;
+    left: -2px;
+    top: 1px;
+    transform: translate(0, 6%) rotate(-180deg);
+
+    ::ng-deep {
+      svg {
+        display: block;
+      }
+    }
+  }
+}
+
+.main-page-footer__link {
+    display: inline-flex;
+    align-items: center;
+    font: 300 30px/32px $gerbera-font;
+    color: #fff;
+    fill: #fff;
+    margin-right: 27px;
+    cursor: pointer;
+
+    &:hover {
+        color: $brown-2;
+        fill: $brown-2;
+    }
+
+    .icon {
+        transform: rotate(-180deg);
+        display: block;
+        width: 13px;
+        height: 26px;
+        margin-left: 8px;
+
+        ::ng-deep {
+            svg {
+                display: block;
+            }
+        }
+    }
+}
+
+.footer {
+  @include birman-media() {
+    padding: 0 10px 0;
+  }
+}
+
+.footer__logo {
+    display: block;
+    fill: #fff;
+    width: 93px;
+    height: 16px;
+  
+    &--usetech {
+      width: 83px;
+      position: relative;
+      top: -2px;
+    }
+  
+    &:active,
+    &:hover {
+      fill: $brown-2;
+  
+      ::ng-deep {
+        svg {
+          fill: $brown-2;
+        }
+      }
+    }
+  
+    ::ng-deep {
+      svg {
+        display: block;
+      }
+    }
+  }
+  
+  .footer__row {
+    display: flex;
+  
+    @include birman-media {
+      flex-direction: column;
+    }
+  }
+  
+  .footer__col {
+    display: flex;
+    &--left {
+      margin-right: auto;
+      margin-top: 3px;
+  
+      @include birman-media {
+        order: 3;
+      }
+    }
+  
+    &--center {
+      @include birman-media {
+        order: 1;
+      }
+    }
+  
+    &--right {
+      margin-left: 69px;
+      @include birman-media {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 71px;
+        order: 2;
+        border-top: 1px solid rgba(#fff, 0.1);
+        border-bottom: 1px solid rgba(#fff, 0.1);
+        margin-left: 0;
+        margin-bottom: 16px;
+        margin-top: 9px;
+      }
+    }
+  }
+  
+  .footer__link-block {
+    margin-right: 9px;
+    @include birman-media {
+      margin-right: 18px;
+    }
+  }
+  
+  .footer__link {
+    margin-bottom: 1px;
+  }
+  
+  .footer__text {
+    font: 300 12px/15px $gerbera-font;
+    color: rgba(#fff, 0.4);
+    max-width: 140px;
+  }
+  
+  
+  .footer__social {
+    display: flex;
+    position: relative;
+    top: 9px;
+  
+    @include birman-media {
+      top: 0;
+    }
+  }
+  
+  .footer__social-icon {
+    display: block;
+    fill: #fff;
+    margin-right: 9px;
+    height: 26px;
+  
+    @include birman-media {
+      margin-right: 20px;
+      height: 35px;
+    }
+  
+    &:hover {
+      fill: $brown-2;
+    }
+  
+    &:last-child {
+      margin-right: 0;
+    }
+  
+    &--twitter {
+      width: 33px;
+      @include birman-media {
+        width: 38px;
+      }
+    }
+  
+    &--facebook {
+      width: 14px;
+      position: relative;
+      top: -1px;
+      @include birman-media {
+        width: 15px;
+      }
+    }
+  
+    &--instagram {
+      width: 26px;
+      @include birman-media {
+        width: 29px;
+      }
+    }
+  }
+  
+  .links {
+    display: flex;
+  }
+  
+  .links__block-wrapp {
+    display: flex;
+  
+    @include birman-media {
+      flex-direction: column;
+    }
+  }
+  
+  .links__block {
+    padding-left: 22px;
+    @include birman-media {
+      padding-left: 0;
+      padding-right: 34px;
+    }
+  }
+  
+  .links__elem {
+    display: flex;
+    align-items: center;
+    min-height: 22px;
+  
+    @include birman-media {
+      min-height: 40px;
+    }
+  }
+  
+  .links__link {
+    display: flex;
+    align-items: center;
+    font: 300 12px/16px $gerbera-font;
+    fill: #fff;
+    color: #fff;
+  
+    @include birman-media {
+      font: 300 15px/40px $gerbera-font;
+    }
+  
+    &:active,
+    &:hover {
+      color: $brown-2;
+      fill: $brown-2;
+    }
+  
+    .icon {
+      position: relative;
+      top: 2px;
+      width: 12px;
+      height: 6px;
+      margin-left: 4px;
+    }
+  }

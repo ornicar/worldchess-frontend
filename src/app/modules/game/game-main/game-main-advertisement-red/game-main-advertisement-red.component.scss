@@ -1,0 +1,105 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+    width: 100%;
+}
+
+.advertisement-red {
+  position: relative;
+  height: 510px;
+  flex: 0 0 auto;
+  @include birman-media {
+    height: 565px;
+  }
+}
+
+.advertisement-red__photo {
+  position: absolute;
+  top: 50%;
+  right: 43%;
+  transform: translate(100%, -50%);
+  width: 230px;
+  height: 393px;
+
+  @include birman-media {
+    right: 15px;
+    top: auto;
+    bottom: 35px;
+    transform: translate(0, 0);
+    width: 175px;
+    height: 283px;
+  }
+}
+
+.advertisement-red__photo-img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url('../../../../../assets/images/red-advertisement-block/photo-dialog-awesome-red.svg');
+}
+
+.advertisement-red__advert {
+  width: 683px;
+  height: 518px;
+  position: absolute;
+  top: -57px;
+  right: 126px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url('../../../../../assets/images/red-advertisement-block/dialog-desktop-red.svg');
+
+  @include birman-media {
+    top: auto;
+    bottom: 165px;
+    right: -25px;
+    width: 327px;
+    height: 365px;
+    background-image: url('../../../../../assets/images/red-advertisement-block/dialog-mobile-red.svg');
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    width: 271px;
+    height: 220px;
+    position: absolute;
+    top: 49%;
+    left: 47.4%;
+    transform: translate(-50%, -50%);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url('../../../../../assets/images/red-advertisement-block/text-awesome-red.svg');
+
+    @include birman-media {
+      width: 222px;
+      height: 185px;
+      top: 40%;
+      left: 48%;
+    }
+  }
+}
+
+.advertisement-red__photo-text {
+  position: absolute;
+  bottom: 38px;
+  right: 209px;
+  color: #fff;
+  font: 300 12px/16px $gerbera-font;
+  white-space: nowrap;
+
+  @include birman-media {
+    bottom: 45px;
+    right: 163px;
+  }
+
+  span {
+    font-weight: bold;
+  }
+}

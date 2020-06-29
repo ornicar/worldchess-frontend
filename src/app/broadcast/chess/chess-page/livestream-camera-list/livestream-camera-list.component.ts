@@ -1,6 +1,4 @@
 import { Component, Input, EventEmitter, Output, HostListener, ElementRef } from '@angular/core';
-import { GoPremiumModalComponent } from '../go-premium-modal/go-premium-modal.component';
-import { EventListener } from '@angular/core/src/debug/debug_node';
 import { ICamera } from '@app/broadcast/core/camera/camera.model';
 
 @Component({

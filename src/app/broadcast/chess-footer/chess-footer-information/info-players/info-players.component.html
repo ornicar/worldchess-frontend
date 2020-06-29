@@ -9,9 +9,7 @@
       <div class="players__dropdown-country">{{selectedTeam?.name}}</div>
       <span class="players__dropdown-link"
         [class.players__dropdown-link--opened]="isDropdownOpened">
-        <svg class="icon">
-          <use xlink:href="#arrow-down"></use>
-        </svg>
+        <svg-arrow-down class="icon"></svg-arrow-down>
       </span>
     </div>
     <ul class="players__dropdown-list" [hidden]="!isDropdownOpened">

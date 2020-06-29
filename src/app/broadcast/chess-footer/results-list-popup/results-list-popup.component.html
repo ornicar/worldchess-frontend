@@ -1,0 +1,55 @@
+<div #popup class="results-list-popup-wrapper">
+  <ng-container *ngIf="player">
+    <a class="results-list-popup-wrapper__close" (click)="onClose()"></a>
+    <div class="results-list-popup">
+        <div class="results-list-popup__player-header">
+          <div class="results-list-popup__player-avatar">
+            <div class="results-list-popup__player-photo" *ngIf="player?.avatar?.full">
+                <img [src]="player.avatar.full">
+            </div>
+            <wc-country-flag *ngIf="player.federation" class="flag-icon" [countryId]="player.federation"></wc-country-flag>
+            <span>{{ player.full_name }}</span>
+          </div>
+          <div class="results-list-popup__player-rank">
+            <span *ngIf="player.rank">{{ player.rank }}</span>
+            <ng-container *ngIf="player.rating">{{ player.rating }}</ng-container>
+          </div>
+          <div class="results-list-popup__player-game-number">{{ points }}</div>
+        </div>
+      
+        <ul class="results-list-popup__list" wcHideScrollbar>
+      
+          <li class="results-list-popup__list-item" *ngFor="let result of results; let i = index">
+            <div class="results-list-popup__list-index">
+              {{ i + 1 }}
+            </div>
+            <ng-container *ngTemplateOutlet="resultsListPopupItemTemplateRef; context: getPlayerOpponent(result)">
+            </ng-container>
+            <div class="results-list-popup__result">
+              <span *ngIf="getPlayerResult(result) === 0.5" class="results-list-popup__result-half">
+                <span>1</span><span>2</span>
+              </span>
+              <ng-container *ngIf="getPlayerResult(result) !== 0.5">{{ getPlayerResult(result) }}</ng-container>
+            </div>
+          </li>
+      
+        </ul>
+      
+      </div>
+  </ng-container>
+</div>
+
+
+<ng-template #resultsListPopupItemTemplateRef let-result="result" let-opponentName="opponentName"
+  let-opponent="opponent">
+  <div class="results-list-popup__player">
+    <span>{{ opponent?.full_name || opponentName }}</span>
+    <wc-country-flag *ngIf="opponent?.federation" class="flag-icon" [countryId]="opponent?.federation">
+    </wc-country-flag>
+    <span class="results-list-popup__circle" [ngClass]="{ 'white-circle': isPlayerWhite(result), 'black-circle': isPlayerBlack(result)}"></span>
+  </div>
+  <div class="results-list-popup__player-rank" *ngIf="opponent">
+    <span *ngIf="opponent?.rank">{{ opponent.rank }}</span>
+    <ng-container *ngIf="opponent?.rating">{{ opponent.rating }}</ng-container>
+  </div>
+</ng-template>

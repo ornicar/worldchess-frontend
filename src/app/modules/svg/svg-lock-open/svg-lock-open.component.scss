@@ -1,0 +1,38 @@
+.lst0 {
+  display: none
+}
+
+.lst1 {
+  display: inline
+}
+
+.lst2 {
+  filter: url(#lAdobe_OpacityMaskFilter)
+}
+
+.lst3 {
+  fill: #fff
+}
+
+.lst4 {
+  mask: url(#lmask-2_1_);
+  fill: #5f41ff
+}
+
+.lst5 {
+  filter: url(#lAdobe_OpacityMaskFilter_1_)
+}
+
+.lst6 {
+  mask: url(#lmask-4_1_);
+  fill: #fff
+}
+
+.lst7 {
+  fill: #5f41ff
+}
+
+:host-context(.livestream) svg {
+  height: 20px;
+  width: 20px;
+}

@@ -86,6 +86,7 @@
 
   &__fields {
     display: flex;
+    position: relative;
     @include phones() {
       flex-direction: column;
     }
@@ -140,6 +141,27 @@
     font: 400 15px/20px $gerbera-font;
     color: #656565;
     margin: 0 0 15px;
+  }
+
+  &__sub-title-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -2000px;
+    left: 50%;
+    width: 166px;
+    height: 45px;
+    background-color: #e5e5e5;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    transform: translate(-50%, -50%);
+
+    &.show {
+      opacity: 1;
+      top: 50%;
+    }
   }
 }
 
@@ -278,13 +300,14 @@
   background-color: transparent;
   border: 0;
   font: 300 22px/54px $gerbera-font;
-  max-width: 275px;
+  width: 50%;
   margin-right: 30px;
   border-bottom: 1px solid #9e9e9e;
   @include phones() {
     font: 300 18px/54px $gerbera-font;
     max-width: 50%;
     flex: 1 0 auto;
+    width: auto;
 
     &:last-child {
       margin-right: 0;

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take, map } from 'rxjs/operators';
 import { PlanType } from '../../../services/paygate-popup.service';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'wc-subscription-menu',
@@ -20,25 +21,38 @@ export class SubscriptionMenuComponent {
     map(paramMap => paramMap.get('upgrade')),
   );
 
-  showBasic$ = this.upgrade$.pipe(
-    map((upgrade) => {
-      return !upgrade;
+  downgrade$ = this.activatedRoute.queryParamMap.pipe(
+    map(paramMap => paramMap.get('downgrade')),
+  );
+
+  showBasic$ = combineLatest(
+    this.upgrade$,
+    this.downgrade$,
+  ).pipe(
+    map(([upgrade, downgrade]) => {
+      return !upgrade && !downgrade;
     })
   );
 
-  showPro$ = this.upgrade$.pipe(
-    map((upgrade) => {
-      if (!upgrade) {
+  showPro$ = combineLatest(
+    this.upgrade$,
+    this.downgrade$,
+  ).pipe(
+    map(([upgrade, downgrade]) => {
+      if (!upgrade && !downgrade) {
         return true;
       } else {
-        return upgrade === 'basic';
+        return upgrade === 'basic' || downgrade === 'premium';
       }
     }),
   );
 
-  showPremium$ = this.upgrade$.pipe(
-    map((upgrade) => {
-      if (!upgrade) {
+  showPremium$ = combineLatest(
+    this.upgrade$,
+    this.downgrade$,
+  ).pipe(
+    map(([upgrade, downgrade]) => {
+      if (!upgrade && !downgrade) {
         return true;
       } else {
         return upgrade === 'basic' || upgrade === 'pro';

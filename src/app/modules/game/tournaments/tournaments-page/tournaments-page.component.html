@@ -1,0 +1,51 @@
+<div class="tournaments-wrapper" wcHideScrollbar>
+  <div class="menu-container">
+    <game-main-menu class="gaming-menu"></game-main-menu>
+  </div>
+  <div class="tournaments">
+    <div class="tournaments__container">
+      <div class="tournaments__head">
+        <svg-cup class="tournaments__cup"></svg-cup>
+        <div class="tournaments__title">
+          <div class="tournaments__title-main">
+            28
+            <span class="desctop-visible">
+              {{'PROFILE.WS' | translate }}
+            </span>
+            {{'TOURNAMENTS.MANY_TOURNAMENTS' | translate }}
+            <span class="desctop-visible">{{'OTHER.TODAY' | translate }}</span>
+          </div>
+          <!-- <div class="tournaments__subtitle">
+            <span class="desctop-visible">1056 games ∙&nbsp;</span>
+            <span class="desctop-visible">2112 players ∙&nbsp;</span>
+            <span>Jan 13</span>
+          </div> -->
+        </div>
+      </div>
+      <gaming-selector [initialMode]="GamingSelectorMode.Tournaments"></gaming-selector>
+    </div>
+    <div class="tournaments__container" *ngIf="isAuthorized$ | async">
+      <div class="my-tournaments-title">
+        {{'TOURNAMENTS.UPCOMING_TOURNAMENTS' | translate }}
+      </div>
+    </div>
+    <div class="tournaments-body">
+      <div class="tournaments__container" *ngIf="isAuthorized$ | async">
+        <ng-container>
+          <wc-tournament-list [onlineTournaments]="myUpcomingTournaments$ | async">
+          </wc-tournament-list>
+        </ng-container>
+      </div>
+      <wc-tournament-timeline [onlineTournaments]="onlineTournaments$ | async">
+      </wc-tournament-timeline>
+    </div>
+  </div>
+  <div>
+    <wc-return-game class="return-lobby"></wc-return-game>
+  </div>
+  <div class="tournaments__container">
+    <div class="tournaments__footer">
+      <wc-game-footer-turnaments></wc-game-footer-turnaments>
+    </div>
+  </div>
+</div>

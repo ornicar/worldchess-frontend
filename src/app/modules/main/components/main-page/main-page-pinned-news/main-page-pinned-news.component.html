@@ -1,0 +1,47 @@
+<div class="pinned-news">
+  <div *ngIf="!full"  class="pinned-news__half" wcHideScrollbar>
+    <img src="../../../../../../assets/images/logo-news.svg" alt="news" class="pinned-news__logo">
+    <div class="pinned-news__title" *ngIf="data.title">
+      {{data.title}}
+    </div>
+    <div  *ngIf="!!data.video_link" class="pinned-news__video">
+      <iframe width="100%" height="100%" [src]="data.video_link  | embedYoutube | safe"
+              frameborder="0"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
+    <div class="pinned-news__image" *ngIf="!data.video_link">
+      <img width="100%" height="100%" [src]="data.featured_image"/>
+    </div>
+    <div class="pinned-news__info">
+      <div *ngIf="!data.video_link  && !!data.preview" class="pinned-news__info-text" [innerHTML]="data.preview">
+      </div>
+      <button class="pinned-news__button" (click)="goToNews($event)">Read now</button>
+    </div>
+    <div class="pinned-news__continuation"><span class="pinned-news__continuation-text">Continuation</span> <span class="pinned-news__continuatio-arrow">
+      <svg-arrow-right class="icon"></svg-arrow-right>
+    </span></div>
+  </div>
+  <div *ngIf="full" class="pinned-news__full">
+    <div  *ngIf="!!data.video_link"  class="pinned-news__video">
+      <iframe width="100%" height="100%" [src]="data.video_link  | embedYoutube | safe"
+              frameborder="0"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
+    <div class="pinned-news__image" *ngIf="!data.video_link">
+      <img width="100%" height="100%" [src]="data.featured_image"/>
+    </div>
+    <div class="pinned-news__info">
+      <div class="pinned-news__text">
+        <div class="pinned-news__title">
+          <span class="pinned-news__title-data">{{(data.pub_date || currentDate)| newsTime}}</span>
+          <span>{{data.title}}</span>
+        </div>
+        <div *ngIf="!data.video_link && !!data.preview" class="pinned-news__preview" [innerHTML]="data.preview">
+        </div>
+      </div>
+      <button (click)="goToNews($event)" class="pinned-news__button">Read now</button>
+    </div>
+  </div>
+</div>

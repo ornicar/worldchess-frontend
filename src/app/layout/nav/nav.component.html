@@ -1,9 +1,12 @@
 <div class="indent"></div>
-<div wcScreenFixed class="navbar" [class.navbar--fixed]="isFixed">
+<div class="navbar" [class.navbar--fixed]="isFixed" #mustBeFixed>
   <div class="wc-container wc-container--header">
     <nav class="d-flex justify-content-between">
       <div class="d-flex align-items-center menu-block">
-        <a routerLink=""><img class="nav-icon" src="assets/images/logo.svg"/></a>
+        <a [href]="paygatePopupManagerService.crossAppLink(true, '/') | async"
+           (click)="window['dataLayerPush']('wchCross', 'Header', 'Logo', 'pic_click', null, null)"
+
+        ><img class="nav-icon" src="assets/images/logo.svg"/></a>
         <a (click)="openMobileSubNav()" class="menu-block__mobile-nav">
           <svg width="21" height="13" viewBox="0 0 21 13" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0.5 0.5H19.5263" stroke="#979797" stroke-linecap="square" />
@@ -11,41 +14,67 @@
             <path d="M0.5 12.5H19.5263" stroke="#979797" stroke-linecap="square" />
           </svg>
         </a>
-        <div class="sub-nav d-sm-flex align-items-center d-flex" [class.sub-nav--open]="isOpenSubNav" wcScreenFixed>
-          <div class="sub-nav__list d-flex justify-content-between">
+        <div class="sub-nav d-sm-flex align-items-center d-flex" [class.sub-nav--open]="isOpenSubNav" #mustBeFixed>
+          <div class="sub-nav__list d-flex">
             <div class="nav-item nav-item--back">
               <a class="as-text" (click)="closeMobileSubNav()">
-                <wc-arrow-down></wc-arrow-down>
-                Back</a
-              >
-            </div>
-            <div *ngIf="tournamentLondonSlug" class="nav-item" routerLinkActive="active">
-              <a class="as-text" [routerLink]="['/tournament', tournamentLondonSlug]" (click)="closeMobileSubNav()"
-                >london</a
-              >
-            </div>
-            <div class="nav-item" routerLinkActive="active">
-              <a class="as-text" routerLink="/news" (click)="closeMobileSubNav()">news</a>
-            </div>
-            <div class="nav-item" routerLinkActive="active">
-              <a class="as-text" routerLink="/ratings" (click)="closeMobileSubNav()">ratings</a>
-            </div>
-            <div class="nav-item">
-              <a class="as-text" href="https://shop.worldchess.com" (click)="closeMobileSubNav()" target="_blank"
-                >shop</a
-              >
-            </div>
-            <div class="nav-item" routerLinkActive="active">
-              <a class="as-text" routerLink="/armageddon" (click)="closeMobileSubNav()">armageddon</a>
-            </div>
-            <!-- <div class="nav-item" routerLinkActive="active">
-              <a class="as-text" routerLink="/tv" (click)="closeMobileSubNav()">tv</a>
-            </div> -->
-            <div class="nav-item" routerLinkActive="active">
-              <a class="as-text" routerLink="/arena" (click)="closeMobileSubNav()"
-                >arena
-                <div class="nav-item__beta">beta</div>
+                <svg-arrow-down class="icon back"></svg-arrow-down>
+                <span>Back</span>
               </a>
+            </div>
+
+            <div class="nav-item" routerLinkActive="active" *ngFor="let item of menu">
+              <ng-container *ngIf="item.mainApp">
+                <ng-container *ngIf="item.blank">
+                  <a class="as-text"
+                     (click)="closeMobileSubNav(item.gtagParams)"
+                     target="_blank"
+                     [href]="item.link"
+                  >
+                    {{item.title}}
+                    <svg-external-link class="link-external" *ngIf="item.external"></svg-external-link>
+                  </a>
+                </ng-container>
+
+                <ng-container *ngIf="!item.blank">
+                  <a class="as-text"
+                     [routerLink]="item.link"
+                     (click)="closeMobileSubNav(item.gtagParams)"
+                  >
+                    {{item.title}}
+                    <svg-external-link class="link-external" *ngIf="item.external"></svg-external-link>
+                  </a>
+                </ng-container>
+
+                <div class="nav-item__beta" *ngIf="item.beta">beta</div>
+              </ng-container>
+              <ng-container *ngIf="!item.mainApp">
+                <ng-container *ngIf="item.blank">
+                  <a class="as-text"
+                     (click)="closeMobileSubNav(item.gtagParams)"
+                     [href]="paygatePopupManagerService.crossAppLink(true, item.link) | async"
+                     target="_blank"
+                  >
+                    {{item.title}}
+                    <svg-external-link class="link-external" *ngIf="item.external"></svg-external-link>
+                  </a>
+                </ng-container>
+
+                <ng-container *ngIf="!item.blank">
+                  <a class="as-text"
+                     (click)="closeMobileSubNav(item.gtagParams)"
+                     [href]="paygatePopupManagerService.crossAppLink(true, item.link) | async"
+                  >
+                    {{item.title}}
+                    <svg-external-link class="link-external" *ngIf="item.external"></svg-external-link>
+                  </a>
+                </ng-container>
+
+                <div class="nav-item__beta" *ngIf="item.beta">beta</div>
+              </ng-container>
+            </div>
+            <div class="mobile-content">
+              <ng-content select="[mobile-content]"></ng-content>
             </div>
           </div>
         </div>
@@ -53,15 +82,14 @@
       <div class="nav__paygate" *ngIf="!(isAuthorized$ | async)">
         <button
           class="nav__paygate-btn"
-          [routerLink]="['', { outlets: { p: ['paygate', 'register'] } }]"
-        >
+          [routerLink]="['', { outlets: { p: ['paygate', currentStep$ | async ] } }]">
           become a member
         </button>
         or <a [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]"> login</a>
       </div>
       <div class="nav__account align-items-center d-sm-flex d-flex" *ngIf="(isAuthorized$ | async)">
         <wc-notifications></wc-notifications>
-        <wc-user-nav></wc-user-nav>
+        <wc-user-nav [primary]="true"></wc-user-nav>
       </div>
     </nav>
   </div>

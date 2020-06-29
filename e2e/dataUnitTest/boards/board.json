@@ -1,0 +1,48 @@
+{
+  "board_id": "aba789f2-99fb-4a24-865e-0086bc0975f5",
+  "white_player": {
+    "full_name": "123",
+    "nickname": "123",
+    "rating": 1194,
+    "avatar": {
+      "full": "https://s3-wctour-ut-test.s3.amazonaws.com/media/default_avatars/4.png"
+    },
+    "nationality_id": null,
+    "fide_id": 551081148,
+    "rank": null
+  },
+  "white_id": 2275,
+  "white_uid": "5ed3752a7e4f36a6e595675066ca1582afe84a4cc772dc0e4c92d6e8b30dfc59",
+  "white_rating": 1194,
+  "white_seconds_left": null,
+  "black_player": {
+    "full_name": "test dsfsdf",
+    "nickname": "test dsfsdf",
+    "rating": 1224,
+    "avatar": {
+      "full": "https://s3-wctour-ut-test.s3.amazonaws.com/media/default_avatars/2.png"
+    },
+    "nationality_id": null,
+    "fide_id": 90102681,
+    "rank": null
+  },
+  "black_id": 2296,
+  "black_uid": "8bd94d7f9b0e960bcc204b3456df976a9b8a1d2c6bcf7dd1e9fa9b404d2caf33",
+  "black_rating": 1224,
+  "black_seconds_left": null,
+  "time_control": {
+    "start_time_in_seconds": 60,
+    "black_start_time_in_seconds": 60,
+    "additional_time_in_seconds": 0,
+    "additional_time_move": 0,
+    "increment_in_seconds": 0,
+    "increment_start_move": 0
+  },
+  "moves": [],
+  "tour_id": 4050,
+  "tournament_id": 2513,
+  "created": "2020-04-20T13:11:07.177772Z",
+  "finished_at": null,
+  "status": 1,
+  "result": null
+}

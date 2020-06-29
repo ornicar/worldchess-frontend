@@ -42,21 +42,26 @@
     }
 
     &--big {
-      font-size: 40px;
-      line-height: 48px;
+      font-size: 38px;
+      line-height: 46px;
       max-height: 147px;
       overflow: hidden;
 
         @include tablets-big {
-            font-size: 36px;
-            line-height: 48px;
+            font-size: 34px;
+            line-height: 46px;
             max-height: 147px;
         }
 
         @include tablets {
-            font-size: 32px;
-            line-height: 48px;
+            font-size: 30px;
+            line-height: 46px;
             max-height: 147px;
+        }
+
+        @include height-650 {
+            font-size: 28px;
+            line-height: 31px;
         }
     }
 

@@ -1,0 +1,165 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  width: 100%;
+}
+
+.board-dashed {
+  display: flex;
+  height: 460px;
+
+  @include birman-media {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+  }
+}
+
+.board-dashed__aside {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  @include birman-media {
+    width: 100%;
+    padding: 0 5px;
+  }
+}
+
+.board-dashed__center {
+  display: flex;
+  @include birman-media {
+    width: 300px;
+    margin: 0 auto;
+  }
+}
+
+.board-dashed__title {
+  font: 300 30px/38px $gerbera-font;
+  text-align: center;
+  margin-bottom: 13px;
+  width: 100%;
+  padding: 0 10px;
+
+  br {
+    @include birman-media {
+      display: none;
+    }
+  }
+}
+
+.board-dashed__text {
+  font: 300 18px/24px $gerbera-font;
+  text-align: center;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 165px;
+
+  @include birman-media {
+    max-width: 100%;
+  }
+}
+
+.board-dashed__button {
+  position: relative;
+  min-width: 137px;
+  height: 31px;
+  border-radius: 3px;
+  background-color: $green-new;
+  padding: 6px 10px 6px 48px;
+  font: 300 14px/17px $gerbera-font;
+  color: #000;
+}
+
+.board-dashed__smile {
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translate(0,-50%);
+  width: 42px;
+  height: 42px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.board-dashed__board {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  left: -10px;
+
+  img {
+    display: block;
+    max-width: 504px;
+
+    @include birman-media {
+      width: 300px;
+    }
+  }
+
+  @include birman-media {
+    left: 0;
+  }
+}
+
+.board-dashed__table {
+  display: flex;
+  align-items: flex-end;
+  flex: 1 1 auto;
+
+  img {
+    width: 150px;
+  }
+}
+
+.board-dashed__block {
+  width: 100%;
+  height: 54px;
+  margin-bottom: 5px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+
+.desktop {
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}
+
+/*---------локализация--------------*/
+
+.img-lang-ru {
+  display: none;
+}
+
+.lang-ru  {
+    .img-lang-en {
+      display: none;
+    }
+  
+    .img-lang-ru {
+      display: block;
+    }
+}

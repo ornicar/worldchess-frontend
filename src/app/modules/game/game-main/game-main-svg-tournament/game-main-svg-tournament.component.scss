@@ -1,0 +1,50 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+    width: 100%;
+}
+
+.svg-tournament { 
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-image: url(../../../../../assets/images/svg-tournament/svg-tournament-bg.svg);
+  height: 550px;
+    @include phones-small {
+      height: 520px;
+      margin: 0 -10px;
+      background-size: cover;
+      background-image: url(../../../../../assets/images/svg-tournament/svg-tournament-mobile-bg.svg);
+    }
+}
+
+.svg-tournament__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 445px;
+  padding: 0 10px;
+  transform: translate(-50%, -50%) rotate(-7deg);
+  font: 400 30px/35px $clifton-trial-italic;
+  text-align: center;
+  color: #fff;
+
+  @include phones-small {
+    max-width: 335px;
+    padding: 0 5px;
+    transform: translate(-50%, -57%) rotate(-7deg);
+    font: 400 24px/30px $clifton-trial-italic;
+  }
+}
+
+/*----локализация------*/
+
+.lang-ru {
+  .svg-tournament__text {
+    font-family: $gerbera-font;
+    font-weight: 300;
+  }
+}

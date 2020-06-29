@@ -1,0 +1,43 @@
+<div class="main-page-header">
+  <div class="main-page-header__container" [ngClass]="this.isOpened?'main-page-header__container--opened':'main-page-header__container--closed'">
+    <ng-container *ngIf="!isOpened">
+      <div class="title">
+        <div class="title__logo">
+          <svg-logo></svg-logo>
+        </div>
+        <img class="title__logo-text" src="./../../../../../../assets/icons/world-chess-main-logo.svg"/>
+      </div>
+      <div class="info-text">
+        <div class="info-text__icons">
+          <svg-play-2 class="icon"></svg-play-2>
+          <svg-queen class="icon icon--padding"></svg-queen>
+          <svg-wi-fi class="icon"></svg-wi-fi>
+          <svg-basket class="icon icon--padding"></svg-basket>
+        </div>
+        <div  class="info-text__content">
+          Watch FIDE events live<br>
+          Play chess online and get FIDE titles<br>
+          Broadcast your own events
+        </div>
+      </div>
+      <div class="page-news-caption">
+        <main-page-component-holder [item]="item"></main-page-component-holder>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="isOpened">
+      <div class="main-page-header__full-text">
+        <span class="title">
+          <div class="title__logo">
+            <svg-logo></svg-logo>
+          </div>
+          <img class="title__logo-text" src="./../../../../../../assets/icons/world-chess-main-logo.svg"/>
+        </span>
+        is the main chess place online where you can <a (click)="goToWatch($event)"><svg-play-2 class="icon"></svg-play-2> watch</a>   FIDE events live,  <a (click)="goToMainPage($event)"><svg-queen class="icon"></svg-queen> play</a> chess with official FIDE rating and even get your title, <a class="disabled"><svg-wi-fi class="icon"></svg-wi-fi> broadcast (soon)</a> your own events and <a href="https://shop.worldchess.com/" target="_blank"><svg-basket class="icon"></svg-basket> shop</a> for great chess merchandise
+      </div>
+    </ng-container>
+    <div class="collapse-button" (click)="toggleOpenClose($event)">
+      <svg-arrow-bottom-blunt class="icon"></svg-arrow-bottom-blunt>
+    </div>
+  </div>
+  <main-page-component-holder [item]="barItem"></main-page-component-holder>
+</div>

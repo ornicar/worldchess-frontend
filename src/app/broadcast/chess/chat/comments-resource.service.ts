@@ -7,6 +7,8 @@ export interface ICommentProfile {
   avatar: {};
   full_name: string;
   id: number;
+  paid: boolean;
+  nickname?: string;
 }
 
 export interface ICommentMove {
@@ -29,6 +31,7 @@ export interface IComment {
   id: number;
   created: string;
   board: number;
+  chat?: string;
   likes: number;
   dislikes: number;
   comment_type: CommentType;
@@ -51,14 +54,17 @@ export interface IMapHttpParams {
 
 export interface ICommentParams extends IMapHttpParams {
   board?: string;
+  chat?: string;
   limit?: string;
   offset?: string;
+  chat_id?: string;
 }
 
 interface ICommentsRequest {
   text: string;
   move_number?: number;
-  board: number;
+  board?: number;
+  chat?: string;
 }
 
 @Injectable()

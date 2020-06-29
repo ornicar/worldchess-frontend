@@ -41,6 +41,10 @@
     margin-right: 5px;
   }
 
+  @include height-650() {
+    font: 300 12px/17px $gerbera-font;
+  }
+
   @include phones() {
     font: 400 12px/17px $gerbera-font;
     max-width: 100px;
@@ -91,5 +95,20 @@
 
   .name {
     font: 400 12px/16px $gerbera-font;
+  }
+}
+
+:host-context(.chess-layout--switched) {
+  .name {
+    font: 400 12px/20px $gerbera-font;
+    margin-right: 5px;
+  }
+
+  .rank {
+    font: 700 10px/10px $gerbera-font;
+
+    span {
+      margin-right: 3px;
+    }
   }
 }

@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {HideScrollbarDirective} from './hide-scrollbar.directive';
+import { HideScrollbarDirective } from './hide-scrollbar.directive';
 import { ClickOutsideDirective } from './click-outside.directive';
-import {InsideScrollAreaDirective} from './intersection-with-scroll-area.directive';
+import { InsideScrollAreaDirective } from './intersection-with-scroll-area.directive';
+import { DisableControlDirective } from '@app/shared/directives/disabled.directive';
+import { TouchDirective } from '@app/shared/directives/touch.directive';
 
 @NgModule({
   imports: [
@@ -11,12 +13,16 @@ import {InsideScrollAreaDirective} from './intersection-with-scroll-area.directi
   declarations: [
     HideScrollbarDirective,
     ClickOutsideDirective,
-    InsideScrollAreaDirective
+    InsideScrollAreaDirective,
+    DisableControlDirective,
+    TouchDirective
   ],
   exports: [
     HideScrollbarDirective,
     ClickOutsideDirective,
-    InsideScrollAreaDirective
+    InsideScrollAreaDirective,
+    DisableControlDirective,
+    TouchDirective
   ]
 })
 export class DirectivesModule { }

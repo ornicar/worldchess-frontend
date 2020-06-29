@@ -1,0 +1,46 @@
+<div class="legalize-skils">
+    <div class="legalize-skils__img">
+      <img class="desctop" src="../../../../assets/images/legalize-skils/legalize-skils.svg" alt="legalize-skils">
+      <img class="mobile" src="../../../../assets/images/legalize-skils/legalize-skils-mobile.svg" alt="legalize-skils">
+      <div class="desctop legalize-skils__price">
+        <img class=" legalize-skils__price-img"  src="../../../../assets/images/legalize-skils/legalize-skils-price.svg" alt="legalize-skils-price">
+        <div class="legalize-skils__price-text">/{{ 'TIME.YEAR' | translate }}</div>
+      </div>
+    </div>
+    <div class="legalize-skils__row">
+      <div class="legalize-skils__col">
+        <div class="legalize-skils__text">
+          {{ 'TEXT.SIGN_UP_WITH_WORLD_CHESS_PRO_ACCOUNT' | translate}}.
+          <div class="mobile legalize-skils__price">
+            <img class="legalize-skils__price-img"  src="../../../../assets/images/legalize-skils/legalize-skils-price-mobile.svg" alt="legalize-skils-price-mobile">
+            <div class="legalize-skils__price-text">/{{ 'TIME.YEAR' | translate }}</div>
+          </div>
+        </div>
+        <a href="#" 
+          class="legalize-skils__button" 
+          (click)="mygames($event)"
+        >
+          {{ 'BUTTONS.BECOME_PRO' | translate }}
+        </a>
+        <div class="legalize-skils__links">
+          <a href="#" 
+            class="legalize-skils__link" 
+            (click)="singlegames($event)"
+          >
+            {{ 'BUTTONS.PLAY_GAME' | translate}}
+            <svg-arrow-right class="icon"></svg-arrow-right>
+          </a>
+          <a href="https://worldchess.com/tournament/candidates2020/14/Wang-Caruana" 
+            target="_blank" 
+            class="legalize-skils__link"
+            (click)="window['dataLayerPush']('wchEvent', 'Main', 'Button', 'View a tournaments', '', '');"
+          >
+            {{ 'TOURNAMENTS.VIEW_TOURNAMENTS' | translate}}
+            <svg-arrow-right class="icon"></svg-arrow-right>
+          </a>
+        </div>
+      </div>
+      <div class="legalize-skils__col">
+      </div>
+    </div>
+  </div>

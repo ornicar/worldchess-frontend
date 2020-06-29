@@ -1,5 +1,6 @@
-<p mat-dialog-title>{{ data.title }}</p>
-<div mat-dialog-content [innerHTML]="data.message"></div>
-<div mat-dialog-actions>
-  <button class="btn btn-white" mat-button (click)="onClickOk()">OK</button>
+<div class="alert">
+  <div class="alert__text" [innerHTML]="data.message"></div>
+  <div class="alert__mat-dialog-actions">
+    <button class="alert__alert__button" (click)="onClickOk()">OK</button>
+  </div>
 </div>

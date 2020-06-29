@@ -1,0 +1,47 @@
+@import '../html/css/variables.scss';
+@import '../html/css/media.scss';
+@import '../html/css/settings.scss';
+
+.score {
+  display: flex;
+  align-items: center;
+  font: 400 15px/15px $gerbera-font;
+  padding: 0 20px;
+}
+
+:host-context(.table-swiss-mobile) {
+  .score {
+    padding: 0;
+  }
+}
+
+.score__number {
+  margin-right: 10px;
+}
+
+.score__half {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 18px;
+  height: 25px;
+  font: 400 12px/13px $gerbera-font;
+  margin-left: 5px;
+
+  span {
+    &:last-child {
+      align-self: flex-end;
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    height: 25px;
+    width: 1px;
+    background-color: #000;
+  }
+}

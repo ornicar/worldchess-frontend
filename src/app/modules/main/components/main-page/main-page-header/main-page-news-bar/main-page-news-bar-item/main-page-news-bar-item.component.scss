@@ -1,0 +1,34 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+    display: block;
+    padding: 0 14px;
+}
+
+.main-page-news-bar-item__container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.main-page-news-bar-item__img {
+    width: 45px;
+    height: 30px;
+    border-radius: 3px;
+    flex: 0 0 auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+}
+
+.main-page-news-bar-item__content {
+    white-space: nowrap;
+    font: 300 12px/15px $gerbera-font;
+    color: #fff;
+
+    span {
+        color:$brown-2;
+    }
+}

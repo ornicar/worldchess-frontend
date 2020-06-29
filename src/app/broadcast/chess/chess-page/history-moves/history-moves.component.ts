@@ -1,15 +1,15 @@
-import {animate, style, transition, trigger} from '@angular/animations';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit} from '@angular/core';
-import {createSelector, select, Store} from '@ngrx/store';
-import {BehaviorSubject, combineLatest, of} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map, pairwise, switchMap} from 'rxjs/operators';
-import {OnChangesInputObservable, OnChangesObservable} from '../../../../shared/decorators/observable-input';
-import {Subscriptions} from '../../../../shared/helpers/subscription.helper';
-import {BoardStatus, IBoard} from '../../../core/board/board.model';
-import {SetSelectedLastMove, SetSelectedMove} from '../../../move/move.actions';
-import {IMove} from '../../../move/move.model';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { createSelector, select, Store } from '@ngrx/store';
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, pairwise, switchMap, take } from 'rxjs/operators';
+import { OnChangesInputObservable, OnChangesObservable } from '@app/shared/decorators/observable-input';
+import { Subscriptions } from '@app/shared/helpers/subscription.helper';
+import { BoardStatus, IBoard } from '../../../core/board/board.model';
+import { SetSelectedLastMove, SetSelectedMove } from '../../../move/move.actions';
+import { IMove } from '../../../move/move.model';
 import * as fromMove from '../../../move/move.reducer';
-import {IVariationMove} from '../../../variation-move/variation-move.model';
+import { IVariationMove } from '../../../variation-move/variation-move.model';
 import {
   selectGroupedVariationMovesOfBoard, selectSelectedVariationMoveOfBoard, selectVariationMovesIsActive
 } from '../../../variation-move/variation-move.reducer';
@@ -71,7 +71,7 @@ export class HistoryMovesComponent implements OnInit, OnChanges {
 
   private selectedMove$ = this.boardId$.pipe(
     switchMap(boardId =>
-      this.store$.pipe(select(this.selectSelectedMove, { boardId }))
+      this.store$.pipe(select(this.selectSelectedMove, {boardId}))
     )
   );
 
@@ -79,8 +79,8 @@ export class HistoryMovesComponent implements OnInit, OnChanges {
     distinctUntilChanged(),
     switchMap(boardId => boardId
       ? this.store$.pipe(
-          select(this.selectGroupedMoves, { boardId })
-        )
+        select(this.selectGroupedMoves, {boardId})
+      )
       : of([])
     ),
     debounceTime(10), // @todo fix. ExpressionChangedAfterItHasBeenCheckedError
@@ -111,11 +111,23 @@ export class HistoryMovesComponent implements OnInit, OnChanges {
     distinctUntilChanged(),
     switchMap(boardId => boardId
       ? this.store$.pipe(
-        select(this.selectGroupedVariationMoves, { boardId })
+        select(this.selectGroupedVariationMoves, {boardId})
       )
       : of({})
-    )
+    ),
+    debounceTime(10),
   );
+
+  selectedVariationMoves$ = combineLatest([
+    this.selectedMove$,
+    this.variationMoves$
+  ]).pipe(map(([selectedMove, variationMoves]) => {
+    if (selectedMove && variationMoves) {
+      return variationMoves[selectedMove.id];
+    } else {
+      return null;
+    }
+  }));
 
   boardStatus = BoardStatus;
 
@@ -124,7 +136,8 @@ export class HistoryMovesComponent implements OnInit, OnChanges {
   constructor(
     private store$: Store<fromMove.State>,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.initDetectNewMoves();
@@ -138,7 +151,7 @@ export class HistoryMovesComponent implements OnInit, OnChanges {
     this.subs.selectedVariationMove = this.boardId$
       .pipe(
         switchMap(boardId =>
-          this.store$.pipe(select(this.selectSelectedVariationMoveOfBoard, { boardId }))
+          this.store$.pipe(select(this.selectSelectedVariationMoveOfBoard, {boardId}))
         ),
       )
       .subscribe((selectedVariationMove: IVariationMove) => {
@@ -157,11 +170,11 @@ export class HistoryMovesComponent implements OnInit, OnChanges {
         distinctUntilChanged(),
         switchMap(boardId => combineLatest(
           of(boardId),
-          this.store$.pipe(select(this.selectBoardMovesAndSelectedMove, { boardId }))
+          this.store$.pipe(select(this.selectBoardMovesAndSelectedMove, {boardId}))
         )),
         pairwise()
       )
-      .subscribe(([ [prevBoardId, [prevMoves] ], [nextBoardId, [nextMoves, selectedMove]]]) => {
+      .subscribe(([[prevBoardId, [prevMoves]], [nextBoardId, [nextMoves, selectedMove]]]) => {
         const selectedMoveIsLast = nextMoves.indexOf(selectedMove) === (nextMoves.length - 1);
         const lastVisibleMove = this.getLastMoveInsideScrollArea();
 
@@ -180,8 +193,8 @@ export class HistoryMovesComponent implements OnInit, OnChanges {
           // Remove moves which user saw.
           newMoves = newMoves.slice(
             1 + Math.max(
-              newMoves.indexOf(lastVisibleMove),
-              newMoves.indexOf(selectedMove)
+            newMoves.indexOf(lastVisibleMove),
+            newMoves.indexOf(selectedMove)
             )
           );
 
@@ -202,12 +215,12 @@ export class HistoryMovesComponent implements OnInit, OnChanges {
 
   onMoveClick(id: number) {
     if (this.canChangeSelectedMove) {
-      this.store$.dispatch(new SetSelectedMove({ id }));
+      this.store$.dispatch(new SetSelectedMove({id}));
     }
   }
 
   selectLatMove() {
-    this.store$.dispatch(new SetSelectedLastMove({ boardId: this.board.id }));
+    this.store$.dispatch(new SetSelectedLastMove({boardId: this.board.id}));
   }
 
   onMoveIntersectScrollArea(move: IMove, isInside: boolean) {

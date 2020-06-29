@@ -9,7 +9,7 @@ export const environment = {
   twitterAppId: buildEnvironments['DJANGO_SOCIAL_AUTH_TWITTER_KEY'],
   stripeKey: buildEnvironments['STRIPE_SECRET_KEY'],
   endpoint: 'https://worldchess.com/api',
-  backendUrl: 'https://worldchess.com',
+  applicationUrl: 'https://worldchess.com',
   newsUrl: 'https://news.worldchess.com/wp-json/wp/v3',
   socket: 'wss://worldchess.com:9000/ws',
   tournamentOlympiadId: 6,

@@ -1,0 +1,289 @@
+<div class="wrapper"
+     (click)="prepareAudioElement()">
+  <div class="gaming" [class.gaming--open-table]="!(_gameReady$ | async)">
+    <div class="menu-container" [class.mobile-hidden]="isMenuVisible$ | async">
+      <game-main-menu class="gaming-menu"></game-main-menu>
+    </div>
+    <div class="gaming__wrapper">
+      <div class="gaming__spot" *ngIf="(_gameReady$ | async)"></div>
+      <div class="gaming__body">
+        <div class="gaming__left-content" [class.with-transition]="_gameReady$ | async">
+          <div class="gaming__left-content-wrapper">
+            <game-launch-settings></game-launch-settings>
+          </div>
+          <div>
+            <wc-return-game class="return-lobby"></wc-return-game>
+          </div>
+        </div>
+        <div class="gaming__right-content">
+          <div class="gaming__right-content-wrapper">
+            <div class="board-block">
+              <div class="board-block__wrapper"
+                [class.board-block__wrapper--result-shown]="showResult$ | async"
+                [class.board-block__wrapper--flipped]="boardIsFlipped$ | async"
+                [class.board-block__wrapper--button-bottom]="isReplay()"
+              >
+                <div class="board-block__head">
+                  <game-user-badge [player]="opponent$ | async"
+                                   [playerName]="opponentName$ | async"
+                                   [timer]="opponentTimer$ | async"
+                                   [materialAdvantage]="opponentMaterialAdvantage$ | async"
+                                   [capturedFigures]="capturedByOpponent$ | async"
+                                   [capturedFigureColor]="playerColor$ | async"
+                                   [messageDisplayed]="topBadgeNotify | async"
+                                   [isMyMove]="isOpponentMove$ | async"
+                                   [isPromotionPopupVisible]="promotionPopupVisible$ | async"
+                                   [gameReviewMode]="gameReviewMode$ | async"
+                                   [timeLimitNotification]="opponentTimeLimitNotification$ | async"
+                                   [isReplay]="getIsReplay$ | async"
+                                   [isShowChat]="(getNewMessage$ | async)?.isFirst === false"
+                                   *ngIf="!(boardIsFlipped$ | async)"
+                  >
+                    <div class="player__result">
+                      <ng-container *ngIf="topBadgeNotify | async as notify">
+                        <ng-container [ngSwitch]="notify.notificationType">
+                          <ng-container *ngSwitchCase="GameBadgeNotificationType.Message">
+                            <div class="player__result--message">
+                              {{ notify.notification }}
+                            </div>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="GameBadgeNotificationType.Info">
+                            <div class="player__result--info">
+                              {{ notify.notification }}
+                            </div>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="GameBadgeNotificationType.ReadyToOfferDraw">
+                            <div class="player__notification">
+                              <div class="player__notification-title">
+                                {{ notify.notification }}
+                              </div>
+                              <div class="player__notification-text">Make a&nbsp;move<br>
+                                to&nbsp;offer</div>
+                            </div>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="GameBadgeNotificationType.OfferedDraw">
+                            <div class="player__notification">
+                              <div class="player__notification-title">
+                                {{ notify.notification }}
+                              </div>
+                            </div>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </game-user-badge>
+                </div>
+                <div class="board-block__aside">
+                  <div class="board-block__aside-button" *ngIf="!(getShowChat$ | async)" [class.game-menu-board-flipped]="boardIsFlipped$ | async">
+                    <game-menu (offerDraw)="offerDraw()"
+                               (resign)="resign()"
+                               (cancelDraw)="cancelDrawOffer()"
+                               (toggleChat)="showChat()"
+                    ></game-menu>
+                  </div>
+                  <game-chat *ngIf="(getShowChat$ | async)"
+                             (hideChat)="showChat()"
+                             [chatID]="(getChatID$ | async)"
+                  >
+                  </game-chat>
+                  <a href="javascript:void(0)"
+                     class="menu-game-buttons__btn menu-game-buttons__btn--scale flip-back-control"
+                     [class.flip-back-control-visible]="boardIsFlipped$ | async"
+                     (click)="flipBack()"
+                  >
+                    <div class="menu-game-buttons__icon">
+                      <svg-flip-board class="icon"></svg-flip-board>
+                    </div>
+                    <div class="menu-game-buttons__signature">
+                      <span>
+                        {{ 'MESSAGES.FLIP_BACK' | translate }}
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                <div class="board-block__board">
+                  <game-chess-board></game-chess-board>
+                  <svg-preloader *ngIf="waitingOpponent$ | async" class="board-block__preloader"></svg-preloader>
+                </div>
+                <!-- <div class="board-block__aside board-block__aside--right" *ngIf="showResult$ | async">
+                  <game-result></game-result>
+                </div> -->
+
+                <div class="board-block__aside board-block__aside--right"
+                     [class.board-block__aside--right-mobile]="isResultShown$ | async">
+                  <game-notifications (offerDraw)="offerDraw()"
+                                      (cancelDraw)="cancelDrawOffer()"
+                                      (resign)="resign()"
+                  ></game-notifications>
+                  <!-- <div class="notifications__footer-mobile notifications__footer--gray" *ngIf="!(gameInProgress$ | async) && (pgnUrl$ | async) && !(showResult$ | async)">
+                    <div colspan="3"  class="notifications__button">
+                      <div class="notifications__footer-wrapper">
+                        <a href="javascript:void(0)"
+                           class="notifications__footer-btn" (click)="downloadPGN()">
+                          Download PGN
+                        </a>
+                      </div>
+                    </div>
+                  </div> -->
+                </div>
+
+                <div class="board-block__aside board-block__aside--right"
+                     *ngIf="isResultShown$ | async"
+                     [class.board-block__aside--right-menu-opened]="openedMenu">
+                  <!-- menu -->
+                  <div _ngcontent-serverapp-c12="" (click)="openMenu()" class="menu menu-mobile" style="margin-right: 5px;"
+                  >
+                    <div _ngcontent-serverapp-c12="" class="menu__btn" [class.menu__btn--close]="openedMenu">
+                      <game-main-menu class="board-block__mobile-menu" [class.board-block__mobile-menu--open]="openedMenu"></game-main-menu>
+                    </div>
+                  </div>
+                  <!-- menu -->
+
+                  <div class="notifications-result">
+                    <div class="notifications-result__body" wcHideScrollbar #notificationsBodyResult>
+                      <div *ngIf="(getIsReplay$ | async)">
+                          <span class="play-agan" style="color: #ffffff">
+                          <span [innerHtml]="getReplayNotification$ | async "></span>
+                          <a class="play-agan__button" (click)="cancelReplayGame()">
+                              <svg-close class="icon"></svg-close>
+                              {{ 'BUTTONS.CANCEL_GAME' | translate }}
+                          </a>
+                          </span>
+                      </div>
+                      <game-notifications *ngIf="!(showResult$ | async) && !(getIsReplay$ | async)"></game-notifications>
+                      <game-result *ngIf="(showResult$ | async) && !(getIsReplay$ | async)"></game-result>
+                    </div>
+                    <div class="notifications__footer notifications__footer--gray"
+                         *ngIf="!(gameInProgress$ | async) && (pgnUrl$ | async) && !(showResult$ | async) && !(getIsReplay$ | async)">
+                      <div colspan="3"  class="notifications__button">
+                        <div class="notifications__footer-wrapper">
+                          <a href="javascript:void(0)"
+                             class="notifications__footer-btn" (click)="downloadPGN()">
+                            {{ 'BUTTONS.DOWNLOAD' | translate }} PGN
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="notifications-result__buttons" *ngIf="(resultButtonsVisible$ | async) && !(getIsReplay$ | async)">
+                      <a href="javascript:void(0)" class="notifications-result__btn"
+                        [class.notifications-result__btn--active]="showResult$ | async"
+                        (click)="showResult()">{{ 'BUTTONS.RESULT' | translate }}</a>
+                      <a href="javascript:void(0)" class="notifications-result__btn"
+                        [class.notifications-result__btn--active-gray]="!(showResult$ | async)"
+                        (click)="showNotifications()">{{ 'MESSAGES.NOTATION' | translate }}</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="board-block__footer">
+                  <div class="board-block__footer-wrapper" [class.board-is-flipped]="boardIsFlipped$ | async">
+                    <game-user-badge
+                      [player]="player$ | async"
+                      [playerName]="playerName$ | async"
+                      [timer]="playerTimer$ | async"
+                      [materialAdvantage]="playerMaterialAdvantage$ | async"
+                      [capturedFigures]="capturedByPlayer$ | async"
+                      [capturedFigureColor]="(playerColor$ | async) === ChessColors.Black ? ChessColors.White : ChessColors.Black"
+                      [messageDisplayed]="bottomBadgeNotify | async"
+                      [isMyMove]="isPlayerMove$ | async"
+                      [gameReviewMode]="gameReviewMode$ | async"
+                      [timeLimitNotification]="playerTimeLimitNotification$ | async"
+                      [boardIsFlipped]="boardIsFlipped$ | async"
+                    >
+                      <game-review-slider *ngIf="selectedMove$ | async"></game-review-slider>
+                      <div class="player__result"
+                           *ngIf="!(selectedMove$ | async) && !(boardIsFlipped$ | async)"
+                      >
+                        <ng-container *ngIf="bottomBadgeNotify | async as notify">
+                          <ng-container [ngSwitch]="notify.notificationType">
+                            <ng-container *ngSwitchCase="GameBadgeNotificationType.Message">
+                              <div class="player__result--message">
+                                {{ notify.notification }}
+                              </div>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="GameBadgeNotificationType.Info">
+                              <div class="player__result--info">
+                                {{ notify.notification }}
+                              </div>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="GameBadgeNotificationType.Action">
+                              <div class="player__result--action">
+                                {{ notify.notification }}
+                              </div>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="GameBadgeNotificationType.AcceptDraw">
+                              <div class="player__notification">
+                                <div class="player__notification-title player__notification-title--button"
+                                  (click)="offerDraw()">
+                                  {{ notify.notification }}
+                                </div>
+                                <div class="player__notification-text">
+                                  or make move<br> to&nbsp;continue playing
+                                </div>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </game-user-badge>
+                  </div>
+                  <a href="javascript:void(0)"
+                     class="menu-game-buttons__btn flip-back-control"
+                     [class.flip-back-control-visible]="boardIsFlipped$ | async"
+                     (click)="flipBack()"
+                  >
+                    <div class="menu-game-buttons__icon">
+                      <svg-flip-board class="icon"></svg-flip-board>
+                    </div>
+                    <div class="menu-game-buttons__signature">
+                      <span>
+                        {{ 'MESSAGES.FLIP_BACK' | translate }}
+                      </span>
+                    </div>
+                  </a>
+<!--                  <game-review-slider *ngIf="(selectedMove$ | async) && (boardIsFlipped$ | async)"-->
+<!--                  ></game-review-slider>-->
+                </div>
+                <div class="mobile-game-result">
+                  <game-result *ngIf="(showResult$ | async) && !(getReplayNotification$ | async)"></game-result>
+                  <div>
+                    <div class="menu-game-buttons__row" *ngIf="isReplay()">
+                      <div class="menu-game-buttons__col">
+                        <div class="menu-game-buttons__center-col" *ngIf="((opponentMode$ | async) !== 'bot' && ((getIsRematch$ | async) || !(getIsReplay$ | async)))">
+                          <button (click)="replayGame()" class="menu-game-buttons__paly-agan">
+                            {{ 'BUTTONS.PLAY_AGAIN' | translate }}
+                          </button>
+                        </div>
+                        <div class="menu-game-buttons__center-col" *ngIf="(getRematchInvite$ | async)">
+                          <button (click)="cancelReplayGame()" class="menu-game-buttons__paly-agan menu-game-buttons__paly-agan--red">
+                            {{ 'BUTTONS.CANCEL' | translate }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="menu-game-buttons__rematch">
+                      {{ getRematchNotfication$ | async }}
+                    </div>
+                  </div>
+                </div>
+                <div class="board-block__glow" [class.board-block__glow--go-top]="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="anti-cheat-container" [class.anti-cheat-container--active]="isAntiCheatPopupVisible$ | async">
+    <anti-cheating (closePopup)="closeAntiCheatPopup()" (reportRequest)="sendReport()"
+      [isReportSubmitted]="!(canCallAnArbiter$ | async)"></anti-cheating>
+  </div>
+  <div class="camera-container" *ngIf="isCameraVisible$ | async" (mouseover)="openAntiCheatPopup()">
+    <svg-anti-cheat *ngIf="!(isAntiCheatCameraRecording$ | async)"></svg-anti-cheat>
+    <svg-anti-cheat-rec *ngIf="isAntiCheatCameraRecording$ | async"></svg-anti-cheat-rec>
+  </div>
+  <div class="camera-container" *ngIf="isCameraShadedVisible$ | async" (mouseover)="openAntiCheatPopup()">
+    <svg-anti-cheat-shaded *ngIf="!(isAntiCheatCameraRecording$ | async)"></svg-anti-cheat-shaded>
+    <svg-anti-cheat-rec-shaded *ngIf="isAntiCheatCameraRecording$ | async"></svg-anti-cheat-rec-shaded>
+  </div>
+</div>

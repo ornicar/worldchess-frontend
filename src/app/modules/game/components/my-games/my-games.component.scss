@@ -1,0 +1,265 @@
+@import "src/html/css/variables-new";
+@import "src/html/css/media-new";
+
+:host {
+  height: 100vh;
+  width: 100vw;
+  display: block;
+}
+
+.my-games-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  color: #fff;
+}
+
+.my-games {
+  padding: 30px 30px 20px;
+  flex: 1 1 auto;
+  height: calc(100% - 220px);
+
+  @include birman-media {
+    padding: 20px 10px;
+  }
+}
+
+.my-games__footer {
+  padding: 20px 30px;
+  @include birman-media {
+    padding: 20px 10px;
+  }
+}
+
+.my-games__header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 46px;
+
+  @include birman-media {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+}
+
+.my-games__title {
+  font: 300 30px/30px $gerbera-font;
+  margin-right: 20px;
+}
+
+.my-games__search-container {
+  max-width: 498px;
+  flex: 1 1 auto;
+
+  @include birman-media {
+    min-width: 100%;
+  }
+}
+
+.my-games__input {
+  display: block;
+  width: 100%;
+  position: relative;
+  input {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    border: 0px;
+    font: 300 22px/25px $gerbera-font;
+    padding: 12px 33px;
+    border-bottom: 1px solid rgba(#fff, 0.5);
+    color: #fff;
+
+    @include birman-media {
+      padding: 8px 33px;
+      margin-top: 11px;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    width: 18px;
+    height: 18px;
+    fill: #fff;
+  }
+}
+
+.my-games__table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  height: calc(100% - 75px);
+  @include birman-media {
+    height: calc(100% - 30px);
+  }
+}
+
+.my-games__table {
+  display: block;
+  width: 598px;
+  height: 100%;
+  font: 300 15px/16px $gerbera-font;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  .upgrade-pro-title {
+    font: 300 15px/16px $gerbera-font;
+    margin: 0 0 16px;
+  }
+}
+
+.my-games__table-body-row {
+  display: flex;
+  width: 100%;
+}
+
+.my-games__table-header {
+  display: flex;
+  width: 100%;
+  color: rgba(#fff, 0.5);
+}
+
+.my-games__table-header-cell,
+.my-games__table-body-cell {
+  &:nth-child(1) {
+    width: 30%;
+    &.my-games__table-body-cell--title {
+      width: 100%;
+    }
+  }
+  &:nth-child(2) {
+    width: 15%;
+  }
+  &:nth-child(3) {
+    width: 13%;
+  }
+  &:nth-child(4) {
+    width: 8%;
+  }
+  &:nth-child(5) {
+    width: 25%;
+  }
+  &:nth-child(6) {
+    width: 7%;
+  }
+}
+
+.my-games__table-header-cell,
+.my-games__table-body-cell {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 5px 5px 5px 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-feature-settings: "tnum" 1;
+
+  &--canter {
+    justify-content: center;
+  }
+}
+
+.letter-spacing {
+  letter-spacing: 0.2em;
+}
+
+.my-games__table-body-cell {
+  padding: 9px 5px 9px 0;
+
+  .icom-pawn {
+    display: block;
+    fill: #fff;
+    width: 14px;
+    height: 20px;
+  }
+
+  .icon-download {
+    display: block;
+    fill: $brown-2;
+    width: 17px;
+    height: 22px;
+  }
+
+  &--title {
+    color: rgba(#fff, 0.4);
+    letter-spacing: 0.2em;
+    font: 300 15px/16px $gerbera-font;
+    text-transform: uppercase;
+  }
+}
+
+.my-games__table-header-cell {
+  border-bottom: 1px solid rgba(#fff, 0.1);
+}
+
+.my-games__table-body {
+  display: block;
+  overflow-y: auto;
+  max-height: calc(100% - 150px);
+  position: relative;
+  margin-bottom: 25px !important;
+}
+
+.my-games__rated-logo {
+  display: inline-block;
+  fill: #fff;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+
+  &--fide-rated-logo {
+    width: 14px;
+    height: 10px;
+  }
+
+  ::ng-deep {
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+}
+
+.gaming-menu {
+  @include birman-media {
+    height: 69px;
+    padding: 0 8px;
+    background-color: transparent;
+
+    ::ng-deep {
+      .logo {
+        width: 50px;
+        height: 54px;
+      }
+    }
+  }
+}
+
+/*-------------локализация--------------*/
+.lang-ru {
+  .my-games__table-header-cell,
+  .my-games__table-body-cell {
+    &:nth-child(2) {
+      width: 15%;
+    }
+    &:nth-child(3) {
+      width: 13%;
+    }
+    &:nth-child(4) {
+      width: 13%;
+    }
+    &:nth-child(5) {
+      width: 17%;
+    }
+    &:nth-child(6) {
+      width: 12%;
+    }
+  }
+}

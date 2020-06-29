@@ -13,7 +13,7 @@
     <ng-container *ngIf="selectedGameState$ | async as selectedGameState; else tourInfoBlock">
       <wc-game-players [board]="selectedGameState.board"></wc-game-players>
       <wc-match-time-info [board]="selectedGameState.board"></wc-match-time-info>
-      <wc-history-moves *ngIf="selectedGameState.isNotExpected" [hideMoveNumbers]="true" [board]="selectedGameState.board" class="chess-page__history-moves"></wc-history-moves>
+      <wc-history-moves *ngIf="selectedGameState.isNotExpected" [board]="selectedGameState.board" class="chess-page__history-moves"></wc-history-moves>
       <wc-history-moves-placeholder *ngIf="!selectedGameState.isNotExpected" [hideMoveNumbers]="true" [tour]="selectedGameState.board?.tour" [tournament]="tournament" class="chess-page__history-moves"></wc-history-moves-placeholder>
       <a [routerLink]="['/tournament', tournament.id, 'pairing', selectedGameState.board.id]" class="to-chess-game-page">Watch full broadcast →</a>
     </ng-container>

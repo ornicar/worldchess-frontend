@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostBinding, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { PaygatePopupService } from '../../services/paygate-popup.service';
@@ -11,9 +11,9 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
   selector: 'wc-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
-  plan$ = this.paygatePopupService.plan$;
 
   mobileShowForm = false;
   savedMobileShowForm = false;
@@ -23,6 +23,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private paygatePopupService: PaygatePopupService,
+    private cd: ChangeDetectorRef,
     private router: Router,
   ) {}
 
@@ -37,12 +38,14 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             if (this.savedMobileShowForm && !this.mobileShowForm) {
               this.mobileShowForm = true;
+              this.cd.markForCheck();
             }
           }
         });
   }
 
   ngAfterViewInit(): void {
+    this.mobileShowForm = true;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -57,6 +60,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       this.hideLogoOnMobileLogin();
     } else {
       this.mobileShowForm = false;
+      this.cd.markForCheck();
     }
   }
 
@@ -70,6 +74,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       this.hideLogoOnMobileLogin();
     } else {
       this.mobileShowForm = false;
+      this.cd.markForCheck();
     }
   }
 
@@ -83,11 +88,13 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       this.hideLogoOnMobileLogin();
     } else {
       this.mobileShowForm = false;
+      this.cd.markForCheck();
     }
   }
 
   hideLogoOnMobileLogin() {
     this.mobileShowForm = this.mobileShowForm ? this.mobileShowForm : window.outerWidth <= 768;
+    this.cd.markForCheck();
   }
 
   closePopup() {

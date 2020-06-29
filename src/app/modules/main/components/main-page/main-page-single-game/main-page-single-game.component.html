@@ -1,0 +1,122 @@
+<div class="settings" [hidden]="disabled$ | async">
+  <div class="settings__block">
+    <form class="settings__form"
+          [formGroup]="settingsForm"
+          wcHideScrollbar
+          [needPaddingRight]="true"
+          [wcForceHideVerticalScrollBar]="true"
+    >
+      <div class="settings__wrapper">
+        <div class="settings__head">
+          <div class="settings__title">
+            Play chess online
+          </div>
+        </div>
+
+        <div class="settings__body">
+          <div class="settings__body-content">
+            <div class="settings__body-row" *ngIf="(getReplayNotification$ | async)">
+              <div class="settings__message" [innerHtml]="getReplayNotification$ | async"></div>
+            </div>
+            <div class="settings__body-row" *ngIf="(notification$ | async)" (click)="hideNotification()">
+              <div class="settings__message" [innerHtml]="notification$ | async"></div>
+            </div>
+
+            <div *ngIf="!(getReplayNotification$ | async) && !(getRematchNotification$ | async)">
+              <div class="settings__body-row settings__body-row--min-height" *ngIf="(submitButtonMode !== SubmitButtonMode.CANCEL_INVITE)">
+                <wc-time-control-form class="settings__table" formControlName="timeControl" [timeControls]="timeControls$ | async">
+                </wc-time-control-form>
+              </div>
+
+              <div class="settings__body-row" *ngIf="(submitButtonMode !== SubmitButtonMode.CANCEL_INVITE)">
+                <wc-game-rating-select-form formControlName="ratingRange" [onlineRatings]="onlineRatings$ | async">
+                </wc-game-rating-select-form>
+              </div>
+
+              <div class="settings__body-row settings__body-row--mb-10"
+                   *ngIf="(submitButtonMode !== SubmitButtonMode.CANCEL_INVITE)">
+                <wc-game-rating-mode-select-form formControlName="ratingMode" class="settings__buttons">
+                </wc-game-rating-mode-select-form>
+              </div>
+            </div>
+
+            <div class="settings__body-row settings__body-row--max-width settings__body-row--mb-40"
+                 [ngSwitch]="submitButtonMode">
+              <div class="games-time">
+                <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.FIND_OPPONENT">
+                  <ng-container [ngSwitch]="settingsForm.value['ratingMode']">
+                    <ng-container *ngSwitchCase="GameRatingMode.UNRATED">
+                      Play to practice your skills. The game will not affect your rating and will not be saved for
+                      analysis
+                    </ng-container>
+                    <ng-container *ngSwitchCase="GameRatingMode.RATED">
+                      The game will be rated. Your current World Chess rating
+                      is {{(accountRating$ | async)?.worldchess_rating ? (accountRating$ | async)?.worldchess_rating : 0}}
+                      . Next time, try playing with the official FIDE Rating
+                    </ng-container>
+                    <ng-container *ngSwitchCase="GameRatingMode.FIDERATED">
+                      The game will be FIDE Rated. Your current FIDE Rating
+                      is {{(accountRating$ | async)?.fide_rating ? (accountRating$ | async)?.fide_rating : 0}}
+                    </ng-container>
+                  </ng-container>
+                </div>
+                <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.CREATE_ACCOUNT">Oops. To play rated or
+                  FIDE
+                  Rated games and save them, please create a&nbsp;World Chess account
+                </div>
+                <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.UPGRADE_NOW">Oops. To play FIDE Rated
+                  games, please upgrade to a&nbsp;World Chess Pro account
+                </div>
+                <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.NEED_FIDE_ID_REGISTER">Oops. Fill FIDE ID
+                  request
+                </div>
+                <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.NEED_FIDE_ID_APPROVE">Oops. Review
+                  membership
+                </div>
+                <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.INVITE_FRIEND">
+                  Send the link to a friend, and the game will start when the join
+                </div>
+              </div>
+            </div>
+            <div class="settings__body-row"
+                 *ngIf="!(getReplayNotification$ | async) && !(getRematchNotification$ | async)">
+              <div class="buttons-in-line">
+                <div class="buttons-in-line__col" [ngSwitch]="submitButtonMode">
+                  <wc-btn-with-loading class="btn-new--blue" *ngSwitchCase="SubmitButtonMode.FIND_OPPONENT"
+                                       (click)="findOpponent($event)" [disabled]="playComputerIsSearching$ | async"
+                                       [class.disabled]="playComputerIsSearching$ | async">
+                    Find opponent...
+                  </wc-btn-with-loading>
+                  <wc-btn-with-loading class="btn-new--green" *ngSwitchCase="SubmitButtonMode.CREATE_ACCOUNT"
+                                       (click)="createAccount($event)" [disabled]="playComputerIsSearching$ | async"
+                  >
+                    Create account...
+                  </wc-btn-with-loading>
+                </div>
+                <div class="buttons-in-line__col">
+                  <wc-btn-with-loading class="btn-new--spall btn-new--brown-border"
+                                       (click)="playComputer($event)"
+                                       [class.disabled]="disabledSearch(submitButtonMode)"
+                                       [disabled]="disabledSearch(submitButtonMode)">
+                    Play computer
+                  </wc-btn-with-loading>
+                </div>
+                <div class="buttons-in-line__col">
+                  <wc-btn-with-loading class="btn-new--spall btn-new--brown-border"
+                                       (click)="inviteFriend($event)"
+                                       [class.disabled]="disabledInvited(submitButtonMode)"
+                                       [disabled]="disabledInvited(submitButtonMode)">
+                    Invite a friend
+                  </wc-btn-with-loading>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div [hidden]="!full" class="settings__board">
+    <game-chess-board hideMenu="true"></game-chess-board>
+  </div>
+</div>

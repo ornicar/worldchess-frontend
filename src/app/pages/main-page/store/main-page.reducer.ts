@@ -22,6 +22,7 @@ export enum BannerType {
   Video = 'video',
   Widget = 'widget',
   Rating = 'rating',
+  Image = 'image',
   Tournament = 'tournament'
 }
 

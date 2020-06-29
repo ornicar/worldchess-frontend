@@ -194,16 +194,6 @@
     flex: 1 0 auto;
   }
 }
-
-wc-game-favorite-icon {
-  cursor: pointer;
-  position: absolute;
-  top: 11px;
-  right: 11px;
-  width: 18px;
-  height: 18px;
-}
-
 :host(.hover) .board-container {
   background: #2F2F2F;
 }

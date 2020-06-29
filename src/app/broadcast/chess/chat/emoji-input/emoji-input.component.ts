@@ -49,9 +49,9 @@ export class EmojiInputComponent implements OnInit, AfterViewInit, OnChanges, On
   @Output() keyup: any = new EventEmitter();
   @Output() emojiClick: any = new EventEmitter();
 
-  @ViewChild('textareaEl') textareaEl;
-  @ViewChild('emojiSearch') emojiSearch;
-  @ViewChild('hiddenTextEl') hiddenTextEl;
+  @ViewChild('textareaEl', { static: true }) textareaEl;
+  @ViewChild('emojiSearch', { static: true }) emojiSearch;
+  @ViewChild('hiddenTextEl', { static: true }) hiddenTextEl;
 
   public input = '';
   public filterEmojis = '';

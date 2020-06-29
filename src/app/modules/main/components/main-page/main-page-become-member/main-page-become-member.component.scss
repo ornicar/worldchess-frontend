@@ -1,0 +1,83 @@
+@import "variables-new";
+@import "media-new";
+
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.become-member {
+  flex: 1 0 auto;
+  background-color: $green-new;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  min-height: 600px;
+
+  @include birman-media() {
+    min-height: 420px;
+  }
+}
+
+.become-member__container {
+  position: relative;
+  max-width: 350px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+
+  @include birman-media() { 
+    max-width: 224px;
+    margin-bottom: 12px;
+  }
+}
+
+.become-member__image {
+  fill: #000; 
+  max-width: 263px;
+  max-height: 310px;
+  width: 100%;
+  margin: 0 20px;
+
+  ::ng-deep {
+    svt {
+      display: block;
+    }
+  }
+}
+
+.become-member__caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 100px;
+  transform: translate(0 , -50%);
+  background-color: #fff;
+  font: 300 30px/35px $gerbera-font;
+  padding: 20px 20px;
+  color: #000;
+  border-radius: 5px;
+  
+  @include birman-media() { 
+    font: 300 20px/25px $gerbera-font;
+    height: 64px;
+  }
+}
+
+.become-member__text {
+  font: 300 22px/30px $gerbera-font;
+  color: #000;
+  text-align: center;
+  max-width: 280px;
+}

@@ -1,254 +1,232 @@
-<form [formGroup]="form" (ngSubmit)="submit()" class="register">
-  <ng-container *ngIf="step === 1" formGroupName="step1">
-    <a class="register__close" (click)="closePopup()"></a>
-    <div class="register__title">
-      Fill in your information, we’ll send it to FIDE
+<wc-base-popup needResetTumblers="true">
+  <ng-container *ngIf="mode !== FideFormMode.SEARCH_PROFILE">
+    <div class="register__head">
+      <div class="register__title">Fill in the FIDE Chess Profile information to&nbsp;link your accounts</div>
+      <div class="register__step" *ngIf="maxSteps$ | async as maxSteps">
+        <svg-arrow-left class="icon" (click)="history.back()"></svg-arrow-left>
+        <svg-arrow-left-bold class="icon icon--mobile" (click)="history.back()"></svg-arrow-left-bold>5<span style="font-size:0.5em">&nbsp;</span>/<span
+        style="font-size:0.5em">&nbsp;</span>{{ maxSteps }}
+      </div>
     </div>
-    <div class="register__labels">
-      <div class="input-text">
-        <div class="input-text__row">
-          <div class="input-text__col">
-            <label class="input-text__input">
-              <div class="input-text__wparrer">
-                <input
-                  class="input-text__elem"
-                  [class.input-text__elem--active]="!!form.controls['step1'].controls['full_name'].value"
-                  type="text"
-                  formControlName="full_name"
-                />
-                <div class="input-text__placeholder">Full name</div>
-              </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.full_name?.required">Invalid full name</div>
-                <div [hidden]="!errors?.full_name?.response">{{ errors?.full_name?.response }}</div>
-              </div>
-            </label>
-          </div>
-        </div>
-        <div class="input-text__row">
-          <div class="input-text__col">
-            <label class="input-text__input">
-              <div class="input-text__wparrer">
-                <input
-                  class="input-text__elem"
-                  [class.input-text__elem--active]="!!form.controls['step1'].controls['fide_id'].value"
-                  type="text"
-                  formControlName="fide_id"
-                />
-                <div class="input-text__placeholder">
-                  FIDE ID<span class="input-text__placeholder--additional">(optional)</span>
-                </div>
-              </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.fide_id?.required">Invalid last name</div>
-                <div [hidden]="!errors?.fide_id?.response">{{ errors?.fide_id?.response }}</div>
-              </div>
-            </label>
-          </div>
-        </div>
+    <div class="toggle-buttons">
+      <div class="toggle-buttons__elem" [class.active]="mode === FideFormMode.CREATE_FIDE"
+        (click)="mode = FideFormMode.CREATE_FIDE">
+        <div class="toggle-buttons__btn"></div>
+        Create a FIDE Profile
+      </div>
+      <div class="toggle-buttons__elem" [class.active]="mode === FideFormMode.ADD_FIDE"
+        (click)="mode = FideFormMode.ADD_FIDE">
+        <div class="toggle-buttons__btn"></div>
+        I already have one
+      </div>
+    </div>
 
-        <div class="input-text__row">
-          <div class="input-text__col">
-            <div class="date-of-birth">
-              <div class="date-of-birth__text">Date of birth</div>
-              <div class="date-of-birth__inputs">
-                <input
-                  type="text"
-                  (change)="onDateChanged()"
-                  placeholder="DD"
-                  #birthdate_day
-                  class="date-of-birth__input"
-                  mask="00"
-                />
-                /
-                <input
-                  type="text"
-                  (change)="onDateChanged()"
-                  placeholder="MM"
-                  #birthdate_month
-                  class="date-of-birth__input"
-                  mask="00"
-                />
-                /
-                <input
-                  type="text"
-                  (change)="onDateChanged()"
-                  placeholder="YYYY"
-                  #birthdate_year
-                  class="date-of-birth__input"
-                  mask="0000"
-                />
-              </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.date_of_birth?.required">Invalid date of birth</div>
-                <div [hidden]="!errors?.date_of_birth?.response">{{ errors?.date_of_birth?.response }}</div>
-              </div>
-            </div>
-          </div>
-          <div class="input-text__col">
-            <div class="gender">
-              <div class="gender__text">Gender</div>
-              <div class="gender__radio">
-                <label class="register-radio">
-                  <input
-                    type="radio"
-                    formControlName="gender"
-                    value="female"
-                    name="gender"
-                    class="register-radio__input"
-                  />
-                  <div class="register-radio__content">
-                    <div class="register-radio__btn"></div>
-                    <div class="register-radio__text">F<span>emale</span></div>
+    <ng-container *ngIf="mode === FideFormMode.CREATE_FIDE">
+      <form [formGroup]="form" (ngSubmit)="form.submit()" class="register">
+        <div class="fide__body">
+          <div class="fide__body-form-col">
+            <div class="fide__form-row">
+              <div class="fide__form-col">
+                <label class="register-input__input" [shake]="form.controls['name'].shake$">
+                  <div class="register-input__wrapper"
+                       [class.register-input__wrapper--error]="(form.controls['name'].errors$ | async)">
+                    <input class="register-input__elem"
+                           [class.register-input__elem--active]="!(form.controls['name'].empty$ | async)" type="text"
+                           paygateFormControl
+                           formControlName="name">
+                    <div class="register-input__placeholder">
+                      Name
+                    </div>
                   </div>
                 </label>
-                <label class="register-radio">
-                  <input
-                    type="radio"
-                    formControlName="gender"
-                    value="male"
-                    name="gender"
-                    class="register-radio__input"
-                  />
-                  <div class="register-radio__content">
-                    <div class="register-radio__btn"></div>
-                    <div class="register-radio__text">M<span>ale</span></div>
+              </div>
+
+              <div class="fide__form-col">
+                <label class="register-input__input" [shake]="form.controls['surname'].shake$">
+                  <div class="register-input__wrapper"
+                       [class.register-input__wrapper--error]="(form.controls['surname'].errors$ | async)">
+                    <input class="register-input__elem"
+                           [class.register-input__elem--active]="!(form.controls['surname'].empty$ | async)"
+                           type="text"
+                           paygateFormControl
+                           formControlName="surname">
+                    <div class="register-input__placeholder">
+                      Surname
+                    </div>
                   </div>
                 </label>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="input-text__row">
-          <div class="input-text__col">
-            <label class="input-text__input">
-              <div class="input-text__wparrer">
-                <input
-                  class="input-text__elem"
-                  [class.input-text__elem--active]="!!form.controls['step1'].controls['place_of_birth'].value"
-                  type="text"
-                  formControlName="place_of_birth"
-                />
-                <div class="input-text__placeholder">Place of birth</div>
-              </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.place_of_birth?.required">Invalid place of birth</div>
-                <div [hidden]="!errors?.place_of_birth?.response">{{ errors?.place_of_birth?.response }}</div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div class="input-text__row">
-          <div class="input-text__col" *ngIf="countries$ | async as countries">
-            <label class="input-text__input">
-              <app-select-input
-                label="Nationality"
-                [control]="form.controls['step1'].controls['nationality']"
-                [options]="countries"
-              ></app-select-input>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.nationality?.required">Invalid nationality</div>
-                <div [hidden]="!errors?.nationality?.response">{{ errors?.nationality?.response }}</div>
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="register__footer">
-      <div class="register__footer-coll">
-        <div class="register__steps">step <span>2 of 3</span></div>
-        <div class="navigation">
-          <button class="navigation__btn" (click)="goToStep(2)">
-            next
-            <svg class="icon">
-              <use xlink:href="#arrow-right"></use>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="step === 2" formGroupName="step2">
-    <a class="register__close" (click)="closePopup()"></a>
-    <div class="register__title">
-      Fill in your information, we’ll send it to FIDE
-    </div>
-    <div class="register__labels">
-      <div class="input-text">
-        <div class="input-text__row">
-          <div class="input-text__col" *ngIf="countries$ | async as countries">
-            <label class="input-text__input">
-              <app-select-input
-                label="Federation"
-                [control]="form.controls['step2'].controls['federation']"
-                [options]="countries"
-              ></app-select-input>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.federation?.required">Invalid federation</div>
-                <div [hidden]="!errors?.federation?.response">{{ errors?.federation?.response }}</div>
-              </div>
-            </label>
-          </div>
-        </div>
-        <div class="input-text__row">
-          <div class="input-text__col">
-            <label class="input-text__input">
-              <div class="input-text__wparrer">
-                <input
-                  class="input-text__elem"
-                  [class.input-text__elem--active]="!!form.controls['step2'].controls['email'].value"
-                  type="text"
-                  formControlName="email"
-                />
-                <div class="input-text__placeholder">Your email</div>
-              </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.email?.required">Your email</div>
-                <div [hidden]="!errors?.email?.response">{{ errors?.email?.response }}</div>
-              </div>
-            </label>
-          </div>
-        </div>
-        <div class="input-text__row">
-          <div class="input-text__col">
-            <label>
-              <input (change)="onFileChanged($event)" type="file" style="display: none" />
-              <img class="photo-preview" *ngIf="preview" [src]="preview" />
-              <div class="your-photo" *ngIf="!preview">
-                <div class="your-photo__text">Your photo</div>
-                <div class="your-photo__icon">
-                  <svg class="icon">
-                    <use xlink:href="#media-horse"></use>
-                  </svg>
+            <div class="fide__form-row">
+              <div class="fide__form-col fide__form-col--width-155">
+                <div class="select-new"
+                     [shake]="form.controls['year_of_birth'].shake$"
+                     [class.select-new--red]="(form.controls['year_of_birth'].errors$ | async)">
+                  <select paygateFormControl formControlName="year_of_birth">
+                    <option selected></option>
+                    <option *ngFor="let year of years" [value]="year.value">{{ year.label }}</option>
+                  </select>
+                  <div class="select-new__placeholder">
+                    Birth year
+                  </div>
                 </div>
               </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.photo?.required">Please upload your photo</div>
-                <div [hidden]="!errors?.photo?.response">{{ errors?.photo?.response }}</div>
+
+              <div class="fide__form-col">
+                <label class="register-input__input">
+                  <div class="register-input__wrapper"
+                       [shake]="form.controls['place_of_birth'].shake$"
+                       [class.register-input__wrapper--error]="(form.controls['place_of_birth'].errors$ | async)">
+                    <input class="register-input__elem"
+                           [class.register-input__elem--active]="!(form.controls['place_of_birth'].empty$ | async)" type="text"
+                           paygateFormControl formControlName="place_of_birth" />
+                    <div class="register-input__placeholder">Birth place</div>
+                  </div>
+                </label>
               </div>
-            </label>
+            </div>
+
+            <div class="fide__form-row fide__form-row--margin-bottom">
+              <div class="fide__form-col">
+                <ng-container *ngIf="countries$ | async as countries">
+                  <div class="select-new"
+                       [shake]="form.controls['nationality'].shake$"
+                       [class.select-new--red]="(form.controls['nationality'].errors$ | async)">
+                    <select paygateFormControl formControlName="nationality">
+                      <option *ngFor="let country of countries" [value]="country.value">{{ country.label }}</option>
+                    </select>
+                    <div class="select-new__placeholder">
+                      Citizenship
+                    </div>
+
+                  </div>
+                </ng-container>
+              </div>
+              <div class="fide__form-col">
+                <ng-container *ngIf="countries$ | async as countries">
+                  <div class="select-new"
+                       [shake]="form.controls['federation'].shake$"
+                       [class.select-new--red]="(form.controls['federation'].errors$ | async)">
+                    <select formControlName="federation" paygateFormControl>
+                      <option *ngFor="let country of countries" [value]="country.value">{{ country.label }}</option>
+                    </select>
+                    <div class="select-new__placeholder">
+                      Federation (if any)
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="fide__form-row">
+              <div class="fide__form-col">
+                <div class="radio-buttons"
+                     [shake]="form.controls['is_male'].shake$">
+                  <label class="radio-buttons__label">
+                    <input class="radio-buttons__input" type="radio" formControlName="is_male" [value]="false">
+                    <div class="radio-buttons__content">
+                      <div class="radio-buttons__btn"></div>
+                      <div class="radio-buttons__text">Male</div>
+                    </div>
+                  </label>
+                  <label class="radio-buttons__label">
+                    <input class="radio-buttons__input" type="radio" formControlName="is_male" [value]="true">
+                    <div class="radio-buttons__content">
+                      <div class="radio-buttons__btn"></div>
+                      <div class="radio-buttons__text">Female</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="fide__photo-col"
+               [shake]="form.controls['photo'].shake$"
+               shakePadding="true">
+            <wc-paygate-image-upload formControlName="photo"></wc-paygate-image-upload>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="register__footer">
-      <div class="register__footer-coll">
-        <div class="navigation navigation--flex-start">
-          <button class="navigation__btn" (click)="goToStep(1)">
-            <svg class="icon">
-              <use xlink:href="#arrow-left"></use>
-            </svg>
-            back
-          </button>
+        <div class="fide__footer">
+          <div class="fide__footer-coll">
+            <wc-btn-with-loading [disabled]="form.invalid$ | async">
+              Confirm
+            </wc-btn-with-loading>
+            <div *ngIf="fideError$ | async" class="create-fide--error">
+              You have send this request earlier or you have no premium/FIDE&nbsp;ID subscribtion
+            </div>
+          </div>
+          <div class="fide__footer-coll">
+            <div class="fide__footer-text">
+              <a (click)="closePopup()">Skip <svg-arrow-right class="icon"></svg-arrow-right> </a>
+              You will be able to create<br>
+              your FIDE<br> Profile later
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="register__footer-coll">
-        <div class="register__steps">step <span>2 of 3</span></div>
-        <button class="register__btn" type="submit">send to FIDE</button>
-      </div>
-    </div>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="mode === FideFormMode.ADD_FIDE">
+      <form [formGroup]="searchForm" (ngSubmit)="searchForm.submit()" class="register">
+        <div class="fide__body fide__body--width-565">
+          <div class="fide__body-form-col">
+            <div class="fide__form-row">
+              <div class="fide__form-col">
+                <label class="register-input__input">
+                  <div class="register-input__wrapper"
+                       [shake]="searchForm.controls['full_name'].shake$"
+                       [class.register-input__wrapper--error]="(searchForm.controls['full_name'].errors$ | async)">
+                    <input class="register-input__elem"
+                           type="text"
+                           paygateFormControl
+                           formControlName="full_name"
+                           [class.register-input__elem--active]="!(searchForm.controls['full_name'].empty$ | async)"/>
+                    <div class="register-input__placeholder">
+                      Name or IDcode from your FIDE Profile
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="fide__form-row">
+              <div class="fide__form-col fide__form-col--width-155">
+                <div class="select-new"
+                     [shake]="searchForm.controls['birth_year'].shake$"
+                     [class.select-new--red]="(searchForm.controls['birth_year'].errors$ | async)">
+                  <select formControlName="birth_year" paygateFormControl [disableControl]="isBirthYearDisabled">
+                    <option selected></option>
+                    <option *ngFor="let year of years" [value]="year.value">{{ year.label }}</option>
+                  </select>
+                  <div class="select-new__placeholder">
+                    Birth year
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fide__footer">
+          <div class="fide__footer-coll">
+            <wc-btn-with-loading [loading]="isSearchLoading$ | async"
+                                 [disabled]="searchForm.invalid$ | async">
+              Confirm
+            </wc-btn-with-loading>
+          </div>
+          <div class="fide__footer-coll">
+            <div class="fide__footer-text">
+              <a (click)="closePopup()">Skip <svg-arrow-right class="icon"></svg-arrow-right> </a>
+              You will be able to create<br>
+              your FIDE<br> Profile later
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
   </ng-container>
-</form>
+  <ng-container *ngIf="mode === FideFormMode.SEARCH_PROFILE">
+    <wc-fide-search-profile (goBack)="setCreateMode()" [searchResults]="searchResults$ | async">
+    </wc-fide-search-profile>
+  </ng-container>
+</wc-base-popup>

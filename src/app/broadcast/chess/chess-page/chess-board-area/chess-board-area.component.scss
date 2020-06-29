@@ -2,13 +2,19 @@
 @import '../../../../../html/css/media';
 
 :host {
+  display: block;
   width: 100%;
+
+  @include height-650() {
+    height: 100%;
+  }
 }
 
 .board {
   display: flex;
   width: 392px;
   flex-direction: column;
+  justify-content: center;
   flex: 0 0 auto;
 
   &__info {
@@ -21,9 +27,13 @@
   @include tablets-big() {
     width: 340px;
   }
-  @include phones() {
-    width: 249px;
+  @include height-650() {
+    width: calc(40vh + 20px);
   }
+  @include phones() {
+    width: 248px;
+  }
+
 }
 
 .board-wrapper {
@@ -31,10 +41,17 @@
   flex: 1;
   justify-content: center;
   position: relative;
+  height: 100%;
   @include tablets-big() {
     padding-bottom: 30px;
   }
   @include phones() {
+    padding-bottom: 0;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @include height-650() {
     padding-bottom: 0;
   }
 
@@ -55,15 +72,14 @@
       padding: 20px;
     }
   }
-  @include phones() {
-    flex-direction: column;
-    align-items: center;
-  }
 }
 
 .board__center {
   position: relative;
-  margin-bottom: 40px;
+  margin-top: 15px;
+  @include phones() {
+    margin-top: 0px;
+  }
 }
 
 .board-buttons {
@@ -84,7 +100,7 @@
     align-items: center;
     color: $black-light;
     fill: $black-light;
-    transition: 0.3s;
+    transition: .3s;
     @include phones() {
       flex-direction: column;
       justify-content: center;
@@ -166,6 +182,7 @@
   &__body {
     display: flex;
     align-items: stretch;
+    height: 100%;
   }
 
   &__footer {
@@ -186,14 +203,18 @@
     justify-content: center;
     align-items: center;
     flex: 1 0 auto;
+    height: 100%;
   }
 }
 
 .multiboard-control {
   position: absolute;
-  right: 60px;
-  bottom: 24px;
+  right: 20px;
+  bottom: 20px;
   z-index: z-index(base, 20);
+  @include ipad() {
+    right: 25px;
+  }
   @include phones() {
     position: static;
     display: flex;
@@ -201,45 +222,184 @@
   }
 }
 
-.shared {
+.buttons-share {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
   position: absolute;
   bottom: 25px;
   left: 25px;
-  width: 92px;
-  height: 32px;
-  background-color: $black-bg;
-  border-radius: 3px;
   box-shadow: 0 0 10px rgba(197, 89, 255, 0.7);
   z-index: z-index(sticky);
 
-  cursor: pointer;
+  @include height-650() {
+    bottom: 20px;
+    left: 20px;
+    width: 48px;
+    border-radius: 50%;
+    box-shadow: none;
+  }
+
   @include phones() {
     position: fixed;
     bottom: 19px;
     left: 60px;
     width: 34px;
+    border-radius: 50%;
+    box-shadow: none;
+  }
+
+  .buttons-group {
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom: 32px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(197, 89, 255, 0.7);
+    border-bottom: 1px solid $black-light;
+
+
+    &.expanded {
+      display: block;
+    }
+
+    .button-share:not(:last-child) {
+      border-bottom: 1px solid $black-light;
+    }
+
+    .button-share {
+      justify-content: flex-start;
+      padding: 5px;
+      @include height-650() {
+        align-items: center;
+        justify-content: center;
+      }
+      @include phones() {
+        justify-content: center;
+      }
+    }
+
+    @include height-650() {
+      box-shadow: none;
+      border-bottom: none;
+      bottom: 52px;
+    }
+
+    @include phones() {
+      box-shadow: none;
+      border-bottom: none;
+      bottom: 38px;
+    }
+  }
+}
+
+.button-share {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 92px;
+  height: 32px;
+  background-color: $black-bg;
+  border-radius: 3px;
+  z-index: z-index(base);
+  cursor: pointer;
+
+  @include height-650() {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(197, 89, 255, 0.7);
+    margin-top: 5px;
+  }
+
+  @include phones() {
+    width: 34px;
     height: 34px;
     border-radius: 50%;
+    box-shadow: 0 0 10px rgba(197, 89, 255, 0.7);
+    margin-top: 5px;
+  }
+
+  .icon {
+    width: 19px;
+    height: 12px;
+    fill: #fff;
+    margin-right: 6px;
+
+    @include height-650() {
+      margin-right: 0;
+      width: 19px;
+      //height: 19px;
+      height: 12px;
+    }
+
+    @include phones() {
+      margin-right: 0;
+      width: 19px;
+      height: 12px;
+    }
+  }
+
+  .text {
+    font: 400 11px/23px $gerbera-font;
+    color: #fff;
+
+    @include height-650() {
+      display: none;
+    }
+
+    @include phones() {
+      display: none;
+    }
   }
 }
 
-.shared__icon {
-  width: 19px;
-  height: 12px;
-  fill: #fff;
-  margin-right: 6px;
-  @include phones() {
-    margin-right: 0;
-  }
-}
 
-.shared__text {
-  font: 400 11px/23px $gerbera-font;
-  color: #fff;
-  @include phones() {
+
+:host-context(.chess-layout--switched) {
+  .board-wrapper__aside {
+    padding: 11px;
+  }
+
+  .board {
+    width: 285px;
+    @include height-650() {
+      width: 225px;
+    }
+  }
+
+  .shared {
+    display: none;
+  }
+
+
+  .board-wrapper {
+    height: 100%;
+    padding-bottom: 0px;
+  }
+
+  .multiboard-control {
+    right: 20px;
+    bottom: 10px;
+  }
+
+  .board__center {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    @include height-650() {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .buttons-share {
+    display: none;
+  }
+
+  ::ng-deep .chess-navigation {
     display: none;
   }
 }
+

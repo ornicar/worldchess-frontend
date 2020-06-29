@@ -1,0 +1,41 @@
+<div class="chart-wrapper lang-{{accountService.getLanguage() | async }}">
+    <div class="chart-scroll" [class.chart-scroll--active]="!disabled" #chartContainer>
+        <div class="chart-scroll__text">{{'GAME.OPPONENTS_RATED' | translate }}</div>
+        <div class="selector"
+             #selector
+             [style.left.px]="(selectedRange$ | async).startIndex"
+             [style.width.px]="fixRightBorderOfSelector ? undefined : (selectedRange$ | async).width"
+             [style.right.px]="fixRightBorderOfSelector ? fixedRightBorder : undefined"
+        >
+          <div class="left-expander"
+               #leftExpander
+               (mousedown)="startExpandLeft($event)"
+               touch (touchStarted)="touchStart(TouchedElement.LeftExpander, $event)">
+            <div class="expand-line"></div>
+          </div>
+          <div class="selector-body"
+               (mousedown)="startDrag($event)"
+               touch (touchStarted)="touchStart(TouchedElement.Selector, $event)"></div>
+          <div class="right-expander"
+               #rightExpander
+               touch (touchStarted)="touchStart(TouchedElement.RightExpander, $event)"
+               (mousedown)="startExpandRight($event)">
+            <div class="expand-line"></div>
+          </div>
+        </div>
+        <svg #chart class="chart">
+        </svg>
+        <div class="range-selected-title">
+          {{(startRangeIndex$ | async) * 10}}...{{((startRangeIndex$ | async) + (widthOnlineRatingRange$ | async)) * 10}}
+        </div>
+      </div>
+      <div class="current-rating"
+             [style.left.px]="ratingDotPosition$ | async">
+          <div class="current-rating__dot">
+          </div>
+          <div class="current-rating__text">
+              {{currentRating$ | async}}
+          </div>
+      </div>
+</div>
+

@@ -1,0 +1,93 @@
+@import 'src/html/css/variables-new';
+@import 'src/html/css/media-new';
+
+.select-language {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.select-language__list {
+  position: relative;
+  right: -3px;
+  position: absolute;
+  bottom: 100%;
+  background-color: #000;
+
+  @include birman-media {
+    right: 0px;
+    bottom: 100%;
+  }
+}
+
+.select-language__elem {
+  padding: 2px 0;
+}
+
+select {
+  position: relative;
+  width: 38px;
+  background-color: transparent;
+  border: none;
+  font: 300 12px/18px $gerbera-font;
+
+  @include birman-media {
+    font: 300 15px/20px $gerbera-font;
+  }
+
+  &:hover {
+    background-color: rgba(#fff, 0.1);
+  }
+}
+
+.select-language__link {
+  display: flex;
+  align-items: center;
+  font: 300 12px/22px $gerbera-font;
+  fill: #fff;
+  color: #fff;
+
+  span {
+    display: inline-block;
+    min-width: 16px;
+
+    @include birman-media {
+      min-width: 20px;
+    }
+  }
+
+  @include birman-media {
+    height: 20px;
+    font: 300 15px/20px $gerbera-font;
+  }
+
+  &:active,
+  &:hover {
+    color: $brown-2;
+    fill: $brown-2;
+  }
+
+  .icon {
+    position: relative;
+    top: 1px;
+    width: 12px;
+    height: 6px;
+    margin-left: 4px;
+  }
+}
+
+.select-language__list-button {
+  display: block;
+  width: 38px;
+  padding: 0 3px;
+  color: #fff;
+  font: 300 12px/18px $gerbera-font;
+
+  @include birman-media {
+    font: 300 15px/20px $gerbera-font;
+  }
+
+  &:hover {
+    background-color: rgba(#fff, 0.1);
+  }
+}

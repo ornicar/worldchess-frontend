@@ -1,15 +1,17 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, isDevMode } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, isDevMode, Input } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { map, tap } from 'rxjs/operators';
-import { AuthLogout } from '../../auth/auth.actions';
-import { selectIsAuthorized } from '../../auth/auth.reducer';
+import { AuthLogout } from '@app/auth/auth.actions';
+import { selectIsAuthorized } from '@app/auth/auth.reducer';
 import * as forRoot from '../../reducers';
-import { SubscriptionHelper, Subscriptions } from '../../shared/helpers/subscription.helper';
-import { selectMyAccount } from '../../account/account-store/account.reducer';
-import { IAccount, FounderStatus } from '../../account/account-store/account.model';
-import { AccountResourceService } from '../../account/account-store/account-resource.service';
-import { AddSubscriptions } from '../../purchases/subscriptions/subscriptions.actions';
-import { AccountLoadSuccess } from '../../account/account-store/account.actions';
+import { SubscriptionHelper, Subscriptions } from '@app/shared/helpers/subscription.helper';
+import { selectMyAccount } from '@app/account/account-store/account.reducer';
+import { IAccount, FounderStatus } from '@app/account/account-store/account.model';
+import { AccountResourceService } from '@app/account/account-store/account-resource.service';
+import { AddSubscriptions } from '@app/purchases/subscriptions/subscriptions.actions';
+import { AccountLoadSuccess } from '@app/account/account-store/account.actions';
+import { combineLatest } from 'rxjs';
+import { PaygatePopupManagerService } from '@app/shared/services/paygate-popup-manager.service';
 
 @Component({
   selector: 'wc-user-nav',
@@ -17,6 +19,7 @@ import { AccountLoadSuccess } from '../../account/account-store/account.actions'
   styleUrls: ['./user-nav.component.scss']
 })
 export class UserNavComponent implements OnInit, OnDestroy {
+  @Input() primary = false;
 
   private subs: Subscriptions = {};
 
@@ -28,26 +31,25 @@ export class UserNavComponent implements OnInit, OnDestroy {
     select(selectMyAccount)
   );
 
-  founderApproved$ = this.account$.pipe(
-    map((account: IAccount) => account && account.founder_approve_status === FounderStatus.APPROVE)
-  );
-
   constructor(
     private cd: ChangeDetectorRef,
     private store$: Store<forRoot.State>,
-    private accountResourceService: AccountResourceService
+    private accountResourceService: AccountResourceService,
+    public paygateService: PaygatePopupManagerService
   ) { }
 
   ngOnInit() {
-
-    this.subs.isAuthorized = this.isAuthorized$.subscribe((isAuthorized: boolean) => {
-      if (isAuthorized) {
+    this.subs.isAuthorized = this.primary && combineLatest(
+      this.isAuthorized$,
+      this.account$,
+    ).subscribe(([isAuthorized, account]) => {
+      if (isAuthorized && !account) {
         this.accountResourceService.getProfile().pipe(
-          tap(account => this.store$.dispatch(new AddSubscriptions({
-            subscriptions: account.subscriptions,
-            count: account.subscriptions.length
+          tap(a => this.store$.dispatch(new AddSubscriptions({
+            subscriptions: a.subscriptions,
+            count: a.subscriptions.length
           }))),
-          tap(account => this.store$.dispatch(new AccountLoadSuccess({ account })))
+          tap(a => this.store$.dispatch(new AccountLoadSuccess({ account: a })))
         ).subscribe(() => {
           this.cd.markForCheck();
         });

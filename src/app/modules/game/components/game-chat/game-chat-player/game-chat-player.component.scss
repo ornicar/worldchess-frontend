@@ -1,0 +1,21 @@
+@import 'src/html/css/variables-new';
+@import 'src/html/css/media-new';
+
+
+.chat-header {
+  display: none;
+  padding: 11px 10px;
+  font: 300 14px/20px $gerbera-font;
+  color: #fff;
+  text-align: start;
+
+  @include birman-media {
+    display: block;
+  }
+}
+// .grey {
+//   color: #909598;
+// }
+// .white {
+//   color: #ffffff;;
+// }

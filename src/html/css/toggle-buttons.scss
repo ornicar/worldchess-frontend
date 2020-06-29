@@ -1,0 +1,95 @@
+@import 'variables-new';
+@import 'media-new';
+
+.toggle-buttons {
+    display: inline-flex;
+    align-self: flex-start;
+    height: 40px;
+    flex: 0 0 auto;
+    border-radius: 3px;
+    overflow: hidden;
+
+    @include phones() {
+        flex-direction: column;
+        height: auto;
+        border-radius: 0;
+    }
+}
+
+.toggle-buttons__elem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 26px;
+    font: 400 22px/22px $gerbera-font;
+    color: #fff;
+    cursor: pointer;
+    border-width: 1px;
+    margin-left: -1px;
+    border-style: solid;
+    border-color: rgba(#FFF, 0.5);
+    border-collapse: collapse;
+ 
+    &:first-child {
+        border-radius: 3px 0 0 3px;
+        margin-left: 0;
+    }
+
+    &:last-child {
+        border-radius: 0 3px 3px 0;
+    }
+
+    &.active {
+        background-color: #fff;
+        color: #000;
+        cursor: default;
+
+        @include phones() {
+            color: #fff;
+            background-color: transparent;
+        }
+
+        .toggle-buttons__btn {
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
+
+    &:hover {
+        border-color: #fff;
+    }
+
+    @include phones() {
+        border: 0;
+        padding: 6px 0;
+        justify-content: flex-start;
+        margin-left: 0;
+    }
+}
+
+.toggle-buttons__btn {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    margin-right: 10px;
+
+    @include phones() {
+        display: flex;
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        width: 16px;
+        height: 16px;
+        background-color: #000;
+        border-radius: 50%;
+        opacity: 0;
+    }
+}

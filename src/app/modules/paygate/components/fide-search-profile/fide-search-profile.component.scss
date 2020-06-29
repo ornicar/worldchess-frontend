@@ -1,0 +1,208 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+    display: flex;
+    height: 100%;
+    flex: 1;
+}
+
+.search-results-container {
+    flex: 0 0 auto;
+    overflow: hidden;
+}
+
+.search-result-wrapper {
+    @include phones() {
+        overflow-y: auto;
+        max-width: calc(100vw - 46px);
+    }
+}
+
+.search-result {
+    display: table;
+    width: 865px;
+    font: 400 22px/25px $gerbera-font;
+
+    .btn-new {
+        min-width: 107px;
+        height: 46px;
+        padding: 3px 10px;
+        margin-top: 4px;
+    } 
+}
+
+.search-result-wrapper {
+    max-height: 349px;
+    overflow-y: auto;
+
+    @include phones() {
+        max-height: none;
+    }
+}
+
+.search-result__head {
+    display: table-header-group;
+}
+
+.search-result__body {
+    display: table-row-group;
+}
+
+.search-result__row {
+    display: table-row;
+
+    &--head {
+        font: 400 15px/20px $gerbera-font;
+        
+
+        .search-result__col {
+            padding: 4px 10px;
+            border-bottom: 1px solid rgba(#000, 0.1);
+
+            &:first-child {
+                padding-left: 0;
+            }
+        
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+    }
+}
+
+.search-result__col {
+    display: table-cell;
+    vertical-align: top;
+    padding: 9px 10px 12px;
+
+    &:first-child {
+        padding-left: 0;
+    }
+
+    &:last-child {
+        padding-right: 0;
+    }
+}
+
+.search-result__user {
+    display: flex;
+}
+
+.search-result__user-photo {
+    position: relative;
+    width: 66px;
+    height: 66px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+    margin-top: 4px;
+    flex: 0 0 auto;
+}
+.search-result__user-img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.search-result__user-no-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid rgba(#000, 0.5);
+    font: 400 15px/18px $gerbera-font;
+    color: #000;
+    text-align: center;
+}
+
+.search-result__dash {
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background-color: #000;
+    margin-bottom: 5px;
+}
+
+.not-you-title {
+    font: 300 29px/29px $gerbera-font;
+    margin-bottom: 25px;
+}
+
+.search-result__list {
+    li {
+        white-space: nowrap;
+    }
+}
+
+
+.btn-new {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-width: 180px;
+    max-width: 416px;
+    height: 60px;
+    padding: 3px 24px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 3px;
+    border: 0;
+    flex: 0 0 auto;
+    font: 300 22px/22px $gerbera-font;
+    cursor: pointer;
+    ::ng-deep {
+      span {
+        display: flex;
+        align-items: center;
+      }
+    }
+  
+    &:active,
+    &:hover {
+      color: #fff;
+    }
+  
+    &.disabled,
+    &[disabled] {
+      opacity: .33;
+      cursor: default;
+    }
+    @include phones() {
+      width: 100%;
+    }
+  
+    svg-preloader {
+      width: 35px !important;
+      height: 35px !important;
+    }
+  
+    &--transparent {
+      border: 1px solid rgba(#fff, 0.5);
+      background-color: transparent;
+      color: #fff;
+  
+      &:hover {
+        border: 1px solid #fff;
+        background-color: transparent;
+      }
+  
+      &.disabled,
+      &[disabled] {
+        cursor: default;
+        border: 1px solid rgba(#fff, 0.5);
+        color: rgba(#fff, 0.5);
+      }
+    }
+  }

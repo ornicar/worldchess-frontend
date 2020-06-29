@@ -1,0 +1,11 @@
+@import "../../../../html/css/variables";
+:host-context(.icon_game-finish) {
+  margin-right: 10px;
+  width: 23px;
+  height: 23px;
+  fill: #ababab;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}

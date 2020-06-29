@@ -1,0 +1,153 @@
+@import "src/html/css/variables-new";
+@import "src/html/css/media-new";
+
+$colors: #FF6C58, #3C40C6, #FFDE32, #A2C91F;
+
+:host(.rounds-timeline) {
+  display: block;
+  position: relative;
+  background-color: $grey-dark-new;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 62px;
+}
+
+.rounds-timeline__list {
+  display: flex;
+  padding: 25px 10px 20px 10px;
+}
+
+.rounds-timeline__elem {
+  flex: 1 1 auto;
+  position: relative;
+  margin: 0 10px;
+
+  @include birman-media {
+    margin: 0 3px;
+  }
+
+  &--break {
+    flex: 0 0 auto;
+    width: 0;
+    margin: 0;
+  }
+
+  &--first-tour {
+    margin-left: 50px;
+  }
+
+  &--backlight {
+
+    .rounds-timeline__round-left,
+    .rounds-timeline__round-right {
+      border-color: #fff;
+    }
+
+    .rounds-timeline__round-name {
+      color: #fff;
+    }
+  }
+}
+
+.rounds-timeline__round {
+  width: 100%;
+  position: relative;
+
+  &-left {
+    border: 1px solid rgba(#fff, 0.2);
+    border-bottom: 0;
+    border-right: 0;
+    display: inline-block;
+    width: 75%;
+    height: 5px;
+    position: relative;
+    top: -15px;
+    &-dashed {
+      border-style: dashed;
+    }
+  }
+
+  &-right {
+    border: 1px solid rgba(#fff, 0.2);
+    border-bottom: 0;
+    border-left: 0;
+    display: inline-block;
+    width: calc(25% - 1px);
+    height: 5px;
+    position: relative;
+    top: -15px;
+    &-dashed {
+      border-style: dashed;
+    }
+  }
+}
+
+.rounds-timeline__round-name {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: rgba(#fff, 0.4);
+  font: 300 15px/22px $gerbera-font;
+
+  span {
+    @include birman-media {
+      display: none;
+    }
+  }
+}
+
+.rounds-timeline__round-progress {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  border-top: 1px solid #474747;
+}
+
+.rounds-timeline__round-time-start,
+.rounds-timeline__round-time-end {
+  position: absolute;
+  left: 3px;
+  top: -25px;
+  bottom: 100%;
+  color: rgba(#fff, 0.4);
+  font: 300 15px/22px $gerbera-font;
+  white-space: nowrap;
+}
+
+.rounds-timeline__round-time-end {
+  left: auto;
+  right: 10px;
+}
+
+.rounds-timeline__line {
+  position: absolute;
+  top: -25px;
+  bottom: 0;
+  width: 1px;
+  height: 50px;
+  background-color: $red-3-new;
+  transform: translate(-1px, 0);
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: $red-3-new;
+  }
+}
+
+.rounds-timeline__line-time {
+  position: absolute;
+  font: 300 15px/22px $gerbera-font;
+  color: $red-3-new;
+  top: 0;
+  left: 5px;
+}

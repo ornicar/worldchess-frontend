@@ -1,0 +1,214 @@
+
+@import 'src/html/css/variables-new';
+@import 'src/html/css/media-new';
+
+:host {
+  width: 100%;
+  display: block;
+}
+
+.online-tournament-widget {
+
+  ::ng-deep {
+    .black-player,
+    .black-player-timer,
+    .black-player-result,
+    .white-player,
+    .white-player-timer,
+    .white-player-result {
+      display: none;
+    }
+
+    wc-chess-board {
+      grid-template-columns: minmax(0, 1fr) minmax(0, auto) 0;
+      grid-template-rows: 0px minmax(0, auto) 0px 0;
+      grid-template-areas: "black-player black-player-timer black-player-result" "chess chess chess" "white-player white-player-timer white-player-result";
+    }
+
+    .tournament-countdown {
+      background-color: transparent;
+      box-shadow: none;
+    }
+  }
+
+  @include birman-media {
+    background-color: $grey-dark-new;
+    padding: 3px 2px;
+    border-radius: 4px;
+  }
+
+
+}
+
+.online-tournament-widget__board {
+  position: relative;
+}
+
+.online-tournament-widget__timer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: z-index(base-dropdown);
+}
+
+
+.player {
+  display: flex;
+  color: #fff;
+  padding: 10px 0;
+
+  @include birman-media {
+    padding: 3px 8px;
+    height: 46px;
+  }
+}
+
+.player__photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 15px;
+  flex: 0 0 auto;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  @include birman-media {
+    display: none;
+  }
+}
+
+.player__time {
+  font: 300 40px/40px $gerbera-font;
+  margin-right: 17px;
+  font-feature-settings: "tnum" 1;
+
+  @include birman-media {
+    display: none;
+  }
+}
+
+.player__time-mobile {
+  display: none;
+  align-items: center;
+  font: 300 14px/20px $gerbera-font;
+  margin-right: 5px;
+
+  @include birman-media {
+    display: inline-flex;
+  }
+}
+
+.player__info {
+  overflow: hidden;
+  padding-right: 5px;
+}
+
+.player__name {
+  font: 300 14px/20px $gerbera-font;
+  min-height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  @include birman-media {
+    color: $brown-2;
+    font: 300 14px/15px $gerbera-font;
+    margin-bottom: 3px;
+    min-height: 15px;
+  }
+}
+
+.player__count {
+  display: flex;
+  font: 300 14px/20px $gerbera-font;
+}
+
+.player__count-wrapper {
+  display: inline-block;
+
+  @include birman-media {
+    opacity: 0.4;
+  }
+}
+
+.player__position {
+  position: relative;
+  flex: 0 0 auto;
+  height: 32px;
+  border: 1px solid rgba(#fff, 0.4);
+  color: rgba(#fff, 0.4);
+  border-radius: 3px;
+  margin-top: 3px;
+  font: 300 28px/28px $gerbera-font;
+  padding: 1px 4px 1px 15px;
+  text-align: end;
+  margin-left: auto;
+
+  &--active {
+    border: 1px solid #fff;
+    color: #fff;
+
+    &:after {
+      color: #fff;
+    }
+  }
+
+  &:after {
+    content: '#';
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -5px;
+    left: -5px;
+    width: 10px;
+    height: 10px;
+    padding: 3px;
+    background-color: #000;
+    color: rgba(#fff, 0.4);
+    font: 300 14px/20px $gerbera-font;
+  }
+
+  @include birman-media {
+    display: none;
+  }
+}
+
+.half-value {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  font: 900 8px/8px $gerbera-font;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 12px;
+    height: 1px;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+  }
+
+  span {
+    &:first-child {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &:last-child {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}

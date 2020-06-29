@@ -1,0 +1,118 @@
+@import 'variables-new';
+@import 'media-new';
+
+.chart-wrapper {
+  position: relative;
+}
+
+.chart-scroll {
+  position: relative;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  display: flex;
+  height: 65px;
+  border: 1px solid #4C4C4C;
+  border-radius: 3px;
+  &--active {
+    .selector {
+      .left-expander,
+      .right-expander {
+        cursor: ew-resize;
+      }
+    }
+  }
+
+  .selector {
+    position: absolute;
+    height: 63px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 4px;
+      bottom: 15px;
+      right: 4px;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+
+    .selector-body {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .left-expander,
+    .right-expander {
+      position: relative;
+      height: 100%;
+      width: 30px;
+      z-index: z-index(base);
+    }
+
+    .right-expander {
+      right: -10px;
+    }
+
+    .left-expander {
+      left: -10px;
+    }
+  }
+  .range-selected-title {
+    position: absolute;
+    top: 13px;
+    right: 9px;
+    color: #fff;
+    font: 300 22px/22px $gerbera-font;
+  }
+}
+
+.current-rating {
+  position: absolute;
+  left: 200px;
+  top: 100%;
+  width: 7px;
+  height: 7px;
+  color: $red-3-new;
+}
+
+.current-rating__dot {
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 7px;
+  background: $red-3-new;
+  border-radius: 50%;
+}
+
+.current-rating__text {
+  position: absolute;
+  top: 5px;
+  transform: translate(-50%, 0);
+  font: 300 10px/10px $gerbera-font;
+  color: $red-3-new;
+}
+
+.chart-scroll__text {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font: 300 15px/18px $gerbera-font;
+  color: #fff;
+}
+
+svg.chart {
+  height: 100%;
+  width: 100%;
+  max-height: 100%;
+  flex-grow: 1;
+}

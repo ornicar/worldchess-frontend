@@ -1,0 +1,5 @@
+<div class="main-page-news-item" [routerLink]="['/news', newsItem.slug || newsItem.id]">
+    <span class="main-page-news-item__time">{{newsItem.pub_date | newsTime}}</span>
+    {{newsItem.title}}
+    <span *ngIf="false" class="main-page-news-item__icon"><img [src]="newsItem.featured_image"/></span>
+</div>

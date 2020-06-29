@@ -1,0 +1,51 @@
+<div class="root" *ngIf="tournament" (click)="gotToTournament($event)">
+  <div class="image" [style.background-image]="'url('+(tournament.image || 'https://s3-wctour-ut-test.s3.amazonaws.com/media/tournament_images/18ee0021fbeac49e.png')+')'"></div>
+  <div class="time">
+    <div>{{this.signupStart | date:'EEEE'}}</div>
+    <div>{{this.signupStart | date:'HH:mm'}}</div>
+  </div>
+  <div class="info">
+    <div class="title">{{tournament.title}}</div>
+    <div class="details" *ngIf="tournament.time_control">
+      {{tournament.time_control.board_type | boardType}}
+      <ng-container *ngIf="!moment.duration(tournament.time_control.increment).asMilliseconds()">
+        {{moment.duration(tournament.time_control.start_time).asMilliseconds() | wcDuration:'m': durationFormat}}<span style="font-size:0.5em">&nbsp;</span>min
+      </ng-container>
+      <ng-container *ngIf="moment.duration(tournament.time_control.increment).asMilliseconds()">
+        {{moment.duration(tournament.time_control.start_time).asMilliseconds() | wcDuration:'h m s': durationFormat}}<span style="font-size:0.5em">&nbsp;</span>
+        +<span style="font-size:0.5em">&nbsp;</span>{{moment.duration(tournament.time_control.increment).asMilliseconds() | wcDuration:'h m s': durationFormat}}
+      </ng-container>
+    </div>
+    <div class="details">
+      <span class="details__icon" *ngIf="tournament.rating_type === GameRatingMode.RATED">
+        <div class="pie">
+          <div class="pie__bg" [style.transform]="'rotate('+ memberCounter + 'deg)'"></div>
+          <div class="pie__bg-half-black" *ngIf="memberCounter < 180"></div>
+          <div class="pie__bg-half-white" *ngIf="memberCounter > 180"></div>
+        </div>
+      </span>
+      <span class="details__text">{{tournament.signed_up_amount}} / {{tournament.players_amount}}</span>
+      <span class="details__icon" *ngIf="tournament.rating_type === GameRatingMode.FIDERATED">
+        <svg-logo-fide-mini class="icon"></svg-logo-fide-mini>
+      </span>
+      <!-- <span class="details__text">&lt; {{tournament.players_rating_maximum}}</span> -->
+      <span class="details__icon" *ngIf="tournament.country !== null"><svg-country-arrow class="icon"></svg-country-arrow></span>
+      <span class="details__icon" *ngIf="tournament.country === null"><svg-worldwide class="icon"></svg-worldwide></span>
+      <span class="details__text" *ngIf="tournament.country !== null">{{getCountryName(tournament.country) | async}}</span>
+      <span class="details__text" *ngIf="tournament.country === null">Worldwide</span>
+    </div>
+  </div>
+  <div class="bottom-block">
+      <div class="avatar-block" *ngIf="(tournament$ | async).signed_up_amount > 0">
+          <div *ngFor="let player of tournamentPlayers$ | async" class="avatar-block__elem">
+              <img [src]="player.avatar.full"/>
+          </div>
+      </div>
+      <div class="bottom-block__text">
+        {{(tournament$ | async).signed_up_amount}} players<br> joined
+      </div>
+      <div class="bottom-block__join-button" (click)="gotToTournament($event)">
+        Join
+      </div>
+  </div>
+</div>

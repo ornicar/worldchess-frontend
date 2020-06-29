@@ -1,0 +1,62 @@
+<div class="player"
+     [class.player--active]="isMyMove$ | async"
+     *ngIf="player"
+     #badge>
+  <div class="player__statistics"
+       [class.mobile-hidden]="!playerInfoVisible || promotionPopupVisible || gameReviewModeMobile"
+       [class.time-limit-notification]="timeLimitNotification$ | async"
+       #playerStat>
+    <div class="player__foto"
+         *ngIf="!(boardIsFlipped$ | async) && !(isReplay$ | async)"
+         [style.background-image]="
+           'url(' + (player?.avatar?.full || defaultAvatar) + ')'
+         "
+    >
+    </div>
+    <svg-preloader class="board-block__preloader" *ngIf="(isReplay$ | async)"></svg-preloader>
+    <div class="player__time"
+         *ngIf="!(boardIsFlipped$ | async)"
+         [class.mobile-hidden]="!timerVisible || promotionPopupVisible">
+      {{ (duration$ | async) | wcDuration:'mm:ss':durationFormat}}
+    </div>
+    <div class="player__info"
+         [class.mobile-hidden]="!playerInfoVisible || promotionPopupVisible || gameReviewModeMobile"
+         *ngIf="!(playerInfoCollapsed$ | async) && !(boardIsFlipped$ | async)">
+         <div [class.hide-name]="(isShowChat$ | async)">
+           <div class="player__name">
+          <span class="player__name-text">
+            {{ playerName$ | async }}
+          </span>
+             <span class="player__name-status" *ngIf="player.rank">{{player.rank}}</span>
+           </div>
+           <div class="player__stat">
+             <span>{{player.rating}}</span>  <span *ngIf="countryName">{{countryName}}</span>
+             <ng-container *ngIf="showPlayerTournamentScore"><span>{{playerRank}}{{tournamentService.rankOrderText(playerRank) | async}}</span>,  {{tournamentService.getFullValue(playerScore)}}
+               <div class="half-value" *ngIf="tournamentService.haveHalfValue(playerScore)"><span>1</span><span>2</span></div> {{'OTHER.PTS' | translate }}
+             </ng-container>
+           </div>
+         </div>
+    </div>
+  </div>
+  <div class="player__result-container" [class.mobile-open]="messageDisplayed$ | async">
+    <svg-hexagon class="player__hexagon"
+                 [class.time-limit-notification]="timeLimitNotification$ | async"
+                 *ngIf="(isMyMove$ | async) && !(messageDisplayed$ | async) && !(gameReviewMode$ | async) && !(boardIsFlipped$ | async)"
+    ></svg-hexagon>
+    <ng-content></ng-content>
+  </div>
+  <div class="player__figures"
+       [class.mobile-hidden]="!takenFiguresVisible || promotionPopupVisible || gameReviewModeMobile"
+       #takenFigures>
+    <captured-figures [capturedFigures]="capturedFigures$ | async"
+                      [capturedFigureColor]="capturedFigureColor$ | async"
+                      [materialAdvantage]="materialAdvantage$ | async"
+                      [needSqueeze]="needTakenFiguresSqueeze$ | async"
+                      (toggleFigures)="toggleFigures($event)"
+                      *ngIf="!(gameReviewMode$ | async) && !(boardIsFlipped$ | async)"
+    ></captured-figures>
+  </div>
+
+</div>
+
+

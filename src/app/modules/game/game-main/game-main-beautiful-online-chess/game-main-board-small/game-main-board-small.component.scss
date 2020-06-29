@@ -1,0 +1,50 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  width: 100%;
+}
+
+.board-small {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 460px;
+  padding: 40px 0 10px;
+}
+
+.board-small__img {
+  width: 359px;
+  height: 274px;
+  margin-right: -80px;
+  margin-bottom: 40px;
+
+  img {
+    width: 100%;
+  }
+
+  @include birman-media {
+    margin-right: -60px;
+  }
+}
+
+.board-small__text {
+  font: 300 18px/24px $gerbera-font;
+  text-align: center;
+  max-width: 260px;
+}
+
+/*----------локализация-------------*/
+
+.lang-ru {
+  .board-small__text {
+    font: 300 15px/20px $gerbera-font;
+    max-width: 275px;
+  }
+
+  .board-small__img {
+    @include birman-media {
+      margin-right: -75px;
+    }
+  }
+}

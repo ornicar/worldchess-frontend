@@ -2,13 +2,14 @@ import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'app-text-input',
-    templateUrl: './text-input.component.html'
+  selector: 'app-text-input',
+  styleUrls: ['./text-input.component.scss'],
+  templateUrl: './text-input.component.html'
 })
 export class TextInputComponent {
   @Input() label = '';
   @Input() responseError = '';
-  @Input() original = '';
+  @Input() disabled = false;
 
   isFocus = false;
 
@@ -28,7 +29,11 @@ export class TextInputComponent {
     return '';
   }
 
-  isEdit(): boolean {
-    return this.original !== this.control.value;
+  getIcon() {
+    if (this.disabled) {
+      return 'lock';
+    } else {
+      return this.getError() ? 'input_error' : 'input_success';
+    }
   }
 }

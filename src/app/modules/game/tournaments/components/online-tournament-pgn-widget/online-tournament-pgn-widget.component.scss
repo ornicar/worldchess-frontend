@@ -1,0 +1,42 @@
+@import 'src/html/css/variables-new';
+@import 'src/html/css/media-new';
+
+:host {
+  width: 100%;
+  display: block;
+  padding: 1px 8px 4px;
+  font: 300 14px/20px $gerbera-font;
+}
+
+.png-wiget__name {
+    color: $brown-2;
+}
+
+.png-wiget__rating {
+    color: rgba(#fff, 0.4);
+}
+
+.png-wiget__elem {
+    margin-bottom: 6px;
+
+    &:last-child {
+        margin-bottom: 0px;
+    }
+}
+
+.png-wiget__button {
+    display: flex;
+    align-items: center;
+    color: $brown-2;
+    fill: $brown-2;
+    margin-top: 14px;
+}
+
+.png-wiget__button-icon {
+    display: block;
+    position: relative;
+    top: -2px;
+    width: 17px;
+    height: 20px;
+    margin-right: 6px;
+}

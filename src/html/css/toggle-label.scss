@@ -1,0 +1,141 @@
+@import 'variables-new';
+@import 'media-new';
+
+.toggle-label {
+    display: flex;
+    margin-bottom: 8px;
+    min-height: 54px;
+  
+    input {
+      position: absolute;
+      opacity: 0;
+  
+      &:checked[disabled] + .toggle-label__btn {
+        border: 1px solid rgba(#fff, 0.33);
+  
+        &:after {
+          background-color: rgba(#000, 0.5);
+          left: 40px !important;
+        }
+      }
+  
+      &[disabled] + .toggle-label__btn {
+        opacity: 0.33;
+        border: 1px solid#fff;
+        cursor: default;
+        &:after {
+          background-color: #fff;
+        }
+      }
+
+      &[disabled]:checked + .toggle-label__btn {
+        opacity: 0.33;
+        border: 1px solid #fff;
+        background-color: #fff;
+        cursor: default;
+        &:after {
+          background-color: #000;
+        }
+      }
+  
+      &[disabled] {
+        cursor: default;
+      }
+  
+      &:checked + .toggle-label__btn {
+        background-color: #fff;
+        border: 1px solid #fff;
+        &:after {
+          left: 40px;
+          background-color: #000;
+        }
+      }
+
+    }
+
+
+    &--small {
+      align-items: center;
+      min-height: auto;
+      margin-bottom: 17px;
+      display: inline-flex;
+      margin-top: -3px;
+
+      input {
+        &:checked + .toggle-label__btn {
+          &:after {
+            left: 30px !important;
+          }
+        }
+      }
+
+      .toggle-label__input + .toggle-label__btn {
+        width: 55px;
+        height: 26px;
+
+        &:after {
+          width: 20px;
+          height: 20px;
+          left: 2px;
+        }
+      }
+    }
+
+    &:hover {
+      .toggle-label__btn {
+        border: 1px solid #fff;
+      }
+
+      input {
+        &:checked + .toggle-label__btn {
+          background-color: #E9E9E9;
+          border: 1px solid #E9E9E9;
+        }
+      }
+    }
+  }
+  
+  .toggle-label__btn {
+    position: relative;
+    top: 3px;
+    border: 1px solid rgba(#fff, 0.5);
+    width: 81px;
+    height: 43px;
+    padding: 5px;
+    border-radius: 22px;
+    margin-right: 10px;
+    flex: 0 0 auto;
+    transition: border 0.3s, background-color 0.3s ;
+  
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      background-color: #fff;
+      top: 50%;
+      left: 5px;
+      transform: translateY(-50%);
+      transition: left .3s;
+    }
+  }
+  
+  .toggle-label__content {
+    display: flex;
+    flex-direction: column;
+    font: 300 22px/25px $gerbera-font;
+    color: #fff;
+  }
+  
+  .toggle-label__price {
+    color: rgba(255,255,255,.5);
+  }
+
+  .toggle-label__text {
+    font: 400 22px/25px $gerbera-font;
+    color: #fff;
+  }
+
+

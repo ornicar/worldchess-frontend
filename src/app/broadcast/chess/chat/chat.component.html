@@ -7,9 +7,7 @@
           <div class="chess-move__count">1</div>
           <div class="wc-title wc-title_small">
             <div class="wc-title__img wc-title__img--small">
-              <svg class="icon">
-                <use xlink:href="#officer" />
-              </svg>
+              <svg-officer class="icon"></svg-officer>
             </div>
             Rxd6
           </div>
@@ -30,6 +28,7 @@
         </div>
       </div> -->
     <ul class="chat__list"
+        wcHideScrollbar
         #messagesList
         (swiperight)="closeChatScreen()"
         (scroll)="onScrollTop()">
@@ -50,6 +49,12 @@
           <!--(onUnlikeMessage)="unlikeMessage($event)"-->
           <!--(onDislikeMessage)="dislikeMessage($event)">-->
         <!--</wc-chat-move>-->
+      </div>
+      <div class="chat__finish-msg" *ngIf="showChatPlaceholder">
+        <div class="chat__finish-msg__bg"></div>
+        <div class="chat__finish-msg__text">
+          Chat will be available soon.
+        </div>
       </div>
       <div class="chat__empty-msg" *ngIf="messages.length === 0 && !chatLocked">
         <div class="chat__text">
@@ -98,7 +103,7 @@
     <div class="chat__anonymous" *ngIf="isAnonymous">
       <a [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]">
         Please Register
-        <svg class="chat__anonymous-arrow"><use xlink:href="#arrow-down" /></svg>
+        <svg-arrow-down class="icon chat__anonymous-arrow"></svg-arrow-down>
       </a>
     </div>
   </div>

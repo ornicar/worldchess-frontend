@@ -15,8 +15,8 @@ export class VideoBannerPlayerComponent {
   VideoType = VideoType;
   @Input() video: IVideo = null;
   @Input() mouseEvents: Subject<VideoPlayerMouseEvents>;
-  @ViewChild('player') playerWrapper: ElementRef;
-  @ViewChild(YoutubePlayerComponent) youtubePlayer: YoutubePlayerComponent;
+  @ViewChild('player', { static: false }) playerWrapper: ElementRef;
+  @ViewChild(YoutubePlayerComponent, { static: false }) youtubePlayer: YoutubePlayerComponent;
 
   youtubeParams = {
     playerVars: {

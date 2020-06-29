@@ -17,7 +17,8 @@ export enum SubscriptionActionTypes {
   ClearSubscriptions = '[Subscription] Clear Subscriptions',
   OpenCancelRenewDialog = '[Subscription] Open cancel renew subscription dialog',
   CloseCancelRenewDialog = '[Subscription] Close cancel renew subscription dialog',
-  CancelRenewSubscription = '[Subscription] Cancel renew subscription'
+  CancelRenewSubscription = '[Subscription] Cancel renew subscription',
+  ReactivateSubscription = '[Subscription] Reactivate subscription'
 }
 
 export class GetSubscriptions implements Action {
@@ -86,6 +87,12 @@ export class CancelRenewSubscription implements Action {
   constructor(public payload: { stripe_id: string, notify: boolean }) {}
 }
 
+export class ReactivateSubscription implements Action {
+  readonly type = SubscriptionActionTypes.ReactivateSubscription;
+
+  constructor(public payload: { stripe_id: string, notify: boolean }) {}
+}
+
 export type SubscriptionActions =
 GetSubscriptions
  | LoadSubscription
@@ -98,4 +105,5 @@ GetSubscriptions
  | ClearSubscriptions
  | OpenCancelRenewDialog
  | CloseCancelRenewDialog
- | CancelRenewSubscription;
+ | CancelRenewSubscription
+ | ReactivateSubscription;

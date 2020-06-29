@@ -1,0 +1,76 @@
+{
+  "ACCOUNT": {
+    "NEW": "New account",
+    "HAVE_ACCOUNT": "Already have an account?",
+    "SIGN_IN": "Sign in",
+    "EMAIL": "Email",
+    "BECOME_MEMBER": "Become a member",
+    "MY_EMAIL": "Enter your email address to use with your account",
+    "WELCOME_BACK": "Welcome back! Log in using your email.",
+    "REGISTER": "Register if you don’t have an account or recover your password",
+    "PASSWORD": "Password",
+    "LOG_IN": "Log in",
+    "NO_ACCOUNT": "Has no account",
+    "HAS_ACCOUNT": "Has an account",
+    "BETA_PASSPORT": "BETA World Chess Passport",
+    "VERIFICATION": "Verification"
+  },
+  "PROFILE": {
+    "MEMBERSHIP": "Membership",
+    "PROFILE": "Profile",
+    "MY_TOURNAMENTS": "My Tournaments",
+    "PURCHASES" : "Purchases (Coming Soon)",
+    "RATING": "Rating",
+    "COUNTRY": "Country",
+    "FRIEND": "Mates",
+    "PRIVACY": "Privacy",
+    "ACCOUNT_NOT_PUBLIC": "Account isn`t public",
+    "EDIT": "edit",
+    "DELETE": "delete profile",
+    "SUPPORT": "Support",
+    "BEGINNER": "beginner",
+    "WS_PASSPORT": "World Chess Passport",
+    "WS": "World Chess",
+    "FOLLOW": "Follow us",
+    "QUESTIONS": "Do you have any questions?",
+    "MEMBER_SINCE": "Member since",
+    "FIDELITY_POINTS": "Fidelity points"
+  },
+  "GAME": {
+    "LIVE": "LIVE",
+    "GAME_LENGTH": "Game length",
+    "LONGEST_MOVE": "Longest move time",
+    "AVG_MOVE": "Average move time",
+    "LEGALIZE": "Legalize your skills",
+    "PLAY_CHESS": "Play chess online for World Chess Passport Online Rating.",
+    "WELCOME_GAME": "Bienvenido al juego",
+    "SINGLE_GAME": "Juegos individuales"
+  },
+  "TOURNAMENTS":{
+    "TODAY": " World Chess Tournaments Today",
+    "TOURNAMENTS": "Torneos",
+    "UPCOMING_TOURNAMENTS": "My upcoming tournaments"
+  },
+  "ACCESS": {
+    "ALL": "Access to all video streams €25/year",
+    "PREMIUM": "Access all video streams including premium events.",
+    "CAMERA": "Get multi-camera view of the top events",
+    "GET_GRANDMASTER": "Get your Grandmaster title with World Chess Passport Online officially"
+  },
+  "OFFER":{
+    "AGREE": "By creating an account and becoming a member, you agree to our",
+    "TERMS": "Terms and Conditions",
+    "PRIVACY": "Privacy Policy"
+  },
+  "OTHER": {
+    "FREE": "Free",
+    "FEATURES": "See all included features...",
+    "FIDE_RATED": "FIDE RATED",
+    "TERMS_USE": "Terms of Use",
+    "BUREAU": "BUREAU",
+    "USE_TECH": "USE TECH",
+    "DESIGNED_BEREAU": "Designed by Bureau Gorbunov in ",
+    "DEVELOPED": "Developed by Usetech",
+    "CONTACTS": "Contacts"
+  }
+}

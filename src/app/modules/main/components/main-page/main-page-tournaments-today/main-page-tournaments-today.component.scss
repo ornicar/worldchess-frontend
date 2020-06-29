@@ -1,0 +1,81 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  overflow: hidden;
+}
+.tournaments-today{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $brown-2;
+  padding: 23px 0px 29px;
+
+  ::ng-deep {
+    .card-row {
+      min-width: 240px !important;
+      max-width: 240px !important;
+    }
+  }
+}
+
+.tournaments-today__head {
+  padding: 0 20px 16px;
+  color: #000;
+
+  @include birman-media {
+    padding:  0 10px 16px;
+  }
+}
+
+.tournaments-today__title {
+  font: 300 30px/32px $gerbera-font;
+  margin-bottom: 8px;
+  min-height: 32px;
+}
+
+.tournaments-today__sub-title {
+  min-height: 20px;
+  font: 300 15px/20px $gerbera-font;
+}
+
+.tournaments-today__lines-area {
+  height: 600px;
+  overflow: hidden;
+}
+
+.tournaments-today__footer {
+  display: flex;
+  height: 32px;
+  padding: 0px 20px;
+
+  @include birman-media {
+    padding:  0 10px;
+  }
+}
+
+.tournaments-today__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: $yellow-new;
+  color: #000;
+  cursor: pointer;
+  border-radius: 3px;
+  min-width: 120px;
+  min-height: 32px;
+  font: 300 15px/20px $gerbera-font;
+  padding: 5px;
+  margin-left: auto;
+
+  &:hover {
+    background-color: $yellow-new-hover;
+  }
+}
+
+

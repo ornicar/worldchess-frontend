@@ -1,5 +1,5 @@
-import {SimpleChanges} from '@angular/core';
-import {ReplaySubject} from 'rxjs';
+import { SimpleChanges } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
 
 const subjects = {
   subjects: new WeakMap<Object, { [prop: string]: ReplaySubject<any> }>(),

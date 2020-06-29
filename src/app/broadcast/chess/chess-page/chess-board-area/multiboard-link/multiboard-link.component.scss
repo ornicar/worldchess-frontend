@@ -54,3 +54,10 @@
     opacity: 1;
   }
 }
+
+
+:host-context(.chess-layout--switched) {
+  .link {
+    display: none;
+  }
+}

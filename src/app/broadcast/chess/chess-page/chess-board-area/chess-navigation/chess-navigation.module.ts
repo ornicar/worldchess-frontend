@@ -7,12 +7,14 @@ import {ColliderService} from './moves-navigation-slider/collider.service';
 import {MovesNavigationContainerComponent} from './moves-navigation-container/moves-navigation-container.component';
 import {MovesNavigationChartComponent} from './moves-navigation-slider/moves-navigation-chart/moves-navigation-chart.component';
 import {FormsModule} from '@angular/forms';
+import {SvgModule} from "@app/modules/svg/svg.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     NouisliderModule,
+    SvgModule
   ],
   declarations: [
     ChessNavigationComponent,

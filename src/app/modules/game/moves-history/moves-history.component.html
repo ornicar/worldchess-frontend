@@ -1,0 +1,43 @@
+<div class="turn-history">
+  <div class="turn-history__head">
+    <div class="turn-history__title">Notations & History</div>
+  </div>
+  <div class="turn-history__turn-wrapper" #wrapper>
+    <ul class="turn-history__table" *ngIf="groupedMoves$ | async as groups">
+      <li class="turn-history__elem" *ngFor="let group of groups; trackBy: trackByMoveGroup; let i = index">
+        <div class="turn-history__nember">{{ i + 1 }}</div>
+        <wc-history-move class="turn-history__turn" *ngFor="let move of group; trackBy: trackByMove" [move]="move"
+          [isSelected]="selectedMove === move" (click)="onMoveSelected(move)"></wc-history-move>
+      </li>
+    </ul>
+  </div>
+  <div class="turn-history__buttons">
+      <div class="turn-history__btn-wrapper">
+        <a (click)="goToFirst()" class="turn-history__btn">
+          <svg-arrow-left-point-blank class="icon turn"></svg-arrow-left-point-blank>
+        </a>
+        <a (click)="goBackward()" class="turn-history__btn">
+          <svg-arrow-left class="icon turn"></svg-arrow-left>
+        </a>
+      </div>
+      <div class="turn-history__btn-wrapper">
+        <a (click)="clear()" class="turn-history__btn">
+          <svg-play class="icon turn"></svg-play>
+        </a>
+      </div>
+      <div class="turn-history__btn-wrapper">
+        <a (click)="goForward()" class="turn-history__btn">
+          <svg-arrow-right class="icon turn"></svg-arrow-right>
+        </a>
+        <a (click)="goToLast()" class="turn-history__btn">
+          <svg-arrow-right-point-blank class="icon turn"></svg-arrow-right-point-blank>
+        </a>
+      </div>
+      <div class="turn-history__btn-wrapper">
+        <a href="#" class="turn-history__btn" *ngIf="false">
+          <svg-dots class="icon turn"></svg-dots>
+        </a>
+      </div>
+    </div>
+</div>
+

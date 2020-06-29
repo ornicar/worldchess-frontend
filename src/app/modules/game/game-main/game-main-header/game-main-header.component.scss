@@ -1,0 +1,107 @@
+
+@import "variables-new";
+@import "media-new";
+
+:host {
+
+  .root {
+    height: 100%;
+  }
+
+  .root-en {
+    display: flex;
+    flex-direction: column;
+    height: 100%;   
+  }
+
+  .root-ru {
+    display: none;
+    flex-direction: column;
+    height: 100%;   
+  }
+
+  .logo-mts {
+    display: block;
+    width: 230px;
+    height: 222px;
+    position: relative;
+    top: 7px;
+  }
+
+  .title {
+    font-family: Gerbera;
+    font-style: normal;
+    margin-bottom: -8px;
+    font: 300 40px/45px $gerbera-font;
+    @include birman-media {
+      font: 300 30px/38px $gerbera-font;
+      margin-bottom: 0;
+    }
+
+    a {
+      color: $brown-2;
+  
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  .logo {
+    flex-grow: 1;
+    display: flex;
+    max-height: 100px;
+    padding-top: 6px;
+    align-items: center;
+    margin-bottom: 3px;
+    @include birman-media {
+      margin-bottom: -15px;
+    }
+  }
+
+  .icon-wrapper {
+    padding-right: 10px;
+  }
+
+
+  .logo__svg {
+    display: block;
+    fill: #FFFFFF;
+
+    &--chess {
+      width: 86px;
+      height: 105px;
+
+      @include birman-media {
+        width: 56px;
+        height: auto;
+      }
+    }
+  }
+
+  .logo__hourse {
+    width: 111px;
+    height: 87px;
+    display: block;
+    fill: #FFFFFF;
+
+    @include birman-media {
+      width: 78px;
+      height: auto;
+    }
+  }
+
+}
+
+
+/*---------------локализация-----------*/
+
+.lang-ru {
+  .root-en {
+    display: none;
+  }
+
+  .root-ru {
+    display: flex;
+  }
+}

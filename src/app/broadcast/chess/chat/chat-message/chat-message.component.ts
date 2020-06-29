@@ -20,11 +20,15 @@ export class ChatMessageComponent implements OnInit {
   @Output() public reply = new EventEmitter<IChatMessage>();
 
   public color: string;
+  public backgroundColorPaid: string;
+  public colorPaid: string;
 
   constructor() { }
 
   ngOnInit() {
     this.color = this.getRandomBackgroundColor();
+    this.backgroundColorPaid = this.getRandomBackgroundColorPaid();
+    this.colorPaid = this.getRandomColorPaid();
   }
 
   public getRandomBackgroundColor() {
@@ -40,6 +44,37 @@ export class ChatMessageComponent implements OnInit {
       color = '#ff9999';
     }
     return `${color}`;
+  }
+
+  public getRandomBackgroundColorPaid() {
+    const random = Math.random() * 2;
+    let backgroundColorPaid;
+    if(this.message.my && this.message.user.paid) {
+      if (random < 1) {
+        backgroundColorPaid = '#D4C7FF';
+      } else {
+        backgroundColorPaid = '#FFC7AE';
+      }
+      
+    } else {
+      backgroundColorPaid = '#FFF';
+    }
+    return `${backgroundColorPaid}`;
+  }
+
+  public getRandomColorPaid() {
+    const random = Math.random() * 2;
+    let colorPaid;
+    if(this.message.user.paid && !this.message.my) {
+      if (random < 1) {
+        colorPaid = '#00C24F';
+      } else {
+        colorPaid = '#F64747';
+      }
+    } else {
+      colorPaid = '#9d9d9d';
+    }
+    return `${colorPaid}`;
   }
 
   public toggleLikeMessage() {

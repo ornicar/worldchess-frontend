@@ -1,10 +1,13 @@
-@import '../../../../../../html/css/variables';
-@import '../../../../../../html/css/media';
+@import 'variables';
+@import 'media';
 
 .chess-navigation {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-top: 20px;
+  @include height-650 {
+    margin-top: 11px;
+  }
 
   &__timeline {
     margin-left: 10px;
@@ -15,12 +18,12 @@
     position: relative;
     fill: $gray-dark;
     background-color: transparent;
-    border: 0px;
+    border: 0;
     width: 18px;
     height: 18px;
     flex: 0 0 auto;
     cursor: pointer;
-    transition: fill 0.3s;
+    transition: fill .3s;
 
     &--back {
       .icon {
@@ -28,6 +31,7 @@
       }
 
     }
+
     &--forward {
       .icon {
         transform: rotate(-90deg);
@@ -38,7 +42,6 @@
       .icon {
         transform: rotate(90deg);
       }
-
 
       &:before {
         content: '';
@@ -57,7 +60,6 @@
         transform: rotate(-90deg);
       }
 
-
       &:before {
         content: '';
         position: absolute;
@@ -73,6 +75,7 @@
     &:disabled {
       cursor: default;
       fill: #9E9E9E;
+
       &:before {
         background-color: #9E9E9E;
       }
@@ -94,6 +97,7 @@
       }
     }
   }
+
   &__icon {
     width: 18px;
     height: 12px;

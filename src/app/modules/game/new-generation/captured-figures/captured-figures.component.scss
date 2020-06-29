@@ -1,0 +1,183 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+  position: relative;
+}
+
+.figure-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  &--squeeze {
+    @include birman-media  {
+      .counted-figure-container {
+        display: none;
+      }
+
+      .material-advantage {
+        margin-right: 0px;
+      }
+    }
+  }
+}
+
+.figure-wrapper__open {
+  display: none;
+  align-items: center;
+  width: 10px;
+  height: 24px;
+  flex: 0 0 auto;
+  margin-right: 3px;
+
+  @include birman-media  {
+    display: flex;
+  }
+}
+
+.figure-wrapper__icon {
+  width: 7px;
+  height: 13px;
+  flex: 0 0 auto;
+  fill: #fff;
+  cursor: pointer;
+
+  ::ng-deep {
+    svg {
+      display: block;
+    }
+  }
+}
+
+.material-advantage {
+  display: flex;
+  align-items: center;
+  margin-right: 18px;
+}
+
+.material-advantage__number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  color: #000;
+  background-color: #fff;
+  border-radius: 2px;
+  font: 300 14px/18px $gerbera-font;
+}
+
+.counted-figure-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: -8px;
+
+  .figure {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 48px;
+    height: 39px;
+
+    @include birman-media  {
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+    }
+
+    &.p {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wP.svg);
+      &.black {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/bP.svg);
+        &.double {
+          background-image:  url(/assets/images/chess/birman-chesspieces-notation/bdP.svg);
+        }
+      }
+      &.double {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/wdP.svg);
+      }
+    }
+
+    &.n {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wN.svg);
+      &.black {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/bN.svg);
+        &.double {
+          background-image:  url(/assets/images/chess/birman-chesspieces-notation/bdN.svg);
+        }
+      }
+      &.double {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/wdN.svg);
+      }
+    }
+
+    &.b {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wB.svg);
+      &.black {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/bB.svg);
+        &.double {
+          background-image:  url(/assets/images/chess/birman-chesspieces-notation/bdB.svg);
+        }
+      }
+      &.double {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/wdB.svg);
+      }
+    }
+
+    &.r {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wR.svg);
+      &.black {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/bR.svg);
+        &.double {
+          background-image:  url(/assets/images/chess/birman-chesspieces-notation/bdR.svg);
+        }
+      }
+      &.double {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/wdR.svg);
+      }
+    }
+
+    &.q {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wQ.svg);
+      &.black {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/bQ.svg);
+        &.double {
+          background-image:  url(/assets/images/chess/birman-chesspieces-notation/bdQ.svg);
+        }
+      }
+      &.double {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/wdQ.svg);
+      }
+    }
+
+    &.k {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wK.svg);
+      &.black {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/bK.svg);
+        &.double {
+          background-image:  url(/assets/images/chess/birman-chesspieces-notation/bdK.svg);
+        }
+      }
+      &.double {
+        background-image:  url(/assets/images/chess/birman-chesspieces-notation/wdK.svg);
+      }
+    }
+  }
+
+  .figure-counter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    left: -6px;
+    color: #fff;
+    font: 300 14px/19px $gerbera-font;
+    width: 0;
+
+    @include birman-media  {
+      left: -4px;
+    }
+  }
+}

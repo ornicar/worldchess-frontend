@@ -1,4 +1,4 @@
-import {BoardNotificationSocketAction, ISocketMessageBoardNotification, SocketType} from '../../auth/auth.model';
+  import {BoardNotificationSocketAction, ISocketMessageBoardNotification, SocketType} from '../../auth/auth.model';
 import {CommentVote, IComment} from '../../broadcast/chess/chat/comments-resource.service';
 
 // @todo Move to auth module and add "extends ISocketMessageBoardNotification"
@@ -41,7 +41,9 @@ export interface ISocketSubscribeMessage extends ISocketMessageBoardNotification
 }
 
 export interface ISocketSubscribeBoardsMessage extends ISocketMessageBoardNotification {
-  board_id: string;
+  board_id?: string;
+  chat_id?: number;
+  token?: string;
   message_type: SocketType.BOARD_NOTIFICATION;
 }
 
@@ -60,10 +62,11 @@ export class SocketActionSubscribeBoardMessage {
 
   board_id: string;
 
-  constructor(boardsIds: number[]) {
+  constructor(boardsIds: number[] | string[]) {
     this.board_id = boardsIds.join(',');
   }
 }
+
 
 export class SocketActionUnsubscribeBoardMessage {
   action: BoardNotificationSocketAction.UNSUBSCRIBE = BoardNotificationSocketAction.UNSUBSCRIBE;

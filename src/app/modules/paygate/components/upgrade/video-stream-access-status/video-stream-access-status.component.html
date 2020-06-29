@@ -1,0 +1,92 @@
+<div class="register__options-control register__options-control--label"
+       [class.register__options-control--disabled]="proPurchased">
+  <div class="register__img" [class.hide-image]="showProFeatures">
+    <div class="register__img-wrapper">
+      <img src="../../../../../assets/img/image.jpg" alt="image.jpg">
+    </div>
+  </div>
+  <label class="toggle-label toggle-embedded">
+    <ng-container *ngIf="proPurchased">
+      <ng-container *ngIf="proPurchased?.cancel_at_period_end; else notCanceled">
+        <div class="purchased__icon canceled-check purchased__icon--white"
+             *ngIf="!(isCancelRenewInProgress | async)">
+          <svg-applied class="icon"></svg-applied>
+      </div>
+        <svg-preloader class="preloader"
+                       *ngIf="isCancelRenewInProgress | async"></svg-preloader>
+        <span class="toggle-label__content">
+          <span>Club Package</span>
+          <span class="toggle-label__price"
+                *ngIf="proProduct$ | async as proProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ proProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+            style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+        </span>
+      </ng-container>
+      <ng-template #notCanceled>
+        <div class="purchased__icon"
+             *ngIf="!(isCancelRenewInProgress | async)">
+          <svg-applied class="icon"></svg-applied>
+        </div>
+        <svg-preloader class="preloader"
+                       *ngIf="isCancelRenewInProgress | async"></svg-preloader>
+        <span class="toggle-label__content">
+          <span>Club Package</span>
+          <span class="toggle-label__price"
+                *ngIf="proProduct$ | async as proProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ proProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+            style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+        </span>
+      </ng-template>
+    </ng-container>
+    <ng-container *ngIf="!proPurchased">
+      <input type="checkbox" [checked]="proSelected$ | async" (change)="onProSelectionChanged($event)">
+      <div class="toggle-label__btn"></div>
+      <span class="toggle-label__content">
+        <span>Club Package</span>
+        <span class="toggle-label__price"
+              *ngIf="proProduct$ | async as proProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ proProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span
+          style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+      </span>
+    </ng-container>
+  </label>
+</div>
+
+
+<div class="register__options-control">
+  <div class="register__options-text" *ngIf="!showProFeatures">
+    <span>
+      <ng-container *ngIf="proPurchased?.cancel_at_period_end; else notCanceled">
+      <span class="status-subtitle">Will freeze on {{ nextPaymentTitle$ | async }} &nbsp;</span>
+      <a (click)="resubscribe()" class="resubscribe">Resubscribe&nbsp;</a>
+      <br class="mobile-none">
+      <span>Live workshops with Grandmasters: master classes and lectures with top chess personalities every month. Ask questions and get advice on your training. All classes are taught in English.
+      </span>
+    </ng-container>
+      <ng-template #notCanceled>
+        <ng-container *ngIf="proPurchased?.status === 'active'">
+          <span class="status-subtitle">Next payment: {{ nextPaymentTitle$ | async }} &nbsp;</span>
+          <a (click)="cancelSubscription()" class="cancel-subscription">Cancel...&nbsp;</a>
+          <br class="mobile-none">
+          <span>Live workshops with Grandmasters: master classes and lectures with top chess personalities every month. Ask questions and get advice on your training. All classes are taught in English.
+          </span>
+        </ng-container>
+      </ng-template>
+    </span>
+    <div class="register__options-text"
+         *ngIf="!(proPurchased$ | async)">
+      <span>
+        <span>Live workshops with Grandmasters: master classes and lectures with top chess personalities every month. Ask questions and get advice on your training. All classes are taught in English.
+        </span>
+      </span>
+    </div>
+  </div>
+  <div class="register__options-text" *ngIf="showProFeatures">
+    <ul>
+      <li>Live workshops with Grandmasters: master classes and lectures with top chess personalities every month. Ask questions and get advice on your training. All classes are taught in English.</li>
+      <li>World Chess Club Membership: participate in online club tournaments and championships (club members only) with exclusive prizes.</li>
+      <li>15% discount on all products at the official World Chess Shop.</li>
+      <li>Playing patterns and profile analysis (available November 1st).</li>
+    </ul>
+  </div>
+
+  <a (click)="toggleProFeatures()"
+     class="register__options-link">{{ showProFeatures ? 'Show less' : 'See all included features...' }}</a>
+</div>

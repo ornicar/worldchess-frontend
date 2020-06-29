@@ -1,0 +1,18 @@
+<div class="logo" [class.logo--hidden]="openmenu || !(gameInProgress$ | async)">
+  <div class="logo__wrapper"
+       [class.logo__wrapper--new]="(getNewMessage$ | async)?.isNew === true"
+  >
+    <svg-logo-fide class="logo__svg-fide"
+                   *ngIf="(gameRatingMode$ | async) === GameRatingMode.FIDERATED"
+    ></svg-logo-fide>
+    <svg-logo class="logo__svg"></svg-logo>
+  </div>
+  <ng-container *ngIf="!isTournamentMenu">
+    <div class="logo__text"
+         *ngIf="(gameRatingMode$ | async) === GameRatingMode.RATED"
+    >{{'OTHER.RATED' | translate}}</div>
+    <div class="logo__text"
+         *ngIf="(gameRatingMode$ | async) === GameRatingMode.FIDERATED"
+    >{{'OTHER.FIDE_RATED' | translate}}</div>
+  </ng-container>
+</div>

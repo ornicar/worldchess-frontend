@@ -1,0 +1,161 @@
+@import 'variables-new';
+@import 'media-new';
+
+.popup-container__header-title {
+  margin-bottom: 10px;
+  @include phones() {
+    font: 400 35px/45px $gerbera-font;
+    margin-bottom: 9px;
+  }
+}
+
+.popup-container__header-title-small {
+  font: 300 29px/36px $gerbera-font;
+  color: #fff;
+  padding-right: 20px;
+
+  @include phones() {
+    font: 300 22px/25px $gerbera-font;
+  }
+}
+
+.font-size-05 {
+  font-size: 0.5em;
+}
+
+.popup-container__header-title-comment {
+  font: 300 29px/36px $gerbera-font;
+  color: rgba(#fff, 0.5);
+  min-height: 42px;
+
+  ::ng-deep {
+    .font-size-05 {
+      font-size: 0.5em;
+    }
+  }
+
+
+  @include phones() {
+    font: 300 22px/25px $gerbera-font;
+  }
+}
+
+.register__form-col--pro-member {
+  width: 42%;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  padding-left: 0;
+
+  @include phones() {
+    display: none;
+  }
+
+}
+
+.icon-gift {
+  display: block;
+  width: 24px;
+  height: 31px;
+  fill: #000;
+  margin-right: 10px;
+}
+
+.register__pro-member {
+  position: relative;
+  width: 100%;
+  background-color: $purple-new;
+  height: 60px;
+  padding: 8px;
+  color: #000;
+  font: 400 15px/20px $gerbera-font;
+
+  span {
+    display: block;
+    //width: 244px;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 100%;
+    top: 0;
+    bottom: 0;
+    border-right: 30px solid $purple-new;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+    border-left: 0;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 2000px;
+    background-color: inherit;
+  }
+}
+
+.purchased {
+  display: flex;
+}
+
+.purchased__icon {
+  width: 45px;
+  height: 45px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  margin-top: 3px;
+
+  .icon {
+    display: block;
+    width: 26px;
+    height: 19px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.register-form__submit-free {
+  padding: 0;
+}
+
+wc-btn-with-loading {
+  margin-right: 15px;
+}
+
+.popup-container__header-wrapper {
+  display: flex;
+
+  @include phones() {
+    flex-direction: column;
+  }
+}
+
+.popup-container__header-content {
+  flex: 1 1 auto;
+}
+
+.popup-container__header-logo {
+  width: 55px;
+  height: 63px;
+  flex: 0 0 auto;
+  margin-top: 10px;
+  fill: #fff;
+
+  @include phones() {
+    margin-top: 20px;
+  }
+}

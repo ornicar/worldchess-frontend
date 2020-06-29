@@ -12,7 +12,7 @@ import {
   AddSubscriptions,
   CancelRenewSubscription,
   CloseCancelRenewDialog,
-  UpdateSubscription
+  UpdateSubscription, ReactivateSubscription
 } from './subscriptions.actions';
 import {
   AuthActionTypes,
@@ -48,17 +48,6 @@ export class SubscriptionsEffects {
     ),
   );
 
-  // @Effect()
-  // onTokenActions$ = this.actions$.pipe(
-  //   ofType<AuthSignInSuccess | AuthSignUpSuccess | AuthRefreshTokenSuccess | AuthSetToken>(
-  //     AuthActionTypes.SignInSuccess,
-  //     AuthActionTypes.SignUpSuccess,
-  //     AuthActionTypes.RefreshTokenSuccess,
-  //     AuthActionTypes.SetToken,
-  //   ),
-  //   map(() => new GetSubscriptions())
-  // );
-
   @Effect()
   onCancelRenew$: Observable<Action> = this.actions$.pipe(
     ofType<CancelRenewSubscription>(SubscriptionActionTypes.CancelRenewSubscription),
@@ -68,10 +57,34 @@ export class SubscriptionsEffects {
           map(() => {
             const update: Update<ISubscription> = {
               id: action.payload.stripe_id,
-              changes: { cancel_at_period_end: null }
+              changes: { cancel_at_period_end: true }
             };
             this.store$.dispatch(new CloseCancelRenewDialog());
-            return new UpdateSubscription({ subscription: update});
+            return new UpdateSubscription({ subscription: update });
+          }),
+          catchError((res = {}) => {
+            if (res.error) {
+              console.error(res.error);
+            }
+            return of(new CloseCancelRenewDialog());
+          })
+        )
+    ),
+  );
+
+  @Effect()
+  onReactivate$: Observable<Action> = this.actions$.pipe(
+    ofType<ReactivateSubscription>(SubscriptionActionTypes.ReactivateSubscription),
+    switchMap(action =>
+      this.purchasesResource
+        .resubscribe(action.payload.stripe_id, action.payload.notify).pipe(
+          map(() => {
+            const update: Update<ISubscription> = {
+              id: action.payload.stripe_id,
+              changes: { cancel_at_period_end: false }
+            };
+            this.store$.dispatch(new CloseCancelRenewDialog());
+            return new UpdateSubscription({ subscription: update });
           }),
           catchError((res = {}) => {
             if (res.error) {

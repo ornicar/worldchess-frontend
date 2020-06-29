@@ -1,0 +1,14 @@
+<div class="root" #cardContainer (mousedown)="startDrag($event)" (mouseleave)="mouseLeave($event)"
+     (mouseenter)="mouseEnter($event)">
+  <div class="card-host-wrapper" #cardHost>
+    <div *ngFor="let partner of partners" class="card-row">
+      <main-page-partner-card [partner]="partner" [isDragging]="isDragging$ | async"></main-page-partner-card>
+    </div>
+    <div *ngFor="let partner of partners" class="card-row">
+      <main-page-partner-card [partner]="partner" [isDragging]="isDragging$ | async"></main-page-partner-card>
+    </div>
+    <div *ngFor="let partner of partners" class="card-row">
+      <main-page-partner-card [partner]="partner" [isDragging]="isDragging$ | async"></main-page-partner-card>
+    </div>
+  </div>
+</div>

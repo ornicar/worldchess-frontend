@@ -1,4 +1,4 @@
-import {IMove, IMovePosition, IMovePrediction} from '../move/move.model';
+import { IMove, IMovePosition, IMovePrediction } from '../move/move.model';
 
 export interface IVariationMove extends IMovePosition {
   primary_key: string;

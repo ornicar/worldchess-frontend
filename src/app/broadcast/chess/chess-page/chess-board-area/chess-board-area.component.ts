@@ -25,8 +25,10 @@ export class ChessBoardAreaComponent {
 
   orientation: Color = 'white';
   isShowBoardMenu = false;
+  isShownSocialBtns = false;
 
-  @ViewChild('boardMenu') boardMenu: ElementRef;
+  @ViewChild('boardMenu', { static: true }) boardMenu: ElementRef;
+  @ViewChild('shareBtn', { static: true }) shareBtn: ElementRef;
 
   constructor(
     private store$: Store<fromBoard.State>,
@@ -59,15 +61,38 @@ export class ChessBoardAreaComponent {
   }
 
   public share() {
-    this.store$.dispatch(new GameOpenEmbeddedWidgetModal());
-    window['gtag']('event', 'click', {event_category: 'share', event_label: this.tournament.title});
+    if(this.isShownSocialBtns) {
+      this.isShownSocialBtns = false;
+    } else {
+      this.isShownSocialBtns = true;
+    }
   }
 
   @HostListener('document:click', ['$event.target'])
+  @HostListener('window:scroll')
   private onClickOutside(targetElement) {
     if (DomHelper.isOutsideElement(this.boardMenu, targetElement) && this.isShowBoardMenu) {
       this.isShowBoardMenu = false;
       this.ch.markForCheck();
     }
+
+    if (DomHelper.isOutsideElement(this.shareBtn, targetElement) && this.isShownSocialBtns) {
+      this.isShownSocialBtns = false;
+      this.ch.markForCheck();
+    }
+
+  }
+
+  public showWidgetWindow(): void {
+    this.store$.dispatch(new GameOpenEmbeddedWidgetModal());
+    window['gtag']('event', 'click', {event_category: 'share', event_label: this.tournament.title});
+  }
+
+  public shareToTwitter(): void {
+    window.open(`https://twitter.com/intent/tweet?url=${window.location.href}&text=I'm watching ${this.tournament.title}`, '_blank');
+  }
+
+  public shareToFacebook(): void {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&quote=I'm watching ${this.tournament.title}`, '_blank');
   }
 }

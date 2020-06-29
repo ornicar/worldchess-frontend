@@ -14,11 +14,11 @@
     </svg>
     <span>→</span>
   </a>
-  <wc-game-favorite-icon
-    *ngIf="(canUseFavorites$ | async) && (isSelected || isHovered)"
+  <svg-favorite-icon
+    class="icon icon_favorite-item"
+    *ngIf="(canUseFavorites$ | async)"
     [checked]="isFavorites$ | async"
     [disabled]="favoriteBoardsIsLoading$ | async"
-    (click)="onToggleFavorite($event)"
-  >
-  </wc-game-favorite-icon>
+    (click)="onToggleFavorite($event)">
+  </svg-favorite-icon>
 </div>

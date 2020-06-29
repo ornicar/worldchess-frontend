@@ -1,0 +1,21 @@
+<div class="main-news-wrapper">
+  <div class="main-news">
+    <main-page-component-holder [item]="mainBannerItem"></main-page-component-holder>
+  </div>
+  <div class="main-news__block">
+    <main-page-component-holder [item]="newsBannerItem"></main-page-component-holder>
+  </div>
+  <div class="main-news__bottom-block">
+    <a *ngIf="!!newsBannerItem" href="#" class="main-news__more" (click)="goToNews($event)">
+      More news <svg-arrow-right class="icon"></svg-arrow-right>
+    </a>
+
+    <div class="kaspersky">
+      <div class="kaspersky__text">
+        Protected by
+      </div>
+      <img src="../../../../../../../assets/images/kaspersky.svg" alt="kaspersky" class="kaspersky__logo">
+    </div>
+  </div>
+</div>
+

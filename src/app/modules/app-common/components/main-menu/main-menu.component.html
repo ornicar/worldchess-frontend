@@ -1,0 +1,76 @@
+<div class="menu-new">
+  <a routerLink="/" class="logo">
+    <div class="logo__link">
+      <svg-hexagon-empty-thin class="logo__svg"></svg-hexagon-empty-thin>
+    </div>
+  </a>
+  <div class="menu-new-list-wrapper">
+    <ul class="menu-new-list" wcHideScrollbar>
+      <li class="menu-new-list__elem" *ngFor="let item of menu">
+        <a class="menu-new-list__link"
+           routerLinkActive="menu-new-list__link--active"
+           [routerLinkActiveOptions]="{ exact: true }"
+           *ngIf="!item.blank"
+           [routerLink]="item.link"
+        >{{item.title}}
+          <span class="link-external" *ngIf="item.external"></span>
+        </a>
+        <a class="menu-new-list__link"
+           routerLinkActive="menu-new-list__link--active"
+           [routerLinkActiveOptions]="{ exact: true }"
+           *ngIf="item.blank"
+           [href]="item.auth ? item.link + (token$ | async) : item.link"
+           target="_blank"
+        >{{item.title}}
+          <span class="link-external" *ngIf="item.external"></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="menu-aside">
+  <ng-container *ngIf="isAuthorized$ | async; else auth">
+    <ng-container *ngIf="account$ | async as account">
+      <div class="menu-user">
+        <div class="menu-user__name">
+          {{account.email}}
+        </div>
+        <div class="menu-user__img" [style.background-image]="
+          'url(' + (account?.avatar?.full || '/assets/images/account/avatar-placeholder.svg') + ')'">
+        </div>
+
+        <div class="menu-user__drop">
+          <div class="menu-user__drop-row">
+            <div class="menu-user__drop-col">
+              <a class="menu-user__drop-link" routerLink="/account/membership">Membership</a>
+              <a class="menu-user__drop-link" routerLink="/account/profile">Profile</a>
+              <a class="menu-user__drop-link" routerLink="/arena/mygames">My games</a>
+            </div>
+          </div>
+          <div class="menu-user__drop-row">
+            <div class="menu-user__drop-col">
+              <a class="menu-user__drop-link menu-user__drop-link--violet" (click)="logout()">Log out</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #auth>
+
+    <button class="menu-new__btn" [routerLink]="['', { outlets: { p: ['paygate', 'register' ] } }]">
+      Become a member
+    </button>
+    <div class="menu-new__login">
+      <span>or</span>
+      <a [routerLink]="['', { outlets: { p: ['paygate', 'login'] } }]"
+      >
+        <span>sign in</span>
+        <svg-head class="menu-new__login-icon"></svg-head>
+      </a>
+    </div>
+  </ng-template>
+</div>

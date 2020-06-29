@@ -1,0 +1,159 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+    width: 100%;
+}
+
+
+.legalize-skils {
+  margin-bottom: 95px;
+
+  @include birman-media {
+    margin-bottom: 0;
+  }
+}
+
+.legalize-skils__img {
+  position: relative;
+  margin-bottom: 13px;
+  img {
+    width: 100%;
+  }
+
+  .legalize-skils__price {
+    position: absolute;
+    top: 93%;
+    right: 50px;
+    width: 30.5%;
+  }
+}
+
+.legalize-skils__price-text {
+  position: absolute;
+  right: 4px;
+  bottom: 6px;
+  color: $yellow-new;
+  font: 400 1.9vw/24px $gerbera-font;
+
+  @include birman-media {
+    font-size: 18px;
+    bottom: auto;
+    top: 25px;
+    right: 1px;
+  }
+}
+
+
+.legalize-skils__price-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+.legalize-skils__row {
+  display: flex;
+  margin: 0 -10px;
+
+  @include birman-media {
+    flex-direction: column;
+  }
+}
+
+.legalize-skils__col {
+  padding: 0 10px;
+  flex: 1;
+}
+
+.legalize-skils__text {
+  position: relative;
+  color: #fff;
+  font: 300 18px/24px $gerbera-font;
+  padding-bottom: 15px;
+  @include birman-media {
+    font: 300 15px/20px $gerbera-font;
+    padding-bottom: 116px;
+  }
+
+  & .legalize-skils__price {
+    position: absolute;
+    top: auto;
+    bottom: -15px;
+    right: 0;
+    width: 193px;
+  }
+}
+
+.legalize-skils__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  color: #fff;
+  font: 300 30px/38px $gerbera-font;
+  border-radius: 6px;
+  background-color: $blue-new;
+  margin-bottom: 22px;
+  max-width: 460px;
+  padding-bottom: 4px;
+  &:hover {
+    background-color: $blue-new-hover;
+  }
+  @include birman-media {
+    font: 300 22px/22px $gerbera-font;
+    margin-bottom: 30px;
+    height: 60px;
+    border-radius: 3px;
+  }
+}
+
+.legalize-skils__links {
+  display: flex;
+
+  @include birman-media {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.legalize-skils__link {
+  display: flex;
+  align-items: center;
+  color: $brown-2;
+  fill: $brown-2;
+  margin-right: 27px;
+  font: 300 18px/24px $gerbera-font;
+  .icon {
+    position: relative;
+    top: -1px;
+    width: 10px;
+    height: 14px;
+    margin-left: 7px;
+  }
+
+  &:hover {
+    color: $brown-2-hover;
+    fill: $brown-2-hover;
+  }
+
+  @include birman-media {
+    margin-bottom: 15px;
+    margin-right: 0;
+  }
+}
+
+.desctop {
+  display: block;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}

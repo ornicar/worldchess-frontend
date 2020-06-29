@@ -1,12 +1,17 @@
 <wc-layout [showSponsorsAtFooter]="false">
-  <div class="account" [class.premium]="(profile$ | async)?.premium">
+  <div class="account">
     <div class="account-nav">
       <div class="container d-flex account-nav-list">
         <a class="as-text" routerLink='/account/membership' routerLinkActive="active">Membership</a>
         <a class="as-text" routerLink='/account/profile' routerLinkActive="active">Profile</a>
-        <a class="as-text" *ngIf="ableToCreateEvent$ | async" routerLink='/account/events' routerLinkActive="active">My Tournaments</a>
-        <a class="as-text inactive">Purchases (coming soon)</a>
-        <a class="as-text" routerLink="/account/profile-fide-id" routerLinkActive="active">Ratings <span class="as-text__marker"></span></a>
+        <a *ngIf="false" class="as-text inactive">Purchases (coming soon)</a>
+        <a class="as-text" routerLink="/account/profile-fide-id" routerLinkActive="active">
+          Rating
+          <ng-container *ngIf="rating">
+            {{rating}}
+            <svg-logo-fide *ngIf="isFide" class="icon"></svg-logo-fide>
+          </ng-container>
+        </a>
       </div>
     </div>
     <router-outlet></router-outlet>

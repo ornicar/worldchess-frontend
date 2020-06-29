@@ -1,5 +1,4 @@
-import {Directive, ElementRef, Input, NgZone, OnChanges, SimpleChanges} from '@angular/core';
-import {AfterViewChecked} from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewChecked, Directive, ElementRef, Input, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 
 @Directive({
   selector: '[wcAutoScroll]'

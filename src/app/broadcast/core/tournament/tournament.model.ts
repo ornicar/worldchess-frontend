@@ -1,5 +1,8 @@
-import {EventOrganizer} from '../event/event.model';
-import {IDefaultEntities} from '../models/default-entities';
+import { EventOrganizer } from '../event/event.model';
+import { IDefaultEntities } from '../models/default-entities';
+import {GameRatingMode, ITimeControl} from "@app/broadcast/core/tour/tour.model";
+import {ILink} from "@app/modules/game/tournaments/models/tournament.model";
+import { fdatasync } from 'fs';
 
 export enum TournamentStatus {
   EXPECTED = 1,
@@ -53,6 +56,7 @@ export interface IGetTournamentsOptions {
 
 // TODO вынести отдельный интерфейс на игрока, его надо изолировать от команды
 interface ITeamPlayerSerialization {
+  id?: number;
   fide_id: number;
   full_name: string;
   birth_year: number;
@@ -60,6 +64,19 @@ interface ITeamPlayerSerialization {
   rating: number;
   avatar: string;
   federation: number;
+}
+
+export interface IOnlineTournamentTeamPlayer {
+  player_id?: number;
+  age: number | null;
+  avatar?: ILink;
+  fide_id: number | null;
+  full_name?: string;
+  nationality_id: number | null;
+  nickname?: string;
+  player_uid: string;
+  rank: string;
+  rating: number;
 }
 
 export interface ITournament {
@@ -147,15 +164,24 @@ export class Tournament implements ITournament {
 
 export class OnlineTournament extends Tournament {
   event: number;
+  tournament_online_players: IOnlineTournamentTeamPlayer[];
   players_amount: number;
+  signup_start_datetime: string;
+  signup_end_datetime: string;
   signup_datetime: {
     lower: string;
     upper: string;
   };
   move_time_limit: number;
   user_signed: boolean;
+  country: number;
+  time_control: ITimeControl;
+  rating_type: GameRatingMode;
   available: boolean;
+  faq_text: string;
+  about: string;
 }
+
 
 export class FounderTournament extends Tournament {
   approve_status: ApprovalStatus;

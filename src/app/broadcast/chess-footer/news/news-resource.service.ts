@@ -1,33 +1,38 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {environment} from '../../../../environments/environment';
-import {IAuthor, INews} from './news.model';
-import {Observable, of} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
+import { IAuthor, INews } from './news.model';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-export interface INewsFilters {
+export interface INewsPagination {
+  limit?: number;
+  offset?: number;
   tags?: string;
-  categories?: string;
+  categories?: string[];
   per_page?: number;
   page?: number;
 }
 
-const DEFAULT_NEWS_PARAMS = {
-  context: 'view',
-  _embed: '',
-};
-
 interface INewsResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: INewsFromResponse[];
+}
+
+interface INewsFromResponse {
   id: number;
-  title: {rendered: string};
-  date: string;
-  status: string;
-  content: {rendered: string};
-  _embedded: {
-    author: {avatar_urls: {96: string, 48: string}, name: string}[],
-    'wp:term': {id: number, name: string}[][],
-    'wp:featuredmedia': {media_details: {sizes: {full: {source_url: string}, medium: {source_url: string}}}}[],
-  };
+  title: string;
+  preview: string;
+  featured_image: string;
+  video_link: string;
+  pub_datetime: string;
+  slug: string;
+  topic: string;
+  author: { username: string };
+  content: string;
+  categories: Array<{ id: number; name: string }>;
 }
 
 interface INewsCategoryItem {
@@ -51,26 +56,27 @@ export class NewsResourceService {
     return this.countNews;
   }
 
-  getAll(filters: INewsFilters = {}) {
+  getAll(filters: INewsPagination = {}) {
     const params: any = {};
-    Object.assign(params, DEFAULT_NEWS_PARAMS);
     Object.assign(params, filters);
     if (params.tags) {
       params.tags = `[${params.tags}]`;
     }
 
-    return this.http.get<INewsResponse[]>(`${environment.newsUrl}/posts/`, {params})
+    return this.http.get<INewsResponse>(`${environment.endpoint}/news/`, {params})
       .pipe(
         map(response => {
-          return response.map(newsItem => this.parseNewsResponseItem(newsItem));
+          return response.results.map(newsItem => this.parseNewsResponseItem(newsItem));
         })
       );
   }
 
-  loadNews(filters: INewsFilters = {}) {
+  loadNews(filters: INewsPagination = {}, customUrl?: string): Observable<INewsResponse> {
+    if (customUrl) {
+      return this.http.get<INewsResponse>(customUrl);
+    }
+
     const params: any = {};
-    Object.assign(params, DEFAULT_NEWS_PARAMS);
-    Object.assign(params, {per_page: NEWS_PER_PAGE, page: 1});
     Object.assign(params, filters);
     if (params.tags) {
       params.tags = `[${params.tags}]`;
@@ -78,20 +84,15 @@ export class NewsResourceService {
 
     if (this.countNews !== null && params.page > Math.ceil(this.countNews / NEWS_PER_PAGE)) {
       // Skip request if page is out of range
-      return of([]);
+      return of();
     }
 
-    return this.http.get<INewsResponse[]>(`${environment.newsUrl}/posts/`, {params, observe: 'response'})
-      .pipe(
-        map(response => {
-          this.countNews = +response.headers.get('X-WP-Total');
-          return response.body.map(newsItem => this.parseNewsResponseItem(newsItem));
-        })
-      );
+    return this.http.get<INewsResponse>(`${environment.endpoint}/news/`, {params});
   }
 
-  get(id: number) {
-    return this.http.get<INewsResponse>(`${environment.newsUrl}/posts/${id}/`, {params: DEFAULT_NEWS_PARAMS})
+  getBySlug(slug: string) {
+    const url = `${environment.endpoint}/news/${slug}/`;
+    return this.http.get<INewsFromResponse>(url)
       .pipe(
         map(response => this.parseNewsResponseItem(response))
       );
@@ -103,52 +104,30 @@ export class NewsResourceService {
     return this.http.get<INewsCategoryItem[]>(`${environment.newsUrl}/categories`, {params});
   }
 
-  private parseNewsResponseItem(newsItem: INewsResponse): INews {
-    const out = {
+  parseNewsResponseItem(newsItem: INewsFromResponse): INews {
+    return {
       id: newsItem.id,
-      title: newsItem.title.rendered,
-      timestamp: newsItem.date,
-      tags: [],
+      title: newsItem.title,
+      timestamp: newsItem.pub_datetime,
+      slug: newsItem.slug,
+      tags: newsItem.categories,
       image: {
-        full: null,
+        full: newsItem.featured_image,
         medium: null,
       },
       author: this.parseNewsAuthor(newsItem),
-      topic: null,
-      content: newsItem.content.rendered,
-      tournament: null,
-      is_published: newsItem.status === 'publish',
+      topic: newsItem.topic,
+      content: newsItem.content,
+      tournament_name: null,
     };
-
-    if (newsItem._embedded['wp:term'][1]) {
-      out.tags = newsItem._embedded['wp:term'][1]
-        .map(t => {
-          return {id: t.id, name: t.name};
-        });
-    }
-
-    if (newsItem._embedded['wp:term'][0] && newsItem._embedded['wp:term'][0][0]) {
-      out.topic = newsItem._embedded['wp:term'][0][0];
-      out.tournament = newsItem._embedded['wp:term'][0][0].name;
-    }
-
-    if (newsItem._embedded['wp:featuredmedia'] && newsItem._embedded['wp:featuredmedia'][0]) {
-      out.image = {
-        full: newsItem._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url,
-        medium: newsItem._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url,
-      };
-    }
-
-    return out;
   }
 
-  private parseNewsAuthor(newsItem: any): IAuthor {
+  parseNewsAuthor(newsItem: any): IAuthor {
     return {
       avatar: {
-        full: newsItem._embedded.author[0].avatar_urls['96'],
-        medium: newsItem._embedded.author[0].avatar_urls['48'],
+        full: null
       },
-      name: newsItem._embedded.author[0].name,
+      name: newsItem.author && newsItem.author.username,
     };
   }
 }

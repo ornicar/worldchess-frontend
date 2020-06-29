@@ -1,9 +1,7 @@
 <div class="congratulations">
   <div class="congratulations__contetnt">
     <div class="congratulations__logo-mobile">
-      <svg class="icon">
-        <use xlink:href="#logo"></use>
-      </svg>
+      <svg-logo class="icon"></svg-logo>
     </div>
     <div class="congratulations__text" *ngIf="tournamentProduct$ | async as product; else commonCongratulations">
       Congratulations!<br/>

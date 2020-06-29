@@ -1,0 +1,214 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  display: block;
+  flex: 1 1 auto;
+
+  .gaming-menu {
+    @include birman-media {
+      background-color: transparent;
+    }
+  }
+
+  @include birman-media {
+    max-height: auto;
+  }
+
+  .header-block {
+    flex-grow: 1;
+
+    @include birman-media {
+      flex: 0 0 auto;
+      min-height: 230px;
+    }
+  }
+
+  .updates-block {
+    width: 220px;
+  }
+
+  .block {
+    padding-right: 10px;
+    padding-left: 10px;
+    box-sizing: content-box;
+    min-width: 100px;
+    max-width: 240px;
+
+    &--padding-right {
+      padding-right: 0;
+    }
+  }
+  .tournament-panes {
+    width: 100%;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .maine-timeline {
+    ::ng-deep {
+      .past-area-label {
+        display: none;
+      }
+    }
+  }
+
+  game-main-join-tournament {
+    margin-bottom: -6px;
+    position: relative;
+    z-index: z-index(base);
+
+    @include birman-media {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+.wrapper {
+  display: block;
+  width: 100%;
+  background-color: #000000;
+}
+
+.menu-container {
+  &.mobile-hidden {
+    @include birman-media {
+      display: none;
+    }
+  }
+}
+
+.players-bar {
+  flex: 0 0 auto;
+  height: 50px;
+}
+
+
+.content__wrapper {
+  position: relative;
+  min-height: calc(100% - 40px);
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1430px;
+  color: #FFFFFF;
+  padding-left: 30px;
+  padding-right: 30px;
+  @include birman-media {
+    height: auto;
+    padding: 10px 10px 0;
+  }
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  margin: 0px;
+
+  &--mb-90 {
+    margin-bottom: 90px;
+  }
+
+  &--mb-50 {
+    margin-bottom: 50px;
+  }
+
+  &--mb-32 {
+    margin-bottom: 32px;
+  }
+
+  &--mb-30 {
+    margin-bottom: 30px;
+  }
+
+  &--mb-20 {
+    margin-bottom: 20px;
+  }
+
+  @include birman-media {
+    margin-bottom: 13px;
+    height: auto;
+  }
+
+
+}
+
+wc-btn-with-loading {
+  ::ng-deep {
+    .btn-new {
+      @include birman-media {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.desctop {
+  display: block;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}
+
+
+.players-info {
+  display: flex;
+  width: 100%;
+
+  @include birman-media {
+    flex-direction: column;
+  }
+
+  game-champions-table {
+    width: 100%;
+  }
+
+  game-main-all-time-chempion {
+    width: 100%;
+  }
+}
+
+.players-info__col {
+  display: flex;
+  padding-right: 10px;
+  flex: 1 1 auto;
+  width: 50%;
+
+  @include birman-media {
+    padding: 0;
+    margin-bottom: 10px;
+    width: 100%;
+    flex: 1 0 auto;
+  }
+
+  &:last-child {
+    padding-right: 0;
+    padding-left: 10px;
+
+    @include birman-media {
+      padding-left: 0;
+    }
+  }
+}
+
+.main-page-footer {
+  margin-bottom: 20px;
+}
+
+.return-lobby {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: z-index(sticky);
+}

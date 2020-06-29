@@ -1,5 +1,6 @@
 <ng-container *ngIf="gameState$ | async as gameState">
-  <wcd-widget-layout class="wc-container" [class.light-mode]="isLightStyle$ | async">
+  <wcd-widget-layout class="wc-container"
+                     [class.light-mode]="isLightStyle$ | async">
     <ng-container slot="title">
       <wc-chess-board-title [gameState]="gameState" [withoutBoard]="withoutBoard"></wc-chess-board-title>
     </ng-container>
@@ -11,6 +12,7 @@
             [viewMode]="ChessBoardViewMode.Normal"
             [boardId]="(gameState$ | async)?.board?.id"
             [tournament]="tournament"
+            [embedded]="true"
           >
           </wc-broadcast-single-chess-board-controller>
 
@@ -27,16 +29,16 @@
           <div *ngIf="hasVideo$ | async" class="main-area__video-checkbox">
             <div class="wcd-checkbox">
               <div class="wcd-checkbox__control" (click)="onVideoEnableClick()">
-                <svg
-                  *ngIf="videoIsEnable"
-                  width="15"
-                  height="13"
-                  viewBox="0 0 15 13"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1.72656 5L7 10.75L13 2.25" stroke="white" stroke-width="2" stroke-linecap="square" />
-                </svg>
+                <ng-template [ngIf]="videoIsEnable$ | async">
+                  <svg
+                    width="15"
+                    height="14"
+                    viewBox="0 0 16 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.72656 5L7 10.75L13 2.25" stroke="white" stroke-width="2" stroke-linecap="square" />
+                  </svg>
+                </ng-template>
               </div>
               <div class="wcd-checkbox__label" (click)="onVideoEnableClick()">enable video</div>
             </div>
@@ -49,8 +51,8 @@
       </div>
     </ng-container>
 
-    <ng-container slot="livestream" *ngIf="(hasVideo$ | async) && videoIsEnable">
-      <wcd-livestream-container> </wcd-livestream-container>
+    <ng-container slot="livestream" *ngIf="showVideo$ | async">
+      <wcd-livestream-container embedded="true" [gameUrl]="gameUrl"> </wcd-livestream-container>
     </ng-container>
 
     <ng-container slot="history">

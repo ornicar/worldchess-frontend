@@ -1,0 +1,88 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  overflow: hidden;
+}
+.join-tournament{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $brown-2;
+  padding: 23px 0px;
+}
+
+.join-tournament__head {
+  padding:  0 20px 16px;
+  color: #000;
+  text-align: center;
+
+  @include birman-media {
+    text-align: left;
+    padding:  0 10px 16px;
+  }
+}
+
+.join-tournament__title {
+  font: 300 30px/32px $gerbera-font;
+  margin-bottom: 8px;
+  min-height: 32px;
+}
+
+.join-tournament__sub-title {
+  min-height: 20px;
+  font: 300 15px/20px $gerbera-font;
+}
+
+.join-tournament__root {
+  width: 100%;
+  overflow: hidden;
+  flex: 1 0 auto;
+  margin-bottom: -17px;
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.card-host-wrapper{
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px 15px;
+  @include birman-media {
+    padding: 0 0px 15px;
+  }
+}
+
+.single-mode{
+  .card-host-wrapper {
+    width: 100%;
+  }
+}
+
+.multiple-mode{
+  .card-host {
+    min-width: 442px;
+    width: auto;
+
+    @include birman-media {
+      min-width: calc(100vw - 20px);
+    }
+  }
+  display: flex;
+  overflow-x: scroll;
+  overflow-x: hidden;
+  flex-direction: row;
+}
+
+.card-host {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}

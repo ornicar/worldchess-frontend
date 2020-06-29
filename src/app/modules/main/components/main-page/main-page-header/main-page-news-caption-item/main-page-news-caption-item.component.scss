@@ -1,0 +1,36 @@
+@import "variables-new";
+@import "media-new";
+
+.page-news-caption-item{
+  cursor: pointer;
+  padding-top: 9px;
+}
+
+.page-news-caption-item__container {
+  display: flex;
+  align-items: center;
+}
+
+
+.page-news-caption-item__img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  height: 80px;
+  flex: 0 0 auto;
+  
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.page-news-caption-item__text {
+  font: 300 12px/15px $gerbera-font;
+
+  span {
+    color:$brown-2;
+  }
+}

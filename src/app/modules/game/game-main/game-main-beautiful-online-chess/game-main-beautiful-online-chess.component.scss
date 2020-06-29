@@ -1,0 +1,134 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  width: 100%;
+}
+
+.online-chess__title {
+  font: 300 30px/38px $gerbera-font;
+  margin-bottom: 22px;
+  @include birman-media {
+    font: 300 22px/30px $gerbera-font;
+    margin-bottom: 13px;
+  }
+}
+
+.online-chess__row {
+  display: flex;
+  margin:  0 -10px 20px;
+
+  @include birman-media {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.online-chess__col {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+  flex: 1;
+  border-radius: 3px;
+  background-color: $grey-dark-new;
+  overflow: hidden;
+  @include birman-media {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+}
+
+.desktop {
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}
+
+.slider {
+  position: relative;
+  left: -10px;
+  width: calc(100% + 20px);
+}
+
+.slider__wrapper {
+  display: flex;
+  width: 100vw ;
+  height: 460px;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.slider__elem {
+  width: 100vw;
+  height: 100%;
+  flex: 0 0 auto;
+  margin-right: 20px;
+  background-color: $grey-dark-new;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @include birman-media {
+    margin-right: 0;
+  }
+}
+
+.slider__dotted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.slider__dot {
+  display: flex;
+  position: relative;
+  width: 24px;
+  height: 24px;
+
+  &:after,
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(#fff, 0.4);
+  }
+
+  &:after {
+    opacity: 0;
+  }
+
+  &:before {
+    width: 4px;
+    height: 4px;
+    border: none;
+    background-color: #fff;
+  }
+
+  &--active {
+    &:after {
+      opacity: 1;
+    }
+    &:before {
+      opacity: 0;
+    }
+  }
+}

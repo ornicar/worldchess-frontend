@@ -9,3 +9,30 @@ export interface ISpecialPlanProduct {
   status: number;
   created: string;
 }
+
+export interface ICard {
+  number: string;
+  expMonth: string;
+  expYear: string;
+  cvc: string;
+  name: string;
+}
+
+export interface ICouponResponse {
+  id: string;
+  valid: boolean;
+  amountOff: number;
+  percentOff: number;
+}
+
+export interface IChargeProductRequest {
+  stripeToken: string;
+  sku: string;
+  coupon?: string;
+}
+
+export interface IChargePlanRequest {
+  stripeToken: string;
+  plan: string;
+  coupon?: string;
+}

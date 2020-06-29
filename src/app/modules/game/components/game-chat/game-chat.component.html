@@ -1,0 +1,45 @@
+<div class="game-chat lang-{{gameTranslateService.getMyLang() | async}}" [ngClass]="viewChat == 'tournament' ? 'game-chat--tournament' : 'game-chat--game' ">
+  <a class="game-chat__close" (click)="closeChat()">
+    <svg-close class="game-chat__close-icon"></svg-close>
+  </a>
+  <div class="game-chat__body">
+    <game-chat-player  *ngIf="(token$ | async) && viewChat=='game'"></game-chat-player>
+    <div *ngIf="viewChat == 'tournament'" style="color:#fff;">
+      <div class="game-chat__title">{{ 'CHAT.CHAT_ROOM' | translate }}</div>
+    </div>
+    <div class="game-chat__empty" *ngIf="commentGroup.length == 0 && viewChat == 'game' && (token$ | async)">
+      {{ 'CHAT.CHAT_ROOM' | translate }}
+    </div>
+    <ul class="game-chat__messages" wcHideScrollbar #messagesList (scroll)="scrolled($event)"
+    [ngClass]="(getShowChat$ | async) == true ? 'fix-mobile' : ''"
+      *ngIf="commentGroup.length > 0">
+      <div *ngFor="let comment of commentGroup">
+        <game-chat-message textMsg="{{comment.text}}" answer="{{comment.my === true ? '' : 'other'}}"
+          abbv="{{comment?.user.full_name}}" link="{{comment?.user.avatar.full}}" #item>
+        </game-chat-message>
+      </div>
+    </ul>
+  </div>
+  <div class="game-chat__footer" *ngIf="!(disableMessage$ | async)">
+    <textarea class="game-chat__input" type="text" placeholder="{{youMessage$ | async}}..." #messageInput
+              *ngIf="(token$ | async)"
+      (keypress)="enterText($event)"></textarea>
+    <div class="game-chat__ended-message" *ngIf="!(token$ | async)
+    && viewChat == 'tournament' && !(disableMessage$ | async)">
+      {{ 'CHAT.REGISTER' | translate }}
+    </div>
+  </div>
+  <div>
+    <a class="game-chat__scroll-btn" *ngIf="!isNearBottom" (click)="scrollToBotom()">
+      <svg-arrow-left-thin class="game-chat__scroll-icon"></svg-arrow-left-thin>
+    </a>
+  </div>
+  <div class="game-chat__ended-message" *ngIf="(disableMessage$ | async) && viewChat == 'tournament'">
+    {{ disableMessage$ | async }}
+  </div>
+  <div class="game-chat__login" *ngIf="!(token$ | async)">
+    <button class="game-chat__btn" [routerLink]="['', { outlets: { p: ['paygate', 'register' ] } }]">
+      {{ 'ACCOUNT.BECOME_MEMBER' | translate }}
+    </button>
+  </div>
+</div>

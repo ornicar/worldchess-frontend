@@ -5,7 +5,7 @@ import { pluck, switchMap, take, tap, map, filter } from 'rxjs/operators';
 import { IDefaultEntities } from '../models/default-entities';
 import { TournamentResourceService } from './tournament-resource.service';
 import * as TournamentActions from './tournament.actions';
-import { CommonTournament, ITournament } from './tournament.model';
+import {CommonTournament, ITournament, TournamentResourceType} from './tournament.model';
 import * as fromTournament from './tournament.reducer';
 
 @Injectable()
@@ -15,8 +15,8 @@ export class TournamentLoadService {
     private store$: Store<fromTournament.State>,
     private tournamentResource: TournamentResourceService) { }
 
-  public loadWithSave(id: number): Observable<CommonTournament> {
-    return this.tournamentResource.getTournament(id).pipe(
+  public loadWithSave(id: number, resourcetype?: TournamentResourceType): Observable<CommonTournament> {
+    return this.tournamentResource.getTournament(id, resourcetype).pipe(
       tap((tournament) => {
         this.store$.dispatch(new TournamentActions.AddTournament({ tournament }));
         this.store$.dispatch(new TournamentActions.AddTournamentDefaultEntities({ id, defaults: tournament.defaults }));

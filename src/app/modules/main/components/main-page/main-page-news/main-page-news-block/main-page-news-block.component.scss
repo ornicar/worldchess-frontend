@@ -1,0 +1,76 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  .main-news__block-list {
+    display: flex;
+    flex-direction: row;
+    margin: 0 -10px 4px;
+
+    @include birman-media() {
+      flex-direction: column;
+      margin: 0 0 4px;
+    }
+  }
+
+  .main-news-block__item {
+    flex: 1;
+    padding: 0 10px;
+
+    @include birman-media() {
+      padding: 0;
+    }
+
+    &--column {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .main-news-block__grid-row {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin: 0 -10px 20px;
+
+    @include birman-media() {
+      flex-direction: column;
+      margin: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .main-news-block__grid-col {
+    padding: 0 10px;
+    flex: 1;
+
+    @include birman-media() {
+      padding: 0 0 20px;
+    }
+
+    &--main {
+      ::ng-deep {
+        .main-page-news-item {
+          font: 300 30px/32px $gerbera-font;
+
+          @include birman-media() {
+            font: 300 22px/30px $gerbera-font;
+          }
+        }
+
+        .main-page-news-item__icon {
+          width: 26px;
+          height: 26px;
+
+          @include birman-media() {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+}

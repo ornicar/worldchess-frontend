@@ -6,8 +6,16 @@
   width: 100%;
   display: grid;
   grid-template-columns: 20px minmax(0, 1fr) minmax(0, auto) 0;
-  grid-template-rows: 40px minmax(0, auto) 40px;
+  grid-template-rows: 40px minmax(0, auto) 40px 0;
   grid-template-areas: "black-player black-player black-player-timer black-player-result" "score-line chess chess chess" "white-player white-player white-player-timer white-player-result";
+}
+
+:host-context(.chess-layout) {
+  @include height-650() {
+      grid-template-rows: 30px minmax(0, auto) 30px 0;
+      grid-template-columns: 20px minmax(0, 1fr) minmax(88px, auto) 0; 
+      grid-template-areas: "black-player black-player black-player-timer black-player-result" "score-line chess chess chess" "white-player white-player white-player-timer white-player-result";
+  }
 }
 
 :host-context(.grid-size--normal) {
@@ -35,6 +43,18 @@
 }
 
 :host-context(.view-mode--multiboard-normal) {
+  .chess-board {
+    width: 251px;
+    height: 251px;
+
+    &__wrapper {
+      width: 251px;
+      height: 251px;
+    }
+  }
+}
+
+:host-context(.view-mode--gaming-normal) {
   .chess-board {
     width: 251px;
     height: 251px;
@@ -75,6 +95,7 @@
     height: 372px;
     padding: 16px;
     background-color: $brown-bg;
+    
     @include tablets-big() {
       width: 320px;
       height: 320px;
@@ -84,6 +105,10 @@
       height: 228px;
       padding: 10px;
     }
+    // @include height-650() {
+    //   width: 210px;
+    //   height: 210px;
+    // }
   }
 
   &__player {
@@ -117,6 +142,65 @@
     transform: translate(0, -50%);
     right: -32px;
   }
+}
+
+:host-context(.chess-layout--switched) {
+  grid-template-rows: 30px minmax(0, auto) 30px;
+  grid-template-columns: 20px minmax(0, 1fr) minmax(0, auto) 0;
+  @include height-650() {
+    grid-template-rows: 22px minmax(0, auto) 22px;
+    grid-template-columns: 15px minmax(0, 1fr) minmax(0, auto) 0;
+  }
+  .chess-board {
+    width: 265px;
+    height: 265px;
+    @include height-650() {
+      width: 210px;
+      height: 210px;
+    }
+  }
+  .chess-board__wrapper {
+    width: 265px;
+    height: 265px;
+
+    @include height-650() {
+      width: 210px;
+      height: 210px;
+    }
+  }
+
+  .time-info__text {
+    @include height-650() {
+      margin-bottom: 0;
+    }
+  }
+}
+
+:host-context(wc-chess-page-layout) {
+  .chess-board {
+    @include height-650() {
+      width: 40vh;
+      height: 40vh;
+    }
+
+    @include phones() {
+      width: 228px;
+      height: 228px;
+    }
+  }
+
+  .chess-board__wrapper {
+    @include height-650() {
+      width: 40vh;
+      height: 40vh;
+      padding: 8px;
+    }
+
+    @include phones() {
+      width: 228px;
+      height: 228px;
+    }
+  } 
 }
 
 .score-line {
@@ -171,6 +255,38 @@
     &__wrapper {
       padding: 12px;
     }
+  }
+}
+
+:host(.view-mode--gaming-normal) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto) 0;
+  grid-template-rows: 40px minmax(0, auto) 40px 0;
+  grid-template-areas: "black-player black-player-timer black-player-result" "chess chess chess" "white-player white-player-timer white-player-result";
+
+  .score-line {
+    display: none;
+  }
+
+  .chess-board {
+    width: 100%;
+    height: 100%;
+
+    &__wrapper {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      background: none;
+    }
+  }
+
+  .outerBoard {
+    border: 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  wc-chess-player-result {
+    background: transparent;
   }
 }
 

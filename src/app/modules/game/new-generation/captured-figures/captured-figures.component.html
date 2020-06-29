@@ -1,0 +1,29 @@
+<div class="figure-wrapper"
+     [class.figure-wrapper--squeeze]="figuresCollapsed$ | async">
+  <div class="figure-wrapper__open">
+    <ng-container *ngIf="needSqueeze$ | async">
+      <svg-arrow-left class="figure-wrapper__icon"
+                      (click)="takenFiguresToggle()"
+      ></svg-arrow-left>
+    </ng-container>
+  </div>
+  <div class="material-advantage"
+       *ngIf="materialAdvantage > 0">
+       <div class="material-advantage__number">
+        +{{materialAdvantage}}
+       </div>
+  </div>
+  <div *ngFor="let countedFigure of (sortedAndCountedFigures$ | async)"
+       class="counted-figure-container">
+    <div class="figure"
+         [ngClass]="countedFigure.count === 2 && countedFigure.figure !== 'p'
+                    ? [countedFigure.figure, capturedFigureColor, 'double']
+                    : [countedFigure.figure, capturedFigureColor]">
+    </div>
+    <div *ngIf="countedFigure.count > 2
+                || (countedFigure.figure === 'p' && countedFigure.count > 1)"
+         class="figure-counter">
+      {{ countedFigure.count }}
+    </div>
+  </div>
+</div>

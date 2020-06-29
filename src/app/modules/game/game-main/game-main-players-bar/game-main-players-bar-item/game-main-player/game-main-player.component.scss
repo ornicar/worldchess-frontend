@@ -1,0 +1,56 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  .player-root__portrait {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        display: block; 
+      }
+  }
+
+  .player-root {
+    display: flex;
+    align-items: center;
+
+    div {
+      margin-right: 4px;
+      white-space: pre;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .player-root__name {
+    color: $brown-2;
+    font: 400 15px/20px $gerbera-font;
+  }
+
+  .player-root__nationality,
+  .player-root__rating {
+    color: $brown-2;
+    font: 400 15px/20px $gerbera-font;
+    font-variant: all-small-caps;
+  }
+
+
+
+  .player-root__gm {
+    display: flex;
+    justify-content: center;
+    width: 24px;
+    height: 15px;
+    background-color: $brown-2;
+    color: #000;
+    font: 400 10px/15px $gerbera-font;
+    border-radius: 2px;
+  }
+}

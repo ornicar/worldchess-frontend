@@ -1,38 +1,27 @@
 <div class="profile-avatar-crop">
   <div class="profile-avatar-crop__header">
     <button class="profile-avatar-crop--btn" (click)="openFileDialog()">
-      Upload image <svg class="icon"><use xlink:href="#upload"></use></svg>
+      Upload image
+      <svg-upload class="icon"></svg-upload>
     </button>
     <input type="file" #upload accept="image/*" (change)="fileChangeEvent($event)">
     <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="rotateLeft()">
-      <svg class="icon">
-        <use xlink:href="#rotate_left"></use>
-      </svg>
+      <svg-rotate-left class="icon"></svg-rotate-left>
     </button>
     <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="rotateRight()">
-      <svg class="icon">
-        <use xlink:href="#rotate_right"></use>
-      </svg>
+      <svg-rotate-right class="icon"></svg-rotate-right>
     </button>
     <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="flipHorizontal()">
-      <svg class="icon">
-        <use xlink:href="#flip"></use>
-      </svg>
+      <svg-icon-flip class="icon"></svg-icon-flip>
     </button>
     <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="flipVertical()">
-      <svg class="icon rotate90">
-        <use xlink:href="#flip"></use>
-      </svg>
+      <svg-icon-flip class="icon rotate90"></svg-icon-flip>
     </button>
     <button class="profile-avatar-crop--btn flex-end" (click)="close()">
-      <svg class="icon">
-        <use xlink:href="#close"></use>
-      </svg>
+      <svg-close class="icon"></svg-close>
     </button>
     <button class="profile-avatar-crop--btn flex-end" *ngIf="showCropper" (click)="done()">
-      <svg class="icon">
-        <use xlink:href="#done"></use>
-      </svg>
+      <svg-done class="icon"></svg-done>
     </button>
   </div>
   <div class="profile-avatar-crop__body">

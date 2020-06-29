@@ -1,0 +1,164 @@
+<div class="rating">
+    <div class="rating__header">
+        <div class="rating__title">
+            <span
+              class="rating__title-text"
+              [routerLink]="['/ratings']"
+              [routerLinkActive]="['rating__title-text--wisible']"
+              [routerLinkActiveOptions]="{exact: true}"
+            >
+                <svg-logo-fide class="rating__title-icon"></svg-logo-fide>
+                FIDE Official Rating
+            </span>
+            <span
+              class="rating__title-text"
+              [routerLink]="['/ratings']"
+              [routerLinkActive]="['rating__title-text--wisible']"
+              [routerLinkActiveOptions]="{exact: true}"
+              [queryParams] = "{ section: 'passport-online' }"
+            >
+                <svg-hexagon class="rating__title-icon"></svg-hexagon>
+                FIDE Online Rating
+            </span>
+            <span
+              class="rating__title-text"
+              [routerLink]="['/ratings']"
+              [routerLinkActive]="['rating__title-text--wisible']"
+              [routerLinkActiveOptions]="{exact: true}"
+              [queryParams] = "{ section: 'world-chess' }"
+            >
+            <svg-hexagon-empty-thin class="rating__title-icon"></svg-hexagon-empty-thin>
+              World Chess Internal Rating
+            </span>
+        </div>
+        <ul class="rating-menu">
+            <li class="rating-menu__elem">
+              <a
+                class="rating-menu__link"
+                [routerLink]="['/ratings']"
+                [routerLinkActive]="['rating-menu__link--active']"
+                [routerLinkActiveOptions]="{exact: true}"
+              >
+                FIDE Rating
+                <svg-logo-fide class="rating-menu__icon"></svg-logo-fide>
+              </a>
+            </li>
+            <li class="rating-menu__elem">
+              <a
+                class="rating-menu__link"
+                [routerLink]="['/ratings']"
+                [routerLinkActive]="['rating-menu__link--active']"
+                [routerLinkActiveOptions]="{exact: true}"
+                [queryParams] = "{ section: 'passport-online' }"
+                >
+                FIDE Online Rating
+                  <svg-hexagon class="rating-menu__icon rating-menu__icon--hexagon"></svg-hexagon>
+              </a>
+            </li>
+            <li class="rating-menu__elem">
+              <a
+                class="rating-menu__link"
+                [routerLink]="['/ratings']"
+                [routerLinkActive]="['rating-menu__link--active']"
+                [routerLinkActiveOptions]="{exact: true}"
+                [queryParams] = "{ section: 'world-chess' }"
+              >
+                World Chess Rating
+                <svg-hexagon-empty class="rating-menu__icon rating-menu__icon--hexagon"></svg-hexagon-empty>
+            </a>
+            </li>
+          </ul>
+    </div>
+
+
+  <div class="rating__wrapper">
+    <div class="filter"
+         [class.filter--active]="showSearchBar">
+      <div class="filter__block-search">
+        <label class="filter__label">
+          <input type="text"
+                 [(ngModel)]="searchQuery"
+                 (input)="onChangeSearchText()"
+                 class="filter__input"
+                 placeholder="search">
+          <img src="/assets/icons/search-icon.svg" alt="" class="filter__icon-search">
+        </label>
+      </div>
+      <div class="filter__block-buttons">
+        <div class="filter__buttons">
+          <ul class="filter__buttons-list">
+            <li class="filter__buttons-elem">
+              <span (click)="setTableView(true)"
+                    class="filter__button"
+                    [class.filter__button--active]="isTableMode">
+                <img src="/assets/icons/table-view-icon.svg" alt="" class="filter__icon-display">
+              </span>
+            </li>
+            <li class="filter__buttons-elem">
+              <span (click)="setTableView(false)"
+                    class="filter__button"
+                    [class.filter__button--active]="!isTableMode">
+                <img src="/assets/icons/portrait-view-icon.svg" alt="" class="filter__icon-display">
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(bestPlayers$ | async) as bestPlayers" class="rating-best">
+      <ul class="rating-best__list">
+        <li class="rating-best__elem"
+            [class.rating-best__elem--best-of-the-best]="i === 0"
+            *ngFor="let player of bestPlayers; index as i"
+            [attr.data-index]="i"
+            [routerLink]="['/ratings', player.fide_id]">
+          <div class="rating-best__title">
+            <div class="rating-best__position">{{player.rank}}</div>
+            <div class="rating-best__name">{{player.full_name}}</div>
+          </div>
+          <div class="rating-best__photo">
+            <div class="rating-best__photo-wrapper">
+              <div *ngIf="player.portrait" class="rating-best__photo-circle">
+                  <img  [src]="player.portrait" alt="">
+              </div>
+              <wc-player-labels [labels]="player.labels"></wc-player-labels>
+            </div>
+          </div>
+          <div class="rating-best__info">
+            <div class="country">
+              <wc-country [federation]="player.federation"></wc-country>
+            </div>
+            <div class="rating-count">
+              <span *ngIf="player.rating"
+              [ngClass]="setGrey(null)"
+              >
+                {{player.rating}}
+                <svg-logo-fide class="rating-count__icon"></svg-logo-fide>
+              </span>
+              <span *ngIf="player.fide_bullet"
+              [ngClass]="setGrey('passport-online')"
+              >
+                {{player.fide_bullet}}
+                <svg-hexagon class="rating-count__icon"></svg-hexagon>
+              </span>
+              <span *ngIf="player.worldchess_bullet"
+              [ngClass]="setGrey('world-chess')"
+              >
+                {{player.worldchess_bullet}}
+                <svg-hexagon-empty class="rating-count__icon"></svg-hexagon-empty>
+              </span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <button class="rating-best__btn"
+              *ngIf="showMoreBestPlayersBtn"
+              (click)="showMore()">see more players</button>
+    </div>
+    <div #ratingTableStart></div>
+    <div class="rating-table-scroll">
+      <wc-player-list-table *ngIf="isTableMode" [searchQuery]="searchQuery"></wc-player-list-table>
+      <wc-player-list-tail *ngIf="!isTableMode" [searchQuery]="searchQuery" ></wc-player-list-tail>
+    </div>
+  </div>
+</div>

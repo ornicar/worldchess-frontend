@@ -2,14 +2,24 @@
   <div class="field__center">
     <div class="board-wrapper">
       <div class="board-wrapper__aside">
-        <div class="shared" (click)="share()">
-          <div class="shared__icon">
-            <svg class="icon">
-              <use xlink:href="#shared" />
-            </svg>
+        <div class="buttons-share">
+          <div class="button-share share" #shareBtn (click)="share()">
+            <svg-shared class="icon"></svg-shared>
+            <div class="text">Share</div>
           </div>
-          <div class="shared__text">
-            Share
+          <div class="buttons-group" [class.expanded]="isShownSocialBtns">
+            <div class="button-share" (click)="shareToFacebook()">
+              <svg-icon-facebook class="icon share"></svg-icon-facebook>
+              <div class="text">facebook</div>
+            </div>
+            <div class="button-share" (click)="shareToTwitter()">
+              <svg-icon-twitter class="icon share"></svg-icon-twitter>
+              <div class="text">twitter</div>
+            </div>
+            <div class="button-share" (click)="showWidgetWindow()">
+              <svg-embed class="icon share"></svg-embed>
+              <div class="text">embed</div>
+            </div>
           </div>
         </div>
       </div>
@@ -18,15 +28,14 @@
           <wc-broadcast-single-chess-board-controller
             [boardId]="gameState?.board?.id"
             [bottomPlayerColor]="orientation"
-            [tournament]="tournament"
-          >
+            [tournament]="tournament">
           </wc-broadcast-single-chess-board-controller>
           <div class="board-buttons">
             <ul #boardMenu class="board-buttons__list">
               <li *ngIf="isShowBoardMenu" class="board-buttons__elem">
                 <a class="board-buttons__link" (click)="onFlipBoard()">
                   <div class="board-buttons__icon">
-                    <svg class="icon"><use xlink:href="#flip-icon" /></svg>
+                    <svg-icon-flip class="icon"></svg-icon-flip>
                   </div>
                   <div class="board-buttons__text">Flip board</div>
                 </a>
@@ -34,7 +43,7 @@
               <li *ngIf="isShowBoardMenu" class="board-buttons__elem">
                 <a class="board-buttons__link" (click)="onLoadPGN()">
                   <div class="board-buttons__icon">
-                    <svg class="icon"><use xlink:href="#pgn-icon" /></svg>
+                    <svg-icon-pgn class="icon"></svg-icon-pgn>
                   </div>
                   <div class="board-buttons__text">PGN</div>
                 </a>
@@ -42,7 +51,7 @@
               <li class="board-buttons__elem">
                 <a class="board-buttons__link" (click)="toggleBoardMenu()">
                   <div class="board-buttons__icon">
-                    <svg class="icon"><use xlink:href="#more-icon" /></svg>
+                    <svg-icon-more class="icon"></svg-icon-more>
                   </div>
                   <div class="board-buttons__text"></div>
                 </a>

@@ -16,12 +16,18 @@ export interface IPlayer {
   fide_id: number;
   full_name: string;
   nickname?: string;
-  birthday?: string;
+  birth_year?: string;
   rank?: playerRank;
   rating?: number;
+  blitz_rating?: number;
+  rapid_rating?: number;
   avatar?: IPlayerAvatar;
   portrait?: string;
   portrait_fullface?: string;
-  federation: number;
+  federation?: number;
   uid?: string;
+  id?: number;
+  is_male?: boolean;
+  nationality_id?: number;
 }
+

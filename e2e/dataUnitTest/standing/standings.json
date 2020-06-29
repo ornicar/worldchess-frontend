@@ -1,0 +1,102 @@
+[
+  {
+    "avatar": "user_avatars/Z/I/D/fmt_89_24_1468495534oblozhka.jpg",
+    "rank": 1,
+    "full_name": "FullName",
+    "rating": 1061,
+    "age": 120,
+    "nationality_id": null,
+    "points": 2,
+    "player_uid": "469b2216509156ecfb09fa8c395684ccfced8ff564d6edaf044e3a9531178c74",
+    "player_id": 254,
+    "points_per_board": [
+      {
+        "points": 1,
+        "board_uid": "07ec0cb6-7809-4b54-9973-0ffab0b35032"
+      },
+      {
+        "points": 1,
+        "board_uid": "2194a110-9668-4dcb-9eb8-9239298620d6"
+      },
+      {
+        "points": 0,
+        "board_uid": "b6657a22-e45d-4d3e-a287-1f5b464e70fd"
+      }
+    ]
+  },
+  {
+    "avatar": "default_avatars/2.png",
+    "rank": 2,
+    "full_name": "ada asd",
+    "rating": 1185,
+    "age": 15,
+    "nationality_id": 52,
+    "points": 2,
+    "player_uid": "ec2c968a6fd102d1ec82b5183a8d4a956ace96c3dd92eecf99eced8b26c6d835",
+    "player_id": 1973,
+    "points_per_board": [
+      {
+        "points": 1,
+        "board_uid": "2ab2ed5d-3157-455e-8774-22a83d98c8a9"
+      },
+      {
+        "points": 0,
+        "board_uid": "2194a110-9668-4dcb-9eb8-9239298620d6"
+      },
+      {
+        "points": 1,
+        "board_uid": "526f86d2-84e3-4d72-97f0-2195d96695a9"
+      }
+    ]
+  },
+  {
+    "avatar": "default_avatars/5.png",
+    "rank": 3,
+    "full_name": "",
+    "rating": 1087,
+    "age": null,
+    "nationality_id": null,
+    "points": 2,
+    "player_uid": "5c7c4283b5ed30f1db1d1d8555fa1e4c269b8a75bfe49c335ffbbceac1fa2f12",
+    "player_id": 2081,
+    "points_per_board": [
+      {
+        "points": 0,
+        "board_uid": "2ab2ed5d-3157-455e-8774-22a83d98c8a9"
+      },
+      {
+        "points": 1,
+        "board_uid": "101683b6-0564-437e-b955-0fb9849eef69"
+      },
+      {
+        "points": 1,
+        "board_uid": "b6657a22-e45d-4d3e-a287-1f5b464e70fd"
+      }
+    ]
+  },
+  {
+    "avatar": "default_avatars/1.png",
+    "rank": 4,
+    "full_name": "Vuhfy Gjgg",
+    "rating": 1056,
+    "age": 55,
+    "nationality_id": 140,
+    "points": 0,
+    "player_uid": "ffdd4047e1c3a9b3decc5ac049252e14dd7193715cf69dbfe0ed8359b0a2d52b",
+    "player_id": 1827,
+    "points_per_board": [
+      {
+        "points": 0,
+        "board_uid": "07ec0cb6-7809-4b54-9973-0ffab0b35032"
+      },
+      {
+        "points": 0,
+        "board_uid": "101683b6-0564-437e-b955-0fb9849eef69"
+      },
+      {
+        "points": 0,
+        "board_uid": "526f86d2-84e3-4d72-97f0-2195d96695a9"
+      }
+    ]
+  }
+]

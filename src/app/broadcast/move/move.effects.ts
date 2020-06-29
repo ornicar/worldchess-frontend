@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
-import {Action, select, Store} from '@ngrx/store';
-import {EMPTY, Observable, of} from 'rxjs';
-import {fromArray} from 'rxjs/internal/observable/fromArray';
-import {catchError, filter, flatMap, map, switchMap, take, tap} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action, select, Store } from '@ngrx/store';
+import { EMPTY, Observable, of } from 'rxjs';
+import { fromArray } from 'rxjs/internal/observable/fromArray';
+import { catchError, filter, flatMap, map, switchMap, take } from 'rxjs/operators';
 import * as fromRoot from '../../reducers';
-import {MoveResourceService} from './move-resource.service';
+import { MoveResourceService } from './move-resource.service';
 import {
   GetMoves,
   LoadMoves,
@@ -19,7 +19,7 @@ import {
   GetLastMovesByBoards,
 } from './move.actions';
 import { IMove } from './move.model';
-import {selectBoardMovesIds, selectMoveStore} from './move.reducer';
+import { selectBoardMovesIds, selectMoveStore } from './move.reducer';
 
 @Injectable()
 export class MoveEffects {
@@ -61,6 +61,23 @@ export class MoveEffects {
 
   @Effect()
   GetLastMovesByBoards$: Observable<Action> = this.actions$.pipe(
+    ofType<GetLastMovesByBoards>(MoveActionTypes.GetLastMovesByBoards),
+    switchMap((action: GetLastMovesByBoards) =>
+      this.moveResource
+        .getLastByBoards(action.payload.boardsIds).pipe(
+        map((moves: IMove[]) => new AddMoves({ moves })),
+        // When server error.
+        catchError(e => {
+          console.error(e);
+
+          return EMPTY;
+        })
+      )
+    )
+  );
+
+  @Effect()
+  GetLastMovesByBoardsTournaments$: Observable<Action> = this.actions$.pipe(
     ofType<GetLastMovesByBoards>(MoveActionTypes.GetLastMovesByBoards),
     switchMap((action: GetLastMovesByBoards) =>
       this.moveResource

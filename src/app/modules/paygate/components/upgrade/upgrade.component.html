@@ -1,0 +1,84 @@
+<svg-preloader class="icon icon_register" *ngIf="loading$ | async"></svg-preloader>
+<wc-base-popup [showCloseIcon]="false" [overrideProBackground]="(proPurchased || fidePurchased) && !isFirstTime">
+  <div slot-custon-title>
+    <div class="popup-container__header-wrapper">
+      <div class="popup-container__header-content">
+        <div class="popup-container__header-title" *ngIf="isFirstTime">Congratulations!</div>
+        <div class="popup-container__header-title" *ngIf="!isFirstTime">Membership</div>
+        <div class="popup-container__header-title-small">{{ (popupTitle$ | async)?.title }}</div>
+        <div class="popup-container__header-title-comment" [innerHTML]="(popupTitle$ | async)?.subtitle"></div>
+      </div>
+      <div class="popup-container__header-logo">
+        <svg-logo-fide class="icon"></svg-logo-fide>
+      </div>
+      </div>
+  </div>
+  <div class="register__options register__options--padding-top">
+    <div class="register__options-col">
+      <wc-video-stream-access-status [proPurchased]="proPurchased$ | async"
+                                     [isFirstTime]="isFirstTime">
+      </wc-video-stream-access-status>
+    </div>
+    <div class="register__options-col">
+      <wc-fide-online-status [fideIdState]="fideIdState$ | async"
+                             [fidePurchased]="fidePurchased$ | async"
+                             [isFirstTime]="isFirstTime">
+      </wc-fide-online-status>
+    </div>
+  </div>
+
+  <div class="register__form-wrapper">
+    <div class="register__form">
+      <div class="register__form-col">
+        <div class="register-form__submit" *ngIf="canUpgrade$ | async; else giftOrFide">
+          <wc-btn-with-loading (click)="goToUpgrade()">
+            Upgrade to Pro membership
+          </wc-btn-with-loading>
+          <ng-container *ngIf="resultPrice$ | async as resultPrice; else freePrice">
+            <span class="register-form__submit-free"
+                  *ngIf="resultPrice !== 0">
+                  €{{ resultPrice / 100 | currency: 'EUR':'':'1.0' }}<span class="font-size-05">&nbsp;</span>/<span class="font-size-05">&nbsp;</span>year</span>
+          </ng-container>
+          <ng-template #freePrice><span class="register-form__submit-free">Free</span></ng-template>
+        </div>
+        <ng-template #giftOrFide>
+          <div class="register-form__submit" *ngIf="needFideIdAssign$ | async; else gift">
+            <wc-btn-with-loading (click)="goToUpgradeFide()">
+              Complete the Upgrade
+            </wc-btn-with-loading>
+          </div>
+          <ng-template #gift>
+            <div class="register-form__submit" *ngIf="false">
+                <wc-btn-with-loading (click)="goToGift()">
+                  <svg-gift class="icon-gift"></svg-gift>Gift membership
+                </wc-btn-with-loading>
+              <span class="register-form__submit-free register-form__submit-free--small">
+                The person will receive<br> a link to register for free
+              </span>
+            </div>
+          </ng-template>
+        </ng-template>
+
+      </div>
+      <div class="register__form-col register__form-col--pro-member"
+           *ngIf="canUpgrade$ | async; else fide">
+        <div class="register__pro-member">
+          <span>
+            Complete the payment<br>to&nbsp;become a Pro member
+          </span>
+        </div>
+      </div>
+      <ng-template #fide>
+        <div class="register__form-col register__form-col--pro-member"
+             *ngIf="needFideIdAssign$ | async">
+          <div class="register__pro-member">
+            <span>
+              Fill in the FIDE Chess Profile information<br>
+              to complete the upgrade to a Pro membership
+            </span>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</wc-base-popup>

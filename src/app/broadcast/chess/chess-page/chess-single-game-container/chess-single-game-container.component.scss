@@ -1,7 +1,12 @@
-@import '../../../../../html/css/variables.scss';
+@import 'variables';
+@import 'media';
 
 :host {
   display: block;
+
+  @include height-650() {
+    height: 100%;
+  }
 }
 
 .available-soon {

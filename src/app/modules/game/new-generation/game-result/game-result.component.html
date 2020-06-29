@@ -1,0 +1,105 @@
+<ng-container *ngIf="isResultShown$ | async">
+  <ng-container *ngIf="playerType$ | async as type">
+    <ng-container *ngIf="gameRatingMode$ | async as mode">
+      <ng-container [ngSwitch]="type">
+        <ng-container *ngSwitchCase="PlayerType.Anonymous">
+          <div class="result-game result-game--reverse lang-{{accountService.getLanguage() | async }}">
+            <div class="result-game__big-head">
+              {{'GAME.SAVE_AND_ANALYZE' | translate}}
+            </div>
+            <div class="result-game__text">
+              {{'GAME.IF_YOU_SIGN_UP' | translate}}&nbsp;.
+              <a href="javascript:void(0)"
+                 [routerLink]="['', { outlets: { p: ['paygate', 'register'] } }]"
+              >
+              {{'GAME.SAVE_AND_SIGN_UP' | translate}}
+              <svg-arrow-right class="icon"></svg-arrow-right></a>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="PlayerType.WCPlayer">
+          <div class="result-game result-game--reverse lang-{{accountService.getLanguage() | async }}"
+               *ngIf="mode === GameRatingMode.RATED">
+            <div class="result-game__rating">
+              <div class="result-game__rating-change">{{(ratingChange$ | async) > 0 ? '+' : ''}}{{(ratingChange$ | async) ? (ratingChange$ | async) : 0}}</div>
+              <div class="result-game__rating-change-subtitle">
+                {{'GAME.RATING_POINTS' | translate}}
+              </div>
+              <div class="result-game__rating-total">
+                {{(player$ | async).rating}}
+                <svg-hexagon-empty class="icon-hexagon"></svg-hexagon-empty>
+              </div>
+              <div class="result-game__rating-total-subtitle">
+                {{'GAME.INTERNAL_RATING' | translate}}
+              </div>
+            </div>
+            <div class="result-game__head">
+              <div class="result-game__logos">
+                <div class="result-game__logo-fide">
+                  <svg-hexagon class="icon icon--hexagon"></svg-hexagon>
+                </div>
+                <div class="result-game__logo">
+                  <svg-logo class="icon icon--logo"></svg-logo>
+                </div>
+              </div>
+              <div class="result-game__text">
+                {{'GAME.OFFICIALLY_COMPLETE' | translate}}<br>
+<!--                <a href="javascript:void(0)" (click)="navigateToFideRegister()"-->
+<!--                >-->
+<!--                  Get FIDE Rating <svg-arrow-right class="icon"></svg-arrow-right>-->
+<!--                </a>-->
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="PlayerType.FidePlayer">
+          <div class="result-game result-game--reverse lang-{{accountService.getLanguage() | async }}"
+               *ngIf="mode === GameRatingMode.RATED">
+            <div class="result-game__rating">
+              <div class="result-game__rating-change">{{(ratingChange$ | async) > 0 ? '+' : ''}}
+                {{(ratingChange$ | async) ? (ratingChange$ | async) : 0}}</div>
+              <div class="result-game__rating-change-subtitle">{{'GAME.RATING_POINTS' | translate}}</div>
+              <div class="result-game__rating-total">
+                {{(player$ | async).rating}}
+                <svg-hexagon-empty class="icon-hexagon"></svg-hexagon-empty>
+              </div>
+              <div class="result-game__rating-total-subtitle">
+                {{'GAME.INTERNAL_RATING' | translate}}
+              </div>
+            </div>
+            <div class="result-game__head">
+              <div class="result-game__logos">
+                <div class="result-game__logo-fide">
+                  <svg-hexagon class="icon icon--hexagon"></svg-hexagon>
+                </div>
+                <div class="result-game__logo">
+                  <svg-logo-fide class="icon icon--logo-fide"></svg-logo-fide>
+                </div>
+              </div>
+              <div class="result-game__text">
+                {{'GAME.NEXT_TYME_TRY_PLAYING' | translate}}
+              </div>
+            </div>
+          </div>
+          <div class="result-game"
+               *ngIf="mode === GameRatingMode.FIDERATED">
+            <div class="result-game__rating">
+              <div class="result-game__rating-change">{{(ratingChange$ | async) > 0 ? '+' : ''}}
+                {{(ratingChange$ | async) ? (ratingChange$ | async) : 0}}</div>
+              <div class="result-game__rating-change-subtitle">{{'GAME.RATING_POINTS' | translate}}</div>
+              <div class="result-game__rating-total">
+                {{(player$ | async).rating}}
+                <svg-logo-fide class="icon-logo-fide"></svg-logo-fide>
+              </div>
+              <div class="result-game__rating-total-subtitle">
+                {{'OTHER.FIDE_ONLINE_RATING' | translate}}
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+

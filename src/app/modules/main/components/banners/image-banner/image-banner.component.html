@@ -1,0 +1,6 @@
+<div class="image-banner_root">
+  <div *ngIf="this.hasAccess()" class="image-banner_content desctop" [style.background-image]="'url(' + (data.image.full) + ')'">
+  </div>
+  <div *ngIf="this.hasAccess()" class="image-banner_content mobile" [style.background-image]="'url(' + (data.image.medium) + ')'">
+  </div>
+</div>

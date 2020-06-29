@@ -1,0 +1,248 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  width: 100%;
+
+  @include birman-media {
+    height: auto;
+  }
+
+}
+
+:host-context(.board-block__footer) {
+  align-items: flex-end;
+}
+
+:host-context(.gaming--open-table) {
+  .player {
+    display: none;
+    @include birman-media {
+      display: flex;
+    }
+  }
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  &--active {
+    .player__statistics {
+      opacity: 1;
+    }
+  }
+}
+
+.player__statistics {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  flex: 1;
+  opacity: .4;
+
+  &.mobile-hidden {
+
+    @include birman-media {
+      display: none;
+    }
+  }
+
+  @include birman-media {
+    flex: 2 0 auto;
+  }
+}
+
+.time-limit-notification {
+  color: $red-new;
+
+  .half-value {
+    &:after {
+      background-color: $red-new;
+    }
+  }
+}
+
+.player__foto {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-size: cover;
+  margin-right: 17px;
+  border-radius: 50%;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.player__time {
+  font: 300 40px/40px $gerbera-font;
+  margin-right: 17px;
+  font-feature-settings: "tnum" 1;
+
+  @include birman-media {
+    margin-right: 6px;
+  }
+
+  &.mobile-hidden {
+    @include birman-media {
+      display: none;
+    }
+  }
+}
+
+.player__info {
+  @include birman-media {
+    max-width: calc(100vw - 200px);
+  }
+  &.mobile-hidden {
+    @include birman-media {
+      display: none;
+    }
+  }
+  & .hide-name {
+    @include birman-media {
+      display: none;
+    }
+  }
+}
+
+.player__name {
+  display: flex;
+  align-items: center;
+  font: 300 14px/20px $gerbera-font;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.player__name-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;;
+}
+
+.player__name-status {
+  font: 300 10px/11px $gerbera-font;
+  color: #000;
+  background-color: #fff;
+  letter-spacing: .1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 15px;
+  margin-left: 5px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+
+.player__stat {
+  font: 300 14px/20px $gerbera-font;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  span {
+    &:before {
+      content: '∙';
+      margin: 0 5px;
+    }
+
+    &:first-child {
+      &:before {
+        display: none;
+      }
+    }
+  }
+}
+
+.player__result-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font: 300 30px/35px $gerbera-font;
+  flex: 1;
+  @include birman-media {
+    flex: 0 1 auto;
+    width: 100%;
+
+    &.mobile-open {
+      flex: 1 1 auto;
+      position: relative;
+      left: 50%;
+      width: 100vw;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.player__figures {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+
+  &.mobile-hidden {
+    @include birman-media {
+      display: none;
+    }
+  }
+}
+
+
+.player__hexagon {
+  display: block;
+  width: 18px;
+  height: 20px;
+  fill: #fff;
+  opacity: 0.4;
+
+  @include birman-media {
+    display: none;
+  }
+
+  ::ng-deep {
+    svg {
+      display: block;
+    }
+  }
+}
+
+.half-value {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  font: 900 8px/8px $gerbera-font;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 12px;
+    height: 1px;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+  }
+
+  span {
+    &:first-child {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &:last-child {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}

@@ -98,6 +98,20 @@
   button {
     display: inline-block;
   }
+
+  &__checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 50%;
+
+    & .tournament-form__checkbox {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      margin-right: 10px;
+    }
+  }
 }
 
 .controls {

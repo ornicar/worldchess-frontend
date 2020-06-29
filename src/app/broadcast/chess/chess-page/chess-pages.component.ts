@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges
 import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, switchMap } from 'rxjs/operators';
-import { selectProfile } from '../../../auth/auth.reducer';
-import { UserPurchasesService } from '../../../purchases/user-purchases/user-purchases.service';
-import { OnChangesInputObservable, OnChangesObservable } from '../../../shared/decorators/observable-input';
-import { SubscriptionHelper, Subscriptions } from '../../../shared/helpers/subscription.helper';
-import { ScreenStateService } from '../../../shared/screen/screen-state.service';
+import { UserPurchasesService } from '@app/purchases/user-purchases/user-purchases.service';
+import { OnChangesInputObservable, OnChangesObservable } from '@app/shared/decorators/observable-input';
+import { SubscriptionHelper, Subscriptions } from '@app/shared/helpers/subscription.helper';
+import { ScreenStateService } from '@app/shared/screen/screen-state.service';
 import { IBoard } from '../../core/board/board.model';
 import * as fromBoard from '../../core/board/board.reducer';
 import { ITour } from '../../core/tour/tour.model';
@@ -30,10 +29,6 @@ export class ChessPagesComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tour?: ITour;
 
   private subs: Subscriptions = {};
-
-  profile$ = this.store$.pipe(
-    select(selectProfile)
-  );
 
   isPremium$ = this.tournament$.pipe(
     switchMap((tournament) =>

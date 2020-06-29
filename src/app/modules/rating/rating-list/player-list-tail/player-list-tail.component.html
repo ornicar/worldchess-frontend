@@ -1,0 +1,33 @@
+<div *ngIf="(playersList$ | async) as players">
+  <div class="rating-tile">
+    <ul class="rating-tile__list">
+      <li class="rating-tile__elem" *ngFor="let player of players; let i = index" [ngClass]="[calcTileColor(player, i)]" [routerLink]="'/ratings/' + player.fide_id">
+        <div class="rating-tile__rank">{{player.rank}}</div>
+        <div class="rating-tile__name">
+          <span class="rating-tile__name-portrait">
+            <img *ngIf="player.avatar" [src]="player.avatar">
+          </span>
+          <wc-player-labels [labels]="player.labels"></wc-player-labels>
+          <span class="rating-tile__name-text">{{player.full_name}}</span>
+        </div>
+        <div class="rating-tile__scores">
+          <div class="rating-tile__score">
+            <span class="rating-tile__score-name">classic</span>{{ getRatingClassic(player) }}
+          </div>
+          <div class="rating-tile__score">
+            <span class="rating-tile__score-name">blitz</span>{{player.blitz_rating}}
+          </div>
+          <div class="rating-tile__score">
+            <span class="rating-tile__score-name">rapid</span>{{player.rapid_rating}}
+          </div>
+          <div class="rating-tile__score">
+            <span class="rating-tile__score-name">Birthday</span>{{player.birth_year}}
+          </div>
+        </div>
+        <div class="rating-tile__country">
+          <wc-country [federation]="player.federation"></wc-country>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

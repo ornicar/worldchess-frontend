@@ -1,0 +1,54 @@
+<wc-base-popup needResetTumblers="true">
+  <div class="register__head">
+    <div class="register__title">For verification, please send us a selfie  with your national ID</div>
+    <div class="register__step" *ngIf="maxSteps$ | async as maxSteps">
+      <svg-arrow-left class="icon" (click)="history.back()"></svg-arrow-left>
+      <svg-arrow-left-bold class="icon icon--mobile" (click)="history.back()"></svg-arrow-left-bold>5<span style="font-size:0.5em">&nbsp;</span>/<span
+      style="font-size:0.5em">&nbsp;</span>{{ maxSteps }}
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="form.submit()" class="register">
+    <div class="fide__body">
+      <div class="fide__coll">
+        <div class="fide__placeholder-image">
+          <img src="../../../../../assets/images/placeholder-image.png" alt="placeholder-image">
+        </div>
+        <ul class="fide__list">
+          <li>Take a selfie that clearly shows your face and your ID with the name in Latin letters and photo.</li>
+          <li>The selfie should be clear, without blurring.</li>
+          <li>The text should be well read. Do not cover the text<br> with your fingers.</li>
+          <li>When making a selfie, please hold a piece of paper with current date.</li>
+          <li style="list-style: none">
+            If you can't make a selfie but need to get verified, please email <a href="mailto:support@worldchess.com?subject=FIDE ID Verification">support@worldchess.com.</a>
+          </li>
+        </ul>
+      </div>
+      <div class="fide__coll fide__pasport-selfie"
+           [shake]="form.controls['national_id_selfie'].shake$"
+           shakePadding="true">
+        <wc-paygate-image-upload formControlName="national_id_selfie"
+                                 [needSubtitle]="false"
+                                 [maximumSizeExceededError]="maximumUploadSizeExceededError$ | async"
+        ></wc-paygate-image-upload>
+      </div>
+    </div>
+    <div class="fide__footer">
+      <div class="fide__footer-coll">
+        <wc-btn-with-loading [loading]="verifyInProgress$ | async"
+                             [disabled]="form.invalid$ | async">
+          Send selfie
+        </wc-btn-with-loading>
+        <div class="register__text register__text--width">
+          We will review your information and confirm it shortly! In some cases we might request additional info to make sure that it's really you
+        </div>
+      </div>
+
+      <div class="fide__footer-coll">
+        <div class="fide__footer-text">
+          <a (click)="closePopup()">Skip <svg-arrow-right class="icon"></svg-arrow-right> </a>
+          You will be able<br> to send selfie later
+        </div>
+      </div>
+    </div>
+  </form>
+</wc-base-popup>

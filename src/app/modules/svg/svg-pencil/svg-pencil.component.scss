@@ -1,0 +1,7 @@
+@import '../../../../html/css/variables';
+
+:host-context(.profile) {
+  position: relative;
+  top: -2px;
+  fill: $red;
+}

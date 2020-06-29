@@ -1,0 +1,6 @@
+<p mat-dialog-title>{{ data.title }}</p>
+<div mat-dialog-content [innerHTML]="data.message"></div>
+<div mat-dialog-actions>
+  <button class="btn btn-white" mat-button (click)="onClickOk()">{{data.buttonTrue || 'Yes'}}</button>
+  <button class="btn btn-white" mat-button (click)="onClickCancel()">{{data.buttonFalse || 'Cancel'}}</button>
+</div>

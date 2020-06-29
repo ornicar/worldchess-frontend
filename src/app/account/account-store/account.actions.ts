@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { IErrorsResponse } from '../../auth/auth.model';
-import {IAccount, IAccountRating} from './account.model';
+import { IAccount, IAccountRating, FounderStatus } from './account.model';
 
 export enum AccountActionTypes {
   LoadSuccess = '[Account] Account load success',
@@ -9,13 +9,18 @@ export enum AccountActionTypes {
   UpdateSuccess = '[Account] Account update success',
   UpdateError = '[Account] Account update error',
   UpdateClear = '[Account] Account update clear errors',
+  Delete = '[Account] Account delete request',
+  DeleteSuccess = '[Account] Account delete success',
+  DeleteError = '[Account] Account delete error',
+  DeleteClear = '[Account] Account delete clear errors',
   Refresh = '[Account] Refresh account info',
-  OpenWannaBeOrgModal = '[Account] Open wanna be organizer modal',
-  CloseWannaBeOrgModal = '[Account] Close wanna be organizer modal',
   CreateFideId = '[Account] Create fide id',
   CreateFideIdSuccess = '[Account] Fide id is created.',
   CreateFideIdError = '[Account] Error occurred then creating fide id.',
   Reset = '[Account] Reset account',
+  CancelFounderStatus = '[Account] Cancel founder status',
+  RequestFounderStatus = '[Account] Request founder status',
+  FounderStatusError = '[Account] Founder status error',
 }
 
 export class AccountLoadSuccess implements Action {
@@ -42,6 +47,30 @@ export class AccountUpdateSuccess implements Action {
   constructor(public payload: { account: IAccount }) {}
 }
 
+export class AccountDelete implements Action {
+  readonly type = AccountActionTypes.Delete;
+
+  constructor() {}
+}
+
+export class AccountDeleteSuccess implements Action {
+  readonly type = AccountActionTypes.DeleteSuccess;
+
+  constructor() {}
+}
+
+export class AccountDeleteError implements Action {
+  readonly type = AccountActionTypes.DeleteError;
+
+  constructor(public payload: { errors: IErrorsResponse }) {}
+}
+
+export class AccountDeleteClear implements Action {
+  readonly type = AccountActionTypes.DeleteClear;
+
+  constructor() {}
+}
+
 export class AccountRefresh implements Action {
   readonly type = AccountActionTypes.Refresh;
 }
@@ -54,18 +83,6 @@ export class AccountUpdateError implements Action {
 
 export class AccountUpdateClear implements Action {
   readonly type = AccountActionTypes.UpdateClear;
-
-  constructor() {}
-}
-
-export class OpenWannaBeOrgModal implements Action {
-  readonly type = AccountActionTypes.OpenWannaBeOrgModal;
-
-  constructor() {}
-}
-
-export class CloseWannaBeOrgModal implements Action {
-  readonly type = AccountActionTypes.CloseWannaBeOrgModal;
 
   constructor() {}
 }
@@ -92,6 +109,24 @@ export class AccountReset implements Action {
   constructor() {}
 }
 
+export class CancelFounderStatus implements Action {
+  readonly type = AccountActionTypes.CancelFounderStatus;
+
+  constructor() {}
+}
+
+export class RequestFounderStatus implements Action {
+  readonly type = AccountActionTypes.RequestFounderStatus;
+
+  constructor() {}
+}
+
+export class FounderStatusError implements Action {
+  readonly type = AccountActionTypes.FounderStatusError;
+
+  constructor(public payload: { errorMessage: string }) {}
+}
+
 export type AccountActions =
   AccountLoadSuccess
   | AccountLoadRatingSuccess
@@ -99,9 +134,15 @@ export type AccountActions =
   | AccountUpdateSuccess
   | AccountUpdateError
   | AccountUpdateClear
-  | OpenWannaBeOrgModal
-  | CloseWannaBeOrgModal
+  | AccountDelete
+  | AccountDeleteSuccess
+  | AccountDeleteError
+  | AccountDeleteClear
   | CreateFideId
   | CreateFideIdSuccess
   | CreateFideIdError
-  | AccountReset;
+  | AccountReset
+  | CancelFounderStatus
+  | RequestFounderStatus
+  | FounderStatusError;
+

@@ -1,5 +1,5 @@
-@import "../../../../../../html/css/variables";
-@import "../../../../../../html/css/media";
+@import "variables";
+@import "media";
 
 $back-color: $blue;
 $border-color: #65ABCF;
@@ -59,15 +59,13 @@ $gradient-width: 85px;
     .prediction__list {
       display: flex;
       background-color: $back-color;
-      overflow-y: hidden;
-      overflow-x: scroll;
+      overflow: hidden;
       flex-wrap: nowrap;
       flex: 1 0 auto;
       width: 1px;
+      height: 100%;
       border-top: solid 1px $border-color;
       z-index: z-index(base);
-      padding-bottom: 17px;
-      margin-bottom: -17px;
 
       li.prediction__elem {
         display: inline-flex;
@@ -75,7 +73,7 @@ $gradient-width: 85px;
         align-items: center;
         justify-content: center;
         height: 55px;
-        flex: 0 1 auto;
+        flex: 0 0 auto;
         color: $black;
         padding: 3px 15px;
         border-left: solid 1px lighten($border-color, 10%);
@@ -84,6 +82,10 @@ $gradient-width: 85px;
         @include tablets-big() {
           font: normal 12px/12px $gerbera-font;
           height: 39px;
+        }
+
+        @include height-650() {
+          font: 300 11px/11px $gerbera-font;
         }
 
         @include phones() {
@@ -109,6 +111,7 @@ $gradient-width: 85px;
           border-radius: 17px;
           white-space: nowrap;
           height: 35px;
+          flex: 0 0 auto;
 
           @include tablets-big() {
             height: 24px;

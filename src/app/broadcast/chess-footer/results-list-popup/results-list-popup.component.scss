@@ -1,0 +1,274 @@
+@import "settings";
+@import "mixins";
+@import "variables";
+@import "media";
+
+:host {
+  @include phones() {
+    width: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+  }
+}
+
+.flag-icon {
+  width: 12px;
+  height: 8px;
+  margin-right: 5px;
+  flex: 0 0 auto;
+
+  @include phones() {
+    width: 15px;
+    height: 11px;
+  }
+}
+
+.results-list-popup-wrapper {
+  position: relative;
+  width: 340px;
+
+  @include phones() {
+    width: 100%;
+    height: 100%;
+    // background-color: #fff;
+    padding-top: 48px;
+  }
+}
+
+.results-list-popup {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+
+  @include phones() {
+    border-radius: 0;
+    height: 100%;
+  }
+}
+
+.results-list-popup-wrapper__close {
+  position: absolute;
+  top: 0;
+  right: -40px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+
+  @include phones() {
+    right: 8px;
+    top: 8px;
+  }
+
+  &:after,
+  &:before {
+    content: '';
+    display: block;
+    width: 23px;
+    height: 1px;
+    background-color: #9E9E9E;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &:before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+.results-list-popup__player-header {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  background-color: $violet;
+  padding: 5px 20px;
+}
+
+.results-list-popup__player-avatar {
+  display: flex;
+  align-items: center;
+  font: 300 18px/18px $gerbera-font;
+  margin-right: auto;
+  padding-right: 5px;
+
+  .flag-icon {
+    width: 23px;
+    height: 15px;
+    margin-right: 5px;
+    flex: 0 0 auto;
+  }
+}
+
+.results-list-popup__player-photo {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-right: 5px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.results-list-popup__player {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  max-width: calc(100% - 105px);
+  font: 400 13px/13px $gerbera-font;
+
+  span {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 5px;
+  }
+
+  @include phones() { 
+    font: 400 15px/15px $gerbera-font;
+  }
+}
+
+.results-list-popup__list {
+  max-height: 270px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0 0 8px 8px;
+  background-color: #fff;
+
+  @include phones() {
+    max-height: calc(100% - 50px);
+  }
+}
+
+.results-list-popup__list-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 20px;
+  min-height: 30px;
+  border-bottom: 1px solid #E5E5E5;
+
+  @include phones() {
+    min-height: 50px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.results-list-popup__player-rank {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  font: 300 15px/15px $gerbera-font;
+  color: #000;
+  width: 55px;
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 17px;
+    height: 13px;
+    background-color: #333333;
+    color: #fff;
+    font: 700 8px/8px $gerbera-font;
+    margin-right: 5px;
+    flex: 0 0 auto;
+  }
+}
+
+.results-list-popup__player-game-number {
+  font: 300 22px/22px $gerbera-font;
+  color: #000;
+  display: block;
+  min-width: 35px;
+  text-align: right;
+  margin-left: 5px;
+  flex: 0 0 auto;
+}
+
+.results-list-popup__list-index {
+  display: flex;
+  align-items: center;
+  width: 20px;
+  font: 300 13px/13px $gerbera-font;
+  color: #9E9E9E;
+  flex: 0 0 auto;
+
+  @include phones() {
+    font: 300 15px/15px $gerbera-font;
+  }
+}
+
+.results-list-popup__result {
+  font: 300 13px/13px $gerbera-font;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 25px;
+  flex: 0 0 auto;
+}
+
+.results-list-popup__result-half {
+  display: inline-block;
+  position: relative;
+  width: 13px;
+  height: 14px;
+  font: 400 8px/8px $gerbera-font;
+  vertical-align: middle;
+
+  span {
+    position: absolute;
+    &:first-child {
+      top: 0;
+      left: 0;
+    }
+    &:last-child {
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 1px;
+    height: 14px;
+    background-color: $black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(20deg);
+
+  }
+}
+
+.results-list-popup__circle {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #979797;
+
+  &.black-circle {
+    background-color: #000;
+    border: 1px solid #000;
+  }
+
+  @include phones() {
+    width: 12px;
+    height: 12px;
+  }
+}

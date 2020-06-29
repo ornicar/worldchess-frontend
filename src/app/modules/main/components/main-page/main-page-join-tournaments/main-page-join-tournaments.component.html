@@ -1,0 +1,15 @@
+<div class="join-tournament">
+  <div class="join-tournament__head">
+    <div class="join-tournament__title">Join next online tournaments</div>
+    <div class="join-tournament__sub-title">You can play. FIDE rating is not needed</div>
+  </div>
+  <div class="join-tournament__root" #cardContainer (mousedown)="startDrag($event)"
+       [ngClass]="totalCount===1?'single-mode': 'multiple-mode'">
+    <div class="card-host-wrapper" #cardHost>
+      <div class="card-host" *ngFor="let tournament of visibleData">
+        <main-page-join-tournament-card [tournament]="tournament"
+                                        [isDragging]="isDragging$ | async"></main-page-join-tournament-card>
+      </div>
+    </div>
+  </div>
+</div>

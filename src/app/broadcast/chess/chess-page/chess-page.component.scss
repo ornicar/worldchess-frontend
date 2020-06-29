@@ -2,6 +2,15 @@
 @import '../../../../html/css/media';
 @import '../../../../scss/settings';
 
+:host {
+  @include height-650() {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
 wc-chess-page-layout {
   background-color: $black-bg;
 }
@@ -15,7 +24,6 @@ wc-chess-page-layout.my-game {
   flex-direction: column;
   flex: 1 1 auto;
   height: auto;
-
   @include phones() {
     height: 200px;
   }
@@ -33,17 +41,26 @@ wc-chess-page-layout.my-game {
 
 .field__body {
   justify-content: center;
-
   @include phones() {
     flex-direction: column;
   }
 
   &--switched {
     min-height: 512px;
-
     @include phones() {
       min-height: 0;
     }
   }
 }
 
+:host {
+  .not-in-center {
+    ::ng-deep {
+      .field__body {
+        .name {
+          max-width: 80px;
+        }
+      }
+    }
+  }
+}

@@ -49,6 +49,24 @@
   background-image: url("images/board/gray.svg");
 }
 
+.birman-gray .cg-board-wrap {
+  background-image: url("images/board/birman-gray.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.birman-gray.editable .cg-board-wrap {
+  background-image: url("images/board/birman-in-dashes.svg");
+}
+
+.birman-gray.textbook .cg-board-wrap {
+  background-image: url("images/board/birman-in-dashes.svg");
+}
+
+.birman-gray.world-chess-board .cg-board-wrap {
+  background-image: url("images/board/board-wood.jpg");
+}
+
 /*
  * Board
  */
@@ -579,4 +597,286 @@ chess-board .merida .cg-board piece.king.black {
 
 .uscf .cg-board piece.king.black {
   background-image: url('../img/chesspieces/uscf/bK.png');
+}
+
+
+
+
+
+/*
+ * Новые ффигуры Бирмана
+ */
+ .birman-chesspieces .cg-board piece.pawn.white {
+  background-image: url('/assets/images/chess/birman-chesspieces/wP.svg');
+}
+
+.birman-chesspieces .cg-board piece.bishop.white {
+  background-image: url('/assets/images/chess/birman-chesspieces/wB.svg');
+}
+
+.birman-chesspieces .cg-board piece.knight.white {
+  background-image: url('/assets/images/chess/birman-chesspieces/wN.svg');
+}
+
+.birman-chesspieces .cg-board piece.rook.white {
+  background-image: url('/assets/images/chess/birman-chesspieces/wR.svg');
+}
+
+.birman-chesspieces .cg-board piece.queen.white {
+  background-image: url('/assets/images/chess/birman-chesspieces/wQ.svg');
+}
+
+.birman-chesspieces .cg-board piece.king.white {
+  background-image: none;
+}
+
+.birman-chesspieces .cg-board piece.king.white:before {
+  background-image: url('/assets/images/chess/birman-chesspieces/wK.svg');
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.birman-chesspieces .cg-board piece.pawn.black {
+  background-image: url('/assets/images/chess/birman-chesspieces/bP.svg');
+}
+
+.birman-chesspieces .cg-board piece.bishop.black {
+  background-image: url('/assets/images/chess/birman-chesspieces/bB.svg');
+}
+
+.birman-chesspieces .cg-board piece.knight.black {
+  background-image: url('/assets/images/chess/birman-chesspieces/bN.svg');
+}
+
+.birman-chesspieces .cg-board piece.rook.black {
+  background-image: url('/assets/images/chess/birman-chesspieces/bR.svg');
+}
+
+.birman-chesspieces .cg-board piece.queen.black {
+  background-image: url('/assets/images/chess/birman-chesspieces/bQ.svg');
+}
+
+.birman-chesspieces .cg-board piece.king.black {
+  background-image: none;
+}
+
+.birman-chesspieces .cg-board piece.king.black:before {
+  background-image: url('/assets/images/chess/birman-chesspieces/bK.svg');
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+
+/*
+ * Фигуры пр просмотре истории ходов
+ */
+
+.birman-gray.editable .cg-board piece.king.white {
+  background-image: none;
+}
+
+.birman-gray.textbook .cg-board piece.king.white {
+  background-image: none;
+}
+
+.birman-gray.editable .cg-board piece.king.white:before {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-king.svg');
+  content: "";
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+
+.birman-gray.editable .cg-board piece.pawn.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-pawn.svg');
+}
+
+.birman-gray.editable .cg-board piece.bishop.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-bishop.svg');
+}
+
+.birman-gray.editable .cg-board piece.knight.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-knight.svg');
+}
+
+.birman-gray.editable .cg-board piece.rook.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-rook.svg');
+}
+
+.birman-gray.editable .cg-board piece.queen.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-queen.svg');
+}
+
+.birman-gray.editable .cg-board piece.king.black {
+  background-image: none;
+}
+
+.birman-gray.editable .cg-board piece.king.black:before {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-king.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.birman-gray.editable .cg-board piece.pawn.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-pawn.svg');
+}
+
+.birman-gray.editable .cg-board piece.bishop.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-bishop.svg');
+}
+
+.birman-gray.editable .cg-board piece.knight.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-knight.svg');
+}
+
+.birman-gray.editable .cg-board piece.rook.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-rook.svg');
+}
+
+.birman-gray.editable .cg-board piece.queen.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-queen.svg');
+}
+
+.birman-gray.textbook .cg-board piece.pawn.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-pawn.svg');
+}
+
+.birman-gray.textbook .cg-board piece.bishop.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-bishop.svg');
+}
+
+.birman-gray.textbook .cg-board piece.knight.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-knight.svg');
+}
+
+.birman-gray.textbook .cg-board piece.knight.white:before {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-knight.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.birman-gray.textbook .cg-board piece.rook.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-rook.svg');
+}
+
+.birman-gray.textbook .cg-board piece.queen.white {
+  background-image: url('/assets/images/chess/birman-in-dashes/white-queen.svg');
+}
+
+.birman-gray.textbook .cg-board piece.king.black {
+  background-image: none;
+}
+
+.birman-gray.textbook .cg-board piece.king.black:before {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-king.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.birman-gray.textbook .cg-board piece.pawn.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-pawn.svg');
+}
+
+.birman-gray.textbook .cg-board piece.bishop.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-bishop.svg');
+}
+
+.birman-gray.textbook .cg-board piece.knight.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-knight.svg');
+}
+
+.birman-gray.textbook .cg-board piece.rook.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-rook.svg');
+}
+
+.birman-gray.textbook .cg-board piece.queen.black {
+  background-image: url('/assets/images/chess/birman-in-dashes/black-queen.svg');
+}
+
+
+
+/*
+ * Фигуры с деревянной доской
+ */
+
+ .birman-gray.world-chess-board .cg-board piece.king.white {
+  background-image: none;
+}
+
+.birman-gray.world-chess-board .cg-board piece.king.white:before {
+  background-image: url('/assets/images/chess/birman-in-wooden/white-king-wooden.svg');
+  content: "";
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+
+.birman-gray.world-chess-board .cg-board piece.pawn.white {
+  background-image: url('/assets/images/chess/birman-in-wooden/white-pawn-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.bishop.white {
+  background-image: url('/assets/images/chess/birman-in-wooden/white-bishop-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.knight.white {
+  background-image: url('/assets/images/chess/birman-in-wooden/white-knight-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.rook.white {
+  background-image: url('/assets/images/chess/birman-in-wooden/white-rook-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.queen.white {
+  background-image: url('/assets/images/chess/birman-in-wooden/white-queen-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.king.black {
+  background-image: none;
+}
+
+.birman-gray.world-chess-board .cg-board piece.king.black:before {
+  background-image: url('/assets/images/chess/birman-in-wooden/black-king-wooden.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.birman-gray.world-chess-board .cg-board piece.pawn.black {
+  background-image: url('/assets/images/chess/birman-in-wooden/black-pawn-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.bishop.black {
+  background-image: url('/assets/images/chess/birman-in-wooden/black-bishop-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.knight.black {
+  background-image: url('/assets/images/chess/birman-in-wooden/black-knight-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.rook.black {
+  background-image: url('/assets/images/chess/birman-in-wooden/black-rook-wooden.svg');
+}
+
+.birman-gray.world-chess-board .cg-board piece.queen.black {
+  background-image: url('/assets/images/chess/birman-in-wooden/black-queen-wooden.svg');
 }

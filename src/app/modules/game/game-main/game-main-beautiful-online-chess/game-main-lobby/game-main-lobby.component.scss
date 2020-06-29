@@ -1,0 +1,120 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.lobby {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 515px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px 10px 0px;
+  text-align: center;
+  overflow: hidden;
+  @include birman-media {
+    padding: 34px 1px 0px;
+  }
+
+  &:before {
+    content:'';
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: block;
+    height: 100px;
+    background: linear-gradient(180deg, rgba(25, 25, 25, 0) 0%, #191919 100%);
+    opacity: 0.9;
+
+    @include birman-media {
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: auto;
+      width: 100px;
+      height: auto;
+      background: linear-gradient(90deg, rgba(25, 25, 25, 0) 0%, #191919 100%);
+    }
+  }
+}
+
+.lobby__title {
+  position: relative;
+  font: 300 30px/38px $gerbera-font;
+  margin-bottom: 13px;
+}
+
+.lobby__text {
+  position: relative;
+  font: 300 18px/24px $gerbera-font;
+  margin-bottom: 36px;
+  @include birman-media {
+    margin-bottom: 32px;
+  }
+}
+
+.lobby__img {
+  width: 100%;
+  display: none;
+  min-height: 312px;
+
+  img {
+    width: 100%;
+
+    @include birman-media {
+      width: 363px;
+      max-width: 100%;
+      margin: 0 auto;
+      height: 100%;
+    }
+  }
+
+  @include birman-media {
+    height: 266px;
+    overflow: hidden;
+  }
+}
+
+.desktop {
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}
+
+/*--------------локализация-------------*/
+
+.lang-en {
+  .lobby__img--lang-en {
+    display: flex;
+  }
+
+  .lobby__img--lang-ru {
+    display: none;
+  }
+}
+
+.lang-ru {
+  .lobby__img--lang-en {
+    display: none;
+  }
+
+  .lobby__img--lang-ru {
+    display: flex;
+  }
+}

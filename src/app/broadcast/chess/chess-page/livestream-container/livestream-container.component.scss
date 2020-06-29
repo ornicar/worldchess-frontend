@@ -12,7 +12,6 @@
   flex: 0 0 auto;
   height: 100%;
   width: 100%;
-
   @include phones() {
     left: -100vw;
     top: 50px;
@@ -21,7 +20,7 @@
     width: 100%;
     position: fixed;
     background-color: black;
-    transition: left 0.3s ease-in, right 0.3s ease-in;
+    transition: left .3s ease-in, right .3s ease-in;
     z-index: z-index(sticky);
   }
 }
@@ -30,7 +29,6 @@
   display: flex;
   flex: 1 1 auto;
   justify-content: center;
-
   position: relative;
   width: 100%;
   height: 100%;
@@ -38,8 +36,10 @@
   &.livestream-main {
     background: none;
     padding-bottom: 50px;
-
     @include phones() {
+      padding-bottom: 0;
+    }
+    @include height-650() {
       padding-bottom: 0;
     }
 
@@ -56,17 +56,31 @@
     overflow: hidden;
     padding-bottom: 56.25%;
     position: relative;
-    height:100%;
-    background-image: url(../../../../../assets/img/video-bg.jpg);
+    height: 100%;
+    background-image: url(/assets/img/video-bg.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-
     @include phones() {
       padding-bottom: 0;
       height: 100%;
       max-height: 385px;
       align-self: center;
+    }
+    @include height-650() {
+      padding-bottom: 0;
+      height: 100%;
+      max-height: 385px;
+      align-self: center;
+    }
+  }
+
+  :host-context(.chess-layout--switched) {
+    .video-block__wrapper {
+      min-height: 500px;
+      @include height-650() {
+        min-height: auto;
+      }
     }
   }
 
@@ -111,12 +125,12 @@
   cursor: pointer;
   z-index: z-index(sticky, 1);
   display: none;
-
   @include phones() {
     display: block;
   }
 
-  &:before, &:after {
+  &:after,
+  &:before {
     content: '';
     width: 33px;
     height: 3px;
@@ -155,10 +169,12 @@
     bottom: 0;
     left: 0;
     background-color: rgba($violet, 0.95);
-    padding: 11px 30px;
+    padding: 11px 25px;
     box-shadow: 0 0 22px 0 $violet;
     z-index: z-index(sticky);
-
+    @include height-650() {
+      padding: 7px 25px;
+    }
     @include phones() {
       left: initial;
       box-shadow: none;
@@ -168,11 +184,18 @@
 
   &__buy-list {
     margin-top: 10px;
+    min-height: 70px;
+    @include height-650() {
+      margin-top: 5px;
+    }
   }
 
   &__buy-title {
     color: #000;
-    font: 300 22px/29px $gerbera-font
+    font: 300 22px/29px $gerbera-font;
+    @include height-650() {
+      font: 300 20px/27px $gerbera-font;
+    }
   }
 
   &__buy-elem {
@@ -183,6 +206,9 @@
   &__buy-elem-text {
     color: #FFF;
     font: 300 15px/23px $gerbera-font;
+    @include height-650() {
+      font: 300 15px/20px $gerbera-font;
+    }
   }
 
   &__buy-elem-icon {
@@ -191,6 +217,11 @@
     width: 20px;
     height: 20px;
     margin-right: 20px;
+
+    @include height-650() {
+      width: 17px;
+      height: 17px;
+    }
 
     &:after,
     &:before {
@@ -225,12 +256,13 @@
     border-radius: 2px;
     font: 300 18px/18px $gerbera-font;
     height: 40px;
+    position: relative;
+    top: -15px;
 
     &:hover {
       border: 1px solid white;
-      transition: border 0.3s ease;
+      transition: border .3s ease;
     }
-
     @include phones() {
       z-index: z-index(sticky);
     }
@@ -247,26 +279,26 @@
     background-color: #fff;
     border-radius: 50%;
     cursor: pointer;
-
     @include phones() {
       left: 30px;
       top: 150px;
       z-index: z-index(sticky);
     }
 
-    .icon-lock {
+    svg-lock {
       display: block;
     }
 
-    .icon-open {
+    svg-lock-open {
       display: none;
     }
 
     &:hover {
-      .icon-lock {
+      svg-lock {
         display: none;
       }
-      .icon-open {
+
+      svg-lock-open {
         display: block;
       }
 

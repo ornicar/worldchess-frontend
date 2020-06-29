@@ -1,0 +1,40 @@
+@import "variables-new";
+@import "media-new";
+
+.alert {
+  display: flex;
+  background-color: $blue-new;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: white;
+}
+
+.alert__text {
+  color: white;
+  font: 400 15px/20px $cofo-sans-font;
+  padding-right: 20px;
+}
+
+.alert__mat-dialog-actions {
+  display: flex;
+  align-items: center;
+}
+
+.alert__alert__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 32px;
+  border-radius: 3px;
+  font: 400 15px/20px $cofo-sans-font;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  background-color: $yellow-new;
+  border: 0;
+
+  &:hover {
+    background-color: $yellow-new-hover;
+  }
+}
+

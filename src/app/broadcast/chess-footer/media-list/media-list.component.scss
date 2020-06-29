@@ -1,133 +1,125 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
+@import 'variables.scss';
+@import 'media.scss';
 
 .media-card {
-    position: relative;
-    height: 240px;
-    padding: 2px 1px 0 1px;
+  position: relative;
+  height: 240px;
+  padding: 2px 1px 0;
+  width: 100%;
+  cursor: pointer;
+
+  &__img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     width: 100%;
-    cursor: pointer;
+    height: 100%;
+  }
 
-    &__img {
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 100%;
-        height: 100%;
+  &__btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    :hover {
+      transition: all .2s ease;
+      transform: scale(1.2);
     }
+  }
 
-    &__btn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        :hover {
-          transition: all .2s ease;
-          transform: scale(1.2);
-        }
-    }
-
-    &__play {
-        width: 100%;
-        height: 100%;
-        fill: rgba(123, 251, 173, 0.6);
-        filter: drop-shadow(0px 0px 7px rgba(123, 251, 173, 0.6));
-    }
+  &__play {
+    width: 100%;
+    height: 100%;
+    fill: rgba(123, 251, 173, 0.6);
+    filter: drop-shadow(0px 0px 7px rgba(123, 251, 173, 0.6));
+  }
 }
 
 .media-card-list {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 19px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 19px;
 
-    &__elem {
-      width: 25%;
+  &__elem {
+    width: 25%;
+    @include ipad() {
+      width: 50%;
+    }
+    @include phones() {
+      width: 100%;
+      margin-bottom: 20px;
 
-      @include ipad() {
-        width: 50%;
-      }
-
-      @include phones() {
-        width: 100%;
-        margin-bottom: 20px;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-      }
-
-      @media screen and (min-width: 1600px) {
-        width: 20%;
-      }
-
-      @media screen and (min-width: 1920px) {
-        width: 16.666%;
+      &:last-child {
+        margin-bottom: 0;
       }
     }
+    @media screen and (min-width: 1600px) {
+      width: 20%;
+    }
+    @media screen and (min-width: 1920px) {
+      width: 16.666%;
+    }
+  }
 }
 
 .section-media {
-    border-top: 1px solid #CDCDCD;
-    padding-bottom: 20px;
-    background-color: $gray;
+  border-top: 1px solid #CDCDCD;
+  padding-bottom: 20px;
+  background-color: $gray;
 
-    &__header {
-        padding: 20px;
-        min-height: 206px;
+  &__header {
+    padding: 20px;
+    min-height: 206px;
 
-        .text {
-            font: 400 18px/18px $gerbera-font;
-            margin-bottom: 20px;
-            color: #9E9E9E;
-
-            @include tablets-big() {
-                font: 400 15px/15px $gerbera-font;
-            }
-        }
-
-        .wc-title {
-            font: 300 38px/38px $gerbera-font;
-            max-width: 33%;
-
-            @include tablets-big() {
-                max-width: 50%;
-                font: 300 33px/33px $gerbera-font;
-            }
-
-            @include ipad() {
-                max-width: 100%;
-            }
-        }
+    .text {
+      font: 400 18px/18px $gerbera-font;
+      margin-bottom: 20px;
+      color: #9E9E9E;
+      @include tablets-big() {
+        font: 400 15px/15px $gerbera-font;
+      }
     }
+
+    .wc-title {
+      font: 300 38px/38px $gerbera-font;
+      max-width: 33%;
+      @include tablets-big() {
+        max-width: 50%;
+        font: 300 33px/33px $gerbera-font;
+      }
+      @include ipad() {
+        max-width: 100%;
+      }
+    }
+  }
 }
 
 .show-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  cursor: pointer;
+  border-top: 1px solid #CDCDCD;
+  background-color: $gray;
+
+  span {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 64px;
-    cursor: pointer;
-    border-top: 1px solid #CDCDCD;
-    background-color: $gray;
-
-    span {
-        display: flex;
-        align-items: center;
-        font: 400 18px/23px $gerbera-font;
-
-        @include tablets-big() {
-            font: 400 15px/23px $gerbera-font;
-        }
+    font: 400 18px/23px $gerbera-font;
+    @include tablets-big() {
+      font: 400 15px/23px $gerbera-font;
     }
+  }
 
-    .icon {
-        position: relative;
-        top: 2px;
-        width: 11px;
-        height: 6px;
-        fill: #9E9E9E;
-        margin-left: 10px; 
-        transform: rotate(-90deg);
-    }
+  .icon {
+    position: relative;
+    top: 2px;
+    width: 11px;
+    height: 6px;
+    fill: #9E9E9E;
+    margin-left: 10px;
+    transform: rotate(-90deg);
+  }
 }

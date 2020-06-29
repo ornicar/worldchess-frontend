@@ -1,0 +1,14 @@
+<div class="root" #cardContainer (mousedown)="startDrag($event)" (mouseleave)="mouseLeave($event)"
+     (mouseenter)="mouseEnter($event)" [ngClass]="move==='left'?'move-left':'move-right'">
+  <div class="card-host-wrapper" #cardHost>
+    <div *ngFor="let tournament of tournaments" class="card-row">
+      <main-page-tournaments-today-row-card [isDragging]="isDragging$|async"  [tournament]="tournament"></main-page-tournaments-today-row-card>
+    </div>
+    <div *ngFor="let tournament of tournaments" class="card-row">
+      <main-page-tournaments-today-row-card [isDragging]="isDragging$|async"  [tournament]="tournament"></main-page-tournaments-today-row-card>
+    </div>
+    <div *ngFor="let tournament of tournaments" class="card-row">
+      <main-page-tournaments-today-row-card [isDragging]="isDragging$|async" [tournament]="tournament"></main-page-tournaments-today-row-card>
+    </div>
+  </div>
+</div>

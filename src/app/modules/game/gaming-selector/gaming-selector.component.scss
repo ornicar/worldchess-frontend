@@ -1,0 +1,90 @@
+@import "variables-new";
+@import "media-new";
+
+.toggle-buttons-game {
+    display: flex;
+    align-self: flex-start;
+    min-height: 40px;
+    flex: 0 0 auto;
+    border-radius: 3px;
+    overflow: hidden;
+
+    @include phones() {
+        flex-direction: column;
+        height: auto;
+    }
+}
+
+.toggle-buttons-game__elem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6px 24px;
+    font: 400 22px/22px $gerbera-font;
+    color: #fff;
+    cursor: pointer;
+    border-width: 1px;
+    margin-left: -1px;
+    border-style: solid;
+    border-color: rgba(#FFF, 0.5);
+    border-collapse: collapse;
+
+    @include phones() {
+        margin-left: 0;
+        padding: 8px;
+    }
+ 
+    &:first-child {
+        border-radius: 3px 0 0 3px;
+        margin-left: 0px;
+        @include phones() {
+            border-radius: 3px 3px 0 0;
+        }
+    }
+
+    &:last-child {
+        border-radius: 0 3px 3px 0;
+        @include phones() {
+            border-radius: 0 0 3px 3px;
+        }
+    }
+
+    &.active {
+        background-color: #fff;
+        color: #000;
+        cursor: default;
+
+        .toggle-buttons-game__btn {
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
+
+    &:hover {
+        border-color: #fff;
+    }
+}
+
+.toggle-buttons-game__btn {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    margin-right: 10px;
+
+    &:after {
+        content: '';
+        display: block;
+        width: 16px;
+        height: 16px;
+        background-color: #000;
+        border-radius: 50%;
+        opacity: 0;
+    }
+}

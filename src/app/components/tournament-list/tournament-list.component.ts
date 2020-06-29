@@ -19,13 +19,13 @@ import { Tournament, TournamentResourceType, TournamentStatus } from '../../broa
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TournamentListComponent {
-  @ContentChild('title', { read: TemplateRef }) title: TemplateRef<HTMLElement>;
-  @ContentChild('buttons', { read: TemplateRef }) buttons: TemplateRef<HTMLElement>;
+  @ContentChild('title', { read: TemplateRef, static: true}) title: TemplateRef<HTMLElement>;
+  @ContentChild('buttons', { read: TemplateRef, static: true }) buttons: TemplateRef<HTMLElement>;
   @Input() tournaments: Tournament[];
   @Input() isDisplayShowMoreBtn: boolean;
   @Output() clickShowMore = new EventEmitter();
   @Output() clickItem: EventEmitter<Tournament> = new EventEmitter();
-  @ViewChild('list')
+  @ViewChild('list', { static: true })
   tournamentsListEl: ElementRef;
 
   readonly TOURNAMENT_ITEM_HEIGHT = 378;

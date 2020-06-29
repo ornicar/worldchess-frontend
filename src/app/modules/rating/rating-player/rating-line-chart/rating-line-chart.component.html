@@ -1,0 +1,74 @@
+<div class="block-statistics__head">
+  <div class="chart-filter">
+    <ul class="chart-filter__list">
+      <li class="chart-filter__elem" *ngIf="data">
+        Official FIDE:
+        <ul class="chart-filter__elem-list">
+          <li>
+              <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.CLASSIC"
+              (click)="setMode(RatingTypeGame.CLASSIC)">Bullet</span>
+          </li>
+          <li>
+              <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.RAPID"
+              (click)="setMode(RatingTypeGame.RAPID)">Rapid</span>
+          </li>
+          <li>
+              <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.BLITZ"
+              (click)="setMode(RatingTypeGame.BLITZ)">Blitz</span>
+          </li>
+        </ul>
+      </li>
+      <li class="chart-filter__elem" *ngIf="dataFide?.fide_bullet || dataFide?.fide_blitz || data?.fide_rapid">
+          FIDE Online:
+          <ul class="chart-filter__elem-list">
+            <li *ngIf="dataFide?.fide_bullet">
+                <span class="chart-filter__link"
+                [class.chart-filter__link--active]="mode === RatingTypeGame.FIDE_BULLET"
+                (click)="setMode(RatingTypeGame.FIDE_BULLET)">Bullet</span>
+            </li>
+            <li *ngIf="dataFide?.fide_rapid">
+                <span class="chart-filter__link"
+                [class.chart-filter__link--active]="mode === RatingTypeGame.FIDE_RAPID"
+                (click)="setMode(RatingTypeGame.FIDE_RAPID)">Rapid</span>
+            </li>
+            <li *ngIf="dataFide?.fide_blitz">
+                <span class="chart-filter__link"
+                [class.chart-filter__link--active]="mode === RatingTypeGame.FIDE_BLITZ"
+                (click)="setMode(RatingTypeGame.FIDE_BLITZ)">Blitz</span>
+            </li>
+          </ul>
+        </li>
+      <li class="chart-filter__elem" *ngIf="dataWS?.worldchess_bullet || dataFide?.worldchess_rapid || dataFide?.worldchess_blitz">
+        World Chess:
+        <ul class="chart-filter__elem-list">
+          <li>
+              <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.WORLDCHESS_BULLET"
+              (click)="setMode(RatingTypeGame.WORLDCHESS_BULLET)">Bullet</span>
+          </li>
+          <li>
+              <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.WORLDCHESS_RAPID"
+              (click)="setMode(RatingTypeGame.WORLDCHESS_RAPID)">Rapid</span>
+          </li>
+          <li>
+              <span class="chart-filter__link"
+              [class.chart-filter__link--active]="mode === RatingTypeGame.WORLDCHESS_BLITZ"
+              (click)="setMode(RatingTypeGame.WORLDCHESS_BLITZ)">Blitz</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="block-schedule">
+  <div class="block-schedule--wrap">
+    <svg #chartPoints class="chart_points"></svg>
+    <div class="chart-wrap">
+      <svg #chart class="chart"></svg>
+    </div>
+  </div>
+</div>

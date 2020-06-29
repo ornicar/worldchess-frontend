@@ -1,28 +1,24 @@
-import {INewsFilters, NewsResourceService} from './news-resource.service';
-import {INews} from './news.model';
-import {catchError, map, tap} from 'rxjs/operators';
-import {BehaviorSubject, combineLatest, EMPTY, of} from 'rxjs';
-import {Injectable} from '@angular/core';
-
-const NEWS_PER_PAGE = 15;
+import { INewsPagination, NewsResourceService } from './news-resource.service';
+import { INews } from './news.model';
+import { catchError, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, EMPTY, of } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class NewsPaginationService {
   isNewsPage = false;
   showButton = false;
-  filter: {tags?: string[], categories?: string[]} = null;
+  nextNewsUrl: string;
+  count = 0;
+  filter: INewsPagination;
 
   private show$ = new BehaviorSubject<number>(0);
-  private newsList$ = new BehaviorSubject<INews[]>([]);
-
-  news$ = combineLatest(this.newsList$, this.show$)
-    .pipe(map(([news, count]) => news.slice(0, count)));
+  news$ = new BehaviorSubject<INews[]>([]);
 
   private page = 1;
   private _loading = false;
 
   constructor(private newsResource: NewsResourceService) {
-
   }
 
   get show() {
@@ -36,26 +32,29 @@ export class NewsPaginationService {
   load(countShow) {
     this._loading = true;
     this.page = 1;
-    this.newsList$.next([]);
     this.show$.next(countShow);
     return this.loadNextPageNews();
   }
 
   private loadNextPageNews() {
-    const params = this.preparedFilters() || {};
-    params.per_page = NEWS_PER_PAGE;
-    params.page = this.page;
+    const params = this.prepareFilter() || {};
     this._loading = true;
 
-    return this.newsResource.loadNews(params)
+    return this.newsResource.loadNews(this.filter)
       .pipe(
+        map((response) => {
+          this.count = response.count;
+          this.nextNewsUrl = response.next;
+
+          return response.results.map((news) => this.newsResource.parseNewsResponseItem(news));
+        }),
         map(n => this.sortTags(n)),
         tap((news) => {
-          const nextList = this.newsList$.value;
+          const nextList = this.news$.value;
           nextList.push(...news);
-          this.newsList$.next(nextList);
+          this.news$.next(nextList);
 
-          this.showButton = this.show$.value < this.newsResource.count;
+          this.showButton = this.show$.value < this.count;
           if (!this.showButton) {
             this.show$.next(news.length);
           }
@@ -73,23 +72,22 @@ export class NewsPaginationService {
     return news.map((newsItem) => ({...newsItem, tags: newsItem.tags.sort(this.compareTags)}));
   }
 
-  private compareTags(tag1: {id: number, name: string}, tag2: {id: number, name: string}) {
+  private compareTags(tag1: { id: number, name: string }, tag2: { id: number, name: string }) {
     return tag2.id - tag1.id;
   }
 
-  public preparedFilters(): INewsFilters {
+  public prepareFilter() {
     if (!this.filter) {
-      return null;
+      this.filter = {
+        limit: this.show$.value,
+        offset: 0
+      };
+    } else {
+      this.filter.limit = this.show$.value;
+      this.filter.offset += this.show$.value;
     }
 
-    const out: any = {};
-    if (this.filter.tags) {
-      out.tags = this.filter.tags.join(',');
-    }
-    if (this.filter.categories) {
-      out.categories = this.filter.categories.join(',');
-    }
-    return out;
+    return this.filter;
   }
 
   public showMore(show) {
@@ -97,18 +95,6 @@ export class NewsPaginationService {
       return of(false);
     }
 
-    const nextShow = this.show$.value + show;
-
-    this.show$.next(nextShow);
-    if (nextShow >= this.newsResource.count) {
-      this.showButton = false;
-      return of(true);
-    }
-
-    if (this.newsList$.value.length < nextShow + show && this.newsResource.count > nextShow) {
-      return this.loadNextPageNews().pipe(map(() => true));
-    }
-
-    return of(true);
+    return this.loadNextPageNews().pipe(map(() => true));
   }
 }

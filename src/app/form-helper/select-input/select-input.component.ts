@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-select-input',
-  templateUrl: './select-input.component.html'
+  styleUrls: ['./select-input.component.scss'],
+  templateUrl: './select-input.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class SelectInputComponent {
   @Input() label = '';
@@ -13,6 +15,7 @@ export class SelectInputComponent {
   @Input() responseError = '';
 
   @Input() original = null;
+  @Input() disabled = false;
 
   isFocus = false;
 

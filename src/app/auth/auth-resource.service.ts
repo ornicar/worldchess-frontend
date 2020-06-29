@@ -1,8 +1,8 @@
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import {
   IActivateCredential,
   INewPasswordCredential,
@@ -11,9 +11,11 @@ import {
   ISignUpCredential,
   ITokenResponse,
   IUidResponse,
-  IActivationCodeResponse
+  IActivationCodeResponse,
+  ISimpleSignUpCredentials,
+  TwitterOAuthCredentials,
 } from './auth.model';
-import { ISimpleSignUpCredentials, TwitterOAuthCredentials } from '../user-access/dto/response/tokens';
+
 
 @Injectable()
 export class AuthResourceService {
@@ -140,6 +142,13 @@ export class AuthResourceService {
     return this.httpClient.post<ITokenResponse>(
       `${environment.endpoint}/auth/users/simple-auth-code/`,
       credential
+    );
+  }
+
+  checkEmail(email: string): Observable<any> {
+    return this.httpClient.post(
+      `${environment.endpoint}/auth/users/email-check/`,
+      { email }
     );
   }
 

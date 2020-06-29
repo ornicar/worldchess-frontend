@@ -1,0 +1,16 @@
+<div class="button-block">
+  <div class="button-block__links-list">
+    <a href="#" class="button-block__link" (click)="lobby($event)"
+      (click)="window['dataLayerPush']('wchEvent', 'Main', 'Button', 'Lobby', '', '');">
+      {{ 'OTHER.LOBBY' | translate}}
+    </a>
+    <a href="#" class="button-block__link" (click)="tournaments($event)"
+      (click)="window['dataLayerPush']('wchEvent', 'Main', 'Button', 'Tournaments', '', '');">{{ 'TOURNAMENTS.TOURNAMENTS' | translate}}</a>
+  </div>
+
+  <wc-btn-with-loading (click)="quickStart($event)"
+    (click)="window['dataLayerPush']('wchEvent', 'Main', 'Button', 'Quick game', '', '');"
+    class="btn-new--spall btn-new--blue-filled">
+    {{ 'BUTTONS.QUICK_GAME' | translate}}
+  </wc-btn-with-loading>
+</div>

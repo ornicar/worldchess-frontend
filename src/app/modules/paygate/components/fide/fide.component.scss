@@ -1,488 +1,164 @@
-@import 'variables';
-@import 'media';
+@import 'variables-new';
+@import 'media-new';
 
-.register {
-    display: flex;
+
+.fide__body {
+  display: flex;
+  padding-right: 39px;
+  flex: 0 0 auto;
+
+  &--width-565 {
+    max-width: 565px;
+  }
+
+  @include phones() {
     flex-direction: column;
-    position: relative;
-    height: 100%;
-    padding: 25px;
-    background-color: #525252;
+    padding-right: 0;
+  }
 }
 
-.register__close {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    width: 19px;
-    height: 19px;
-    cursor: pointer;
-
-    &:after,
-    &:before {
-        content: '';
-        display: block;
-        width: 25px;
-        height: 1px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(45deg);
-        background-color: #999;
-    }
-
-    &:before {
-        transform: translate(-50%, -50%) rotate(-45deg);
-    }
+.fide__body-form-col {
+  flex: 1;
+  @include phones() {
+    flex: 0 0 auto;
+  }
 }
 
-.register__title {
-    font: 300 33px/43px $gerbera-font;
-    color: #fff;
-    height: 160px;
-    padding-right: 25px;
+.input-text__wrapper {
+  padding: 15px 0 5px;
 
-    a {
-        color: #999;
-    }
-
-    @include laptop() {
-        font: 300 20px/29px $gerbera-font;
-        height: auto;
-    }
-
-    @include tablets() {
-        font: 300 29px/29px $gerbera-font;
-        height: auto;
-    }
+  &--error {
+    border-bottom: 1px solid #ff7070;
+  }
 }
 
-.register__labels {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.fide__photo-col {
+  flex: 0 0 auto;
+  width: 260px;
+  padding: 6px 0 0;
+  padding-left: 33px;
+
+  @include phones() {
+    padding: 0;
+  }
+}
+
+.create-fide--error {
+  margin: 0 0 10px 15px;
+  color: #ff7070;
+  width: 300px;
+}
+
+.fide__form-row {
+  display: flex;
+  margin: 0 -15px;
+  margin-bottom: 10px;
+
+  @include phones() {
     flex-direction: column;
-    width: 100%;
+    margin-bottom: 0;
+  }
 
-    @include laptop() {
-        margin: 0 auto;
-
-        .input-text {
-            margin-bottom: 0;
-
-            &__row {
-                margin: 0 -15px 12px;
-
-                &:last-child {
-                    margin-bottom: 0;
-                }
-
-                .date-of-birth__inputs {
-                    font-size: 18px;
-                    line-height: 17px;
-                }
-
-                .date-of-birth__input {
-                    font-size: 18px;
-                    line-height: 24px;
-                }
-
-                .register-radio__text {
-                    font-size: 18px;
-                }
-
-                .input-text__col.mat-select-value-text {
-                    font-size: 18px;
-                    line-height: 24px;
-                }
-
-                &.input-text__col.mat-form-field-appearance-legacy.mat-form-field-infix {
-                    padding: 11px 0 4px 0;
-                }
-            }
-
-            &__elem {
-                font-size: 16px;
-                line-height: 20px;
-            }
-
-            &__wparrer {
-                padding: 19px 0 4px 0;
-            }
-
-            &__error {
-                font-size: 12px;
-                line-height: 18px;
-            }
-        }
-    }
-
-    @include tablets() {
-        margin: 0 auto;
-    }
+  &--margin-bottom {
+    margin-bottom: 25px;
 
     @include phones() {
-        margin: 0 auto;
-        padding: 0 50px;
+      margin-bottom: 14px;
     }
-
-    @include phones-small() {
-        padding: 0;
-    }
+  }
 }
 
-.register__footer {
-    height: 160px;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 -10px;
+.fide__footer-text {
+  font: 400 15px/20px $gerbera-font;
+  color: #fff;
+  margin-left: auto;
 
-    @include laptop() {
-        .navigation__btn {
-            height: 30px;
-        }
-    }
-
-    @include tablets() {
-        height: auto;
-    }
-
-    @include phones-small() {
-        flex-direction: column;
-        margin: 0;
-    }
-}
-
-.register__footer-coll {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    flex: 1;
-    padding: 0 25px;
-
-    @include tablets() {
-        width: 100%;
-        justify-content: space-between;
-    }
-}
-
-.register-checkbox__content {
-    display: flex;
-}
-
-.register-checkbox__input {
-    position: absolute;
-    opacity: 0;
-}
-
-.register-checkbox__btn {
-    position: relative;
-    top: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 19px;
-    height: 19px;
-    border: 1px solid #979797;
-    padding: 3px;
-    fill: #fff;
-    margin-right: 15px;
-
-    .icon {
-        opacity: 0;
-    }
-}
-
-.register-checkbox__text {
-    font: 400 15px/23px $gerbera-font;
-    color: #fff;
-
-    span {
-        color: #979797;
-    }
-}
-
-.register-checkbox__input:checked+.register-checkbox__content {
-    .register-checkbox__btn {
-        .icon {
-            opacity: 1;
-        }
-    }
-}
-
-.register__btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    height: 60px;
-    padding: 14px 25px;
-    background-color: #fff;
-    border-radius: 3px;
-    border: 0;
-    font: 300 22px/22px $gerbera-font;
-    cursor: pointer;
-
-    &--pro {
-        background-color: $pink;
-    }
-
-    &--premium {
-        background-color: #dca4ff;
-    }
-
-    @include tablets() {
-        width: 246px;
-    }
-
-    @include phones-small() {
-        width: 100%;
-        font: 300 18px/18px $gerbera-font;
-    }
-}
-
-.register__text {
-    font: 300 15px/23px $gerbera-font;
-    color: #999;
-
-    a,
-    span {
-        color: #fff;
-    }
-}
-
-.navigation {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    padding-right: 5px;
-    align-items: center;
-    justify-content: flex-end;
-
-    &--flex-start {
-        justify-content: flex-start;
-        align-items: flex-end;
-    }
-}
-
-.navigation__btn {
-    display: flex;
-    align-items: center;
-    font: 300 22px/17px $gerbera-font;
-    color: #fff;
-    border: 0;
-    background-color: transparent;
-    cursor: pointer;
-    height: 60px;
-
-    .icon {
-        position: relative;
-        top: 2px;
-        margin-right: 5px;
-        fill: #979797;
-        width: 20px;
-        height: 20px;
-    }
-}
-
-.input-text__row {
-    display: flex;
-    margin: 0 -15px 20px;
-
-    @include phones-small() {
-        margin: 0 -10px 20px;
-    }
-}
-
-.input-text__col {
-    flex: 1;
-    padding: 0 15px;
-
-    @include phones-small() {
-        padding: 0 10px;
-    }
-}
-
-.input-text__error {
-    position: relative;
-}
-
-.register__steps {
-    font: 400 15px/20px $gerbera-font;
-    text-align: center;
-    color: #999;
+  @include phones() {
+    margin-left: 0;
     margin-bottom: 10px;
-    width: auto;
-    align-self: flex-end;
+  }
 
-    span {
-        color: #fff;
-    }
-}
-
-.date-of-birth {
-    width: 100%;
-}
-
-.date-of-birth__inputs {
+  a {
     display: flex;
+    align-items: center;
     color: #fff;
-    font: 300 25px/25px $gerbera-font;
 
-    @include phones-small() {
-        font: 300 18px/22px $gerbera-font;
+    &:hover {
+      color: #000;
+      .icon {
+        fill: #000;
+      }
+      &:visited {
+        color: #000;
+      }
     }
+
+    .icon {
+      width: 5px;
+      height: 20px;
+      fill: #fff;
+      margin-left: 5px;
+    }
+
+    &:visited {
+      color: #fff;
+    }
+  }
 }
 
-.date-of-birth__input {
-    display: inline-block;
+.fide__form-col {
+  padding: 0 15px;
+  flex: 1;
+
+  @include phones() {
+    margin-bottom: 11px;
+  }
+
+  &--width-155 {
+    width: 155px;
     flex: 0 0 auto;
-    background-color: transparent;
-    font: 300 22px/17px $gerbera-font;
-    color: #999;
-    width: 45px;
-    border: 0;
-    color: #fff;
-    margin-left: 5px;
-    text-align: center;
-
-    @include phones-small() {
-        font: 300 17px/17px $gerbera-font;
-        width: 35px;
-    }
-
-    &:first-child {
-        margin-left: 0;
-    }
-
-    &:last-child {
-        width: 50px;
-    }
+  }
 }
 
-.date-of-birth__text {
-    color: #fff;
-    font: 400 15px/20px $gerbera-font;
-    margin-bottom: 10px;
-}
-
-.gender__text {
-    color: #fff;
-    font: 400 15px/20px $gerbera-font;
-    margin-bottom: 10px;
-}
-
-.gender__radio {
-    display: flex;
-}
-
-.register-radio {
-    margin-right: 29px;
-
-    &:last-child {
-        margin-right: 0;
-    }
-
-    @include phones-small() {
-        margin-right: 10px;
-    }
-}
-
-.register-radio__input {
-    position: absolute;
-    opacity: 0;
-}
-
-.register-radio__content {
-    display: flex;
-    align-items: center;
-}
-
-.register-radio__text {
-    color: #fff;
-    font: 300 22px/17px $gerbera-font;
-
-    span {
-        @include phones-small() {
-            display: none;
-        }
-    }
-}
-
-.register-radio__btn {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 23px;
-    height: 23px;
+.fide__footer {
+  display: flex;
+  margin: 0 -5px;
+  padding-top: 10px;
+  margin-top: auto;
+  @include phones() {
     flex: 0 0 auto;
-    border-radius: 50%;
-    border: 1px solid #979797;
-    margin-right: 19px;
-
-    &:after {
-        content: '';
-        display: block;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background-color: #979797;
-        opacity: 0;
-    }
-
-    @include phones-small() {
-        margin-right: 10px;
-    }
+    flex-direction: column-reverse;
+  }
 }
 
-.register-radio__input:checked+.register-radio__content .register-radio__btn:after {
-    opacity: 1;
+.fide__footer-coll {
+  display: flex;
+  align-items: flex-end;
+  flex: 1 1 auto;
+  padding: 0 5px;
+  @include phones() {
+    width: 100%;
+  }
 }
 
-.your-photo {
-    display: flex;
-    flex-direction: column;
-    width: 147px;
-    height: 193px;
-    border: 1px solid #999;
-    margin-top: 30px;
 
-    img {
-        max-width: 100%;
-        max-height: 100%;
-    }
+/*-----------------*/
+
+.register__head {
+  margin-bottom: 5px;
 }
 
-.your-photo__text {
-    color: #fff;
-    font: 300 22px/17px $gerbera-font;
-    padding: 10px;
-    text-align: center;
+.toggle-buttons {
+  margin-bottom: 23px;
+
+  @include phones() {
+    margin-top: 16px;
+    margin-bottom: 14px;
+  }
 }
 
-.photo-preview {
-    max-width: 200px;
-    max-height: 200px;
-}
 
-.your-photo__icon {
-    margin-top: auto;
-    width: 136px;
-    height: 135px;
-
-    .icon {
-        fill: #fff;
-        width: 100%;
-    }
-}
-
-.input-text__placeholder {
-    &--additional {
-        margin-left: 4px;
-        font: 300 16px/22px $gerbera-font;
-        color: #fff;
-        opacity: .5;
-    }
+.register-input__placeholder {
+  top: 62%;
+  font: 300 22px/22px $gerbera-font;
 }

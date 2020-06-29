@@ -1,161 +1,158 @@
-<wc-preloader *ngIf="loading$ | async"></wc-preloader>
-
-<form *ngIf="!(loading$ | async)" [formGroup]="form" (ngSubmit)="submit()" class="register" [class.mobile]="isMobile">
-  <a class="register__close" (click)="closePopup()"></a>
-
-  <div *ngIf="!isShownPromocodeScreen || !isMobile; else promocodeTitle" class="register__title">
-    Thanks for registering! Now fill in your payment information
-  </div>
-
-  <ng-template #promocodeTitle>
-    <div class="register__title">
-      Do you have promocode? Use it!
+<wc-base-popup needResetTumblers="true">
+  <form [formGroup]="form"(ngSubmit)="form.submit()" class="register" [class.mobile]="isMobile">
+    <div class="register__head">
+      <div class="register__title">
+        <span class="register__title-text register__title-text--width" [innerHTML]="title$ | async"></span>
+      </div>
+      <div class="register__step" *ngIf="maxSteps$ | async as maxSteps">
+        <svg-arrow-left class="icon" (click)="history.back()"></svg-arrow-left>
+        <svg-arrow-left-bold class="icon icon--mobile" (click)="history.back()"></svg-arrow-left-bold>4<span style="font-size:0.5em">&nbsp;</span>/<span style="font-size:0.5em">&nbsp;</span>{{ maxSteps }}</div>
     </div>
-  </ng-template>
 
-  <ng-container *ngIf="isShownPromocodeScreen">
-    <div class="coupon" [class.mobile]="isMobile">
-      <label class="input-text__input">
-        <div class="input-text__wparrer" [class.input-text__wparrer--error]="promocodeError">
-          <input
-            class="input-text__elem"
-            formControlName="promocode"
-            [class.input-text__elem--active]="!!form.controls['promocode'].value"
-            (keydown.enter)="applyPromocode($event)"
-            type="text"
-          />
-          <div class="input-text__placeholder">Promocode</div>
-          <div *ngIf="promocodeError" class="input-text__error">
-            <div>{{ promocodeError }}</div>
-          </div>
-        </div>
-      </label>
-      <button
-        class="register__btn register__btn--pro"
-        (click)="applyPromocode($event)"
-        [class.accepted]="promocodeAccepted"
-        [disabled]="promocodeAccepted"
-      >
-        {{ promocodeAccepted ? 'accepted' : 'apply' }}
-      </button>
-    </div>
-  </ng-container>
+    <div class="payment__body">
+      <div class="payment__form-wrapper">
 
-  <ng-container *ngIf="!isShownPromocodeScreen || !isMobile">
-    <div class="register__labels">
-      <div class="card">
-        <div class="card__row">
-          <div class="card__col card__col--flex-3">
-            <label class="input-text__input">
-              <div class="input-text__wparrer">
-                <input
-                  mask="0000 0000 0000 0000"
-                  class="input-text__elem"
-                  [class.input-text__elem--active]="!!form.controls['card_number'].value"
+        <div class="payment__form" [shake]="form.shake$">
+          <div class="payment__form-row">
+            <label class="register-input__input"
+            [class.register-input__input--red]="form.controls['card_number'].error$ | async"
+            >
+              <div class="register-input__wrapper">
+                <input mask="0000 0000 0000 0000" class="register-input__elem"
+                  [class.register-input__elem--active]="!!form.controls['card_number'].value"
                   type="text"
-                  formControlName="card_number"
-                />
-                <div class="input-text__placeholder">Card number</div>
+                  paygateFormControl
+                  formControlName="card_number" />
+                  <div class="register-input__placeholder">Card number
+                    <div *ngIf="form.controls['card_number'].error$ | async" class="register-input__error">
+                      <div class="register-input__error-text">Invalid card number</div>
+                    </div>
+                  </div>
               </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.card_number?.required">Invalid card number</div>
-                <div [hidden]="!errors?.card_number?.response">{{ errors?.card_number?.response }}</div>
-              </div>
+
             </label>
           </div>
-          <div class="card__col">
-            <label class="input-text__input">
-              <div class="input-text__wparrer">
-                <input
-                  mask="000"
-                  class="input-text__elem"
-                  [class.input-text__elem--active]="!!form.controls['cvc'].value"
-                  type="text"
-                  formControlName="cvc"
-                />
-                <div class="input-text__placeholder">CVC</div>
-              </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.cvc?.required">Invalid cvc</div>
-                <div [hidden]="!errors?.cvc?.response">{{ errors?.cvc?.response }}</div>
-              </div>
-            </label>
-          </div>
-        </div>
 
-        <div class="card__row">
-          <div class="card__col">
-            <app-select-input
-              label="Exp. Month"
-              [control]="form.controls['exp_month']"
-              [options]="months"
-            ></app-select-input>
-          </div>
-          <div class="card__col">
-            <app-select-input
-              label="Exp. Year"
-              [control]="form.controls['exp_year']"
-              [options]="years"
-            ></app-select-input>
-          </div>
-          <div class="card__col card__col--flex-2"></div>
-        </div>
+          <div class="payment__form-row">
+            <div class="payment__form-col">
+              <div class="select-new-wrapper">
+                <div class="select-new"
+                     [class.select-new--red]="(form.controls['exp_month'].error$ | async) && !!form.controls['exp_month'].value">
+                  <select formControlName="exp_month" paygateFormControl>
+                    <option selected></option>
+                    <option *ngFor="let month of months" [value]="month.value">{{month.label}}</option>
+                  </select>
+                  <div class="select-new__placeholder">MM</div>
+                </div>
+                <div class="select-new-dash"></div>
+                <div class="select-new"
+                     [class.select-new--red]="(form.controls['exp_month'].error$ | async) && !!form.controls['exp_month'].value">
+                  <select formControlName="exp_year" paygateFormControl>
+                    <option selected></option>
+                    <option *ngFor="let year of years" [value]="year.value">{{year.label}}</option>
+                  </select>
+                  <div class="select-new__placeholder">YY</div>
+                </div>
+              </div>
+            </div>
 
-        <div class="card__row">
-          <div class="card__col">
-            <label class="input-text__input">
-              <div class="input-text__wparrer">
+            <div class="payment__form-col payment__form-col--width">
+              <label class="register-input__input"
+              [class.register-input__input--red]="!!(form.controls['cvc'].error$ | async) && !!form.controls['cvc'].value">
+                <div class="register-input__wrapper">
+                  <input mask="000" class="register-input__elem"
+                    [class.register-input__elem--active]="!!form.controls['cvc'].value"
+                    type="text"
+                    formControlName="cvc"
+                    paygateFormControl
+                  />
+                    <div class="register-input__placeholder">CVC
+                        <!-- <div *ngIf="controlErrors['cvc'] | async" class="register-input__error">
+                          <div>Invalid cvc</div>
+                        </div> -->
+                    </div>
+                </div>
+
+              </label>
+            </div>
+          </div>
+
+          <div class="payment__form-row">
+            <label class="register-input__input"
+              [class.register-input__input--red]="!!(form.controls['name'].error$ | async) && !!form.controls['name'].value"
+            >
+              <div class="register-input__wrapper">
                 <input
-                  class="input-text__elem"
-                  [class.input-text__elem--active]="!!form.controls['name'].value"
+                  class="register-input__elem register-input__elem--big"
+                  [class.register-input__elem--active]="!!form.controls['name'].value"
                   type="text"
                   formControlName="name"
+                  paygateFormControl
                 />
-                <div class="input-text__placeholder">Name on card</div>
+                  <div class="register-input__placeholder">Name on card
+                      <ng-container *ngIf="form.controls['name'].error$ | async as error">
+                        <div *ngIf="error !== 'required'" class="register-input__error">
+                          <div class="register-input__error-text">Invalid Name on card</div>
+                        </div>
+                      </ng-container>
+                  </div>
               </div>
-              <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-                <div [hidden]="!errors?.name?.required">Invalid Name on card</div>
-                <div [hidden]="!errors?.name?.response">{{ errors?.name?.response }}</div>
-              </div>
+
             </label>
           </div>
         </div>
       </div>
-    </div>
-  </ng-container>
 
-  <div class="register__footer">
-    <div *ngIf="!isShownPromocodeScreen || !isMobile" class="register__footer-coll">
-      <div class="input-text-small">
-        Your subscription will be automatically renewed unless you tell us to stop. Before the start of each renewal,
-        you will be sent a reminder notice stating the term and rate then in effect (current rates listed below). If you
-        do nothing, your credit/debit card or payment account will be charged or you will be sent an invoice for your
-        subscription. You may cancel at any time during your subscription by contacting customer service at the infor-
-        mation below, and receive a full refund for all unserved issues.
-      </div>
-    </div>
+      <div class="payment__promocode">
+        <label class="toggle-label toggle-label--small">
+          <input class="toggle-label__input" type="checkbox" (change)="togglePromocodeScreen()"
+            [checked]="isShownPromocodeScreen">
+            <div class="toggle-label__btn"></div>
+          <div class="toggle-label__content">
+            <div class="toggle-label__text">I have a promo code</div>
+          </div>
+        </label>
+        <div class="payment__promocode-input" *ngIf="isShownPromocodeScreen">
+          <label class="register-input__input" [shake]="form.controls['promocode'].shake$">
+            <div class="register-input__wrapper" [class.register-input__wrapper--error]="promocodeError">
+              <input class="register-input__elem" formControlName="promocode"
+                [class.register-input__elem--active]="!!form.controls['promocode'].value"
+                (keydown.enter)="applyPromocode($event)" type="text" />
+              <div class="register-input__placeholder">Promo code
+                  <div *ngIf="!!form.controls['promocode'].value && (form.controls['promocode'].error$ | async) as error" class="register-input__error">
+                    <div class="register-input__error-text">{{ error }}</div>
+                  </div>
+              </div>
 
-    <div class="register__footer-coll">
-      <div class="price" *ngIf="totalPrice$ | async as totalPrice">
-        <div class="cost__sum">{{ totalPrice / 100 | currency: 'EUR':'symbol-narrow' }}</div>
-        <div class="cost__text">
-          billed annualy
+            </div>
+          </label>
+          <button class="btn-new btn-new--apply" (click)="applyPromocode($event)"
+            [class.accepted]="promocodeAccepted" [disabled]="promocodeAccepted">
+            <svg-applied *ngIf="promocodeAccepted" class="icon"></svg-applied>
+            <ng-container *ngIf="form.controls['promocode'].pending; else applytmpl"><svg-preloader class="icon icon_register"></svg-preloader></ng-container>
+            <ng-template #applytmpl>{{ promocodeAccepted ? 'Applied' : 'Apply' }}</ng-template>
+          </button>
         </div>
       </div>
-      <div class="register__steps">step <span>2 of 3</span></div>
-      <button
-        *ngIf="!isShownPromocodeScreen || !isMobile; else promocodeButton"
-        class="register__btn register__btn--pro"
-        type="submit"
-      >
-        checkout
-      </button>
-
-      <ng-template #promocodeButton>
-        <button class="register__btn register__btn--pro" (click)="hidePromocodeScreen()">
-          {{ promocodeAccepted ? 'submit' : 'skip' }}
-        </button>
-      </ng-template>
     </div>
-  </div>
-</form>
+    <div class="register__footer">
+      <div class="register__footer-coll">
+        <wc-btn-with-loading
+          [loading]="loading$ | async"
+          [disabled]="form.invalid$ | async"
+        >
+          Checkout&nbsp;€&nbsp;<span *ngIf="totalPrice$ | async as totalPrice">{{ totalPrice / 100 | currency: 'EUR':'':'1.0' }}<span style="font-size:0.5em">&nbsp;</span>/<span style="font-size:0.5em">&nbsp;</span>year</span>
+        </wc-btn-with-loading>
+        <div class="register__text register__text--width">Your subscription will be automatically renewed unless you
+          tell us to stop</div>
+      </div>
+
+      <div class="register__footer-coll">
+        <div class="register__text register__text--small">Before the start of each renewal, you will be sent a reminder
+          notice stating the term and rate then in effect. If you do nothing, your credit/debit card or payment account
+          will be charged or you will be sent an invoice for your subscription.</div>
+      </div>
+
+    </div>
+  </form>
+</wc-base-popup>

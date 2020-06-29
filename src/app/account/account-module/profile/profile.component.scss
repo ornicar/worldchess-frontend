@@ -17,10 +17,12 @@
 .profile__info {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0 1 auto;
+  width: 50%;
   background-color: #fff;
   @include ipad() {
     flex: 2;
+    width: 100%;
   }
 
   .mat-form-field {
@@ -55,7 +57,8 @@
     right: 0;
     bottom: 0;
     left: 0;
-    opacity: .5;
+    opacity: .1;
+    background-size: cover;
     background-image: url('../../../../assets/images/auth/background.svg');
   }
 }
@@ -96,8 +99,8 @@
   }
 }
 
+.profile__form-row__text,
 .profile__view-row__value {
-  display: flex;
   position: relative;
   font: 300 32px/36px $gerbera-font;
   margin-bottom: 20px;
@@ -114,6 +117,15 @@
     }
 
   }
+}
+
+.profile__form-row__text {
+  padding-bottom: 8px;
+}
+
+.profile__view-row__link {
+  display: block;
+  font: 300 15px/22px $gerbera-font;
 }
 
 .profile__view-row__value-active {
@@ -148,23 +160,37 @@
   }
 }
 
-.profile__edit-btn {
+.profile__control {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 60px;
   height: 31px;
   border-radius: 50%;
   background-color: #fff;
   box-shadow: 0 0 5px rgba(194, 190, 185, 0.0001);
   border: 0;
-  color: #FF6969;
   cursor: pointer;
 
-  .icon {
-    width: 13px;
-    height: 13px;
-    fill: #FF6969;
+  &.profile__edit-btn {
+    width: 60px;
+    color: #FF6969;
+
+    .icon {
+      width: 13px;
+      height: 13px;
+      fill: #FF6969;
+    }
+  }
+
+  &.profile__delete-btn {
+    width: 130px;
+    color: #2D2D2D;
+
+    .icon {
+      width: 15px;
+      height: 15px;
+      fill: #2D2D2D;
+    }
   }
 }
 
@@ -188,6 +214,7 @@
   margin-right: 10px;
 }
 
+.icon,
 .profile__social-elem-icon {
   max-width: 15px;
   max-height: 15px;
@@ -216,6 +243,16 @@
   @include phones() {
     width: 200px;
     height: 200px;
+  }
+
+  &--img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   img {
@@ -339,5 +376,83 @@
     font: 400 15px/20px $gerbera-font;
     color: #fff;
     border: 0;
+  }
+}
+
+.rating-player__title {
+  margin-bottom: 20px;
+  padding: 0 9px;
+  font: 400 33px/48px $gerbera-font;
+}
+
+.rating-player__wrapper {
+  padding: 38px 20px;
+  width: 100%;
+  max-width: 1330px;
+  margin: 0 auto;
+  @include phones() {
+    padding: 20px;
+  }
+}
+
+.rating-player__blocks-wrap {
+  overflow: hidden;
+}
+
+.rating-player__blocks {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 40px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin-bottom: -17px;
+
+  @include tablets() {
+    justify-content: flex-start;
+  }
+
+  &--width {
+    @include phones() {
+      margin-right: 0;
+      margin-left: 0;
+      overflow-x: hidden;
+    }
+    .block-statistics {
+      width: calc(100% - 20px);
+
+      @include phones() {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.block-statistics {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  background-color: #fff;
+  position: relative;
+  width: 32%;
+  min-width: 395px;
+  height: 436px;
+  flex: 0 0 auto;
+  margin: 0 10px 0;
+  box-shadow: 0 0 10px 0 #e5e5e5;
+  padding: 0 10px;
+  border-radius: 10px;
+
+  wc-rating-line-chart {
+    height: 100%;
+  }
+
+  @include phones() {
+    min-width: 280px;
+    height: 321px;
+    margin: 0 5px;
+
+    &--graph {
+      height: 445px;
+    }
   }
 }

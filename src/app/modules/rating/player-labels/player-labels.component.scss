@@ -1,0 +1,117 @@
+@import "settings";
+@import "mixins";
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+
+
+
+.marker {
+  position: absolute;
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: 1.3px;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  z-index: z-index(base);
+  font: 400 15px/22px $gerbera-font;
+
+  &--first {
+    background-color: #B4966E;
+    transform: rotate(-10deg);
+    bottom: 0px;
+    right: -33px;
+
+    @include phones() {
+      transform: rotate(-10deg);
+      bottom: 10px;
+      right: -10px;
+    }
+  }
+
+  &--second {
+    background-color: #7701FF;
+    transform: rotate(10deg);
+    bottom: 30px;
+    left: -21px;
+
+    @include phones() {
+      bottom: auto;
+      left: -10px;
+      right: auto;
+    }
+  }
+}
+
+.rating-table {
+
+  &__name {
+    .marker--first {display: none}
+  }
+
+  &__age {
+    .marker--second {display: none}
+
+    .marker.marker--first {
+      top: -2px; 
+      right: 5px;
+      
+      @include tablets() {
+        top: -10px;
+      }    
+    
+    };
+  }
+
+  .marker {
+    &--first {
+      transform: rotate(10deg);
+      top: -16px;
+      font-size: 15px;
+      bottom: auto;
+      right: -30px;
+      padding: 5px 10px;
+
+      @include phones-medium() {
+        left: auto;
+        right: 0;
+      }
+    }
+
+    &--second {
+      transform: rotate(-10deg);
+      font-size: 15px;
+      right: auto;
+      left: -50px;
+      bottom: auto;
+      top: -10px;
+      padding: 5px 10px;
+
+      @include phones-medium() {
+        left: 2px;
+      }
+    }
+  }
+}
+
+.rating-tile {
+
+  .marker {
+    &--first {
+      transform: rotate(11deg);
+      top: 73px;
+      bottom: auto;
+      right: -10px;
+      font-size: 15px;
+    }
+
+    &--second {
+      transform: rotate(-11deg);
+      top: -49px;
+      bottom: auto;
+      right: 17px;
+      left: auto;
+      font-size: 15px;
+    }
+  }
+}

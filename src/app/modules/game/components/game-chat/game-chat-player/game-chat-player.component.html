@@ -1,0 +1,4 @@
+<div class="chat-header" [ngClass]="{grey: (isOppoenetMode$ | async) === true, white: (isOppoenetMode$ | async) === false}">
+    {{fullName}} <br/>
+    {{rating}} {{federation$ | async }}
+</div>

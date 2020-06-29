@@ -1,0 +1,6 @@
+<div class="mini-banner_root">
+  <div *ngIf="data.banner_type==='news' || data.banner_type==='image'" class="mini-banner_content" [style.background-image]="'url(' + (data.image.full) + ')'">
+    <div class="title">{{data.title}}</div>
+    <button [routerLink]="['/news', data.slug || data.news_id]" class="read-new-button">{{data.link_text}}</button>
+  </div>
+</div>

@@ -5,7 +5,11 @@
 :host {
   display: block;
   padding: 16px 25px;
-  min-height: 130px;
+  // min-height: 130px;
+
+  @include height-650() {
+    padding: 7px 25px;
+  }
 }
 
 h1.wc-title {

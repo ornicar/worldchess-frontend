@@ -6,7 +6,7 @@
 >
   <div class="selected">
     {{ prefix }} {{ getItemLabel(selectedItem) }}
-    <svg class="arrow-down__icon"><use xlink:href="#arrow-down" /></svg>
+    <svg-arrow-down class="icon arrow-down__icon livestream"></svg-arrow-down>
   </div>
   <ul>
     <li
@@ -16,7 +16,7 @@
     >
       <span class="livestream-camera-list__item">{{ prefix }} {{ getItemLabel(item) }}</span>
       <ng-container *ngIf="!item.link_display">
-        <svg class="icon icon-lock"><use xlink:href="#lock" /></svg>
+        <svg-lock class="icon icon-lock"></svg-lock>
       </ng-container>
     </li>
   </ul>

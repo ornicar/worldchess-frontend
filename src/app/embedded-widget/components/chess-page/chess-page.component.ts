@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select } from '@ngrx/store';
-import { combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, pluck, shareReplay } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
-import { ChessBoardViewMode } from '../../../broadcast/chess/chess-page/chess-board/chess-board.component';
+import { ChessBoardViewMode } from '@app/broadcast/chess/chess-page/chess-board/chess-board.component';
 import { ChessPageComponent as ChessPageComponentBase } from '../../../broadcast/chess/chess-page/chess-page.component';
-import { ClearCameras, GetCameras } from '../../../broadcast/core/camera/camera.actions';
+import { ClearCameras, GetCameras } from '@app/broadcast/core/camera/camera.actions';
 import * as fromCamera from '../../../broadcast/core/camera/camera.reducer';
 import { IWidgetConfig, WidgetStyle } from '../../widget-config';
 
@@ -36,13 +36,21 @@ export class ChessPageComponent extends ChessPageComponentBase implements OnInit
     shareReplay(1)
   );
 
-  public videoIsEnable = false;
+  public videoIsEnable$ = new BehaviorSubject(false);
+
+  showVideo$ = combineLatest([this.hasVideo$, this.videoIsEnable$]).pipe(
+    map(([hasVideo, videoIsEnable]) => hasVideo && videoIsEnable),
+  );
 
   public get gameUrl() {
-    const tournamentUrl = `${environment.backendUrl}/tournament/${this.tournament.id}`;
+    const tournamentUrl = `${environment.applicationUrl}/tournament/${this.tournament.id}`;
 
     return this.board ? `${tournamentUrl}/pairing/${this.board.id}` : tournamentUrl;
   }
+
+  public isLightStyle$ = this.config$.pipe(
+    map(({style}) => style === WidgetStyle.Light)
+  );
 
   goToWC() {
     window['gtag']('event', 'go', {
@@ -52,18 +60,14 @@ export class ChessPageComponent extends ChessPageComponentBase implements OnInit
     window.open(this.gameUrl);
   }
 
-  public isLightStyle$ = this.config$.pipe(
-    map(({style}) => style === WidgetStyle.Light)
-  );
-
   public onVideoEnableClick() {
-    this.videoIsEnable = !this.videoIsEnable;
+    this.videoIsEnable$.next(!this.videoIsEnable$.value);
   }
 
   ngOnInit() {
     super.ngOnInit();
 
-    this.subs.camerasLoadSub = combineLatest(this.tour$, this.canLoadVideo$)
+    this.subs.camerasLoadSub = combineLatest([this.tour$, this.canLoadVideo$])
       .subscribe(([tour, canLoadVideo]) => {
         this.store$.dispatch(new ClearCameras());
 

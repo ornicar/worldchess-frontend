@@ -1,0 +1,16 @@
+@import "src/html/css/variables-new";
+@import "src/html/css/media-new";
+
+.return-lobby-ellem {
+   ::ng-deep {
+       .tournament-countdown {
+            width: 140px;
+            height: 58px;
+            padding: 5px;
+       }
+
+       .tournament-countdown__time {
+        font: 300 27px/29px $gerbera-font;
+       }
+   }
+}

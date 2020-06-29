@@ -1,0 +1,37 @@
+<ng-container *ngIf="isNewsPage; else newsBlock">
+  <wc-layout>
+    <ng-container *ngTemplateOutlet="newsBlock"></ng-container>
+  </wc-layout>
+</ng-container>
+
+<ng-template #newsBlock>
+  <div class="block bg-black">
+    <div class="container" *ngIf="!isNewsPage">
+      <h1 class="block-header">News</h1>
+    </div>
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let newsItem of newsLoader.news$ | async" [ngClass]="{'news-current':isNewsPage}"
+        class="news-item d-flex" [routerLink]="['/news', newsItem.slug ? newsItem.slug : newsItem.id]">
+        <ng-container *ngIf="getImageUrl(newsItem) as url; else emptyImage;">
+          <div class="news-image" [ngStyle]="{'background-image': url}"></div>
+        </ng-container>
+        <ng-template #emptyImage>
+          <div class="news-image"></div>
+        </ng-template>
+        <div class="news-item-content d-flex">
+          <div class="news-date">{{newsItem.timestamp | date: 'MMM d - h:mm a'}}</div>
+          <h2 class="news-title">{{newsItem.title}}</h2>
+          <div class="d-flex mt-auto flex-wrap">
+            <div *ngFor="let tag of newsItem.tags" class="news-tag"
+              [class.news-tag--active]="isTagActive(tag.id)"
+              (click)="onTagClick(tag.id)"
+            >
+              {{tag.name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="newsLoader.showButton || !isNewsPage" class="news-more"><span (click)="showMore()">show more</span></div>
+  </div>
+</ng-template>

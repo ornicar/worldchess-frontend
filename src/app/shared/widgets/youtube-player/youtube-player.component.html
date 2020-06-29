@@ -2,6 +2,6 @@
   [class.pause]="state === PlayerState.PAUSED"
   [class.play]="state === PlayerState.PLAYING"
   [class.is-hover]="isHover">
-  <wc-preloader *ngIf="state === PlayerState.PRELOADING"></wc-preloader>
+  <svg-preloader class="icon icon_youtube" *ngIf="state === PlayerState.PRELOADING"></svg-preloader>
   <div class="youtube-player" [id]="playerId"></div>
 </div>

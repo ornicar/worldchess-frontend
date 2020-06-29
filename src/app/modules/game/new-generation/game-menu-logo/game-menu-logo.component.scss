@@ -1,0 +1,83 @@
+@import 'variables-new';
+@import 'media-new';
+
+.logo {
+  height: 54px;
+  position: relative;
+
+  &--hidden {
+    display: none;
+
+    @include birman-media {
+      display: block;
+    }
+  }
+}
+
+.logo__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 43px;
+
+  &--new {
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: -11px;
+        right: -1px;
+        display: block;
+        width: 8px;
+        height: 8px;
+        background-color: $blue-new;
+        border-radius: 50%;
+
+        @include birman-media {
+          content: none;
+        }
+    }
+  }
+}
+
+.logo__svg,
+.logo__svg-fide {
+  display: block;
+  width: 40px;
+  height: 43px;
+  flex: 0 0 auto;
+  fill: #fff;
+  margin-right: 16px;
+  cursor: pointer;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @include birman-media {
+    width: 50px;
+    height: 44px;
+  }
+}
+
+.logo__svg-fide {
+  width: 57px;
+  height: 41px;
+
+  @include birman-media {
+    display: none;
+  }
+}
+
+.logo__text {
+  position: absolute;
+  color: #fff;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, 0);
+  font: 300 12px/16px $gerbera-font;
+  white-space: nowrap;
+
+  @include birman-media {
+    display: none;
+  }
+}

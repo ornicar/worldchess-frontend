@@ -4,42 +4,17 @@ import { IMove } from '../broadcast/move/move.model';
 import { ISocketBaseMessage } from '../shared/socket/socket-base-message.model';
 
 
-export const Profile = t.type({
-  id: t.number,
-  email: t.string,
-  full_name: t.string,
-  premium: t.boolean
-});
-
-export interface IProfile extends t.TypeOf<typeof Profile> {
-  id: number;
-  email: string;
-  full_name: string;
-  premium: boolean;
-  fide_id?: number;
-  is_admin?: boolean;
-  // orders_count: number;
-  // subscriptions_count: number;
-}
-
-const TokenDataWithoutProfile = t.type({
+export const TokenData = t.type({
   exp: t.number,
   orig_iat: t.number,
   // @todo.
   refresh_exp: t.number
 });
 
-const TokenDataProfile = t.partial({
-  profile: Profile
-});
-
-export const TokenData = t.intersection([TokenDataWithoutProfile, TokenDataProfile]);
-
 export interface ITokenData extends t.TypeOf<typeof TokenData> {
   exp: number;
   orig_iat: number;
   refresh_exp: number;
-  profile?: IProfile;
 }
 
 export interface IErrorsResponse {
@@ -101,11 +76,17 @@ export enum BoardNotificationSocketAction {
   BOARD_CHANGE = 'BOARD_CHANGE',
   NEW_MOVE = 'NEW_MOVE',
   MOVE_ADD = 'MOVE_ADD',
+  GAMING_ADD_MOVE = 'GAMING_ADD_MOVE',
+  GAMING_GAME_STARTED = 'GAMING_GAME_STARTED',
+  GAMING_SUBSCRIBE_VIEWER_TO_BOARD = 'GAMING_SUBSCRIBE_VIEWER_TO_BOARD',
+  BOARD_UNSUBSCRIBE = 'BOARD_UNSUBSCRIBE',
+  GAMING_GAME_END = 'GAMING_GAME_END',
   MOVE_ESTIMATING = 'MOVE_ESTIMATING',
   MOVE_REPLACE = 'MOVE_REPLACE',
   NEW_MESSAGE_VOTE = 'NEW MESSAGE VOTE',
   NOTIFICATION = 'NOTIFICATION',
   GAME_OVER = 'GAME_OVER',
+  GAMING_GAME_ABORT = 'GAMING_GAME_ABORT',
 }
 
 export enum UserNotificationSocketAction {
@@ -115,10 +96,16 @@ export enum UserNotificationSocketAction {
   NEW_MOVE = 'NEW_MOVE',
 }
 
+export enum TourNotificationSocketAction {
+  TOUR_STARTED = 'TOUR_STARTED',
+}
+
 export enum SocketType {
   USER_NOTIFICATION = 'USER_NOTIFICATION',
   BOARD_NOTIFICATION = 'BOARD_NOTIFICATION',
   GAMING = 'GAME_NOTIFICATION',
+  TOUR_NOTIFICATION = 'TOUR_NOTIFICATION',
+  TOURNAMENT_NOTIFICATION = 'TOURNAMENT_NOTIFICATION',
 }
 
 export interface ISocketMessage extends ISocketBaseMessage {
@@ -138,6 +125,11 @@ export interface ISocketMessageBoardNotification extends ISocketBaseMessage {
 export interface ISocketMessageUserNotification extends ISocketBaseMessage {
   action: UserNotificationSocketAction;
   message_type: SocketType.USER_NOTIFICATION;
+}
+
+export interface ISocketMessageTourNotification extends ISocketBaseMessage {
+  action: TourNotificationSocketAction;
+  message_type: SocketType.TOUR_NOTIFICATION;
 }
 
 // ===== Board notifications
@@ -177,7 +169,7 @@ export class ISocketGamingBoardCreatedMessage implements ISocketMessageUserNotif
   user_uid: string;
 }
 
-export class ISocketGamingPLayerReadyMessage implements ISocketMessageUserNotification {
+export class ISocketGamingPlayerReadyMessage implements ISocketMessageUserNotification {
   action: UserNotificationSocketAction.PLAYER_READY;
   message_type: SocketType.USER_NOTIFICATION;
   board_id: number;
@@ -197,7 +189,27 @@ export class ISocketGamingBoardStartedMessage implements ISocketMessageUserNotif
 }
 
 export type UserNotificationSocketMessages =
-  ISocketGamingNewMove
-  | ISocketGamingBoardCreatedMessage
-  | ISocketGamingPLayerReadyMessage
-  | ISocketGamingBoardStartedMessage;
+ISocketGamingNewMove
+| ISocketGamingBoardCreatedMessage
+| ISocketGamingPlayerReadyMessage
+| ISocketGamingBoardStartedMessage;
+
+// ===== Tour notifications
+
+export class ISocketTourStartedMessage implements ISocketMessageTourNotification {
+  action: TourNotificationSocketAction.TOUR_STARTED;
+  message_type: SocketType.TOUR_NOTIFICATION;
+  tour_id: number;
+  user_uid: string;
+}
+
+export interface TwitterOAuthCredentials {
+  redirect_state: string;
+  oauth_token: string;
+  oauth_verifier: string;
+}
+
+export interface ISimpleSignUpCredentials {
+  email: string;
+  is_paid: boolean;
+}

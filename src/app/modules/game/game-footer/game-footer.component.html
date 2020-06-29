@@ -1,0 +1,51 @@
+<div class="footer lang-{{accountService.getLanguage() | async }}">
+  <div class="footer__head">
+    <a target="blank" href="https://www.notion.so/worldchess/Privacy-Policy-for-FIDE-Online-Arena-and-worldchess-com-website-470e3c8fdc9148f49611e66df8a25448" target="_blank" class="footer__link"
+       (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'www.fide.com', null, null);"
+    >{{ 'OTHER.FIDE_SITE' | translate }}</a>
+    <a target="blank" href="https://worldchess.com/assets/docs/terms-of-use.pdf" class="footer__link"
+       (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'terms-of-use.pdf', null, null);"
+    >{{ 'OTHER.TERMS_USE' | translate }}</a>
+  </div>
+  <div class="footer__row">
+    <div class="footer__col">
+      <a target="blank" href="https://bureau.rocks/"
+         (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'bureau.rocks', null, null);"
+      >
+        <svg-bureau class="footer__logo"></svg-bureau>
+      </a>
+      <div class="footer__text">
+        {{'OTHER.DESIGNED_BEREAU' | translate }} 2020
+      </div>
+    </div>
+    <div class="footer__col">
+      <a target="blank" href="https://usetech.ru/"
+         (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'usetech.ru', '', '');"
+      >
+        <svg-usetech class="footer__logo footer__logo--usetech"></svg-usetech>
+      </a>
+      <div class="footer__text">
+        {{'OTHER.DEVELOPED' | translate }}
+      </div>
+    </div>
+    <div class="footer__col">
+      <div class="footer__social">
+        <a target="blank" href="https://twitter.com/theworldchess" class="footer__social-icon footer__social-icon--twet"
+           (click)="window['dataLayerPush']('wchCross', 'Footer', 'Social', 'tw', null, null);"
+        >
+          <svg-twet class="icon icon--twet"></svg-twet>
+        </a>
+        <a target="blank" href="https://www.facebook.com/theworldchess" class="footer__social-icon footer__social-icon--facebook"
+           (click)="window['dataLayerPush']('wchCross', 'Footer', 'Social', 'fb', null, null);"
+        >
+          <svg-facebook class="icon icon--facebook"></svg-facebook>
+        </a>
+        <a target="blank" href="https://www.instagram.com/theworldchess" class="footer__social-icon footer__social-icon--instagram"
+           (click)="window['dataLayerPush']('wchCross', 'Footer', 'Social', 'instagram', null, null);"
+        >
+          <svg-instagram class="icon icon--instagram"></svg-instagram>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

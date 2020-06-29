@@ -1,0 +1,58 @@
+<div class="tournament-timeline-container"
+     [hidden]="hidden$ | async"
+     #timelineContainer
+     [style.height.px]="timelineHeight">
+  <div class="timeline-wrapper">
+    <div class="group-label fiderated-label"
+         [style.top.px]="fideRatedLabelTop" *ngIf="fideRatedLines$.value.length"><svg-logo-fide-mini class="icon"></svg-logo-fide-mini> {{'OTHER.FIDE_RATED' | translate }}</div>
+    <div class="group-label wcrated-label"
+         [style.top.px]="wcRatedLabelTop" *ngIf="wCRatedLines$.value.length"><svg-hexagon-empty class="icon icon--hexagon"></svg-hexagon-empty>{{'OTHER.RATED' | translate }}</div>
+    <div class="tournament-timeline"
+         #timeline
+         [style.width.px]="timelineWidth"
+         (mousedown)="startDrag($event)"
+    >
+      <div class="timeline-labels">
+        <div class="timelabel"
+             *ngFor="let timelabel of timeLabels$ | async"
+             [style.left.px]="timelabel.offset">
+          {{timelabel.label}}
+        </div>
+      </div>
+      <div class="timeline-past-area"
+           [style.width.px]="pastAreaLeft"></div>
+      <div class="timeline-past-area-right-border"
+           [style.width.px]="pastAreaLeft"></div>
+      <div class="past-area-label"
+           [style.left.px]="pastAreaLeft - 20">{{pastAreaLabel}}</div>
+      <div class="past-area-label-dot"
+           [style.left.px]="pastAreaLeft - 3"></div>
+      <ng-container *ngFor="let fideLine of fideRatedLines$ | async; let i=index">
+        <ng-container *ngFor="let tournament of fideLine">
+          <wc-tournament-card [tournament]="tournament"
+                              [style.position]="'absolute'"
+                              [style.left.px]="calcTournamentOffset(tournament)"
+                              [width]="calcTournamentWidth(tournament)"
+                              [style.top.px]="calcTournamentTop(tournament, i)">
+          </wc-tournament-card>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngFor="let wcLine of wCRatedLines$ | async; let i=index">
+        <ng-container *ngFor="let tournament of wcLine">
+          <wc-tournament-card [tournament]="tournament"
+                              [style.position]="'absolute'"
+                              [style.left.px]="calcTournamentOffset(tournament)"
+                              [width]="calcTournamentWidth(tournament)"
+                              [style.top.px]="calcTournamentTop(tournament, i)">
+          </wc-tournament-card>
+        </ng-container>
+      </ng-container>
+      <wc-tournament-card [tournament]="tournament"
+                          [style.position]="'relative'"
+                          [width]="0"
+                          [style.left.px]="timelineWidth - window.innerWidth"
+                          [style.top]="'20px'">
+      </wc-tournament-card>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,9 @@
 @import 'media';
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
   overflow: hidden;
   background-color: #f6f6f6;
 }

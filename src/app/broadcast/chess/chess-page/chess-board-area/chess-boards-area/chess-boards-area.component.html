@@ -5,9 +5,8 @@
   class="mobile-carousel">
   <div
     *ngIf="currentBoardIdx > 0"
-    class="arrow-left"
-    >
-    <svg class="icon"><use xlink:href="#arrow-down" /></svg>
+    class="arrow-left">
+    <svg-arrow-left class="icon icon_mobile"></svg-arrow-left>
   </div>
   <wc-chess-board-grid-item
     *ngFor="let board of (filteredBoards$ | async); trackBy: trackByBoard; let idx = index;"
@@ -18,17 +17,16 @@
     [board]="board"
     [isSelected]="board.id === choseGameId"
     [class.selected]="board.id === choseGameId"
-    (click)="onChildGameClick($event, board)"
-  >
+    (click)="onChildGameClick($event, board)">
   </wc-chess-board-grid-item>
   <div
     *ngIf="!isLastBoard"
-    class="arrow-right"
-    >
-    <svg class="icon"><use xlink:href="#arrow-down" /></svg>
+    class="arrow-right">
+    <svg-arrow-right class="icon icon_mobile"></svg-arrow-right>
   </div>
 </div>
 
+<!--
 <wc-drag-scroll
   #drag
   *ngIf="!isMobile"
@@ -36,15 +34,20 @@
   [dragScrollYDisabled]="true"
   (dragScrollStatus)="onDragScrollStatusChange($event)"
   wcHideScrollbar
-  [wcHideScrollbarType]="'horizontal'"
->
+  [wcHideScrollbarType]="'horizontal'">
+-->
+<wc-drag-scroll
+  #drag
+  *ngIf="!isMobile"
+  [dragDisabled]="!enableDragScroll"
+  [dragScrollYDisabled]="true"
+  (dragScrollStatus)="onDragScrollStatusChange($event)">
   <virtual-scroller
     [parentScroll]="drag.elementRef.nativeElement"
     [horizontal]="true"
     [modifyOverflowStyleOfParentScroll]="false"
     [items]="filteredBoards$ | async"
-    (vsUpdate)="boardsList = $event"
-  >
+    (vsUpdate)="boardsList = $event">
     <div class="board-grid" #container>
       <wc-chess-board-grid-item
         *ngFor="let board of boardsList; trackBy: trackByBoard"
@@ -53,8 +56,7 @@
         [board]="board"
         [isSelected]="board.id === choseGameId"
         [class.selected]="board.id === choseGameId"
-        (click)="onChildGameClick($event, board)"
-      >
+        (click)="onChildGameClick($event, board)">
       </wc-chess-board-grid-item>
     </div>
   </virtual-scroller>
@@ -62,13 +64,13 @@
 
 <div class="controls">
   <ng-container *ngIf="filtersStatus$ | async as filtersStatus">
-    <wc-game-favorite-icon
+    <svg-favorite-icon
+      class="icon icon_favorite-area"
       *ngIf="canUseFavorites$ | async"
       [fill]="true"
       [checked]="filtersStatus.onlyFavorites"
-      (click)="changeFilterFavorites(!filtersStatus.onlyFavorites)"
-    >
-    </wc-game-favorite-icon>
+      (click)="changeFilterFavorites(!filtersStatus.onlyFavorites)">
+    </svg-favorite-icon>
   </ng-container>
 
   <div *ngIf="!isMobile" class="size-controls">
@@ -76,10 +78,10 @@
       <div class="size-controls__slider-circle" style="top: 50%;"></div>
     </div>
     <button type="button" class="size-controls__prev" (click)="onNextViewMode()" [disabled]="isNextViewModeDisables">
-        <svg class="icon"><use xlink:href="#minus" /></svg>
+      <svg-minus class="icon icon_multiboard"></svg-minus>
     </button>
     <button type="button" class="size-controls__next" (click)="onPrevViewMode()" [disabled]="isPrevViewModeDisables">
-        <svg class="icon"><use xlink:href="#plus" /></svg>
+      <svg-plus class="icon icon_multiboard"></svg-plus>
     </button>
   </div>
 </div>

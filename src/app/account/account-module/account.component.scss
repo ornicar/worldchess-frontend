@@ -16,32 +16,6 @@ a.as-text.active {
   pointer-events: none;
 }
 
-// .account.premium {
-//   $border-color: #383838;
-
-//   .account-nav {
-//     border-bottom: 1px solid $border-color;
-//     border-top: 1px solid $border-color;
-//   }
-
-//   a.as-text {
-//     color: #a0a0a0;
-
-//     @include media-breakpoint-up(sm) {
-//       border-right: 1px solid $border-color;
-//     }
-//   }
-
-//   a.as-text.active {
-//     color: #fff;
-//     pointer-events: none;
-//   }
-
-//   a.as-text.inactive {
-//     color: #383838;
-//   }
-// }
-
 .account-nav {
   $border-color: #e5e5e5;
   background-color: $broadcast-menu-bg;
@@ -70,6 +44,22 @@ a.as-text.active {
 
     &.active {
       color: #2D2D2D;
+
+      .icon {
+        fill: #2D2D2D;
+      }
+    }
+    
+    .icon {
+      width: 30px;
+      height: 22px;
+      margin-left: 5px;
+      fill:#5e5e5e5e;
+
+      @include phones() {
+        width: 21px;
+        height: 15px;
+      }
     }
   }
 }

@@ -1,0 +1,93 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  width: 110px;
+  .svg-icon {
+    fill: #FFFFFF;
+  }
+  .svg-cup-icon {
+    width: 29px;
+    height: 30px;
+    @include birman-media {
+      width: 15px;
+      height: 15px;
+      margin-left: 2px;
+    }
+  }
+  .cup-number {
+    padding-left: 2px;
+  }
+  .tour-count-title {
+    font: 300 15px/20px $gerbera-font;
+    @include birman-media {
+      display: inline-flex;
+    }
+  }
+  .today__link {
+    color: $brown-2;
+    font: 300 15px/20px $gerbera-font;
+    fill: $brown-2;
+    &:hover {
+      color: #fff;
+      fill: #fff;
+    }
+
+    .arrow {
+      position: relative;
+      top: 2px;
+      display: inline-block;
+      width: 6px;
+      height: 11px;
+    }
+
+    @include birman-media {
+      position: relative;
+      top: -2px;
+    }
+
+    br {
+      @include birman-media {
+        display: none;
+      }
+    }
+  }
+
+  .block {
+    margin-bottom: 3px;
+    @include birman-media {
+      margin-bottom: 6px;
+    }
+  }
+  .svg-fade-icon {
+    display: inline-block;
+    width: 17px;
+    height: 16px;
+    margin-right: 3px;
+  }
+  .row {
+    display: flex;
+    @include birman-media {
+      display: inline-flex;
+    }
+  }
+  .cup-row {
+    font-size: 30px;
+    line-height: 30px;
+    padding-top: 5px;
+    @include birman-media {
+      font-size: 15px;
+      line-height: 20px;
+      padding-top: 0;
+      padding-right: 10px;
+      padding-left: 3px;
+    }
+  }
+  .arrow {
+    font-size: 18px;
+  }
+  .svg-arrow{
+    display: inline-block;
+    width: 12px;
+  }
+}

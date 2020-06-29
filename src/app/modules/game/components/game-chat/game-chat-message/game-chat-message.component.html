@@ -1,0 +1,15 @@
+<li class="game-chat__message" [ngClass]="{'game-chat__message--ansver': (answer !== '' ? true : false) }">
+        <span class="game-chat__message-text">
+          {{textMsg}}
+          <svg-chat-booble-arrow class="chat-booble-arrow"></svg-chat-booble-arrow>
+        </span>
+  <div class="game-chat__avatar game-chat__avatar--text" *ngIf="!link && abbv">
+    {{abbv}}
+  </div>
+  <div class="game-chat__avatar" *ngIf="link">
+    <img src="{{link}}"/>
+  </div>
+  <div class="game-chat__avatar" *ngIf="!link && !abbv">
+    An
+  </div>
+</li>

@@ -1,0 +1,156 @@
+@import "settings";
+@import "mixins";
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+
+
+.block-header {
+  padding: 20px;
+  color: #fff;
+  font: 300 38px/48px $gerbera-font;
+  min-height: 217px;
+  border-bottom: 1px solid $gray-800;
+
+  @include tablets-big() {
+    font: 300 33px/42px $gerbera-font;
+  }
+
+  @include phones() {
+    min-height: 132px;
+    font: 300 22px/22px $gerbera-font;
+  }
+}
+
+.news-more {
+  position: relative;
+  font: 400 18px/23px $gerbera-font;
+  background: #000;
+  padding: 20px 0;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  @include tablets-big() {
+    font-size: 15px;
+  }
+
+  &:after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    margin-left: 6px;
+    border: solid $black-light;
+    display: inline-block;
+    border-width: 0 1px 1px 0;
+    transform: rotate(-45deg);
+  }
+}
+
+.news-item {
+  width: 50%;
+  background: #000;
+  border-bottom: 1px solid #383838;
+  cursor: pointer;
+  min-height: calc(50vh/2 - 31px);
+  overflow: hidden;
+
+  @include ipad() {
+    width: 100%;
+  }
+
+  @include phones() {
+    min-height: 117px;
+  }
+
+  &:hover {
+    background: #383838;
+
+    .news-image {
+      filter: grayscale(1);
+      -ms-filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    }
+  }
+}
+
+.news-image {
+  width: 50%;
+  flex: 0 0 auto;
+  background-position: center;
+  background-size: cover;
+
+  @include phones() {
+    display: none;
+  }
+}
+
+.news-item-content {
+  padding: 20px 55px 40px 20px;
+  flex-direction: column;
+  @include tablets-big() {
+    padding: 20px 40px 40px 20px;
+  }
+  @include phones() {
+    padding: 20px;
+  }
+}
+
+.news-date {
+  font: 400 18px/23px $gerbera-font;
+  color: #656565;
+  margin-bottom: 20px;
+  
+  @include tablets-big() {
+    font: 400 15px/23px $gerbera-font;
+  }
+
+  @include phones() {
+    font: 400 15px/15px $gerbera-font;
+  }
+}
+
+.news-title {
+  font: 300 28px/38px $gerbera-font;
+  color: #fff;
+  
+  @include tablets-big() {
+    font: 300 22px/32px $gerbera-font;
+  }
+
+  @include phones() {
+    font: 300 15px/22px $gerbera-font;
+  }
+}
+
+.news-current {
+  &:first-child {
+    width: 100%;
+    height: calc(50vh - 50px);
+    min-height: 318px;
+
+    @include phones() {
+      flex-direction: column;
+      height: auto;
+      min-height: 351px;
+    }
+
+    .news-title {
+      font: 300 55px/68px $gerbera-font;
+      
+      @include tablets-big() {
+        font: 300 33px/43px $gerbera-font;
+      }
+
+      @include phones() {
+        font: 300 33px/43px $gerbera-font;
+      }
+    }
+
+    .news-image {
+      @include phones() {
+        display: block;
+        height: 144px;
+        flex: 0 0 auto;
+        width: 100%;
+      }
+    }
+  }
+}

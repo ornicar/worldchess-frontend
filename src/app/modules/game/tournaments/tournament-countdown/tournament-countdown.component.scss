@@ -1,0 +1,38 @@
+@import "variables-new";
+@import "media-new";
+
+.tournament-countdown {
+    width: 193px;
+    height: 105px;
+    background-color: $red-3-new;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 10px;
+    color: #fff; 
+    text-align: center;
+}
+
+:host-context(.board__wrapper) {
+    .tournament-countdown {
+        @include birman-media {
+            background-color: transparent;
+            box-shadow: none;
+        }
+    }
+}
+
+:host-context(.online-tournament-boards) {
+    .tournament-countdown {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+.tournament-countdown__time {
+    font: 300 55px/59px $gerbera-font;
+    font-feature-settings: "tnum" 1;
+}
+
+.tournament-countdown__text {
+    font: 300 14px/16px $gerbera-font;
+}

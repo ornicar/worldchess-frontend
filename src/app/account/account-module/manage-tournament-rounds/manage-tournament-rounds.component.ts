@@ -7,11 +7,12 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
 import { SubscriptionHelper } from '../../../shared/helpers/subscription.helper';
 import { TournamentLoadService } from '../../../broadcast/core/tournament/tournament-load.service';
-import { TabValue } from '../manage-tournament/manage-tournament';
+import { isLastTab, TabValue } from '../manage-tournament/manage-tournament';
 import { TournamentResourceService } from '../../../broadcast/core/tournament/tournament-resource.service';
 import { BoardType, TourStatus, ITour } from '../../../broadcast/core/tour/tour.model';
 import { ManageTournamentTabLinked } from '../manage-tournament/manage-tournament-linked';
 import { isNumber } from 'util';
+import { TournamentManagerMode } from '@app/account/account-module/my-events/my-events.component';
 
 
 @Component({
@@ -210,4 +211,7 @@ export class ManageTournamentRoundsComponent extends ManageTournamentTabLinked<I
 
   }
 
+  ableToNext(): boolean {
+    return this.mode === TournamentManagerMode.CREATE && !isLastTab(this.selectedTabValue);
+  }
 }

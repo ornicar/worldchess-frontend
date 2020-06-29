@@ -1,0 +1,139 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+    width: 100%;
+}
+
+.fide-text__row {
+  display: flex;
+  margin: 0 -10px;
+  margin-bottom: 22px;
+
+  @include birman-media {
+    flex-direction: column;
+    margin-bottom: 8px;
+  }
+}
+
+.fide-text__col {
+  flex: 1;
+  padding: 0 10px;
+  @include birman-media {
+    padding: 0 10px 10px;
+  }
+}
+
+.fide-text__title {
+  color: #fff;
+  font: 300 30px/38px $gerbera-font;
+  margin-bottom: 18px;
+  @include birman-media {
+    margin-bottom: 5px;
+    font: 300 22px/30px $gerbera-font;
+  }
+}
+
+.fide-text__text {
+  color: #fff;
+  font: 300 22px/30px $gerbera-font;
+
+  &--width {
+    max-width: 925px;
+  }
+  @include birman-media {
+    font: 300 18px/24px $gerbera-font;
+  }
+}
+
+.fide-text__text-small {
+  color: #fff;
+  font: 300 18px/24px $gerbera-font;
+  @include birman-media {
+    font: 300 15px/20px $gerbera-font;
+    margin-bottom: 12px;
+  }
+}
+
+.fide-text__title-small {
+  color: rgba(#fff, 0.4);
+  font: 300 15px/20px $gerbera-font;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+}
+
+.play-chess {
+  position: relative;
+  left: -15px;
+  height: 50vw;
+  max-height: 778px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  margin-bottom: 14px;
+  margin-top: 15px;
+  background-image: url('../../../../../assets/images/play-chess/play-chess-brilliantly-desktop.svg');
+  @include birman-media {
+    height: 100vw;
+    left: 0;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    background-image: url('../../../../../assets/images/play-chess/play-chess-brilliantly-mobile.svg');
+  }
+}
+
+.hexagon-chess {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  height: 50vw;
+  max-height: 778px;
+  margin-bottom: 14px;
+  margin-top: 15px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url('../../../../../assets/images/play-chess/hexagon.svg');
+  @include birman-media {
+    height: 107vw;
+    max-height: 930px;
+    margin-top: 3px;
+    margin-top: 10px;
+  }
+}
+
+.hexagon-chess__text {
+  font: 400 2.1vw/2.7vw $gerbera-font;
+  color: #000;
+  max-width: 46%;
+  text-align: center;
+
+  span {
+    display: inline-block;
+    margin-top: 5px;
+    font-family: $clifton-trial-italic;
+  }
+
+  @include birman-media {
+      font-size: 4.5vw;
+      line-height: 5.6vw;
+  }
+}
+
+/*-----------локализация-------------*/
+
+.lang-ru {
+  .play-chess {
+    background-image: url('../../../../../assets/images/play-chess/play-chess-brilliantly-desktop-ru.svg');
+  }
+
+  .hexagon-chess__text {
+    max-width: 85%;
+    span {
+      display: block;
+      font-family: $gerbera-font;
+      margin-top: 0;
+    }
+  }
+}

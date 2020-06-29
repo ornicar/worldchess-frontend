@@ -1,0 +1,71 @@
+
+@import "variables-new";
+@import "media-new";
+
+:host {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-page-quick-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 30px 20px 20px;
+  flex: 1 0 auto;
+  background-color: #000;
+  min-height: 600px;
+
+  @include birman-media {
+    min-height: 420px;
+    padding: 20px 10px;
+  }
+}
+
+.main-page-quick-game__img {
+  width: 100%;
+}
+
+.main-page-quick-game__img-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  max-height: 420px;
+  margin-bottom: 10px;
+}
+
+.main-page-quick-game__btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: 300 30px/32px $gerbera-font;
+  padding: 20px;
+  background-color: $blue-new;
+  border-radius: 6px;
+  white-space: nowrap;
+  width: 360px;
+  min-height: 120px;
+
+  &:hover {
+    background-color: $blue-new-hover;
+  }
+
+  @include birman-media {
+    width: 256px;
+    min-height: 85px;
+  }
+}
+
+
+.main-page-quick-game__text {
+  text-align: center;
+  color: #fff;
+  font: 300 22px/30px $gerbera-font;
+  margin-top: auto;
+}

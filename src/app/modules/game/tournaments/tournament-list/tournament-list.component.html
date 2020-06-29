@@ -1,0 +1,7 @@
+<div class="tournament-list">
+  <div class="tournament-card-container"
+       *ngFor="let tournament of onlineTournaments$ | async">
+    <wc-tournament-card [tournament]="tournament" [fullWidthMobile]="true"></wc-tournament-card>
+    <div class="time-title">{{titleCaseWord( getMoment(tournament.datetime_of_tournament) | async )}}</div>
+  </div>
+</div>

@@ -1,34 +1,34 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import {SharedModule} from '../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { TournamentListComponent } from './tournament-list/tournament-list.component';
 import { RouterModule } from '@angular/router';
-import { CoreModule } from '../broadcast/core/core.module';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { OwnEventButtonComponent } from './own-event-button/own-event-button.component';
 import { TournamentListTitleComponent } from './tournament-list-title/tournament-list-title.component';
-import { SetkaNewsComponent } from './setka-news/setka-news.component';
+import { MainPreloaderComponent } from './main-preloader/main-preloader.component';
+import { SvgModule } from '@app/modules/svg/svg.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    CoreModule,
-    SharedModule
+    SharedModule,
+    SvgModule
   ],
   declarations: [
     TournamentListComponent,
     ComingSoonComponent,
     OwnEventButtonComponent,
     TournamentListTitleComponent,
-    SetkaNewsComponent,
+    MainPreloaderComponent,
   ],
   exports: [
     TournamentListComponent,
     ComingSoonComponent,
     OwnEventButtonComponent,
     TournamentListTitleComponent,
-    SetkaNewsComponent
+    MainPreloaderComponent,
   ],
 })
 export class ComponentsModule { }

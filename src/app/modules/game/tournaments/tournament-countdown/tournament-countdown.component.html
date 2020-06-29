@@ -1,0 +1,30 @@
+<div class="tournament-countdown" *ngIf="!(boardIsFlipped$ | async)">
+  <div *ngIf="isAction === false">
+    <div class="tournament-countdown__time">
+      {{ (duration$ | async) | wcDuration:'mm:ss':durationFormat}}
+    </div>
+    <div class="tournament-countdown__text">
+      <span *ngIf="!text">
+        {{'OTHER.UNTIL_GAME_START' | translate}}
+      </span>
+      <span *ngIf="text">
+        {{text}}
+      </span>
+    </div>
+  </div>
+  <div *ngIf="isAction === true">
+    <a (click)="event()" style="color: #ffffff;">
+      <div class="tournament-countdown__time">
+        {{ (duration$ | async) | wcDuration:'mm:ss':durationFormat}}
+      </div>
+      <div class="tournament-countdown__text">
+        <span *ngIf="!text">
+        {{'OTHER.UNTIL_GAME_START' | translate}}
+      </span>
+        <span *ngIf="text">
+        {{text}}
+      </span>
+      </div>
+    </a>
+  </div>
+</div>

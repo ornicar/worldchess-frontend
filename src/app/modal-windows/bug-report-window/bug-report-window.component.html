@@ -1,14 +1,40 @@
-
-<p mat-dialog-title>Bug report</p>
-<div mat-dialog-content>
-    <h3>
-        We try to make better our product every day and your opinion is very important to us.
-        Please describe your problem:
-    </h3>
-
-    <textarea [(ngModel)]="report" rows="10"></textarea>
-</div>
-<div mat-dialog-actions>
-  <button class="btn btn-white" mat-button (click)="cancel()">Cancel</button>
-  <button class="btn btn-blue" mat-button (click)="send()">Send</button>
+<div class="mat-dialog-wrapper">
+  <p mat-dialog-title>
+    {{ 'OTHER.SUPPORT_FORM' | translate }}
+  </p>
+  <div mat-dialog-content>
+      <h3>
+        {{ 'TEXT.PLEASE_USE_THE_SUPPORT_FORM' | translate }}
+      </h3>
+      <div class="select-wrapper">
+        <select [(ngModel)]="bugType" [class.invalid]="validate && !bugType">
+          <option *ngFor="let bugType of bugTypes"
+          [ngValue]="bugType.type" [disabled]="!bugType.type">
+          {{ getLocalName(bugType.codeLoc) | async }}
+        </option>
+        </select>
+        <svg-arrow-down class="icon bug-report"></svg-arrow-down>
+      </div>
+      <mat-form-field class="example-full-width">
+        <mat-label>{{ 'OTHER.REPORT' | translate }}</mat-label>
+        <textarea matInput placeholder="Ex. It makes me..." [class.invalid]="validate && !report" [(ngModel)]="report" rows="10"></textarea>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+          <mat-label>{{ 'ACCOUNT.EMAIL' | translate }}</mat-label>
+          <input matInput placeholder="Type your email"
+                 [formControl]="emailFormControl"
+                 [errorStateMatcher]="matcher">
+          <mat-hint>{{ 'OTHER.TYPE_YOUR_EMAIL' | translate }}</mat-hint>
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            {{ 'TEXT.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' | translate }}
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            {{ 'OTHER.EMAIL_IS' | translate }} <strong>{{ 'OTHER.REQUIRED' | translate }}</strong>
+          </mat-error>
+        </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button class="btn btn-white" mat-button (click)="cancel()">{{ 'BUTTONS.CANCEL' | translate }}</button>
+    <button class="btn btn-blue" mat-button (click)="send()">{{ 'BUTTONS.SEND' | translate }}</button>
+  </div>
 </div>

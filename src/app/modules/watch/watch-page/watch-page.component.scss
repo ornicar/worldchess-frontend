@@ -1,0 +1,23 @@
+:host {
+  background-color: black;
+  height:100%;
+  width: 100%;
+}
+
+.main-page {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.main-page__offline-tournament {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1430px;
+  width: 100%;
+  padding: 0 20px 20px;
+}

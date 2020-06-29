@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <div class="menu-container">
+    <main-menu menu-section="mainMenu"></main-menu>
+  </div>
+  <div class="main-page">
+    <div class="container">
+      <offline-tournament-block class="main-page__offline-tournament" [hideButton]="true" [data]="tournaments$ | async"></offline-tournament-block>
+    </div>
+  </div>
+  <div class="container">
+    <wc-game-footer-main></wc-game-footer-main>
+  </div>
+</div>

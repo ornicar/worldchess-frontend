@@ -1,0 +1,30 @@
+<div class="rating-player__info">
+  <div class="rating-count" *ngIf="player.title !== ''">
+    <span>{{player.title}}</span>
+  </div>
+  <div class="country" *ngIf="player.federation">
+    <wc-country [federation]="player.federation"></wc-country>
+  </div>
+  <div class="birth-date" *ngIf="player.birth_date !== 'undefined' && player.birth_date !== null && player.birth_date !== 0">
+    <span>Birth {{player.birth_date | date:'yyyy'}}</span>
+  </div>
+  <!--<div class="social">-->
+    <!--<ul class="social__list">-->
+      <!--<li class="social__elem">-->
+        <!--<a href="#" class="social__link">-->
+          <!--<img alt="twitter" src="assets/images/icon-twitter.svg">-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--<li class="social__elem">-->
+        <!--<a href="#" class="social__link">-->
+          <!--<img alt="facebook" src="assets/images/icon-facebook.svg">-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--<li class="social__elem">-->
+        <!--<a href="#" class="social__link">-->
+          <!--<img alt="instagram" src="assets/images/icon-instagram.svg">-->
+        <!--</a>-->
+      <!--</li>-->
+    <!--</ul>-->
+  <!--</div>-->
+</div>

@@ -1,0 +1,123 @@
+<div class="footer lang-{{accountService.getLanguage() | async}}">
+  <div class="footer__row">
+    <div class="footer__col footer__col--left">
+      <div class="footer__link-block">
+        <a target="blank" href="https://bureau.rocks/" class="footer__link"
+          (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'BUREAU', null, null);">
+          <svg-bureau class="footer__logo"></svg-bureau>
+        </a>
+        <div class="footer__text">
+          {{'OTHER.DESIGNED_BEREAU' | translate }} 2020
+        </div>
+      </div>
+      <div class="footer__link-block">
+        <a target="blank" href="https://usetech.ru/" class="footer__link"
+          (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'USETECH', '', '');">
+          <svg-usetech class="footer__logo footer__logo--usetech"></svg-usetech>
+        </a>
+        <div class="footer__text">
+          {{'OTHER.DEVELOPED' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__col footer__col--center">
+      <div class="links">
+        <div class="links__block-wrapp">
+          <div class="links__block">
+            <div class="links__elem">
+              <a href="https://www.notion.so/worldchess/Privacy-Policy-for-FIDE-Online-Arena-and-worldchess-com-website-470e3c8fdc9148f49611e66df8a25448" target="_blank"
+                class="links__link"
+                (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'Privacy Policy', null, null);"
+              >
+                {{'OTHER.FIDE_SITE' | translate }}
+              </a>
+            </div>
+            <div class="links__elem">
+              <a href="https://www.notion.so/FIDE-Online-Arena-FAQ-c3faf57a215b4f6588f1416bea37877b"
+                target="_blank"
+                class="links__link"
+                (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'Arena FAQ', null, null);"
+              >
+                {{'OTHER.ARENA_FAQ' | translate }}
+              </a>
+            </div>
+          </div>
+          <div class="links__block">
+            <div class="links__elem">
+              <a href="https://www.notion.so/FIDE-Online-Arena-Titles-045a5cbfb0994e0b9c04e05ee44c0491"
+                target="_blank"
+                class="links__link"
+                (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'FIDE Online Titles', null, null);"
+              >
+                {{'OTHER.FIDE_ONLINE_TITLES' | translate }}
+              </a>
+            </div>
+            <div class="links__elem">
+              <a href="https://www.notion.so/Fair-Play-Policy-66fcda18e0544bd0b38cc3b82ee012f0"
+                target="_blank"
+                class="links__link"
+                (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'Fair Play Policy', null, null);"
+              >
+                {{ 'OTHER.FAIR_PLAY_POLICY' | translate }}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="links__block-wrapp">
+          <div class="links__block">
+            <div class="links__elem">
+              <a href="/assets/docs/terms-of-use.pdf"
+                target="_blank"
+                class="links__link"
+                (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'Terms', null, null);"
+              >
+                {{'OFFER.TERMS' | translate }}
+              </a>
+            </div>
+            <div class="links__elem">
+              <a href="mailto:support@worldchess.com"
+                class="links__link"
+                (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'Support', null, null);"
+              >
+                {{'PROFILE.SUPPORT' | translate }}
+            </a>
+            </div>
+          </div>
+          <div class="links__block">
+            <div class="links__elem">
+              <a href="https://www.notion.so/About-FIDE-Online-Arena-c53fb68de5dc49c188e7c0c03bc44fa6"
+                target="_blank"
+                class="links__link"
+                (click)="window['dataLayerPush']('wchCross', 'Footer', 'Link', 'About', null, null);"
+              >
+                {{'OTHER.ABOUT' | translate }}
+              </a>
+            </div>
+            <div class="links__elem">
+              <game-languages></game-languages>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="footer__col footer__col--right">
+      <div class="footer__social">
+        <a target="blank" href="https://twitter.com/theworldchess" class="footer__social-icon footer__social-icon--twitter"
+          (click)="window['dataLayerPush']('wchCross', 'Footer', 'Social', 'tw', null, null);">
+          <svg-twet class="icon"></svg-twet>
+        </a>
+        <a target="blank" href="https://www.facebook.com/theworldchess" class="footer__social-icon footer__social-icon--facebook"
+          (click)="window['dataLayerPush']('wchCross', 'Footer', 'Social', 'fb', null, null);">
+          <svg-facebook class="icon"></svg-facebook>
+        </a>
+        <a target="blank" href="https://www.instagram.com/theworldchess" class="footer__social-icon footer__social-icon--instagram"
+          (click)="window['dataLayerPush']('wchCross', 'Footer', 'Social', 'instagram', null, null);">
+          <svg-instagram class="icon"></svg-instagram>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

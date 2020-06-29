@@ -7,6 +7,7 @@ export interface IResultRecord {
   'black_player_name'?: string;
   'result': Result | null;
   'board_type': number;
+  tour_id?: number;
 }
 
 export interface IResultsLists {

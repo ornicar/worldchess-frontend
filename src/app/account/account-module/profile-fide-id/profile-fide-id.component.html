@@ -12,14 +12,23 @@
             <p class="profile__view-row__value">{{ rating.since | date: 'dd.MM.yyyy' }}</p>
           </div>
           <div class="profile__view-row">
-            <p class="profile__view-row__label">BETA World Chess Passport</p>
+            <p class="profile__view-row__label">BETA FIDE&nbsp;ID</p>
             <p class="profile__view-row__value">
-              <ng-container *ngIf="rating.fide_id; else nonfide">
+              <ng-container *ngIf="rating.fide_id">
                 {{ rating.fide_id }}
               </ng-container>
-              <ng-template #nonfide>
+              <ng-container *ngIf="!(isFide$ | async)">
                 - <a class="profile__view-btn" href="javascript:void(0)" (click)="upgrade()">upgrade now</a>
-              </ng-template>
+              </ng-container>
+              <ng-container *ngIf="needToSubmitFideForm$ | async">
+                <a class="profile__view-btn" (click)="requestFideId()">Get FIDE ID</a>
+              </ng-container>
+            </p>
+          </div>
+          <div class="profile__view-row" *ngIf="rating.fide_id">
+            <p class="profile__view-row__label">Fidelity points</p>
+            <p class="profile__view-row__value">
+              {{ fidelityPoints$ | async }}
             </p>
           </div>
           <div class="profile__view-row">
@@ -30,23 +39,18 @@
               <ng-container *ngSwitchDefault>-</ng-container>
             </p>
           </div>
-          <div class="profile__view-row" *ngFor="let plan of rating.subscriptions">
-            <p class="profile__view-row__label">{{ plan.plan }}</p>
-            <ng-container [ngSwitch]="getPurchasePlansStatus(plan)">
-              <ng-container *ngSwitchCase="PurchasePlansStatus.ACTIVE">
-                <p class="profile__view-row__value">
-                  <span class="profile__view-row__value-active">Active</span>
-                </p>
-                <p class="profile__view-row__below">Active till {{ plan.period.upper | date: 'dd.MM.yy' }}</p>
-              </ng-container>
-              <ng-container *ngSwitchCase="PurchasePlansStatus.EXPIRED">
-                <p class="profile__view-row__value">Expired</p>
-              </ng-container>
-            </ng-container>
-          </div>
-          <div class="profile__view-row" *ngIf="rating.subscriptions.length === 0">
-            <p class="profile__view-row__label">Status</p>
-            <p class="profile__view-row__value">-</p>
+          <div class="profile__view-row" *ngIf="friendsList$ | async as lists;">
+            <p class="profile__view-row__label">Friends list</p>
+            <p class="profile__view-row__value">
+              <mat-nav-list>
+                <mat-list-item *ngFor="let item of lists">
+                  <div class="mat-list-item-content-text">{{ item.name }}</div>
+                  <button mat-icon-button class="mat-list-item-button" (click)="deleteFriend(item.friend_id)">
+                    <svg-close class="icon"></svg-close>
+                  </button>
+                </mat-list-item>
+              </mat-nav-list>
+            </p>
           </div>
         </div>
       </div>
@@ -55,9 +59,7 @@
       <div class="profile__rating">
         <ng-container [ngSwitch]="hasFideRating$ | async">
           <div class="profile__block">
-            <svg class="icon">
-              <use xlink:href="#logo"></use>
-            </svg>
+            <svg-logo class="icon rating"></svg-logo>
             <ng-container *ngSwitchCase="true">
               <div class="profile__rating-info">
                 {{ rating.fide_rating }}
@@ -81,7 +83,7 @@
         <div class="profile__all-rating">
           <div class="profile__rating-block">
             <div class="profile__rating-block-label">
-              WC rating
+              WC highest rating
             </div>
             <div class="profile__rating-block-info">
               {{ rating.worldchess_rating }}
@@ -89,7 +91,7 @@
           </div>
           <div *ngIf="hasFideRating$ | async" class="profile__rating-block">
             <div class="profile__rating-block-label">
-              WC Passport rating
+              FIDE highest rating
             </div>
             <div class="profile__rating-block-info">
               {{ rating.fide_rating }}
@@ -115,7 +117,7 @@
             </div>
             <div *ngIf="hasFideRating$ | async" class="profile__rating-block">
               <div class="profile__rating-block-label">
-                WC Passport bullet
+                FIDE bullet
               </div>
               <div class="profile__rating-block-info">
                 {{ rating.fide_bullet }}
@@ -133,7 +135,7 @@
             </div>
             <div *ngIf="hasFideRating$ | async" class="profile__rating-block">
               <div class="profile__rating-block-label">
-                WC Passport blitz
+                FIDE blitz
               </div>
               <div class="profile__rating-block-info">
                 {{ rating.fide_blitz }}
@@ -151,12 +153,80 @@
             </div>
             <div *ngIf="hasFideRating$ | async" class="profile__rating-block">
               <div class="profile__rating-block-label">
-                WC Passport rapid
+                FIDE rapid
               </div>
               <div class="profile__rating-block-info">
                 {{ rating.fide_rapid }}
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="rating-player__wrapper">
+    <div *ngIf="classicPieFideOnline">
+        <h2 class="rating-player__title">FIDE Online game statistics</h2>
+        <div class="rating-player__blocks-wrap">
+          <div class="rating-player__blocks">
+            <div class="block-statistics" *ngIf="classicPieFideOnline['bullet']">
+              <wc-game-statistic-pie-chart
+                [title]="'Bullet'"
+                [data]="classicPieFideOnline['bullet']"
+              ></wc-game-statistic-pie-chart>
+            </div>
+            <div class="block-statistics" *ngIf="classicPieFideOnline['blitz']">
+              <wc-game-statistic-pie-chart
+                [title]="'Blitz'"
+                [data]="classicPieFideOnline['blitz']"
+              ></wc-game-statistic-pie-chart>
+            </div>
+            <div class="block-statistics" *ngIf="classicPieFideOnline['rapid']">
+              <wc-game-statistic-pie-chart
+                [title]="'Rapid'"
+                [data]="classicPieFideOnline['rapid']"
+              ></wc-game-statistic-pie-chart>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div *ngIf="classicPieWorldChess">
+      <h2 class="rating-player__title">World Chess game statistics</h2>
+      <div class="rating-player__blocks-wrap">
+        <div class="rating-player__blocks">
+          <div class="block-statistics" *ngIf="classicPieWorldChess['bullet']">
+            <wc-game-statistic-pie-chart
+              [title]="'Bullet'"
+              [data]="classicPieWorldChess['bullet']"
+            ></wc-game-statistic-pie-chart>
+          </div>
+          <div class="block-statistics" *ngIf="classicPieWorldChess['blitz']">
+            <wc-game-statistic-pie-chart
+              [title]="'Blitz'"
+              [data]="classicPieWorldChess['blitz']"
+            ></wc-game-statistic-pie-chart>
+          </div>
+          <div class="block-statistics" *ngIf="classicPieWorldChess['rapid']">
+            <wc-game-statistic-pie-chart
+              [title]="'Rapid'"
+              [data]="classicPieWorldChess['rapid']"
+            ></wc-game-statistic-pie-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="lineFIDE || lineWS">
+      <h2 class="rating-player__title">Rating chart</h2>
+      <div class="rating-player__blocks-wrap">
+        <div class="rating-player__blocks rating-player__blocks--width">
+          <div class="block-statistics block-statistics--graph">
+            <wc-rating-line-chart
+              [data]="null"
+              [dataFide]="lineFIDE"
+              [dataWS]="lineWS"
+            ></wc-rating-line-chart>
           </div>
         </div>
       </div>

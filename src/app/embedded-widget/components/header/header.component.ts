@@ -9,5 +9,5 @@ import { HeaderComponent as HeaderComponentBase } from '../../../broadcast/compo
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent extends HeaderComponentBase {
-  backendUrl = environment.backendUrl;
+  applicationUrl = environment.applicationUrl;
 }

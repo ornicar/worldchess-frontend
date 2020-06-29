@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AccountResourceService } from '../account-store/account-resource.service';
-import {AccountLoadRatingSuccess} from '../account-store/account.actions';
-import {IAccountRating} from '../account-store/account.model';
+import { AccountLoadRatingSuccess } from '../account-store/account.actions';
+import { IAccountRating } from '../account-store/account.model';
 import * as fromRoot from '../../reducers';
 
 @Injectable()

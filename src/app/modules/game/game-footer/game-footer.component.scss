@@ -1,0 +1,110 @@
+@import 'variables-new';
+@import 'media-new';
+
+.footer__logo {
+  display: block;
+  fill: #fff;
+  width: 93px;
+  height: 16px;
+  margin-bottom: 7px;
+
+  &--usetech {
+    width: 83px;
+    position: relative;
+    top: -2px;
+  }
+
+  &:active,
+  &:hover {
+    fill: $brown-2;
+
+    ::ng-deep {
+      .st0,
+      .st1 {
+        fill: $brown-2;
+      }
+    }
+  }
+
+  ::ng-deep {
+    svg {
+      display: block;
+    }
+  }
+}
+
+.footer__row {
+  display: flex;
+}
+
+.footer__col {
+  margin-right: 17px;
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @include birman-media {
+    margin-right: 12px;
+  }
+}
+
+.footer__text {
+  font: 300 12px/15px $gerbera-font;
+  color: #fff;
+  opacity: .4;
+}
+
+.footer__link {
+  font: 300 12px/22px $gerbera-font;
+  margin-bottom: 15px;
+  color: #fff;
+  margin-right: 20px;
+
+  &:last-child {
+    margin-left: 0;
+  }
+
+  &:active,
+  &:hover {
+    color: $brown-2;
+  }
+}
+
+.footer__social {
+  display: flex;
+  position: relative;
+  top: -2px;
+  margin-left: 18px;
+}
+
+.footer__social-icon {
+  fill: #fff;
+  margin-right: 6.5px;
+
+  &--twet {
+    width: 33px;
+    height: 26px;
+  }
+
+  &--facebook {
+    width: 14px;
+    height: 28px;
+  }
+
+  &--instagram {
+    width: 26px;
+    height: 26px;
+  }
+
+  &:hover {
+    fill: $brown-2;
+  }
+
+  .icon {
+    width: 100%;
+    height: 100%;
+    svg {
+      height: 100%;
+    }
+  }
+}

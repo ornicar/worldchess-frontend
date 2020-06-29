@@ -1,0 +1,54 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  bottom: 0;
+  left: 0;
+  padding: 0 10px;
+}
+
+.partner-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+.partner-card__dragging {
+  cursor: grabbing;
+}
+
+.partner-card__content {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 220px;
+  background-color: #000;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 4px;
+}
+
+.partner-card__logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.partner-card__text {
+  font: 300 15px/20px $gerbera-font;
+  color: $yellow-new;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

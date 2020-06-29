@@ -1,0 +1,240 @@
+@import "variables-new";
+@import "media-new";
+
+
+:host {
+  @include birman-media() {
+    height: 100%;
+  }
+}
+
+div.mat-dialog-wrapper {
+  max-height: calc(100vh - 48px);
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  margin: 0 -30px;
+
+  @include birman-media() {
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 0;
+  }
+}
+
+.col-sm {
+  flex: 1;
+  padding: 0 30px;
+  margin-bottom: 30px;
+  @include birman-media() {
+    padding: 0;
+  }
+
+  &--mobile {
+    display: flex;
+
+    .game-settings__sub-title {
+      margin-bottom: 0;
+      margin-right: 8px;
+    }
+  }
+}
+
+.mobile-hidden {
+  @include birman-media() {
+    display: none;
+  }
+}
+
+.desktop-hidden {
+  display: none;
+  @include birman-media() {
+    display: flex;
+  }
+}
+
+.game-settings__btn {
+  width: 220px;
+  height: 60px;
+  background-color: #3C40C6;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font: 300 22px/50px $gerbera-font;
+  cursor: pointer;
+  border: 0;
+
+  &:hover {
+    background-color: #565BF4;
+  }
+
+  @include birman-media() {
+    width: 100%;
+  }
+}
+
+.game-settings {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+
+  @include birman-media() {
+    height: 100%;
+  }
+}
+
+.game-settings__popup {
+  padding: 30px;
+  max-width: 1024px;
+  width: 100%;
+
+  @include birman-media() {
+    padding: 10px;
+    max-width: 375px;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+}
+
+.game-settings__title {
+  font: 300 30px/40px $gerbera-font;
+  margin-bottom: 10px;
+
+  @include birman-media() {
+    margin-bottom: 23px;
+  }
+}
+
+.game-settings__sub-title {
+  font: 300 22px/25px $gerbera-font;
+  margin-bottom: 15px;
+  @include birman-media() {
+    margin-bottom: 30px;
+  }
+}
+
+.game-settings__btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  .btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 0;
+    position: relative;
+    background-color: #fff;
+    &:after,
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 25px;
+      height: 2px;
+      background-color: #000;
+    }
+
+    &:before {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}
+
+.mat-button-toggle[disabled] {
+  opacity: 0.5;
+}
+
+.mat-button-toggle-checked {
+  .game-settings__board-text {
+    color: rgba(#fff, 1);
+  }
+  .game-settings__board-checked {
+    opacity: 1;
+  }
+}
+
+.mat-button-toggle-group {
+  overflow: visible;
+}
+
+.game-settings__board {
+  line-height: 18px;
+  position: relative;
+
+  &--stub {
+    width: 180px;
+  }
+
+  &:hover {
+    .game-settings__board-text {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  @include birman-media() {
+    width: 89px;
+  }
+}
+
+.game-settings__board-img {
+  position: relative;
+  left: -22px;
+  width: 160px;
+  height: 200px;
+  margin-bottom: 5px;
+
+  @include birman-media() {
+    left: 0px;
+    width: 89px;
+    height: 129px;
+  }
+}
+
+.game-settings__board-text {
+  font: 300 15px/18px $gerbera-font;
+  line-height: 18px !important;
+  text-align: left;
+  color: rgba(#fff, 0.4);
+  white-space: normal;
+}
+
+.game-settings__board-checked {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  background-color: #fff;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  opacity: 0;
+
+  @include birman-media() {
+    right: 5px;
+    top: 5px;
+    width: 21px;
+    height: 21px;
+  }
+
+  .icon {
+    display: block;
+    width: 18px;
+    height: 19px;
+    fill: #000;
+
+    @include birman-media() {
+      width: 16px;
+      height: 17px;
+    }
+  }
+}

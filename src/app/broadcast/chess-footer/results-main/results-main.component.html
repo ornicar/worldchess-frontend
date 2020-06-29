@@ -1,27 +1,30 @@
 <div class="results">
-  <div class="results__timer-wrapper"
-    *ngIf="(dateTimeOfRound$ | async)">
-      <div class="results__timer">
-        Next round starts in:
-        <wc-timer [date]="(dateTimeOfRound$ | async)" [format]="'DD:HH:mm:ss'"></wc-timer>
-      </div>
+  <div class="results__timer-wrapper" *ngIf="(dateTimeOfRound$ | async)">
+    <div class="results__timer">
+      Next round starts in:
+      <wc-timer [date]="(dateTimeOfRound$ | async)" [format]="'DD:HH:mm:ss'"></wc-timer>
+    </div>
   </div>
 
   <div *ngFor="let playerResults of playersResults; let idx = index;" [class.right]="idx === 1" class="results__half">
     <div class="avatar-image">
-      <img [class.reverse]="playerResults.player?.portrait_fullface" [src]="playerResults.player?.portrait_fullface || playerResults.player?.portrait || playerResults.player.avatar" alt="player photo">
+      <img [class.reverse]="playerResults.player?.portrait_fullface"
+        [src]="playerResults.player?.portrait_fullface || playerResults.player?.portrait || playerResults.player.avatar"
+        alt="player photo">
     </div>
 
     <div class="results__score">
-      <div [ngClass]="isEnd && isWinner(playerResults) ? 'results__result results__result--winner' : 'results__result results__result--less'">
+      <div
+        [ngClass]="isEnd && isWinner(playerResults) ? 'results__result results__result--winner' : 'results__result results__result--less'">
         {{ playerResults?.total }}
       </div>
       <div [class.right]="idx === 1" class="results__name">
-        {{ playerResults?.player?.full_name | wcReplace:',':'' }} <wc-country-flag [countryId]="playerResults?.player?.federation"></wc-country-flag>
+        {{ playerResults?.player?.full_name | wcReplace:',':'' }} <wc-country-flag
+          [countryId]="playerResults?.player?.federation"></wc-country-flag>
       </div>
     </div>
   </div>
- 
+
   <h3 class="without_results" *ngIf="playersResults?.length === 0">Results will be available after the first round</h3>
 
 </div>

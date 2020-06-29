@@ -1,0 +1,10 @@
+<div class="shop-banner" (click)="goToShop($event)">
+  <div class="shop-banner__background"></div>
+  <img class="shop-banner__img" [src]="data.image.full"/>
+  <div class="shop-banner__price">{{data.price | currency:'EUR':'symbol-narrow':'1.0-0'}}</div>
+  <div class="shop-banner__content">
+    <div class="shop-banner__title">{{data.title}}</div>
+    <button class="shop-banner__button" (click)="goToShop($event)">Buy</button>
+  </div>
+  
+</div>

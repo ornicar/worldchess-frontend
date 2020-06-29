@@ -9,17 +9,19 @@ import {
   Input,
   OnChanges
 } from '@angular/core';
-import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject, combineLatest, forkJoin } from 'rxjs';
 import { Tournament, TournamentStatus, TournamentType, TournamentResourceType} from '../../core/tournament/tournament.model';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
-import { map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { OnChangesInputObservable, OnChangesObservable } from '../../../shared/decorators/observable-input';
 import { ITour } from '../../core/tour/tour.model';
 import { IResultsLists, Result, IPlayerResults, IResultRecord } from '../../core/result/result.model';
 import * as fromTurnament from '../../core/tournament/tournament.reducer';
 import {GetFideTournamentResults, GetFounderTournamentResults} from '../../core/tournament/tournament.actions';
 import { IPlayer } from '../../core/player/player.model';
+import { ActivatedRoute } from '@angular/router';
+import { IBoard } from '@app/broadcast/core/board/board.model';
 
 interface IAggregatedResults {
   [key: number]: IPlayerResults;
@@ -71,20 +73,32 @@ export class ChessFooterResultsComponent implements OnInit, OnDestroy, OnChanges
   constructor(
     private cd: ChangeDetectorRef,
     private store$: Store<fromRoot.State>,
+    private activatedRoute: ActivatedRoute,
     ) { }
 
   public ngOnInit() {
-    this.subs.push(this.tournament$.subscribe((tournament) => {
-      switch (tournament.resourcetype) {
-        case TournamentResourceType.Tournament:
-          this.store$.dispatch(new GetFideTournamentResults({ id: tournament.id }));
-          break;
 
-        case TournamentResourceType.FounderTournament:
-          this.store$.dispatch(new GetFounderTournamentResults({ id: tournament.id }));
-          break;
-      }
-    }));
+    this.subs.push(
+      combineLatest([
+        this.activatedRoute.data.pipe(
+          map((data: { tournament: Tournament, board: IBoard }) => data.tournament),
+        ),
+        this.tournament$,
+      ]).pipe(
+        map(([t1, t2]) => t1 || t2),
+        filter(t => !!t),
+      ).subscribe((tournament) => {
+         this.tournament = tournament;
+         switch (tournament.resourcetype) {
+           case TournamentResourceType.Tournament:
+             this.store$.dispatch(new GetFideTournamentResults({ id: tournament.id }));
+             break;
+
+           case TournamentResourceType.FounderTournament:
+             this.store$.dispatch(new GetFounderTournamentResults({ id: tournament.id }));
+             break;
+         }
+       }));
 
     this.subs.push(this.tournamentResults$.subscribe((items) => {
       this.classicList = items.Classic || [];
@@ -113,7 +127,7 @@ export class ChessFooterResultsComponent implements OnInit, OnDestroy, OnChanges
   }
 
   public getPlayersResults(): IPlayerResults[] {
-    if (this.results.length === 0) {
+    if (!this.results || this.results.length === 0) {
       return [];
     }
 
@@ -127,10 +141,6 @@ export class ChessFooterResultsComponent implements OnInit, OnDestroy, OnChanges
     results.forEach((result) => {
       if (result.result === null) {
         return;
-      }
-
-      if (result.white_player_name) {
-        result.white_player = null;
       }
 
       const whitePlayerKey = ChessFooterResultsComponent.getPlayerKey(result, 'white_player');
@@ -179,7 +189,8 @@ export class ChessFooterResultsComponent implements OnInit, OnDestroy, OnChanges
       player = {
         full_name: playerKey,
         fide_id: null,
-        federation: null
+        federation: null,
+        id: null,
       };
     }
     return { games: 0, wins: 0, draw: 0, loss: 0, total: 0, player };

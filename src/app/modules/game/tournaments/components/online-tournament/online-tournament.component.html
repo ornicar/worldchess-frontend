@@ -1,0 +1,562 @@
+<div class="online-tournament-wrapper">
+  <div class="menu-container">
+    <game-main-menu class="gaming-menu"></game-main-menu>
+  </div>
+  <div *ngIf="(routeID$ | async) == (tournamentSubject$ | async)?.id; then viewTournament; else loadingTournament"></div>
+  <ng-template #loadingTournament>
+    <div class="preloader">
+      <wc-preloader></wc-preloader>
+    </div>
+  </ng-template>
+  <ng-template #viewTournament>
+    <div *ngIf="tournamentSubject$ | async as tournament" class="online-tournament">
+      <div class="online-tournament__container">
+        <div class="online-tournament__header-container">
+          <div class="online-tournament__title">
+            <div class="online-tournament__title-main">
+              <svg-cup class="icon-cup"></svg-cup> {{ tournament.title }} {{ tournament.additional_title }}
+            </div>
+            <div class="online-tournament__subtitle">
+              <span *ngIf="tournament.time_control">
+                {{ getBoardType(tournament.time_control.board_type) | async }} {{ convertTime(tournament.time_control) }} ∙
+              </span>
+              <span *ngIf="tournament.rating_type == 'fide'">
+                <svg-logo-fide class="icon-fide"></svg-logo-fide>
+              </span>
+              <span>
+                {{ convertGameMode(tournament.rating_type) | async }}
+              </span>
+            </div>
+          </div>
+          <div class="online-tournament__search-container" [ngSwitch]="actionButtonMode">
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.CREATE_ACCOUNT">
+              <a href="#" class="search-container__time" (click)="createAccount($event, tournament)">
+                {{ 'BUTTONS.CREATE_OPPONENT' | translate }}</a
+              >
+            </div>
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.UPGRADE_NOW">
+              <div class="search-container__text">
+                {{ 'TEXT.TO_JOIN_FIDE' | translate }}
+              </div>
+              <a href="#" class="search-container__time search-container__time--upgrade" (click)="updateAccount($event, tournament)">{{
+                'BUTTONS.UPGRADE_NOW' | translate
+              }}</a>
+            </div>
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.NEED_FIDE_ID_REGISTER">
+              <div class="search-container__text"></div>
+              <a href="#" class="search-container__time search-container__time--upgrade" (click)="registerFideId($event)">{{
+                'BUTTONS.FILL_FIDE_ID_REQUEST' | translate
+              }}</a>
+            </div>
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.NEED_FIDE_ID_APPROVE">
+              <div class="search-container__text"></div>
+              <a href="#" class="search-container__time search-container__time--disabled">{{ 'BUTTONS.REVIEW_MEMBERSHIP' | translate }}</a>
+            </div>
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.REGISTER">
+              <div class="search-container__text">{{ 'TEXT.YOU_WILL_BE_NOTIFIDED' | translate }}</div>
+              <a href="#" class="search-container__time" (click)="join($event, tournament)">
+                {{ 'BUTTONS.JOIN' | translate }}&nbsp;
+                <span>
+                  <wc-timer
+                    [date]="tournament.signup_end_datetime ? tournament.signup_end_datetime : tournament.datetime_of_tournament"
+                    format="{{ getFormat(tournament) }}"
+                    (countdownChange)="displayCounter($event)"
+                    stopTrim="m s"
+                  ></wc-timer>
+                </span>
+              </a>
+            </div>
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.LEAVE">
+              <div class="search-container__text"></div>
+              <a href="#" class="search-container__time search-container__time--leave" (click)="leave($event, tournament)"
+                >{{ 'BUTTONS.LEAVE' | translate }}&nbsp;&nbsp;
+                <span>
+                  <wc-timer
+                    [date]="tournament.signup_end_datetime ? tournament.signup_end_datetime : tournament.datetime_of_tournament"
+                    format="{{ getFormat(tournament) }}"
+                    (countdownChange)="displayCounter($event)"
+                    stopTrim="m s"
+                  ></wc-timer>
+                </span>
+              </a>
+            </div>
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.DISABLE">
+              <div *ngIf="disableTournament(tournament)" class="search-container__text">
+                {{ 'TEXT.YOU_CAN_JOIN' | translate }}
+              </div>
+              <div *ngIf="disableDuplication(tournament)" class="search-container__text">
+                {{ 'TEXT.YOU_CAN_NOT_SING_UP' | translate }}
+              </div>
+              <a class="search-container__time search-container__time--disabled">{{ 'BUTTONS.JOIN' | translate }}</a>
+            </div>
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.END">
+              <a class="search-container__time search-container__time--end">{{ 'BUTTONS.THE_TURNAMENT_HAS_ENTED' | translate }}</a>
+            </div>
+            <div class="search-container" *ngSwitchCase="ActionButtonMode.HIDE">
+              <a
+                class="search-container__time search-container__time--disabled"
+                *ngIf="tournament.status === TournamentStatus.EXPECTED && tournament.user_signed === true"
+                >{{ 'BUTTONS.JOIN' | translate }}</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="online-tournament__content-wrapper">
+          <div class="online-tournament__row" [class.online-tournament__row--mobile-open]="openContent">
+            <div class="online-tournament__row-content">
+              <div class="statistic">
+                <div class="statistic__head statistic__head--desctop">
+                  <div class="statistic__head-cell statistic__head-cell--logo">
+                    <svg-logo class="statistic__logo"></svg-logo>
+                  </div>
+                  <div class="statistic__head-cell">
+                    <div class="statistic__head-title">
+                      {{ 'OTHER.ORGANIZER' | translate }}
+                    </div>
+                    <div class="statistic__head-text">
+                      {{ tournament.sponsor_title }}
+                    </div>
+                  </div>
+                  <div class="statistic__head-cell">
+                    <div class="statistic__head-title">
+                      {{ 'OTHER.PARTICIPATION' | translate }}
+                    </div>
+                    <div class="statistic__head-text">
+                      {{ 'OTHER.OPEN' | translate }}
+                    </div>
+                  </div>
+                  <div class="statistic__head-cell">
+                    <div class="statistic__head-title">
+                      {{ 'OTHER.SYSTEM' | translate }}
+                    </div>
+                    <div class="statistic__head-text">
+                      {{ getTournamentType(tournament) | async }}
+                    </div>
+                  </div>
+                  <div class="statistic__head-cell">
+                    <div class="statistic__head-title">
+                      {{ 'OTHER.REGION' | translate }}
+                    </div>
+                    <div class="statistic__head-text">
+                      {{ getFederationTitle(tournament.country) }}
+                    </div>
+                  </div>
+                  <div class="statistic__head-cell">
+                    <div class="statistic__head-title">
+                      {{ 'OTHER.PLAYERS' | translate }}
+                    </div>
+                    <div class="statistic__head-text">{{ tournament?.signed_up_amount }}/{{ tournament.players_amount }}</div>
+                  </div>
+                  <div class="statistic__head-cell">
+                    <div class="statistic__head-title">
+                      {{ 'OTHER.ROUNDS' | translate }}
+                    </div>
+                    <div class="statistic__head-text">
+                      {{ tournament?.number_of_tours }}
+                    </div>
+                  </div>
+                  <div class="statistic__head-cell">
+                    <div class="statistic__head-title">
+                      {{ 'OTHER.STATUS' | translate }}
+                    </div>
+                    <div class="statistic__head-text">
+                      <ng-container *ngIf="tournament.status === TournamentStatus.EXPECTED">
+                        {{ 'OTHER.UPCOMING' | translate }}
+                      </ng-container>
+                      <ng-container *ngIf="tournament.status === TournamentStatus.GOES">
+                        {{ 'OTHER.IN_PROCESS' | translate }}
+                      </ng-container>
+                      <ng-container *ngIf="tournament.status === TournamentStatus.COMPLETED">
+                        {{ 'OTHER.ENDED' | translate }}
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="statistic__head-cell statistic__head-cell--mobile">
+                    <div class="statistic__head-text">
+                      <a (click)="expandContent($event)" class="statistic__head-link"
+                        >{{ 'BUTTONS.MORE' | translate }}
+                        <svg-arrow-down class="icon-arrow-down"></svg-arrow-down>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="tournament.image" class="aside-img-big">
+                <div class="aside-img__picture" [style.background-image]="'url(' + tournament.image + ')'"></div>
+              </div>
+              <div class="online-tournament__text">
+                <div [innerHTML]="tournament.about"></div>
+                <a class="desctop-hidden" (click)="expandContent($event)">{{ 'BUTTONS.LESS' | translate }}</a>
+              </div>
+            </div>
+            <div class="online-tournament__row-aside">
+              <div *ngIf="tournament.image" class="aside-img">
+                <div class="aside-img__picture" [style.background-image]="'url(' + tournament.image + ')'"></div>
+              </div>
+            </div>
+          </div>
+          <div class="slider-photos">
+            <ul class="slider-photos__list">
+              <li *ngFor="let standing of getPlayersLimited$ | async; let i = index" class="slider-photos__elem">
+                <div class="slider-photos__photo" [style.background-image]="'url(' + standing?.avatar + ')'">
+                  <img *ngIf="standing?.avatar" alt="" />
+                  <span *ngIf="!standing?.avatar" class="slider-photos__initials">{{
+                    standing?.full_name || 'Anonymous' | wcWordsFirstLetters
+                  }}</span>
+                </div>
+                <div *ngIf="standing?.player_id === account?.player.player_id || (getStandings$ | async)?.length - i <= 3">
+                  <div class="slider-photos__text">{{ standing?.full_name || 'Anonymous' }}</div>
+                  <div *ngIf="tournament.status !== TournamentStatus.EXPECTED" class="slider-photos__result">
+                    {{ onlineTournamentSerivce.getFullValue(standing?.points) }}
+                    <div class="half-value" *ngIf="onlineTournamentSerivce.haveHalfValue(standing?.points)">
+                      <span>1</span><span>2</span>
+                    </div>
+                    <span *ngIf="i == (getStandings$ | async)?.length - 1"> {{ 'OTHER.PTS' | translate }}</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="slider-photos__counter">
+              <div class="slider-photos__counter-players">{{ getTitlePlayers$ | async }}</div>
+              <div class="slider-photos__counter-countries" *ngIf="countCountries$ | async">{{ countCountries$ | async }}</div>
+            </div>
+          </div>
+          <wc-rounds-time-line *ngIf="(timeLineIntervalsReal$ | async)?.length" [intervals]="timeLineIntervalsReal$ | async">
+          </wc-rounds-time-line>
+          <div class="online-tournament__row online-tournament__row--reverse">
+            <div class="online-tournament__row-aside online-tournament__row-aside--desctop">
+              <a class="online-tournament__btn-chat-hide" href="javascript:void(0)" (click)="showChat(tournament)">
+                <div class="online-tournament__btn-chat-hide-icon" *ngIf="toggleChat">
+                  <svg-chat-game-fill class="icon"></svg-chat-game-fill>
+                </div>
+                <div class="online-tournament__btn-chat-hide-icon" *ngIf="!toggleChat">
+                  <svg-chat-game class="icon"></svg-chat-game>
+                </div>
+                {{ 'CHAT.CHAT' | translate }}
+              </a>
+              <div class="online-tournament__chat-mobile" *ngIf="toggleChatMobile">
+                <game-chat
+                  [viewChat]="'tournament'"
+                  (hideChat)="showChatMobile(tournament)"
+                  [disableMessage]="enableChat$ | async"
+                  [chatID]="getChatID$ | async"
+                ></game-chat>
+              </div>
+              <div class="online-tournament__chat-desktop" *ngIf="toggleChat">
+                <game-chat
+                  [viewChat]="'tournament'"
+                  (hideChat)="showChat()"
+                  [chatID]="getChatID$ | async"
+                  [disableMessage]="enableChat$ | async"
+                >
+                </game-chat>
+              </div>
+            </div>
+            <div class="online-tournament__row-content">
+              <div *ngIf="isShowCertificate(tournament)">
+                <div class="certificate">
+                  <div class="certificate__title">{{ 'OTHER.MY_CERTIFICATE' | translate }}</div>
+                  <div class="certificate__img">
+                    <div class="certificate__content">
+                      <div class="certificate__head">
+                        <svg-logo-fide class="certificate__fide-logo"></svg-logo-fide>
+                        FIDE
+                        <svg-logo class="certificate__logo"></svg-logo>
+                        {{ 'PROFILE.WS' | translate }}
+                      </div>
+                      <div class="certificate__sub-title">{{ 'OTHER.TOURNAMENT_CERTIFICATE' | translate }}</div>
+
+                      <!-- HTML Content -->
+
+                      <div class="certificate__sertifies">
+                        {{ 'TEXT.THIS_SERTIFIES_THAT' | translate }}
+                      </div>
+                      <div class="certificate__name">
+                        {{ account?.full_name || 'Anonymous' }}
+                      </div>
+
+                      <div class="certificate__text">
+                        {{ 'TEXT.TOOK_PART_IN_THE' | translate }} {{ tournament.title }}, <br />
+                        {{ 'TEXT.ORGANISED_ON_THE_FIDE_ONLINE_ARENA' | translate }}, <br />
+                        {{ 'TEXT.AND_WAS_PLACED' | translate }} {{ getCertificate() | async }} {{ 'OTHER.OF' | translate }}
+                        {{ (getPlayers$ | async)?.length }}.
+                      </div>
+                      <div class="certificate__footer">
+                        <ul class="certificate__list">
+                          <li class="certificate__list-elem">
+                            <span>{{ 'OTHER.EVENT' | translate }}: </span> {{ tournament.title }}
+                          </li>
+                          <li class="certificate__list-elem">
+                            <span>{{ 'GAME.TIME_CONTROL' | translate }}: </span>
+                            {{ getBoardType(tournament.time_control.board_type) | async }} {{ convertTime(tournament.time_control) }}
+                          </li>
+                          <li class="certificate__list-elem">
+                            <span>{{ 'OTHER.ROUNDS' | translate }}: </span> {{ tournament.number_of_tours }}
+                          </li>
+                          <li class="certificate__list-elem">
+                            <span>{{ 'OTHER.DATE' | translate }}: </span> {{ tournament.datetime_of_tournament | date: 'MMMM d, yyyy' }}
+                          </li>
+                        </ul>
+                        <div class="certificate__qr-code">
+                          <a href="https://arena.myfide.net/tournaments" class="certificate__qr-code-icon">
+                            <img src="../../../../assets/images/certificate-qr-code.gif" alt="" />
+                          </a>
+                          <div class="certificate__qr-code-text">
+                            {{ 'TEXT.THIS_CERTIFICATE_IS_GENERATED_UPON' | translate }} <br />
+                            {{ 'TEXT.TOURNAMENT_ON_FIDE_ONLINE_ARENA' | translate }} <br />
+                            {{ 'TEXT.AND_THE_LIST_OF_PARTICIPANTS' | translate }}.
+                          </div>
+                        </div>
+                        <div class="certificate__signature">
+                          <div class="certificate__signature-text">{{ 'PROFILE.WS' | translate }} CEO</div>
+                          <div class="certificate__signature-field">
+                            <img src="../../../../assets/images/certificate-signature.jpg" alt="" />
+                            <!--правка-->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <img src="../../../../assets/images/certificate.jpg" alt="certificate" />
+                  </div>
+                  <div class="certificate__buttons">
+                    <a class="certificate__btn" (click)="downloadPDF(tournament.id)">
+                      <div class="certificate__btn-icon">
+                        <svg-download-my-games class="icon-download"></svg-download-my-games>
+                      </div>
+                      <div class="certificate__btn-text">PDF</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="tournament.status === TournamentStatus.EXPECTED" class="mega-title">
+                <div class="mega-title__text">{{ 'TEXT.ROUND_1_WILL_START_SOON' | translate }}</div>
+              </div>
+              <div *ngIf="tournament.status !== TournamentStatus.EXPECTED" class="round-switch">
+                <div class="round-switch__title">
+                  <ng-container *ngIf="selectedTour$ | async as selectedTour">
+                    {{ 'MESSAGES.ROUND' | translate }} {{ selectedTour.tour_number }}
+                  </ng-container>
+                </div>
+                <div class="round-switch__buttons">
+                  <!--                <a href="#" class="round-switch__button round-switch__button&#45;&#45;multiboard">-->
+                  <!--                  Multiboard-->
+                  <!--                </a>-->
+                  <a
+                    href=""
+                    (click)="prevTour($event, tournament)"
+                    [attr.disabled]="!(canPrevTourSelect$ | async)"
+                    class="round-switch__button round-switch__button--previous"
+                    [class.round-switch__button--disabled]="!(canPrevTourSelect$ | async)"
+                  >
+                    <svg-arrow-left-thin class="icon"></svg-arrow-left-thin>
+                    {{ 'BUTTONS.PREVIOUS' | translate }}
+                  </a>
+                  <a
+                    href=""
+                    (click)="nextTour($event, tournament)"
+                    [attr.disabled]="!(canNextTourSelect$ | async)"
+                    class="round-switch__button round-switch__button--next"
+                    [class.round-switch__button--disabled]="!(canNextTourSelect$ | async)"
+                  >
+                    {{ 'BUTTONS.NEXT' | translate }}
+                    <svg-arrow-right-thin class="icon"></svg-arrow-right-thin>
+                  </a>
+                </div>
+              </div>
+              <div class="online-tournament-boards">
+                <div class="online-tournament-boards__board" *ngFor="let board of getFavoriteBoard | slice: 0:2">
+                  <wc-online-tournament-widget
+                    [board]="board"
+                    [showCountdown]="isShowReturnGame(tournament) | async"
+                    [needResubscribe]="needResubscribe$ | async"
+                  >
+                  </wc-online-tournament-widget>
+                </div>
+              </div>
+              <div *ngIf="tournament.status !== TournamentStatus.EXPECTED" class="online-tournament-rounds">
+                <ul class="online-tournament-rounds__list">
+                  <li
+                    *ngFor="let board of boardSelectTour$ | async"
+                    class="online-tournament-rounds__elem"
+                    [class.active]="isActiveBoard(board) | async"
+                  >
+                    <div
+                      (mouseover)="onOverWidget($event, board)"
+                      (mouseout)="onOutWidget($event, board)"
+                      class="online-tournament-rounds__elem-wrapper"
+                    >
+                      <div class="online-tournament-rounds__order">
+                        {{ board?.desk_number }}
+                      </div>
+                      <!--  -->
+                      <ng-container>
+                        <div class="online-tournament-rounds__drop-widget" *ngIf="board?.expand === true && !disableWidget(tournament)">
+                          <wc-online-tournament-widget
+                            [board]="board"
+                            (wsmouseover)="mouseOver($event, board)"
+                            [needResubscribe]="needResubscribe$ | async"
+                          ></wc-online-tournament-widget>
+                        </div>
+                        <div
+                          class="online-tournament-rounds__drop-widget online-tournament-rounds__drop-widget--players"
+                          *ngIf="board?.expand === true && disableWidget(tournament)"
+                        >
+                          <wc-online-tournament-pgn-widget [board]="board" (wsmouseover)="mouseOver($event, board)">
+                          </wc-online-tournament-pgn-widget>
+                        </div>
+                        <div class="online-tournament-rounds__players">
+                          <div class="online-tournament-rounds__player">
+                            <div
+                              class="online-tournament-rounds__name online-tournament-rounds__name--bottom"
+                              [class.active]="(account$ | async)?.player.player_id === board.black_id"
+                            >
+                              {{ board.black_player?.full_name ? board.black_player?.full_name : 'Anonymous' }}
+                            </div>
+                            <ng-container *ngIf="board.status === BoardStatus.COMPLETED">
+                              <ng-container [ngSwitch]="board.result">
+                                <div
+                                  class="online-tournament-rounds__result online-tournament-rounds__result--bottom online-tournament-rounds__result--zero"
+                                  *ngSwitchCase="BoardResult.VICTORY"
+                                >
+                                  0
+                                </div>
+                                <div
+                                  class="online-tournament-rounds__result online-tournament-rounds__result--bottom"
+                                  *ngSwitchCase="BoardResult.DEFEAT"
+                                >
+                                  1
+                                </div>
+                                <div
+                                  class="online-tournament-rounds__result online-tournament-rounds__result--bottom online-tournament-rounds__result--half"
+                                  *ngSwitchCase="BoardResult.DRAW"
+                                >
+                                  <span>1</span><span>2</span>
+                                </div>
+                                <div
+                                  class="online-tournament-rounds__result online-tournament-rounds__result--bottom online-tournament-rounds__result--zero"
+                                  *ngSwitchCase="BoardResult.NOTHING"
+                                >
+                                  0
+                                </div>
+                              </ng-container>
+                            </ng-container>
+                            <ng-container
+                              *ngIf="board.status !== BoardStatus.COMPLETED && board.last_move && !board.last_move.is_white_move"
+                            >
+                              <div class="online-tournament-rounds__move">
+                                <div class="online-tournament-rounds__move">
+                                  <wc-figure class="figure-theme-birman" [san]="board.last_move.san" [isWhite]="false"> </wc-figure>
+                                  {{ board.last_move.san | wcRemoveFigureNotation }}
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                          <div class="online-tournament-rounds__player">
+                            <div
+                              class="online-tournament-rounds__name"
+                              [class.active]="(account$ | async)?.player.player_id === board.white_id"
+                            >
+                              {{ board.white_player?.full_name !== '' ? board.white_player?.full_name : 'Anonymous' }}
+                            </div>
+                            <ng-container *ngIf="board.status === BoardStatus.COMPLETED">
+                              <ng-container [ngSwitch]="board.result">
+                                <div class="online-tournament-rounds__result" *ngSwitchCase="BoardResult.VICTORY">1</div>
+                                <div
+                                  class="online-tournament-rounds__result online-tournament-rounds__result--zero"
+                                  *ngSwitchCase="BoardResult.DEFEAT"
+                                >
+                                  0
+                                </div>
+                                <div
+                                  class="online-tournament-rounds__result online-tournament-rounds__result--half"
+                                  *ngSwitchCase="BoardResult.DRAW"
+                                >
+                                  <span>1</span><span>2</span>
+                                </div>
+                                <div
+                                  class="online-tournament-rounds__result online-tournament-rounds__result--zero"
+                                  *ngSwitchCase="BoardResult.NOTHING"
+                                >
+                                  0
+                                </div>
+                              </ng-container>
+                            </ng-container>
+                            <ng-container
+                              *ngIf="board.status !== BoardStatus.COMPLETED && board.last_move && board.last_move.is_white_move"
+                            >
+                              <div class="online-tournament-rounds__move">
+                                <wc-figure class="figure-theme-birman" [san]="board.last_move.san" [isWhite]="true"> </wc-figure>
+                                {{ board.last_move.san | wcRemoveFigureNotation }}
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div *ngIf="tournament.status === TournamentStatus.EXPECTED" class="online-tournament-table-wrapper">
+                <table *ngIf="(getPlayers$ | async)?.length" class="online-tournament-table">
+                  <thead class="online-tournament-table__thead">
+                    <tr class="online-tournament-table__row">
+                      <th class="online-tournament-table__cell" style="min-width: 143px;">{{ 'GAME.PLAYER' | translate }}</th>
+                      <th class="online-tournament-table__cell">{{ 'PROFILE.FROM' | translate }}</th>
+                      <th class="online-tournament-table__cell">{{ 'PROFILE.RATING' | translate }}</th>
+                      <th class="online-tournament-table__cell" style="min-width: 65px;">{{ 'PROFILE.AGE' | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody class="online-tournament-table__tbody">
+                    <tr *ngFor="let player of getPlayers$ | async" class="online-tournament-table__row">
+                      <td class="online-tournament-table__cell">{{ player?.full_name ? player?.full_name : 'Anonymous' }}</td>
+                      <td class="online-tournament-table__cell">
+                        {{ getFederationTitle(player.nationality_id) === 'Worldwide' ? '-' : getFederationTitle(player.nationality_id) }}
+                      </td>
+                      <td class="online-tournament-table__cell">{{ player.rating }}</td>
+                      <td class="online-tournament-table__cell">{{ player?.age }} {{ 'TEXT.AGE' | translate }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <wc-tournament-standings
+                *ngIf="tournament.status !== TournamentStatus.EXPECTED"
+                [tournamentId]="tournament.id"
+              ></wc-tournament-standings>
+              <div class="tournament__text" [innerHTML]="tournament.faq_text"></div>
+              <wc-return-game class="return-lobby"></wc-return-game>
+              <div class="leave" *ngIf="tournament.status === TournamentStatus.GOES && tournament.user_signed === true">
+                <div class="leave__button">
+                  <div class="leave__hold" [style.opacity.0]="signoutProgress$ | async">
+                    <div class="leave__hold-progress" [style.width.%]="signoutProgress$ | async"></div>
+                    <div class="leave__hold-text">{{ 'OTHER.HOLD_TO_LEAVE' | translate }}...</div>
+                  </div>
+                  <div
+                    class="leave__text"
+                    (mouseup)="clickSignout(false)"
+                    (mousedown)="clickSignout(true)"
+                    (touchend)="clickSignout(false)"
+                    (touchstart)="clickSignout(true)"
+                    [class.hidden]="signoutProgress$ | async"
+                  >
+                    <svg-download-my-games class="icon"></svg-download-my-games>
+                    {{ 'OTHER.LEAVE TOURNAMENT' | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <a href="javascript:void(0)" class="online-tournament__chat-btn" (click)="showChatMobile()">
+    <div class="online-tournament__chat-btn-icon">
+      <svg-chat-game class="icon"></svg-chat-game>
+    </div>
+  </a>
+  <div class="online-tournament__footer">
+    <wc-game-footer-turnaments></wc-game-footer-turnaments>
+  </div>
+</div>

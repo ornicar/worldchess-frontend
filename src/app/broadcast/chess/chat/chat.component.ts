@@ -12,23 +12,25 @@ import {
 import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
-import { IProfile } from '../../../auth/auth.model';
-import { selectProfile } from '../../../auth/auth.reducer';
-import { IChatMessageLike } from '../../../board/board-socket/board-socket.model';
+import * as moment from 'moment';
+import { IChatMessageLike } from '@app/board/board-socket/board-socket.model';
 import * as fromRoot from '../../../reducers/index';
-import { OnChangesInputObservable, OnChangesObservable } from '../../../shared/decorators/observable-input';
-import { SubscriptionHelper, Subscriptions } from '../../../shared/helpers/subscription.helper';
-import { ScreenStateService } from '../../../shared/screen/screen-state.service';
+import * as fromAccount from '@app/account/account-store/account.reducer';
+import { OnChangesInputObservable, OnChangesObservable } from '@app/shared/decorators/observable-input';
+import { SubscriptionHelper, Subscriptions } from '@app/shared/helpers/subscription.helper';
+import { ScreenStateService } from '@app/shared/screen/screen-state.service';
 import { GameOpenChatInfoModal, ChatInfoModalTypes } from '../chess-page/game/game.actions';
 import { IChatMessage } from './chat-message/chat-message.component';
 import { CommentsResourceService, IComment, ICommentParams, ICommentProfile } from './comments-resource.service';
 import { delay, filter, map, switchMap, take } from 'rxjs/operators';
-import * as moment from 'moment';
 import { BoardStatus, IBoard } from '../../core/board/board.model';
 import { of } from 'rxjs/internal/observable/of';
 import { combineLatest } from 'rxjs/internal/observable/combineLatest';
 import { BackLightReplyMessagePipe } from './backLightReplyMessage.pipe';
 import { ChatSocketService } from './services/chat-socket.service';
+import { IAccount } from '@app/account/account-store/account.model';
+import { ITour, TourStatus } from '@app/broadcast/core/tour/tour.model';
+
 
 const DELAY_LOCK_CHAT = moment.duration(5, 'h');
 const MAX_WIDTH_SCREEN_LOCK = 768;
@@ -41,10 +43,6 @@ const MAX_MESSAGE_LENGTH = 150;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
-  private profile$ = this.store$.pipe(
-    select(selectProfile)
-  );
-
   public openPopup: Function; // needs to emodzi input
   public messagesSs: Subscription;
   public likesSs: Subscription;
@@ -52,7 +50,12 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
   public commentsSs: Subscription;
   public endGameSs: Subscription;
 
+  public account$ = this.store$.pipe(
+    select(fromAccount.selectMyAccount),
+  );
+
   @Input() board: IBoard;
+  @Input() tour: ITour;
 
   @OnChangesInputObservable('board')
   private selectedBoard$ = new BehaviorSubject<IBoard>(this.board);
@@ -60,15 +63,16 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
   public chatLocked = false;
   public loadingHistory = false;
   public showFinishMessage = false;
+  public tourIsNotStarted = true;
 
   public requests = [];
   public messages: IChatMessage[] = [];
   public messageText = '';
-  public profile?: IProfile;
   public avatarColor = '';
+  public account: IAccount;
 
   public get isAnonymous() {
-    return !this.profile;
+    return !this.account;
   }
 
   private boards = [];  // array for multi-boarding
@@ -86,7 +90,7 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
 
   private subs: Subscriptions = {};
 
-  @ViewChild('messagesList') private messagesListComponent: ElementRef;
+  @ViewChild('messagesList', { static: true }) private messagesListComponent: ElementRef;
   @HostBinding('class.open-mobile') openMobileClass = false;
 
   focusInput = new BehaviorSubject<boolean>(null);
@@ -100,13 +104,13 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
   ) { }
 
   public ngOnInit() {
-    this.subs.chatState = combineLatest(this.profile$, this.selectedBoard$)
-      .subscribe(([profile, board]) => {
-        this.profile = profile;
+    this.subs.chatState = combineLatest(this.account$, this.selectedBoard$)
+      .subscribe(([account, board]) => {
+        this.account = account;
         this.updateChatLocked();
 
         if (board) {
-          this.subscribeMessages([board.id], profile);
+          this.subscribeMessages([board.id], account);
         } else {
           this.unsubscribeChat();
         }
@@ -174,7 +178,7 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
     }
   }
 
-  public subscribeMessages(boardIds: number[], profile: IProfile) {
+  public subscribeMessages(boardIds: number[], account: IAccount) {
     this.messages = [];
     this.offset = 0;
     this.messagesFinished = false;
@@ -190,7 +194,7 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
       .subscribe((comments: IComment[]) => {
         const messages = comments.map((comment: IComment): IChatMessage => ({
           ...comment,
-          my: profile && comment.user && profile.id === comment.user.id
+          my: account && comment.user && account.id === comment.user.id
         }));
 
         this.messages.push(...messages);
@@ -235,7 +239,7 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
           return;
         }
 
-        if (like.user === (profile && profile.id)) {
+        if (like.user === (account && account.id)) {
           message.current_user_vote = like.vote;
           // Mark comment as like updated
           const i = this.waitLike.indexOf(like.comment);
@@ -279,7 +283,7 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
           .filter((comment: IComment) => !this.messages.find(m => m.id === comment.id))
           .map((comment: IComment, index: number): IChatMessage => ({
             ...comment,
-            my: this.profile && comment.user && this.profile.id === comment.user.id,
+            my: this.account && comment.user && this.account.id === comment.user.id,
           }));
 
         this.messages = [...messages.reverse(), ...this.messages];
@@ -293,7 +297,7 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
     let messageText = this.messageText.slice(0, MAX_MESSAGE_LENGTH).trim();
     messageText = this.replaceNameToTags(messageText);
     if (messageText && !this.chatLocked) {
-      if (this.profile) {
+      if (this.account) {
         const requestId = uuidv4();
         this.requests.push(requestId);
         const currentBoardId = this.boards[0]; // if no boards are there we don't enter this method
@@ -357,12 +361,8 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
 
 
   public setPopupAction(fn: any) {
-    if (!this.chatLocked) {
-      this.openPopup = fn;
-      this.cd.markForCheck();
-    } else {
-      this.openPopup = () => { };
-    }
+    this.openPopup = fn;
+    this.cd.markForCheck();
   }
 
   public setMessageText($event) {
@@ -492,7 +492,7 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
   }
 
   updateChatLocked() {
-    this.chatLocked = !this.profile || !this.boards.length || this.gameOver;
+    this.chatLocked = !this.account || !this.boards.length || this.gameOver;
   }
 
   replyMessage(message: IChatMessage) {
@@ -538,5 +538,9 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy, AfterViewChe
 
   get notMoveMessages(): IChatMessage[] {
     return this.messages.filter(m => !m.move);
+  }
+
+  get showChatPlaceholder(): boolean {
+    return !this.gameOver && !this.showFinishMessage && this.messages.length === 0 && this.boards.length === 0;
   }
 }

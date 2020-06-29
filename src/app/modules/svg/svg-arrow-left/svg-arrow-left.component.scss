@@ -1,0 +1,34 @@
+@import "../../../../html/css/variables";
+:host-context(.turn) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    height: 100%;
+  }
+}
+:host-context(.icon_register) {
+  margin-right: 5px;
+  padding: 0;
+  svg {
+    position: relative;
+    top: 2px;
+    fill: #979797;
+    width: 20px;
+    height: 20px;
+  }
+}
+:host-context(.icon_mobile) {
+  fill: $gray-dark;
+  width: 18px;
+  height: 18px;
+  svg {
+    height: 100%;
+    width: 100%;
+    fill: $light-gray;
+    display: flex;
+    position: relative;
+    left: 0px;
+    animation: arrow-right 0.5s infinite alternate;
+  }
+}

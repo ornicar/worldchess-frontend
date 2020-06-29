@@ -1,0 +1,23 @@
+version: '3.5'
+
+# volumes:
+#   media: {}
+
+services:
+  frontend-node:
+    image: registry.usetech.ru/worldchess/tournament-bc-frontend/frontend-node/develop:latest
+    ports:
+      - "8099:8099"
+
+  frontend-nginx:
+    image: registry.usetech.ru/worldchess/tournament-bc-frontend/nginx/develop:latest
+    ports:
+      - "80:80"
+
+  frontend-game:
+    container_name: game-app
+    image: registry.usetech.ru/worldchess/tournament-bc-frontend/game/develop:latest
+
+networks:
+  default:
+    name: tournament-bc_webnet

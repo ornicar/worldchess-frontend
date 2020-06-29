@@ -1,0 +1,92 @@
+.purchased {
+  display: flex;
+}
+
+.preloader {
+  width: 45px;
+  height: 45px;
+  margin-right: 10px;
+}
+
+.toggle-label .purchased__icon {
+  width: 45px;
+  height: 45px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  margin-top: 3px;
+
+  &.canceled-subscription {
+    border: 1px dashed #fff;
+    background-color: transparent;
+    .icon {
+      fill: #fff;
+      width: 11px;
+      height: 26px;
+    }
+  }
+
+  &.canceled-check {
+    border: 1px dashed #fff;
+    background-color: transparent;
+    .icon {
+      fill: #fff;
+    }
+  }
+
+  .icon {
+    display: block;
+    width: 26px;
+    height: 19px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.cancel-subscription {
+  color: #fff;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 50%;
+    margin-bottom: 3px;
+    margin-right: 7px;
+  }
+}
+
+.resubscribe {
+  color: #000;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 2px;
+    background-color: #000;
+    border-radius: 50%;
+    margin-bottom: 3px;
+    margin-right: 7px;
+  }
+}
+
+.status-subtitle {
+  font-weight: bold;
+}
+
+
+.toggle-label .purchased__icon.purchased__icon--white {
+  border: 1px dashed #fff;
+  background-color: transparent !important;
+  fill: #fff;
+}

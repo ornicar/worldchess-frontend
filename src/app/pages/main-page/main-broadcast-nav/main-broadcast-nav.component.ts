@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderModelType, ISelectedModel } from '../../../broadcast/components/header/header.component';
 import { EventLoadService } from '../../../broadcast/core/event/event-load.service';
 import { IEvent } from '../../../broadcast/core/event/event.model';
 import { TournamentLoadService } from '../../../broadcast/core/tournament/tournament-load.service';
 import { CommonTournament } from '../../../broadcast/core/tournament/tournament.model';
+import { ScreenStateService } from '@app/shared/screen/screen-state.service';
 
 @Component({
   selector: 'wc-main-broadcast-nav',
@@ -17,10 +18,13 @@ export class MainBroadcastNavComponent implements OnInit {
 
   public currentEvent: IEvent;
 
+  @Input() compact = false;
+
   constructor(
     private router: Router,
     private tournamentLoad: TournamentLoadService,
-    private eventLoad: EventLoadService
+    private eventLoad: EventLoadService,
+    private screenState: ScreenStateService,
   ) { }
 
   ngOnInit() {
@@ -76,6 +80,7 @@ export class MainBroadcastNavComponent implements OnInit {
    }
 
     if (routerCommands.length) {
+      this.screenState.slideLeftBack();
       this.router.navigate(routerCommands);
     } else {
       console.error('Can not navigate.');

@@ -1,0 +1,20 @@
+<div class="toggle-buttons-game toggle-buttons-game--big lang-{{accountService.getLanguage() | async }}"
+     [class.toggle-buttons-game--active]="!disabled">
+  <div class="toggle-buttons-game__elem"
+       [class.active]="selectedUserRating === UserRating.UNRATED"
+       (click)="onSelectUserRating(UserRating.UNRATED)">
+       {{ 'OTHER.NON_RATED' | translate }}
+  </div>
+  <div class="toggle-buttons-game__elem toggle-buttons-game__elem--hexagon"
+       [class.active]="selectedUserRating === UserRating.RATED"
+       (click)="onSelectUserRating(UserRating.RATED)">
+      {{ 'OTHER.RATED' | translate }}
+    <svg-hexagon-empty class="icon"></svg-hexagon-empty>
+  </div>
+  <div class="toggle-buttons-game__elem"
+       [class.active]="selectedUserRating === UserRating.FIDERATED"
+       (click)="onSelectUserRating(UserRating.FIDERATED)">
+       {{ 'OTHER.FIDE_RATED' | translate }}
+    <svg-logo-fide class="icon"></svg-logo-fide>
+  </div>
+</div>

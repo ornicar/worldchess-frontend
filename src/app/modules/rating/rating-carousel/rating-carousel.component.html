@@ -1,0 +1,25 @@
+<div class="rating" *ngIf="players$ | async as players">
+  <div class="container">
+    <h1 class="block-header">Rating</h1>
+  </div>
+  <ngu-carousel [inputs]="carouselRating" [dataSource]="players" #carousel (onMove)="carouselMove($event)">
+
+    <ngu-tile *nguCarouselDef="let player; let i = index">
+      <div class="rating-item">
+        <div class="rating-item__photo">
+            <img class="photo" [src]="player.portrait" [alt]="player.name">
+        </div>
+        <div class="info">
+          <wc-country [federation]="player.federation"></wc-country>
+          <div class="name">{{player.name}}</div>
+          <div class="sex">{{player.title}}</div>
+          <div class="year">{{player.rating}}</div>
+          <div class="count">{{i + 1}}</div>
+        </div>
+      </div>
+    </ngu-tile>
+
+    <button NguCarouselPrev class="ngu-button" [hidden]="carousel.isFirst">Previous</button>
+    <button NguCarouselNext class="ngu-button" [hidden]="carousel.isLast">Next</button>
+  </ngu-carousel>
+</div>

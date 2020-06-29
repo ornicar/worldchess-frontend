@@ -1,0 +1,82 @@
+@import "variables-new";
+@import "media-new";
+
+.main-news-wrapper {
+  padding: 0 0px 36px;
+
+  @include birman-media() {
+    padding: 0 0px 17px;
+  }
+}
+
+.main-news {
+  width: 100%;
+  position: relative;
+  height: 600px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 33px;
+}
+
+.image{
+  top:0;
+  left: 0;
+  width: 100%;
+}
+
+.main-news__block {
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(#fff, 0.15);
+
+  @include birman-media() {
+    margin: 0 10px 4px;
+  }
+}
+
+.main-news__more {
+  display: flex;
+  align-items: center;
+  font: 300 15px/20px $gerbera-font;
+  color: $brown-2;
+  fill: $brown-2;
+
+  .icon {
+    position: relative;
+    top: -3px;
+    display: block;
+    width: 6px;
+    height: 12px;
+    margin-left: 5px;
+  }
+}
+
+.main-news__bottom-block {
+  display: flex;
+  justify-content: space-between;
+
+  @include birman-media() {
+    margin: 0 10px;
+  }
+}
+
+.kaspersky {
+  display: none;
+  align-items: center;
+
+  @include birman-media() {
+    display: flex;
+  }
+}
+
+.kaspersky__text {
+  color: rgba(#fff, 0.4);
+  font: 300 12px/15px $gerbera-font;
+  margin-right: 8px;
+}
+
+.kaspersky__logo {
+  display: block;
+  opacity: 0.4;
+  width: 95px;
+}

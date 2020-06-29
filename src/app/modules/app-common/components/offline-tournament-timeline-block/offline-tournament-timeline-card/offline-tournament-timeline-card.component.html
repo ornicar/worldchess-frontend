@@ -1,0 +1,40 @@
+<div class="tournament-card"
+     [style.width.px]="width"
+     [class.full-width-mobile]="fullWidthMobile"
+     [class.empty-padding]="!width"
+     (click)="goToTournament()">
+  <div class="tournament-card-inner">
+    <div class="tournament-card-inner__image" [hidden]="!tournament.image">
+      <img class="tournament-image" [src]="tournament.image"/>
+    </div>
+    <div class="tournament-card-inner__content">
+      <div class="tournament-card-inner__top-row">
+        <div class="tournament-title">
+          {{tournament.title}}
+        </div>
+        <div class="additional-title">
+          {{tournament.additional_title}}
+        </div>
+      </div>
+      <div class="tournament-card-inner__bottom-row">
+        <!-- <div class="tournament-card-inner__gender">
+          <svg-head class="tournament-card-inner__gender-icon" [hidden]="isMale"></svg-head>
+          <svg-head-girl class="tournament-card-inner__gender-icon" [hidden]="!isMale"></svg-head-girl>
+        </div> -->
+        <!-- <div class="tournament-card-inner__count">{{playersCount}}</div> -->
+        <div class="flag-icon">
+          <wc-country-flag countryCode="ru" countryId="1"></wc-country-flag>
+        </div>
+        <div class="tournament-card-inner__country">{{country}}</div>
+        <div class="tournament-card-inner__currency-sign">
+          {{currencySign}}
+        </div>
+        <span style="font-size: 0.5em;">&nbsp;</span>
+        <div class="tournament-card-inner__prize-fund">
+          {{tournament.prize_fund | currency:'':'':'4.0-0'}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div></div>

@@ -183,6 +183,15 @@ export const EMOJI_DB: any = [{
     'sad', 'tear'
   ]
 }, {
+  'emoji': '🤔',
+  'description': 'Thinking Face',
+  'aliases': [
+    'thinking'
+  ],
+  'tags': [
+    'thinking'
+  ]
+}, {
   'emoji': '😂',
   'description': 'face with tears of joy',
   'aliases': [

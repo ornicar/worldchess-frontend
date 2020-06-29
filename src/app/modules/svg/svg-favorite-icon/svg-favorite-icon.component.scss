@@ -1,0 +1,41 @@
+$icon-color: #FF947B;
+
+:host-context(.icon){
+  path {
+    stroke: $icon-color;
+  }
+  &.checked {
+    fill: $icon-color;
+  }
+  &.disabled {
+    filter: grayscale(40%);
+    cursor: default;
+  }
+  &.fill {
+    fill: #272727;
+  }
+}
+:host-context(.icon_favorite-area){
+  cursor: pointer;
+  filter: drop-shadow(0 0 14px rgba(0, 0, 0, 0.7));
+  width: 26px;
+  height: 26px;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+:host-context(.icon_favorite-item){
+  cursor: pointer;
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  width: 18px;
+  height: 18px;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+

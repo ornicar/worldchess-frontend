@@ -1,0 +1,37 @@
+<div class="paygate-image-upload">
+  <div class="paygate-image-upload__handler"
+       [class.paygate-image-upload__handler--disabled]='currentImage'
+       [class.paygate-image-upload__handler--height]='currentImage'
+       (click)="openFileDialog()">
+    <div class="paygate-image-upload__img-wrap" >
+      <div
+      class="paygate-image-upload__img paygate-image-upload__img--bg"
+      [style.background-image]="
+          'url(' + currentImage + ')'
+        "
+       *ngIf="!!currentImage; else noImage">
+      </div>
+      <div
+      class="paygate-image-upload__img paygate-image-upload__img--circle"
+      [style.background-image]="
+          'url(' + currentImage + ')'
+        "
+       *ngIf="!!currentImage; else noImage"
+       >
+      </div>
+    </div>
+    <ng-template class="paygate-image-upload__img-text" #noImage>
+      <ng-container *ngIf="!_maximumSizeExceededError">
+        <span class="desk">Drag your<br> photo here</span>
+        <span class="mobile">Upload my photo...</span>
+      </ng-container>
+      <ng-container *ngIf="_maximumSizeExceededError">
+        <span class="desk-error">The file is too large.<br> Maximum size is 64 Mb photo here</span>
+        <span class="mobile-error">The file is too large.<br> Maximum size is 64 Mb photo here</span>
+      </ng-container>
+    </ng-template>
+  </div>
+  <div class="paygate-image-upload__text" *ngIf="!currentImage && _needSubtitle">The photo will be used<br> in both your FIDE Profile and<br> World Chess account</div>
+  <div class="paygate-image-upload__text" *ngIf="currentImage"><a (click)="removeImage()">Remove image</a></div>
+  <input type="file" style="visibility:hidden" #upload accept="image/*" (change)="onFileChanged($event)">
+</div>

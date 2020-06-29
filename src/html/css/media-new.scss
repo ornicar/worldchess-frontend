@@ -1,0 +1,37 @@
+@mixin phones {
+	@media screen and (max-width: $phones) {
+		@content;
+	}
+}
+
+@mixin tablets {
+	@media screen and (max-width: $tablets) {
+		@content;
+	}
+}
+
+@mixin birman-media {
+	@media screen and (max-width: $birman-media) {
+		@content;
+	}
+}
+
+@mixin ipad {
+	@media screen and (max-width: $ipad) {
+		@content;
+	}
+}
+
+@mixin phones-small {
+	@media screen and (max-width: $phones-small) {
+		@content;
+	}
+}
+
+@mixin phones-super-small {
+	@media screen and (max-width: $phones-super-small) {
+		@content;
+	}
+}
+
+

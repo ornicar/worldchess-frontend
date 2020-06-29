@@ -1,0 +1,18 @@
+<div class="popup-container" [class.pro-container]="proContainer$ | async">
+  <a class="popup-container__close" *ngIf="showCloseIcon" (click)="closePopup()"></a>
+    <div class="popup-container__wrapper-scroll">
+      <div  class="popup-container__header">
+        <div class="popup-container__custom-title"#customTitle>
+          <ng-content select="[slot-custon-title]"></ng-content>  
+        </div>
+        <div *ngIf="customTitle.children.length  === 0">
+          <div class="popup-container__header-title">{{popupTitle}}</div>
+          <div class="popup-container__header-title popup-container__header-title--pro">New Pro account</div>	
+        </div>
+        <ng-content select="[slot-sign-in]"></ng-content>
+      </div>
+      <ng-content></ng-content>
+    </div>
+</div>
+
+

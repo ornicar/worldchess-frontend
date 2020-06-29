@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ElementRef, OnChanges } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
-import { OnChangesInputObservable, OnChangesObservable } from '../../shared/decorators/observable-input';
+import { OnChangesInputObservable, OnChangesObservable } from '@app/shared/decorators/observable-input';
 import { Tournament, TournamentResourceType, TournamentType } from '../core/tournament/tournament.model';
 import { ScreenStateService } from '@app/shared/screen/screen-state.service';
+import { IBoard } from '@app/broadcast/core/board/board.model';
 
 @Component({
   selector: 'wc-chess-footer',
@@ -20,6 +21,9 @@ export class ChessFooterComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input()
   public tour = null;
+
+  @Input()
+  public board: IBoard;
 
   public subs = [];
 
@@ -50,11 +54,8 @@ export class ChessFooterComponent implements OnInit, OnDestroy, OnChanges {
         }
 
         if (
-          tournament.tournament_type !== TournamentType.PLAYOFF
-          && (
-            tournament.resourcetype === TournamentResourceType.Tournament
-            || tournament.resourcetype === TournamentResourceType.FounderTournament
-          )
+          tournament.resourcetype === TournamentResourceType.Tournament
+          || tournament.resourcetype === TournamentResourceType.FounderTournament
         ) {
           this.addTab('results');
         } else {
@@ -74,6 +75,9 @@ export class ChessFooterComponent implements OnInit, OnDestroy, OnChanges {
     }));
   }
 
+  @OnChangesObservable()
+  ngOnChanges() {}
+
   private addTab(tabName: string): void {
     const isTabExist = Boolean(this.tabs.find(tab => tab.value === tabName));
 
@@ -85,11 +89,6 @@ export class ChessFooterComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  @OnChangesObservable()
-  ngOnChanges() {
-
-  }
-
   setDefaultActiveTab() {
     this.activeTab = this.tabs.length > 0 && this.tabs.find(() => true).value;
   }
@@ -99,8 +98,9 @@ export class ChessFooterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public setActiveTab(tab: string) {
-    if (tab === 'media' && this.isMobile) {
-      this.el.nativeElement.scrollIntoView();
+    if (tab === 'media') {
+      const offset = this.el.nativeElement.offsetTop;
+      window.scrollTo({ top: offset - 50 });
     }
     if (!this.tabs.map(t => t.value).includes(tab)) {
       this.setDefaultActiveTab();

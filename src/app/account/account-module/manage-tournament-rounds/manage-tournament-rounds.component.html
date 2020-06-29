@@ -193,6 +193,6 @@
 <div class="controls">
   <button class="btn btn-blue" (click)="onClose()">Close</button>
   <button class="btn btn-blue" [disabled]="isSaveDisabled()" *ngIf="ableToSave()"(click)="onSave()">Save</button>
-  <button class="btn btn-blue" *ngIf="ableToNext()"(click)="onNext()">Next</button>
-  <button class="btn btn-blue" *ngIf="ableToSend()" (click)="onSendToApprove()">Send to approve</button>
+  <button class="btn btn-blue" [disabled]="isSaveDisabled()" *ngIf="ableToNext()"(click)="onNext()">Next</button>
+  <button class="btn btn-blue" [disabled]="isSaveDisabled()" *ngIf="ableToSend()" (click)="onSendToApprove()">Send to approve</button>
 </div>

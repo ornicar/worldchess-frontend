@@ -1,0 +1,98 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1 0 auto;
+  height: 100%;
+  .offline-tournament_show-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    min-height: 32px;
+    position: absolute;
+    right: 20px;
+    bottom: 30px;
+    cursor: pointer;
+    font: 300 15px/20px $gerbera-font;
+    color: #FFF;
+    padding: 5px 25px;
+    border-radius: 3px;
+    background-color: #000000;
+    border: none;
+    z-index: z-index(base);
+  }
+}
+
+.offline-tournament-block__wraopper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.offline-tournament-block {
+  position: relative;
+  background: #FF8B8B;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 20px;
+    box-shadow: 0px 0px 52px 0px rgba(255,141,139,1);
+  }
+
+  @include birman-media {
+    height: 420px;
+  }
+}
+
+.offline-tournament-block__header {
+  padding: 16px 19px 5px;
+  flex: 0 0 auto;
+  @include birman-media {
+    padding: 16px 10px 5px;
+  }
+}
+
+.offline-tournament-block__title {
+  color: #000;
+  font: 300 30px/32px $gerbera-font;
+  margin-bottom: 7px;
+}
+.offline-tournament-block__subtitle{
+  font: 300 15px/20px $gerbera-font;
+  color: #000;
+}
+
+.offline-tournament-block__fide-logo {
+  position: relative;
+  top: 7px;
+  width: 47px;
+  height: 34px;
+  margin-right: 10px;
+  display:inline-block;
+  fill: #000;
+}
+
+.offline-tournament-block__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.offline-tournament-block__button{
+  background-color: #000000;
+  color: #FFFFFF;
+}

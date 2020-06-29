@@ -1,0 +1,11 @@
+<div class="alert">
+  <div class="alert__text" [innerHTML]="data.message">
+  </div>
+  <div class="alert__mat-dialog-actions">
+  </div>
+  <wc-timer
+    [date]="data.date"
+    format="mm:ss"
+    stopTrim="m s"
+  ></wc-timer>
+</div>

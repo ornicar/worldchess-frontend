@@ -1,0 +1,41 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-styles {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 21px;
+}
+
+.board-styles__text {
+  font: 300 18px/24px $gerbera-font;
+  text-align: center;
+  max-width: 400px;
+  margin-bottom: 37px;
+  padding: 0 10px;
+}
+
+.board-styles__img {
+  overflow: hidden;
+  max-width: 675px;
+  flex: 1 1 auto;
+  width: 100%;
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../../assets/images/beautiful-online-chess/board-styles.png');
+
+  @include birman-media {
+    background-image: url('../../../../../../assets/images/beautiful-online-chess/board-styles-mobile.png');
+  }
+}

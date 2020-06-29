@@ -1,0 +1,88 @@
+<div class="wrapper lang-{{accountService.getLanguage() | async }}">
+  <div class="menu-container">
+    <game-main-menu class="gaming-menu"></game-main-menu>
+  </div>
+  <div class="desctop players-bar">
+    <wc-game-main-players-bar></wc-game-main-players-bar>
+  </div>
+  <div class="content__wrapper">
+    <div class="row mobile">
+      <wc-game-main-button-block-mobile></wc-game-main-button-block-mobile>
+    </div>
+    <div class="row row--mb-90" >
+      <game-main-header class="header-block"></game-main-header>
+      <game-main-tournament class="block block--padding-right desctop"></game-main-tournament>
+      <game-main-best-player class="block desctop"></game-main-best-player>
+      <wc-game-main-updates class="block desctop updates-block"></wc-game-main-updates>
+      <wc-game-main-button-block class="block block--padding-right desctop button-block"></wc-game-main-button-block>
+    </div>
+    <div class="row row--mb-90">
+      <wc-game-main-tournament-panes class="tournament-panes"></wc-game-main-tournament-panes>
+    </div>
+    <div class="row mobile">
+      <wc-game-main-updates></wc-game-main-updates>
+      <game-main-tournament></game-main-tournament>
+      <game-main-best-player></game-main-best-player>
+    </div>
+    <div class="row mobile">
+      <wc-game-main-players-bar></wc-game-main-players-bar>
+    </div>
+    <div class="row">
+      <game-main-join-tournament class="full-width"></game-main-join-tournament>
+    </div>
+  </div>
+    <div class="row">
+      <game-maine-timeline class="full-width maine-timeline"></game-maine-timeline>
+    </div>
+  <div class="content__wrapper">
+    <div class="row mobile">
+      <wc-btn-with-loading 
+        class="btn-new--brown-border find-opponent-btn mobile" 
+        routerLink="/tournaments"        
+      >
+        {{ 'BUTTONS.JOIN_TOURNAMENT' | translate}}...
+      </wc-btn-with-loading>
+    </div>
+    <div class="row">
+      <game-main-svg-tournament class="svg-tournament"></game-main-svg-tournament>
+    </div>
+    <div class="row row--mb-32">
+      <game-main-find-opponent class="full-width"></game-main-find-opponent>
+    </div>
+    <div class="row row--mb-50">
+      <div class="players-info">
+        <div class="players-info__col">
+          <game-champions-table class="half-width"></game-champions-table>
+        </div>
+        <div class="players-info__col">
+          <game-main-all-time-chempion class="half-width"></game-main-all-time-chempion>
+        </div>
+      </div>
+    </div>
+    <div class="row row--mb-30" *ngIf="false">
+      <game-main-advertisement></game-main-advertisement>
+    </div>
+    <div class="row row--mb-20">
+      <game-main-beautiful-online-chess></game-main-beautiful-online-chess>
+    </div>
+    <div class="row" *ngIf="false">
+      <game-main-advertisement-red></game-main-advertisement-red>
+    </div>
+    <div class="row">
+      <game-main-fide-text></game-main-fide-text>
+    </div>
+    <div class="row">
+      <game-main-rating-points></game-main-rating-points>
+    </div>
+    <div class="row">
+      <game-main-legalize-skils></game-main-legalize-skils>
+    </div>
+    <div>
+      <wc-return-game class="return-lobby"></wc-return-game>
+    </div>
+    <div class="main-page-footer">
+      <wc-game-footer-main></wc-game-footer-main>
+    </div>
+  </div>
+
+</div>

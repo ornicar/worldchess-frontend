@@ -1,0 +1,239 @@
+@import 'variables-new';
+@import 'media-new';
+
+.footer__logo {
+  display: block;
+  fill: #fff;
+  width: 93px;
+  height: 16px;
+
+  &--usetech {
+    width: 83px;
+    position: relative;
+    top: -2px;
+  }
+
+  &:active,
+  &:hover {
+    fill: $brown-2;
+
+    ::ng-deep {
+      .st0,
+      .st1 {
+        fill: $brown-2;
+      }
+    }
+  }
+
+  ::ng-deep {
+    svg {
+      display: block;
+    }
+  }
+}
+
+.footer__row {
+  display: flex;
+
+  @include birman-media {
+    flex-direction: column;
+  }
+}
+
+.footer__col {
+  display: flex;
+  &--left {
+    margin-right: auto;
+    margin-top: 3px;
+
+    @include birman-media {
+      order: 3;
+    }
+  }
+
+  &--center {
+    @include birman-media {
+      order: 1;
+    }
+  }
+
+  &--right {
+    margin-left: 69px;
+    @include birman-media {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 71px;
+      order: 2;
+      border-top: 1px solid rgba(#fff, 0.1);
+      border-bottom: 1px solid rgba(#fff, 0.1);
+      margin-left: 0;
+      margin-bottom: 16px;
+      margin-top: 9px;
+    }
+  }
+}
+
+.footer__link-block {
+  margin-right: 9px;
+  @include birman-media {
+    margin-right: 18px;
+  }
+}
+
+.footer__link {
+  margin-bottom: 1px;
+}
+
+.footer__text {
+  font: 300 12px/15px $gerbera-font;
+  color: rgba(#fff, 0.4);
+  max-width: 140px;
+}
+
+
+.footer__social {
+  display: flex;
+  position: relative;
+  top: 9px;
+
+  @include birman-media {
+    top: 0;
+  }
+}
+
+.footer__social-icon {
+  display: block;
+  fill: #fff;
+  margin-right: 9px;
+  height: 26px;
+
+  @include birman-media {
+    margin-right: 20px;
+    height: 35px;
+  }
+
+  &:hover {
+    fill: $brown-2;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &--twitter {
+    width: 33px;
+    @include birman-media {
+      width: 38px;
+    }
+  }
+
+  &--facebook {
+    width: 14px;
+    position: relative;
+    top: -1px;
+    @include birman-media {
+      width: 15px;
+    }
+  }
+
+  &--instagram {
+    width: 26px;
+    @include birman-media {
+      width: 29px;
+    }
+  }
+}
+
+.links {
+  display: flex;
+}
+
+.links__block-wrapp {
+  display: flex;
+
+  @include birman-media {
+    flex-direction: column;
+  }
+}
+
+.links__block {
+  padding-left: 22px;
+  @include birman-media {
+    padding-left: 0;
+    padding-right: 34px;
+  }
+}
+
+.links__elem {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+
+  @include birman-media {
+    min-height: 40px;
+  }
+}
+
+.links__link {
+  display: flex;
+  align-items: center;
+  font: 300 12px/16px $gerbera-font;
+  fill: #fff;
+  color: #fff;
+
+  @include birman-media {
+    font: 300 15px/40px $gerbera-font;
+  }
+
+  &:active,
+  &:hover {
+    color: $brown-2;
+    fill: $brown-2;
+  }
+
+  .icon {
+    position: relative;
+    top: 2px;
+    width: 12px;
+    height: 6px;
+    margin-left: 4px;
+  }
+}
+
+.select-language {
+  position: relative;
+}
+
+.select-language__list {
+  position: relative;
+  right: -3px;
+  position: absolute;
+  bottom: 100%;
+  background-color: #000;
+
+  @include birman-media {
+    right: 0px;
+    bottom: calc(100% - 10px);
+  }
+}
+
+.select-language__elem {
+  padding: 2px 0;
+}
+
+.select-language__list-button {
+  display: block;
+  width: 38px;
+  padding: 0 3px;
+  color: #fff;
+  font: 300 12px/18px $gerbera-font;
+
+  @include birman-media {
+    font: 300 15px/20px $gerbera-font;
+  }
+
+  &:hover {
+    background-color: rgba(#fff, 0.1);
+  }
+}

@@ -1,0 +1,44 @@
+<div class="tournament-timeline-container"
+     [hidden]="hidden$ | async"
+     #timelineContainer
+     [style.height.px]="timelineHeight" xmlns="http://www.w3.org/1999/html">
+  <div class="timeline-wrapper">
+    <div class="tournament-timeline"
+         #timeline
+         (mousedown)="startDrag($event)">
+      <div class="tournament-timeline-background"
+           [ngClass]="timelineClass"
+           [style.width.px]="timelineWidth">
+        <div class="tournament-timeline-grid"
+             [style.width.px]="timelineWidth">
+          <div class="timeline-labels">
+            <div class="timelabel" [ngClass]="timelabel.today? 'today': ''"
+                 *ngFor="let timelabel of timeLabels$ | async"
+                 [style.left.px]="timelabel.offset">
+              {{timelabel.label}}
+            </div>
+          </div>
+          <div class="timeline-past-area"
+               [style.width.px]="pastAreaLeft"></div>
+          <div class="timeline-past-area-right-border"
+               [style.width.px]="pastAreaLeft"></div>
+          <div class="past-area-label-dot"
+               [style.left.px]="pastAreaLeft - 3"></div>
+          <ng-container *ngFor="let line of tournamentLines$ | async; let i=index">
+            <ng-container *ngFor="let tournament of line">
+              <offline-tournament-timeline-card [tournament]="tournament"
+                                                [style.position]="'absolute'"
+                                                [style.left.px]="calcTournamentOffset(tournament)"
+                                                [width]="calcTournamentWidth(tournament)"
+                                                [style.top.px]="calcTournamentTop(tournament, i)">
+              </offline-tournament-timeline-card>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(tournamentLines$ | async).length!==0" class="icon-logo">
+      <svg-logo class="icon"></svg-logo>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import { ChatSocketService } from './services/chat-socket.service';
 import { FormHelperModule } from '../../../form-helper/form-helper.module';
 import { ChatMoveComponent } from './chat-move/chat-move.component';
 import { BackLightReplyMessagePipe } from './backLightReplyMessage.pipe';
+import { SvgModule } from '@app/modules/svg/svg.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { BackLightReplyMessagePipe } from './backLightReplyMessage.pipe';
     SharedModule,
     FormHelperModule,
     BoardModule,
+    SvgModule
   ],
   providers: [
     ChatSocketService,

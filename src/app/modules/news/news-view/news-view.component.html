@@ -1,0 +1,74 @@
+<wc-layout>
+  <div *ngIf="(news$ | async) as news" class="post">
+    <div class="post--box">
+      <div class="image" [ngStyle]="{'background-image': getImageUrl(news.image)}"></div>
+      <div class="description">
+        <div class="description--title">
+          <div class="date">
+            {{news.timestamp | date: 'MMM d - h:mm a'}}
+          </div>
+          <div class="title">
+            {{news.title}}
+          </div>
+          <div class="social-block">
+            <div class="social text">
+              <div class="social">
+                <a href="https://twitter.com/theworldchess" class="icon">
+                  <img src="assets/images/icon-twitter.svg" alt="twitter">
+                </a>
+                <a href="https://www.facebook.com/theworldchess" class="icon">
+                  <img src="assets/images/icon-facebook.svg" alt="facebook">
+                </a>
+                <a href="https://www.instagram.com/theworldchess" class="icon">
+                  <img src="assets/images/icon-instagram.svg" alt="instagram">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="post--content">
+      <div class="content">
+        <div class="text" [innerHtml]="news.content | wcSanitizeHtml"></div>
+        <div class="postscriptum">
+          <div class="hexagon"></div>
+        </div>
+        <div class="news-footer">
+          <div class="description--about">
+            <div *ngIf="news.author" class="author author-border">
+              <div class="author--img" [ngStyle]="{'background-image': getImageUrl(news.author.avatar)}"></div>
+              <div class="author__coll">
+                <div class="title-sup">author</div>
+                <div class="title">{{news.author.name}}</div>
+              </div>
+            </div>
+            <div class="author">
+              <div class="author__coll"
+                   *ngIf="news.topic">
+                <div class="title-sup">topic</div>
+                <div class="title">{{news.topic.name}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="info-box">
+            <div class="row">
+              <div class="social">
+                <a href="https://twitter.com/theworldchess" class="icon">
+                  <img src="assets/images/icon-twitter.svg" alt="twitter">
+                </a>
+                <a href="https://www.facebook.com/theworldchess" class="icon">
+                  <img src="assets/images/icon-facebook.svg" alt="facebook">
+                </a>
+                <a href="https://www.instagram.com/theworldchess" class="icon">
+                  <img src="assets/images/icon-instagram.svg" alt="instagram">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</wc-layout>
+

@@ -1,24 +1,24 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import {  distinctUntilChanged, filter, map, pairwise, shareReplay, startWith, switchMap, mergeMap } from 'rxjs/operators';
 import {
   BoardNotificationSocketAction,
+  TourNotificationSocketAction,
   ISocketBoardNewMove,
   SocketType,
-  IProfile,
   ISocketMessage,
   ISocketSendMessage,
-} from '../../../auth/auth.model';
-import { selectIsAuthorized, selectProfile } from '../../../auth/auth.reducer';
-import { SocketConnectionService } from '../../../auth/socket-connection.service';
-import { INotification } from '../../../board/board-socket/board-socket.model';
-import { BoardSocketService } from '../../../board/board-socket/board-socket.service';
-import { UserPurchasesService } from '../../../purchases/user-purchases/user-purchases.service';
-import { OnChangesInputObservable, OnChangesObservable } from '../../../shared/decorators/observable-input';
-import { SubscriptionHelper, Subscriptions } from '../../../shared/helpers/subscription.helper';
-import { ScreenStateService } from '../../../shared/screen/screen-state.service';
+} from '@app/auth/auth.model';
+import { selectIsAuthorized } from '@app/auth/auth.reducer';
+import { SocketConnectionService } from '@app/auth/socket-connection.service';
+import { INotification } from '@app/board/board-socket/board-socket.model';
+import { BoardSocketService } from '@app/board/board-socket/board-socket.service';
+import { UserPurchasesService } from '@app/purchases/user-purchases/user-purchases.service';
+import { OnChangesInputObservable, OnChangesObservable } from '@app/shared/decorators/observable-input';
+import { SubscriptionHelper, Subscriptions } from '@app/shared/helpers/subscription.helper';
+import { ScreenStateService } from '@app/shared/screen/screen-state.service';
 import { UpdateBoard } from '../../core/board/board.actions';
 import { IBoard } from '../../core/board/board.model';
 import * as fromBoard from '../../core/board/board.reducer';
@@ -29,6 +29,8 @@ import { AddMoves, DeleteMoves, GetMovesByBoard, UpdateMoves, UpsertMove } from 
 import { DeactivateVariationMoves } from '../../variation-move/variation-move.actions';
 import { IGameState } from './game/game.model';
 import { selectGameState } from './game/game.selectors';
+import * as fromAccount from '@app/account/account-store/account.reducer';
+import { IAccount } from '@app/account/account-store/account.model';
 
 @Component({
   selector: 'wc-chess-page',
@@ -61,8 +63,8 @@ export class ChessPageComponent implements OnInit, OnChanges, OnDestroy {
     select(selectIsAuthorized)
   );
 
-  profile$ = this.store$.pipe(
-    select(selectProfile)
+  account$ = this.store$.pipe(
+    select(fromAccount.selectMyAccount),
   );
 
   isPremium$ = this.tournament$.pipe(
@@ -76,8 +78,12 @@ export class ChessPageComponent implements OnInit, OnChanges, OnDestroy {
       }
 
       if (tournament.broadcast_type === BroadcastType.PAY) {
-        return this.profile$.pipe(
-          mergeMap((profile: IProfile) => (!!profile && profile.premium) || (!!profile && !!profile.is_admin) ? of(true) : this.userPurchases.hasUserTournament(tournament))
+        return this.account$.pipe(
+          mergeMap((account: IAccount) => (
+            (!!account && account.premium) || (!!account && !!account.full_camera_access) ?
+              of(true) :
+              this.userPurchases.hasUserTournament(tournament))
+          )
         );
       }
 
@@ -102,14 +108,14 @@ export class ChessPageComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected store$: Store<fromBoard.State>,
+    private router: Router,
     private screenService: ScreenStateService,
     private cd: ChangeDetectorRef,
     private boardSocketService: BoardSocketService,
     private socketService: SocketConnectionService<ISocketMessage, ISocketSendMessage>,
     private screenState: ScreenStateService,
     private userPurchases: UserPurchasesService
-  ) {
-  }
+  ) {}
 
   onResize(matches: MediaQueryList['matches']) {
     if (matches) {
@@ -169,7 +175,7 @@ export class ChessPageComponent implements OnInit, OnChanges, OnDestroy {
     this.subs.subscribeToBoard = this.gameState$
         .pipe(
           map(state => state && state.board),
-          startWith(null),
+          startWith(null as IBoard),
           pairwise()
         )
         .subscribe(([prev, next]) => {
@@ -180,6 +186,9 @@ export class ChessPageComponent implements OnInit, OnChanges, OnDestroy {
             // @todo move to distinctUntilChanged.
             return;
           }
+
+          console.log('next id->', next.id);
+          console.log('prev id->', prev.id);
 
           if (next) {
             this.boardSocketService.subscribeToBoard(next.id);
@@ -222,6 +231,17 @@ export class ChessPageComponent implements OnInit, OnChanges, OnDestroy {
               this.store$.dispatch(new DeleteMoves({ ids: message.remove_moves_ids }));
 
               this.store$.dispatch(new AddMoves({ moves: message.moves }));
+              break;
+            }
+
+            case TourNotificationSocketAction.TOUR_STARTED: {
+              const { tour_id: tourId } = message;
+              if (this.tour.id === tourId) {
+                const url = this.router.url;
+                this.router.navigate(['/'], { skipLocationChange: true }).then(() => {
+                  this.router.navigate([url]);
+                });
+              }
               break;
             }
           }
@@ -279,5 +299,8 @@ export class ChessPageComponent implements OnInit, OnChanges, OnDestroy {
       this.boardInCenter = !this.boardInCenter;
     }
     this.cd.markForCheck();
+    setTimeout(() => { // TODO это костыль для перерисовки доски. потому что до доски оооочень долго добираться
+      window.dispatchEvent(new Event('resize'));
+    }, 0);
   }
 }

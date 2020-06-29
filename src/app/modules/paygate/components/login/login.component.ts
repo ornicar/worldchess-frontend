@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Router } from '@angular/router';
-import { combineLatest, Subject } from 'rxjs';
+import { combineLatest, Subject, from, of } from 'rxjs';
 import * as forRoot from '../../../../reducers';
-import { delay, filter, map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { AuthSignIn } from '../../../../auth/auth.actions';
 import { selectIsAuthorized, selectSignInErrors, selectSignInLoading } from '../../../../auth/auth.reducer';
 import { PaygatePopupService } from '../../../../modules/paygate/services/paygate-popup.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'wc-login',
@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       Validators.required,
     ]),
   });
+
+  window = window;
 
   loginIncorrect$ = this.store$.pipe(
     select(selectSignInErrors),
@@ -51,7 +53,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     // TODO remove store
     private store$: Store<forRoot.State>,
-    private router: Router,
     private paygatePopupService: PaygatePopupService,
   ) {
   }
@@ -72,7 +73,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.form.valid) {
-      this.store$.dispatch(new AuthSignIn({ credential: this.form.value }));
+      const kfp = window['kfp'];
+      const kasperskyId = environment.kaspersky_script_id;
+      const fraudRequest = kfp ? from(kfp.login_start(kasperskyId, 'login')) : of(null);
+      fraudRequest.subscribe((ksid) => {
+        this.store$.dispatch(new AuthSignIn({ credential: this.form.value }));
+      });
     }
   }
 

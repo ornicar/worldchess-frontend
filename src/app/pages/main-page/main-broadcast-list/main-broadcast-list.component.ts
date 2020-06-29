@@ -33,7 +33,7 @@ export class MainBroadcastListComponent implements OnInit, AfterViewInit, OnDest
 
   @Output() onBuyBroadcast = new EventEmitter<FounderTournament>();
 
-  @ViewChild(TournamentListComponent)
+  @ViewChild(TournamentListComponent, { static: true })
   tournamentListCmp: TournamentListComponent;
 
   displayShowMoreBtn = false;
@@ -63,7 +63,7 @@ export class MainBroadcastListComponent implements OnInit, AfterViewInit, OnDest
   ngOnInit() {
     this.tournaments$ = this.store$.pipe(
       select(this.isNoneFide ? fromTournament.selectNoneFideTournaments : fromTournament.selectAllTournament),
-      map((t: CommonTournament[]) => this.tournamentsSortByOngoing(t))
+      // map((t: CommonTournament[]) => this.tournamentsSortByOngoing(t))
     );
 
     this.tournamentsList$ = combineLatest(this.tournaments$, this.page$)
@@ -181,7 +181,8 @@ export class MainBroadcastListComponent implements OnInit, AfterViewInit, OnDest
         }
 
         const tournamentsIds = this.getTournamentsIdsFromOrders(account.orders);
-        if (tournament.broadcast_type === BroadcastType.ONLY_TICKET && !tournamentsIds.includes(tournament.id) && !!tournament.ticket_price && !!tournament.product) {
+        if (tournament.broadcast_type === BroadcastType.ONLY_TICKET &&
+          !tournamentsIds.includes(tournament.id) && !!tournament.ticket_price && !!tournament.product) {
           return of(true);
         }
 
@@ -197,8 +198,15 @@ export class MainBroadcastListComponent implements OnInit, AfterViewInit, OnDest
       return of(false);
     }
 
-    return this.tournamentWishList$.pipe(
-      switchMap(wishList => {
+    return combineLatest(
+      this.tournamentWishList$,
+      this.isAuthorized$,
+    ).pipe(
+      switchMap(([wishList, isAuthorized]) => {
+        if (!isAuthorized) {
+          return of(false);
+        }
+
         const entry = wishList.find(e => e.tournament === tournament.id);
         if (!!entry) {
           return of(false);
@@ -217,15 +225,16 @@ export class MainBroadcastListComponent implements OnInit, AfterViewInit, OnDest
               return of(true);
             }
 
-            if (tournament.broadcast_type === BroadcastType.ONLY_TICKET && tournament.status === TournamentStatus.EXPECTED && tournamentsIds.includes(tournament.id)) {
+            if (tournament.broadcast_type === BroadcastType.ONLY_TICKET &&
+              tournament.status === TournamentStatus.EXPECTED && tournamentsIds.includes(tournament.id)) {
               return of(true);
             }
 
             return of(false);
-          })
+          }),
         );
       })
-    )
+    );
   }
 
   canRemoveFromWishList(tournament: FounderTournament): Observable<boolean> {
@@ -250,8 +259,6 @@ export class MainBroadcastListComponent implements OnInit, AfterViewInit, OnDest
     ).subscribe((isAuthorized) => {
       if (isAuthorized) {
         this.store$.dispatch(new TournamentActions.AddTournamentToWishList({ tournament: tournament.id }));
-      } else {
-        this.router.navigate(['/sign-in']);
       }
     });
   }
@@ -264,8 +271,6 @@ export class MainBroadcastListComponent implements OnInit, AfterViewInit, OnDest
     ).subscribe((isAuthorized) => {
       if (isAuthorized) {
         this.store$.dispatch(new TournamentActions.RemoveTournamentFromWishList({ tournament: tournament.id }));
-      } else {
-        this.router.navigate(['/sign-in']);
       }
     });
   }

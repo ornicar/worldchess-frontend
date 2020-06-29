@@ -1,0 +1,219 @@
+@import "settings";
+@import "mixins";
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+
+:host {
+  ::ng-deep {
+    ngu-carousel {
+      box-shadow: 0 -1px 0 0 #e0e0e0;
+
+      .ngu-button {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 50px;
+        z-index: 1;
+        padding: 0;
+        border: none;
+        background: 0 0;
+        cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
+        text-indent: 10em;
+
+        &:before {
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          content: '';
+          width: 12px;
+          height: 12px;
+          border-style: solid;
+          border-color: #000;
+          border-width: 0 1px 1px 0;
+          margin: -6px 0 0 -6px;
+        }
+
+        &[ngucarouselprev] {
+          left: 0;
+
+          &:before {
+            transform: rotate(135deg);
+          }
+        }
+
+        &[ngucarouselnext] {
+          right: 0;
+
+          &:before {
+            transform: rotate(-45deg);
+          }
+        }
+      }
+    }
+
+    ngu-tile {
+      display: flex;
+      padding: 0;
+
+      .tile {
+        box-shadow: -1px 0 0 0 #e0e0e0;
+        flex: 1;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.rating {
+
+  h1 {
+    font-family: $gerbera-font;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  .block-header {
+    color: #000;
+    font: 300 38px/48px $gerbera-font;
+    min-height: 217px;
+    padding: 20px;
+
+    @include tablets-big() {
+      font: 300 33px/32px $gerbera-font;
+    }
+
+
+    @include phones() {
+      min-height: 132px;
+      font: 300 22px/22px $gerbera-font;
+    }
+  }
+
+  .rating-item {
+    width: 100%;
+    position: relative;
+
+    .count {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      font: 400 38px/48px $gerbera-font;
+
+      @include tablets-big() {
+        font: 400 33px/33px $gerbera-font;
+      }
+    }
+
+    .rating-item__photo {
+      width: 270px;
+      height: 385px;
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 50px;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: 365px;
+        height: 400px;
+      }
+    }
+
+    .info {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 0 17px 18px 20px;
+
+      @include media-breakpoint-up(lg) {
+        padding: 0 20px 29px 20px;
+      }
+
+      .name {
+        flex-grow: 1;
+        padding: 0 18px;
+        font: 300 28px/34px $gerbera-font;
+
+        @include tablets-big() {
+          font: 300 22px/28px $gerbera-font;
+          margin-top: 4px;
+        }
+
+        @include phones() {
+          font: 300 17px/22px $gerbera-font;
+          margin-top: 6px;
+        }
+      }
+
+      .flag {
+        width: 24px;
+        height: 17px;
+        margin-right: 9px;
+        min-width: 24px;
+        margin-top: 3px;
+
+        @include media-breakpoint-up(lg) {
+          margin-top: 9px;
+        }
+      }
+
+      .country,
+      .sex,
+      .year {
+        text-transform: uppercase;
+        color: #5e5e5e;
+        display: inline-block;
+        letter-spacing: 1.3px;
+        font: 400 13px/35px $gerbera-font;
+
+        @include tablets-big() {
+          font: 400 11px/35px $gerbera-font;
+        }
+
+        @include ipad() {
+          font: 400 11px/26px $gerbera-font;
+        }
+
+        @include phones() {
+          font: 400 11px/25px $gerbera-font;
+        }
+      }
+
+      .sex {
+        color: white;
+        background-color: #333333;
+        margin-right: 3px;
+        line-height: 18px;
+        height: 17px;
+        margin-top: 4px;
+        width: 26px;
+        padding: 0;
+        text-align: center;
+        min-width: 26px;
+        padding-left: 2px;
+
+        @include media-breakpoint-up(lg) {
+          margin-top: 9px;
+        }
+        @include ipad() {
+          margin-top: 8px;
+        }
+      }
+      .year {
+        @include ipad() {
+          font: 400 11px/33px $gerbera-font;
+        }
+        @include phones() {
+          font: 400 11px/33px $gerbera-font;
+        }
+      }
+    }
+  }
+}

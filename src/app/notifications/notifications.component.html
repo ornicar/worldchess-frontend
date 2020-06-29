@@ -1,5 +1,5 @@
 <ng-container *ngIf="notification$ | async as notification">
-  <svg class="icon shake"><use xlink:href="#bell" /></svg>
+  <svg-bell class="icon shake"></svg-bell>
   <div class="timer">
     <wc-timer
       [date]="notification.data?.tour_start"

@@ -1,0 +1,10 @@
+@import "../../../../html/css/variables";
+@import "../../../../html/css/media";
+
+:host-context(svg-logo-fide.player) {
+  height: 15px;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}

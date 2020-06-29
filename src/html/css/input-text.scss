@@ -2,70 +2,107 @@
 @import 'media';
 
 .input-text {
-  display: block;
-  position: relative;
-  width: 100%;
-  margin-bottom: 22px;
-  @include phones-small() {
-    margin-bottom: 10px;
-  }
+    display: block;
+    position: relative;
+    width: 100%;
+    margin-bottom: 22px;
+
+    @include phones-small() {
+        margin-bottom: 10px;
+    }
 }
 
-.input-text__wparrer {
-  position: relative;
-  border-bottom: 1px solid #999;
-  padding: 19px 0;
-  @include phones-small() {
-    padding: 10px 0;
-  }
+.input-text__wrapper {
+    position: relative;
+    border-bottom: 1px solid rgba(#fff, 0.5);
+    padding: 19px 0;
+    cursor: text;
+
+    &:hover {
+        border-bottom: 1px solid#fff;
+    }
+
+    @include phones-small() {
+        padding: 10px 0;
+    }
+
+    &--code {
+        padding: 0;
+        position: relative;
+
+        .input-text__elem {
+            font: 400 170px/140px $gerbera-font;
+            height: 190px;
+            margin-top: -20px;
+
+            @include phones() {
+                font: 400 80px/80px $gerbera-font;
+                height: 105px;
+            }
+        }
+
+        .input-text__placeholder {
+            font: 300 170px/170px $gerbera-font;
+            color: rgba(#fff, 0.5);
+            @include phones() {
+                font: 300 80px/80px $gerbera-font;
+            }
+        }
+    }
 }
 
 .input-text__elem {
-  display: block;
-  width: 100%;
-  background-color: transparent;
-  color: #fff;
-  font: 300 22px/27px $gerbera-font;
-  border: 0;
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    color: #fff;
+    font: 300 22px/27px $gerbera-font;
+    border: 0;
 
-  &--active,
-  &:focus {
-    & + .input-text__placeholder {
-      top: 5px;
-      left: 0;
-      font: 300 15px/20px $gerbera-font;
-      color: #999;
-      @include phones-small() {
-        font: 300 12px/15px $gerbera-font;
-      }
+    &--active,
+    &:focus {
+        &+.input-text__placeholder {
+            top: 10px;
+            left: 0;
+            font: 300 15px/20px $gerbera-font;
+            color: #999;
+
+            @include phones-small() {
+                font: 300 12px/15px $gerbera-font;
+            }
+        }
     }
-  }
-  @include phones-small() {
-    font: 300 18px/17px $gerbera-font;
-  }
+
+    @include phones-small() {
+        font: 300 18px/17px $gerbera-font;
+    }
 }
 
 .input-text__placeholder {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  color: #fff;
-  font: 300 22px/22px $gerbera-font;
-  transform: translate(0, -50%);
-  transition: 0.3s;
-  @include phones-small() {
-    font: 300 18px/18px $gerbera-font;
-  }
+    position: absolute;
+    top: 50%;
+    left: 0;
+    color: #fff;
+    font: 300 22px/22px $gerbera-font;
+    transform: translate(0, -50%);
+    transition: 0.15s;
+
+    @include phones-small() {
+        font: 300 18px/18px $gerbera-font;
+    }
+
+    &--error {
+        color: #FF6F32 !important;
+    }
 }
 
 .input-text__error {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  font: 300 15px/23px $gerbera-font;
-  color: #ff7070;
+    font: 300 15px/18px $gerbera-font;
+    color: #FF6F32;
 
-  a {
-    color: #fff;
-  }
+
+    a {
+        color: #fff;
+    }
 }
+

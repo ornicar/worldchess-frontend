@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, EMPTY } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
 import { deserializeTournament } from './tournament.reducer';
 import { environment } from '../../../../environments/environment';
@@ -13,9 +13,10 @@ import {
   OnlineTournament,
   IGetTournamentsOptions,
   CommonTournament,
+  TournamentResourceType,
 } from './tournament.model';
 import { IPaginationResponse } from '../../chess-footer/team-players/team-players-resource.service';
-import { ITour } from '../tour/tour.model';
+import { ITour, IFounderTour } from '../tour/tour.model';
 import { IResultsLists } from '../result/result.model';
 import { CommonModule } from '@angular/common';
 
@@ -25,16 +26,28 @@ export class TournamentResourceService {
   constructor(private http: HttpClient) {
   }
 
-  getTournament(id: number): Observable<CommonTournament> {
-    return this.http.get<ITournament>(`${environment.endpoint}/tournaments/${id}/`).pipe(
+  getTournament(id: number, resourcetype?: TournamentResourceType): Observable<CommonTournament> {
+    // @todo. Use one endpoint.
+    let url = resourcetype === TournamentResourceType.OnlineTournament
+      ? `${environment.endpoint}/online/tournaments/${id}/`
+      : `${environment.endpoint}/tournaments/${id}/`;
+
+    return this.http.get<ITournament>(url).pipe(
+      map(tournament => Object.assign(tournament, {resourcetype})),
       map(tournament => deserializeTournament(tournament)),
+      catchError((error, caught) => {
+        if ([404, 502].includes(error.status)) {
+          return EMPTY;
+        }
+        return null;
+      })
     );
   }
 
   getTournamentBySlug(slug: string): Observable<CommonTournament> {
-    return this.http.get<ITournament>(`${environment.endpoint}/tournaments/slug/${slug}`).pipe(
+    return this.http.get<ITournament>(`${environment.endpoint}/tournaments/slug/${slug}/`).pipe(
       map(tournament => deserializeTournament(tournament)),
-    )
+    );
   }
 
   getAll(options: IGetTournamentsOptions = {}): Observable<Array<CommonTournament>> {
@@ -44,7 +57,7 @@ export class TournamentResourceService {
     Object.keys(options).forEach(o => params = params.set(o, options[o]));
     return this.http.get<IPaginationResponse<ITournament>>(`${environment.endpoint}/tournaments/`, { params })
       .pipe(map((r) => {
-        return r.results.map(t => deserializeTournament(t))
+        return r.results.map(t => deserializeTournament(t));
       }));
   }
 
@@ -60,7 +73,7 @@ export class TournamentResourceService {
     params = params.set('limit', '100');
 
     return this.http.get<ITournament[]>(`${environment.endpoint}/founder/tournaments/my/`, { params }).pipe(
-      map((tournaments: ITournament[]) => tournaments.map(t => plainToClass<FounderTournament, object>(FounderTournament, t)))
+      map((tournaments: ITournament[]) => tournaments.map(t => plainToClass(FounderTournament, t)))
     );
   }
 
@@ -69,8 +82,8 @@ export class TournamentResourceService {
     Object.keys(tournament).forEach(key => {
       formData.append(key, tournament[key]);
     });
-    return this.http.post<any>(`${environment.endpoint}/founder/tournaments/`, formData).pipe(
-      map(tournament => plainToClass<FounderTournament, object>(FounderTournament, tournament))
+    return this.http.post<ITournament>(`${environment.endpoint}/founder/tournaments/`, formData).pipe(
+      map(t => plainToClass(FounderTournament, t))
     );
   }
 
@@ -80,8 +93,8 @@ export class TournamentResourceService {
       formData.append(key, changes[key]);
     });
 
-    return this.http.patch<any>(`${environment.endpoint}/founder/tournaments/${id}/`, formData).pipe(
-      map(tournament => plainToClass<FounderTournament, object>(FounderTournament, tournament))
+    return this.http.patch<ITournament>(`${environment.endpoint}/founder/tournaments/${id}/`, formData).pipe(
+      map(tournament => plainToClass(FounderTournament, tournament))
     );
   }
 
@@ -96,7 +109,7 @@ export class TournamentResourceService {
   }
 
   getMyTournamentTours(tournamentId: number) {
-    return this.http.get<ITour[]>(`${environment.endpoint}/founder/tournaments/${tournamentId}/tours/`);
+    return this.http.get<IFounderTour[]>(`${environment.endpoint}/founder/tournaments/${tournamentId}/tours/`);
   }
 
   addMyTournamentTour(tournamentId: number, tour: Partial<ITour>) {
@@ -135,6 +148,12 @@ export class TournamentResourceService {
   signupToTournament(tournamentId: number): Observable<OnlineTournament> {
     return this.http.post<OnlineTournament>(`${environment.endpoint}/online/tournaments/${tournamentId}/signup/`, null).pipe(
       map(tournament => plainToClass<OnlineTournament, object>(OnlineTournament, tournament))
+    );
+  }
+
+  leaveToTournament(tournamentId: number): Observable<number> {
+    return this.http.post<OnlineTournament>(`${environment.endpoint}/online/tournaments/${tournamentId}/signout/`, null).pipe(
+      map(() => tournamentId)
     );
   }
 

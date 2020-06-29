@@ -1,5 +1,5 @@
-import {ElementRef, HostBinding, Component, Input, OnChanges} from '@angular/core';
-import {animate, style, transition, trigger} from '@angular/animations';
+import { ElementRef, HostBinding, Component, Input, OnChanges } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 const changeContent = trigger('changeContent', [
   transition('void <=> *', []),
@@ -21,7 +21,7 @@ const changeContent = trigger('changeContent', [
   animations: [changeContent]
 })
 export class FlowContentComponent implements OnChanges {
-  @Input() trigger: string;
+  @Input() trigger: string | number;
   destHeight: number;
 
   constructor(private element: ElementRef) {}

@@ -7,14 +7,14 @@ export interface INews {
   tags: Array<{ id: number; name: string}>;
   image?: IImagePreset;
   author: IAuthor;
-  topic: Array<{ id: number; name: string}>;
+  topic: string;
   content: string;
   tournament_name?: string;
-  is_published: boolean;
+  slug: string;
 }
 
 export interface IAuthor {
-  avatar: IImagePreset;
+  avatar?: IImagePreset;
   name: string;
 }
 

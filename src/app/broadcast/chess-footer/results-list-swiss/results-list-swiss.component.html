@@ -6,7 +6,9 @@
           №
         </td>
         <td class="table__col">
-          Players
+          <span class="player">
+              Players
+          </span>
         </td>
       </tr>
       <tr class="table__row" *ngFor="let playerResults of playersResults; index as i; trackBy: trackByFn;">
@@ -18,14 +20,80 @@
             <span *ngIf="playerResults.player?.avatar" class="player__photo">
               <img [src]="playerResults.player.avatar" alt="photo">
             </span>
-            <span class="player__title">{{ playerResults?.player?.full_name | wcWordsFirstLetters }}</span>
+            <span class="player__title">{{ playerResults?.player?.full_name | wcFullNameInitials }}</span>
             <span class="player__flag">
               <wc-country-flag [countryId]="playerResults?.player?.federation"></wc-country-flag>
             </span>
           </span>
         </td>
+        <td class="table__col table__col--score">
+          <wc-score [score]="playerResults.total">
+            <a (click)="togglePlayerInfo(true, playerResults)" class="table__player-btn">see more</a>
+          </wc-score>
+        </td>
       </tr>
     </table>
+    <div class="table-wrapper" [class.active]="showPlayerInfo && selectedResult" (click)="togglePlayerInfo(false)">
+      <table (swiperight)="togglePlayerInfo(false)" class="table-swiss-mobile">
+        <ng-container *ngIf="selectedResult">
+          <tr class="table-swiss-mobile__row">
+            <td class="table-swiss-mobile__col">
+              {{ selectedResult.player.full_name | wcFullNameInitials }}
+            </td>
+            <td class="table-swiss-mobile__col">
+              <div class="table-swiss-mobile__close" (click)="togglePlayerInfo(false)"></div>
+              Results
+            </td>
+          </tr>
+          <tr class="table-swiss-mobile__row">
+            <td class="table-swiss-mobile__col">
+              Games
+            </td>
+            <td class="table-swiss-mobile__col">
+              <div class="table-swiss-mobile__count">{{ selectedResult.games }}</div>
+            </td>
+          </tr>
+          <tr class="table-swiss-mobile__row">
+            <td class="table-swiss-mobile__col">
+              Wins
+            </td>
+            <td class="table-swiss-mobile__col">
+              <div class="table-swiss-mobile__count">{{ selectedResult.wins }}</div>
+            </td>
+          </tr>
+          <tr class="table-swiss-mobile__row">
+            <td class="table-swiss-mobile__col">
+              Draws
+            </td>
+            <td class="table-swiss-mobile__col">
+              <div class="table-swiss-mobile__count">{{ selectedResult.draw }}</div>
+            </td>
+          </tr>
+          <tr class="table-swiss-mobile__row">
+            <td class="table-swiss-mobile__col">
+              Losses
+            </td>
+            <td class="table-swiss-mobile__col">
+              <div class="table-swiss-mobile__count">{{ selectedResult.loss }}</div>
+            </td>
+          </tr>
+          <tr class="table-swiss-mobile__row">
+            <td class="table-swiss-mobile__col">
+              Results
+            </td>
+            <td class="table-swiss-mobile__col">
+              <div class="table-swiss-mobile__count">
+                <wc-score [score]="selectedResult.total"></wc-score>
+              </div>
+            </td>
+          </tr>
+          <tr class="table-swiss-mobile__row">
+            <td class="table-swiss-mobile__col last"></td>
+            <td class="table-swiss-mobile__col last"></td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
   </div>
   <div class="results-list__scroll" wcHideScrollbar>
     <table class="table">

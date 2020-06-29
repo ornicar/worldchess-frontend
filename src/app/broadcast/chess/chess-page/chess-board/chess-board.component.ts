@@ -1,3 +1,5 @@
+import { CheckmateState } from '@app/shared/widgets/chessground/figure.model';
+import { SetCheckmate } from './../../../../modules/game/state/game.actions';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,14 +10,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { Color } from 'chessground/types';
-import {BoardStatus, IBoard} from '../../../core/board/board.model';
-import {IMovePosition, MoveReaction} from '../../../move/move.model';
+import { BoardStatus, IBoard } from '../../../core/board/board.model';
+import { IMovePosition, MoveReaction } from '../../../move/move.model';
 
 export enum ChessBoardViewMode {
   Normal,
   MultiboardNormal,
   MultiboardMedium,
-  GamingPlay,
+  GamingNormal,
   OnlyBoard,
   WidgetVertical
 }
@@ -29,6 +31,8 @@ export enum ChessBoardViewMode {
 export class ChessBoardComponent implements OnInit {
 
   private defaultBottomPlayerColor: Color = 'white';
+
+  checkmateState: CheckmateState;
 
   @Input()
   viewMode: ChessBoardViewMode = ChessBoardViewMode.Normal;
@@ -77,6 +81,11 @@ export class ChessBoardComponent implements OnInit {
     return this.viewMode === ChessBoardViewMode.MultiboardNormal;
   }
 
+  @HostBinding('class.view-mode--gaming-normal')
+  get viewModeIsGamingNormal() {
+    return this.viewMode === ChessBoardViewMode.GamingNormal;
+  }
+
   @HostBinding('class.view-mode--multiboard-medium')
   get viewModeIsMultiboardMedium() {
     return this.viewMode === ChessBoardViewMode.MultiboardMedium;
@@ -101,10 +110,6 @@ export class ChessBoardComponent implements OnInit {
     return this.viewMode === ChessBoardViewMode.MultiboardMedium;
   }
 
-  onPositionChange(position: IMovePosition) {
-    this.moveCompleted.emit(position);
-  }
-
   onTriedToMove() {
     this.moveCancelled.emit();
   }
@@ -113,5 +118,29 @@ export class ChessBoardComponent implements OnInit {
     if (this.bottomPlayerColor === null) {
       this.bottomPlayerColor = this.defaultBottomPlayerColor;
     }
+  }
+
+  getCheckmate(color: string = 'white'): boolean {
+    let flagCheckmate: boolean = false;
+    if (this.checkmateState) {
+      switch (color) {
+        case 'white':
+          flagCheckmate = !(this.checkmateState === CheckmateState.WhiteCheckmates);
+          break;
+        case 'black':
+          flagCheckmate = !(this.checkmateState === CheckmateState.BlackCheckmates);
+          break;
+        default:
+          flagCheckmate = false;
+          break;
+      }
+      return flagCheckmate;
+    } else {
+      return false;
+    }
+  }
+
+  setCheckmate($event) {
+    this.checkmateState = $event;
   }
 }

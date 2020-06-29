@@ -1,0 +1,79 @@
+<div class="notifications" [class.notifications--hidden]="openedMenu"
+*ngIf="linesAccumulatorWithTap$ | async as lines; else notify">
+    <div class="notifications__body-wrapper" wcHideScrollbar>
+        <div class="notifications__body" #notificationsbody wcHideScrollbar>
+            <table class="notifications__table">
+                <tr class="notifications__table-row" *ngFor="let line of lines">
+                    <td class="notifications__table-cell">
+                        {{line[0].move_number}}
+                    </td>
+                    <td class="notifications__table-cell" *ngFor="let move of line" #moves>
+                        <div *ngIf="move" (click)="selectMove(move)"
+                            [class.selected]="(selectedMove$ | async)?.fen  === move.fen" style="cursor: pointer;"
+                            class="notifications__move">
+                            <img [src]="'/assets/images/chess/birman-chesspieces-notation/' + move.firstFigure + '.svg'"
+                                alt="" *ngIf="move.firstFigure" />
+                            {{move.san}}
+                            <img [src]="'/assets/images/chess/birman-chesspieces-notation/' + move.lastFigure + '.svg'"
+                                alt="" *ngIf="move.lastFigure" />
+                            <span class="checkmate-char">
+                                {{move.lastChar}}
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="notifications__footer" *ngIf="(gameInProgress$ | async) && !(cancelGameAvailable$ | async)">
+                    <td colspan="3"  class="notifications__table-cell">
+                        <div class="notifications__footer-wrapper">
+                            <div colspan="3" class="notifications__footer-resign-progress" [style.opacity.0]="resignProgress$ | async">
+                                <div class="text">{{'MESSAGES.HOLD_RESIGN' | translate }}...</div>
+                                <div class="progress" [style.width.%]="resignProgress$ | async"></div>
+                            </div>
+
+                            <ng-container *ngIf="!(cancelGameAvailable$ | async)">
+                                <a *ngIf="!(playerOfferedDraw$ | async) && !(playerReadyToOfferDraw$ | async)" href="javascript:void(0)"
+                                    class="notifications__footer-btn" (click)="callForDraw()" [class.hidden]="resignProgress$ | async">
+                                    {{'BUTTONS.OFFER_DRAW' | translate }}
+                                    <svg-offer-draw-d-button class="notifications__d-button"></svg-offer-draw-d-button>
+                                </a>
+                                <a *ngIf="(playerOfferedDraw$ | async) || (playerReadyToOfferDraw$ | async)" href="javascript:void(0)"
+                                    class="notifications__footer-btn" (click)="cancelDrawOffer()" [class.hidden]="resignProgress$ | async">
+                                    {{'BUTTONS.CANCEL_DRAW' | translate }}
+                                </a>
+                                <a href="javascript:void(0)" class="notifications__footer-btn" (mousedown)="_resign(true, $event)"
+                                    (mouseup)="_resign(false, $event)" [class.hidden]="resignProgress$ | async">
+                                    {{'BUTTONS.RESIGN' | translate }}
+                                </a>
+                            </ng-container>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="notifications__cancel-container" *ngIf="(gameInProgress$ | async) && (cancelGameAvailable$ | async)">
+        <a (click)="cancelGame()" class="notifications__footer-btn notifications__footer-btn--cancel-game"
+           *ngIf="!isTournamentBoard">
+            <svg-close class="icon"></svg-close>
+            {{'BUTTONS.CANCEL_GAME' | translate }}
+        </a>
+    </div>
+</div>
+
+<game-main-menu class="board-block__mobile-menu" [class.board-block__mobile-menu--open]="openedMenu" *ngIf="!(isResultShown$ | async)">
+</game-main-menu>
+
+<ng-template #notify>
+    <span class="first-move" [class.first-move--hidden]="openedMenu" *ngIf="gameInProgress$ | async">
+        <span *ngIf="isWhite$ | async">{{'TEXT.MAKE_FIRST_MOVE' | translate }}</span>
+        <a class="first-move__button" (click)="cancelGame()" *ngIf="!isTournamentBoard">
+            <svg-close class="icon"></svg-close>
+            {{'BUTTONS.CANCEL_GAME' | translate }}
+        </a>
+    </span>
+</ng-template>
+
+<div class="menu" (click)="openMenu()">
+    <div class="menu__btn" [class.menu__btn--close]="openedMenu"></div>
+</div>

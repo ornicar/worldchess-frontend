@@ -93,7 +93,7 @@ export class MultiboardFilters {
 })
 export class ChessBoardsAreaComponent implements OnChanges, OnInit, OnDestroy {
 
-  @ViewChild(VirtualScrollerComponent)
+  @ViewChild(VirtualScrollerComponent, { static: false })
   private virtualScroller: VirtualScrollerComponent;
 
   @Input() tournament: Tournament;

@@ -267,7 +267,7 @@ $flag-icon-css-path: '~flag-icon-css/flags';
 @include flag-icon(zm);
 @include flag-icon(zw);
 
-@import "~flag-icon-css/sass/_flag-icon-more";
+//@import "~flag-icon-css/sass/_flag-icon-more";
 
 .flag-icon-fd {
     background-size: cover !important;

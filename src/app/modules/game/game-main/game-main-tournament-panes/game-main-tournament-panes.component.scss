@@ -1,0 +1,77 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  .root {
+    display: flex;
+    min-height: 30px;
+    margin: 0 -10px;
+
+    @include birman-media {
+      overflow-y: auto;
+    }
+  }
+  .pane-col {
+    flex:1;
+
+    @include birman-media {
+      display: flex;
+      flex: 0 0 auto;
+    }
+
+    .row {
+      @include birman-media {
+        height: 240px;
+      }
+    }
+  }
+  .big-cell {
+    position: relative;
+    display: block;
+    margin: 10px;
+    flex: 1;
+    overflow: hidden;
+    border-radius: 3px;
+    &:after {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+
+    @include birman-media {
+      flex: 0 0 auto;
+      width: 220px;
+      height: 220px;
+    }
+  }
+  .cell {
+    position: relative;
+    display: block;
+    margin: 10px;
+    flex: 1;
+    overflow: hidden;
+    border-radius: 3px;
+    &:after {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+
+    @include birman-media {
+      flex: 0 0 auto;
+      width: 220px;
+      height: 220px;
+      margin: 10px 10px 0;
+    }
+  }
+  .row {
+    display: flex;
+    margin: 0;
+  }
+  .bg-green {
+    .image {
+
+      background-color: #00FF00;
+    }
+  }
+}

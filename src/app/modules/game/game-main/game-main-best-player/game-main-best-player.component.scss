@@ -1,0 +1,191 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 5px;
+  width: 100px;
+  font-size: 15px;
+
+  @include birman-media {
+    width: 100%;
+    padding-top: 0;
+  }
+  .header {
+    display: flex;
+    margin-bottom: 5px;
+    @include birman-media {
+      margin-bottom: 0;
+    }
+    .logo {
+      display: block;
+      width: 17px;
+      height: 13.5px;
+      position: relative;
+      top: 1px;
+      fill: #FFFFFF;
+      padding-right: 5px;
+      box-sizing: content-box;
+      flex: 0 0 auto;
+    }
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 3px;
+
+    &__img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    @include birman-media {
+      width: 54px;
+      height: 54px;
+      margin-bottom: 0;
+      position: relative;
+      top: 3px;
+    }
+  }
+
+  .title {
+    font: 300 15px/20px $gerbera-font;
+    text-align: left;
+  }
+  .root {
+    display: flex;
+    width: 100%;
+  }
+  .root__avatar {
+    flex: 0 0 auto;
+    width: 54px;
+    height: 54px;
+    margin-left: 5px;
+  }
+  .root__content {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  .profile-info {
+    @include birman-media {
+      display: flex;
+    }
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: -5px;
+    font: 300 15px/20px $gerbera-font;
+    @include birman-media {
+      display: flex;
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  .table-row {
+    @include birman-media {
+      display: flex;
+      align-items: center;
+
+      &:after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 2px;
+        border-radius: 50%;
+        background-color: #fff;
+        margin: 0 6px;
+      }
+    }
+
+    &:last-child {
+      &:after {
+        content: none;
+      }
+    }
+  }
+
+  .table-title-column,
+  .table-value-column {
+    @include birman-media {
+      display: flex;
+    }
+  }
+
+  .table-title-column {
+    margin-right: 5px;
+  }
+
+  .full-name{
+    color:#fff;
+    font: 300 15px/20px $gerbera-font;
+    margin-right: 3px;
+    text-align: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    span {
+      @include birman-media {
+        display: inline-flex;
+        height: 20px;
+      }
+    }
+  }
+  .age-and-country {
+    color:$gray-bg-new;
+    font: 300 15px/20px $gerbera-font;
+    text-align: start;
+
+    @include birman-media {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    span {
+      @include birman-media {
+        display: inline-flex;
+        align-items: center;
+        height: 20px;
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 2px;
+          height: 2px;
+          border-radius: 50%;
+          background-color: $gray-bg-new;
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+  .table-title-column {
+    text-align: left;
+  }
+  .table-value-column {
+    text-align: right;
+  }
+}
+
+
+.desctop {
+  display: block;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}

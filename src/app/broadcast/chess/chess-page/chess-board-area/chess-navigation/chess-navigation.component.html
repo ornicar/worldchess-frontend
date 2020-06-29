@@ -3,22 +3,22 @@
     <button class="chess-navigation__btn chess-navigation__btn--to-begining"
             [disabled]="isDisableBegin$ | async"
             (click)="onBeginClick()">
-      <svg class="icon"><use xlink:href="#arrow-down" /></svg>
+      <svg-arrow-down class="icon navigation"></svg-arrow-down>
     </button>
     <button class="chess-navigation__btn chess-navigation__btn--back"
             [disabled]="isDisableBegin$ | async"
             (click)="onBackwardClick()">
-      <svg class="icon"><use xlink:href="#arrow-down" /></svg>
+      <svg-arrow-down class="icon navigation"></svg-arrow-down>
     </button>
     <button class="chess-navigation__btn chess-navigation__btn--forward"
             [disabled]="isDisableEnd$ | async"
             (click)="onForwardClick()">
-      <svg class="icon"><use xlink:href="#arrow-down" /></svg>
+      <svg-arrow-down class="icon navigation"></svg-arrow-down>
     </button>
     <button class="chess-navigation__btn chess-navigation__btn--to-ending"
             [disabled]="isDisableEnd$ | async"
             (click)="onEndClick()">
-      <svg class="icon"><use xlink:href="#arrow-down" /></svg>
+      <svg-arrow-down class="icon navigation"></svg-arrow-down>
     </button>
 
     <wc-moves-navigation-container class="chess-navigation__timeline" [board]="board">

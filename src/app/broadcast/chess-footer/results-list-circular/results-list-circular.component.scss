@@ -1,10 +1,15 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
-@import '../html/css/settings.scss';
+@import 'variables.scss';
+@import 'media.scss';
+@import 'settings.scss';
 
 :host {
   width: 100%;
-  padding-bottom: 40px;
+  position: relative;
+  z-index: z-index(base);
+}
+
+:host(.active) {
+  z-index: z-index(base-dropdown);
 }
 
 .results-list {
@@ -18,12 +23,21 @@
   width: 300px;
   background-color: #F2F2F2;
   z-index: z-index(base);
+  @include phones() {
+    width: 100%;
+  }
 
   .table__col {
     color: #000;
 
     &--order {
       color: #000;
+    }
+
+    &:first-child {
+      @include phones() {
+        display: none;
+      }
     }
   }
 
@@ -44,10 +58,20 @@
   flex: 1 0 auto;
   overflow-x: auto;
   width: calc(100% - 300px);
+  background-color: #C8C8C8;
 
   .table__col {
-    color: rgba(#9E9E9E, 0.5);
+    color: #000;
     //min-width: 157px;
+  }
+
+  .table__head {
+    .table__col {
+      color: rgba(#9E9E9E, 0.5);
+    }
+  }
+  @include phones() {
+    display: none;
   }
 }
 
@@ -56,12 +80,14 @@
   width: 100%;
   border-collapse: collapse;
   font: 300 18px/22px $gerbera-font;
+
   &:first-child {
     td {
       &:first-child {
         text-align: center;
       }
-      &:nth-child(2){
+
+      &:nth-child(2) {
         padding-left: 19px;
       }
     }
@@ -95,6 +121,13 @@
     background-color: #59F19B;
   }
 
+  &--score {
+    display: none;
+    @include phones() {
+      display: table-cell;
+    }
+  }
+
   div.results {
     display: flex;
     flex-direction: row;
@@ -109,6 +142,10 @@
 
 .table__head {
   background-color: #F2F2F2;
+}
+
+.table__body {
+  background-color: #fff;
 }
 
 .table__body .table__col {
@@ -159,6 +196,7 @@
 .player__flag {
   display: block;
   flex: 0 0 auto;
+  margin-left: auto;
   width: 23px;
   height: 15px;
 
@@ -237,4 +275,144 @@ hr.dash {
   width: calc((100% + 10px) / 3);
   border: 1px solid black;
   margin: auto;
+}
+
+.table__player-btn {
+  font: 400 15px/22px $gerbera-font;
+  color: $light-gray;
+  text-decoration: underline;
+  margin-left: auto;
+}
+
+.table-swiss-mobile {
+  border-collapse: collapse;
+  font: 300 18px/22px $gerbera-font;
+  margin-top: 50px;
+  width: 100%;
+  background-color: #fff;
+  transition: left .3s;
+  border-top: 1px solid rgba(#9E9E9E, 0.5);
+}
+
+.table-swiss-mobile tbody {
+  display: block;
+  max-height: calc(100vh - 130px);
+  overflow: auto;
+  width: 100%;
+  padding-bottom: 120px;
+}
+
+.table-swiss-mobile tbody tr,
+.table-swiss-mobile thead tr {
+  display: flex;
+}
+
+.table-swiss-mobile__col {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  border-bottom: 1px solid rgba(#9E9E9E, 0.5);
+  border-right: 1px solid rgba(#9E9E9E, 0.5);
+  padding: 10px;
+  height: 80px;
+
+  &:last-child {
+    border-right: 0;
+    text-align: center;
+  }
+}
+
+.table-swiss-mobile__half {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-left: 10px;
+  width: 18px;
+  height: 25px;
+  font: 400 12px/13px $gerbera-font;
+
+  span {
+    &:last-child {
+      align-self: flex-end;
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    height: 25px;
+    width: 1px;
+    background-color: #000;
+  }
+}
+
+.table-swiss-mobile__count {
+  display: inline-flex;
+  align-items: center;
+}
+
+.table-swiss-mobile__player {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.table-swiss-mobile__flag {
+  display: block;
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: 23px;
+  height: 15px;
+
+  .flag-icon {
+    display: block;
+  }
+}
+
+.table-swiss-mobile__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+
+  &:after,
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) rotate(45deg);
+  }
+
+  &:before {
+    transform: translate(-50%,-50%) rotate(-45deg);
+  }
+}
+
+.table-wrapper {
+  display: none;
+  position: fixed;
+  top: -100%;
+  right: -200%;
+  width: 100%;
+  height: 100vh;
+  transition: right .3s;
+  z-index: z-index(modal);
+
+  &.active {
+    right: 0;
+    top: 0;
+  }
+  @include phones() {
+    display: block;
+  }
 }

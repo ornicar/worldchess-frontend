@@ -1,0 +1,42 @@
+:host {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: block;
+  .main-page-component-holder_root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .main-page-component-holder_empty {
+    width: 100%;
+    height: 100%;
+  }
+
+  .main-page-component-holder_target-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .main-page-component-holder_empty-indicator {
+    height: 100%;
+    background-color: black;
+    //border-radius: 8px;
+    animation: main-page-component-holder-opacity 2s linear infinite;
+  }
+
+  @keyframes main-page-component-holder-opacity {
+    0% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 0.4;
+    }
+  };
+}

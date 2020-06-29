@@ -1,5 +1,6 @@
-import {DOCUMENT} from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import {
+  AfterViewChecked,
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ContentChild,
@@ -13,16 +14,16 @@ import {
   OnInit,
   Output,
   QueryList,
+  SimpleChanges,
   TemplateRef,
-  ViewChild, ViewChildren
+  ViewChild, ViewChildren,
 } from '@angular/core';
-import {SimpleChanges} from '@angular/core/src/metadata/lifecycle_hooks';
-import {FormControl} from '@angular/forms';
-import {fromEvent, Observable, of} from 'rxjs';
-import {map, mapTo, take} from 'rxjs/operators';
-import {DomHelper} from '../../../../shared/helpers/dom.helper';
-import {SubscriptionHelper, Subscriptions} from '../../../../shared/helpers/subscription.helper';
-import {ScreenStateService} from '../../../../shared/screen/screen-state.service';
+import { FormControl } from '@angular/forms';
+import { fromEvent, Observable, of } from 'rxjs';
+import { map, mapTo, take } from 'rxjs/operators';
+import { DomHelper } from '../../../../shared/helpers/dom.helper';
+import { SubscriptionHelper, Subscriptions } from '../../../../shared/helpers/subscription.helper';
+import { ScreenStateService } from '../../../../shared/screen/screen-state.service';
 
 @Component({
   selector: 'wc-header-select',
@@ -30,7 +31,7 @@ import {ScreenStateService} from '../../../../shared/screen/screen-state.service
   styleUrls: ['./header-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy {
+export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
 
   @Input() name: string;
 
@@ -48,13 +49,17 @@ export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() isReadOnly: boolean;
 
+  @Input() preloader = false;
+
   @Output() selectedChange = new EventEmitter<any>();
 
-  @ViewChild('dropdown') dropdown;
+  @Input() simpleAsRegular = false;
 
-  public marginLedtDropdown: number = null;
+  @ViewChild('dropdown', { static: false }) dropdown;
 
   public isMobile = false;
+
+  showPreloader = false;
 
   get isAutocomplete(): boolean {
     return (this.autocompleteFields && this.autocompleteFields.length > 0) || Boolean(this.autocompleteFunction);
@@ -62,6 +67,8 @@ export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy {
 
   @ViewChildren('autocomplete', { read: ElementRef })
   private autocompleteElement: QueryList<ElementRef<HTMLElement>>;
+
+  @ViewChildren('mustBeFixed', {read: ElementRef}) mustBeFixed: QueryList<ElementRef>;
 
   public autocompleteFormControl = new FormControl('');
 
@@ -97,10 +104,10 @@ export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy {
     return this.optionsExcludeSelected.length && !this.isReadOnly;
   }
 
-  @ContentChild('option', {read: TemplateRef}) optionTemplate;
-  @ContentChild('titleNonSelected', {read: TemplateRef}) titleNonSelectedTemplate;
-  @ContentChild('titleSelected', {read: TemplateRef}) titleSelectedTemplate;
-  @ContentChild('afterDropdownContent', {read: TemplateRef}) afterDropdownContentTemplate;
+  @ContentChild('option', { read: TemplateRef, static: true }) optionTemplate;
+  @ContentChild('titleNonSelected', { read: TemplateRef, static: true }) titleNonSelectedTemplate;
+  @ContentChild('titleSelected', { read: TemplateRef, static: true }) titleSelectedTemplate;
+  @ContentChild('afterDropdownContent', { read: TemplateRef, static: true }) afterDropdownContentTemplate;
 
   private subs: Subscriptions = {};
 
@@ -143,6 +150,10 @@ export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy {
 
       this.cd.detectChanges();
     }
+  }
+
+  ngAfterViewChecked() {
+    this.mustBeFixed.forEach(el => this.screenState.addFixedElement(el.nativeElement));
   }
 
   private onMatchMediaMobile(isMatches: boolean) {
@@ -189,7 +200,7 @@ export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy {
     this.isOpen = true;
     this.cd.markForCheck();
 
-    if (this.isAutocomplete) {
+    if (this.isAutocomplete && !this.isMobile) {
       // Clear the filter input and focus on it.
       this.autocompleteFormControl.reset('');
       this.autocompleteElement.changes
@@ -218,9 +229,21 @@ export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy {
     this.cd.detectChanges();
   }
 
+  simpleClose() {
+    if (this.simpleAsRegular) {
+      this.closeDropdown();
+    } else {
+      this._isOpen = false;
+    }
+  }
+
   changeOption(option) {
     this.selectedChange.emit(option);
-    this.closeDropdown();
+    if (this.isMobile && this.preloader) {
+      this.showPreloader = true;
+    } else {
+      this.closeDropdown();
+    }
   }
 
   private addOutsideClickListener() {
@@ -254,20 +277,19 @@ export class HeaderSelectComponent implements OnInit, OnChanges, OnDestroy {
       this.alignLeft = false;
       return;
     }
-
+ 
     const dropDownRect = this.dropdown.nativeElement.getBoundingClientRect();
     const selectRect = this.elementRef.nativeElement.getBoundingClientRect();
     const widthWithoutScroll = document.documentElement.clientWidth || (window.innerWidth - 20);
-    this.alignLeft = widthWithoutScroll < dropDownRect.right;
-    if (this.alignLeft && dropDownRect.right < dropDownRect.width) {
-      this.marginLedtDropdown = dropDownRect.width - selectRect.width - selectRect.left;
-    } else {
-      this.marginLedtDropdown = 0;
+    if(widthWithoutScroll < dropDownRect.right && window.innerWidth > 1522) {
+      this.alignLeft = true;
     }
   }
 
   ngOnDestroy() {
+    this.isOpen = false;
     SubscriptionHelper.unsubscribe(this.subs);
+    this.mustBeFixed.forEach(el => this.screenState.removeFixedElement(el.nativeElement));
   }
 
   private filterOptions(options: { [key: string]: string }[], filterString: string = ''): any[] {

@@ -1,0 +1,16 @@
+<div class="bar">
+  <div class="line">
+    <div *ngFor="let item of data$ | async">
+      <main-page-news-bar-item [value]="item"></main-page-news-bar-item>
+    </div>
+    <div *ngFor="let item of data$ | async">
+      <main-page-news-bar-item [value]="item"></main-page-news-bar-item>
+    </div>
+  </div>
+  <div class="kaspersky">
+    <div class="kaspersky__text">
+      Protected by 
+    </div>
+    <img src="../../../../../../../assets/images/kaspersky.svg" alt="kaspersky" class="kaspersky__logo">
+  </div>
+</div>

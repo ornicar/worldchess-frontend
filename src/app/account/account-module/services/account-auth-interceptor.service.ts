@@ -37,9 +37,12 @@ export class AccountAuthInterceptorService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const isNotBroadcast = request.url.indexOf(environment.endpoint) === -1;
     const isJWT = request.url.indexOf(this.authResource.JWT_ENDPOINT) !== -1;
+    const withCredentials = request.clone({
+      withCredentials: true,
+    });
 
     if (isNotBroadcast || isJWT) {
-      return next.handle(request);
+      return next.handle(withCredentials);
     } else {
       // Add the token if exist.
       return this.getToken().pipe(mergeMap(token => {
@@ -48,12 +51,12 @@ export class AccountAuthInterceptorService implements HttpInterceptor {
             'Authorization': `JWT ${token}`
           };
 
-          return next.handle(request.clone({ setHeaders })).pipe(
+          return next.handle(withCredentials.clone({ setHeaders })).pipe(
             // logout when token has expired.
             tap(null, error => error.status === 401 && this.store$.dispatch(new AuthLogout()))
           );
         } else {
-          return next.handle(request);
+          return next.handle(withCredentials);
         }
       }));
     }

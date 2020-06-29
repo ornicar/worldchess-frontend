@@ -12,6 +12,10 @@
   font: 500 15px/22px $gerbera-font;
   color: #fff;
   float: right;
+
+  @include height-650() {
+    font: 300 13px/20px $gerbera-font;
+  }
 }
 
 :host(.top-position) {

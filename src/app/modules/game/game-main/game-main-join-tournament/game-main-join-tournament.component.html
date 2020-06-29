@@ -1,0 +1,13 @@
+<div class="root">
+    <div class="left-column">
+      <div class="tournaments-row">{{tournamentCount$ | async}} {{ 'MESSAGES.TOURNAMENTS_MNTH' | translate}}</div>
+    </div>
+  <div class="right-column desctop">
+    <wc-btn-with-loading
+      class="btn-new--brown-border join-button"
+      routerLink="/tournaments"
+    >
+      {{ 'BUTTONS.JOIN_TOURNAMENT' | translate}}...
+    </wc-btn-with-loading>
+  </div>
+</div>

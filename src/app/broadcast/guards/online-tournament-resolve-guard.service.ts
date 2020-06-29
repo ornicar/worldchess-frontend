@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { TournamentLoadService } from '../core/tournament/tournament-load.service';
-import { OnlineTournament } from '../core/tournament/tournament.model';
+import { OnlineTournament, TournamentResourceType } from '../core/tournament/tournament.model';
 import * as fromTournament from '../core/tournament/tournament.reducer';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class OnlineTournamentResolveGuard implements Resolve<OnlineTournament> {
   resolve(routeSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<OnlineTournament> {
     const tournamentId = parseInt(routeSnapshot.params['tournament'], 10);
 
-    return this.tournamentLoad.loadWithSave(tournamentId).pipe(
+    return this.tournamentLoad.loadWithSave(tournamentId, TournamentResourceType.OnlineTournament).pipe(
       map(tournament => tournament as OnlineTournament)
     );
   }

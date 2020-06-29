@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {AuthModule} from '../../auth/auth.module';
 import {BoardSocketService} from './board-socket.service';
 
 @NgModule({
@@ -10,7 +9,6 @@ import {BoardSocketService} from './board-socket.service';
   ],
   imports: [
     CommonModule,
-    AuthModule
   ]
 })
 export class BoardSocketModule { }

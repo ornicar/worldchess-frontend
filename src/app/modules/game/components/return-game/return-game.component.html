@@ -1,0 +1,9 @@
+<div *ngIf="isShowReturnGame$ | async" class="return-lobby-ellem">
+<tournament-countdown
+  [timer]="countdownTimer$ | async"
+  [text]="changeText$ | async"
+  (click)="goToBoard()"
+  [isAction]="true"
+>
+</tournament-countdown>
+</div>

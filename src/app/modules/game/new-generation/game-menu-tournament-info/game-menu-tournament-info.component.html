@@ -1,0 +1,13 @@
+  <div class="tournament-info">
+    <a class="tournament-info__icon"
+      [class.flash]="(gameResult$ | async)"
+      (click)="goToLobby()">
+      <svg-cup-thin class="icon"></svg-cup-thin>
+    </a>
+    <a class="tournament-info__name"
+      [class.flash]="(gameResult$ | async)"
+      (click)="goToLobby()">
+      {{tournamentName$ | async}}
+    </a>
+    <div class="tournament-info__round">{{'MESSAGES.ROUND' | translate}} {{tournamentCurrentTourNumber$ | async}} {{'OTHER.OF' | translate}} {{tournamentNumberOfTours$ | async}}</div>
+  </div>

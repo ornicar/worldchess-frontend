@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, select, Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie';
 import { defer, EMPTY, Observable, of, timer } from 'rxjs';
 import { fromArray } from 'rxjs/internal/observable/fromArray';
-import { catchError, delay, map, mapTo, mergeMap, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, delay, map, mapTo, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import * as forRoot from '../reducers';
 import { AuthResourceService } from './auth-resource.service';
 import {
@@ -39,6 +39,7 @@ import {
   AuthGetUidSuccess,
   AuthGetUidError,
   AuthInit,
+  AuthSignUpSuccessClear,
 } from './auth.actions';
 import { decodeToken, selectToken, tokenRefreshTimeLeft, tokenTimeLeft } from './auth.reducer';
 import { IsAuthorizedGuard } from './is-authorized.guard';
@@ -46,6 +47,7 @@ import { IsNotAuthorizedGuard } from './is-not-authorized.guard';
 import { SocketConnectionService } from './socket-connection.service';
 import { ISocketMessage, ISocketSendMessage } from './auth.model';
 import { AccountReset } from '@app/account/account-store/account.actions';
+import { IsMainApp } from '@app/is-main-app.token';
 
 const TIME_10_MINUTES = 600;
 const TIME_1_MINUTE = 60;
@@ -62,7 +64,8 @@ export class AuthEffects {
     private route: ActivatedRoute,
     private router: Router,
     private socketConnectionService: SocketConnectionService<ISocketMessage, ISocketSendMessage>,
-    private cookieService: CookieService // @todo. local storage
+    private cookieService: CookieService, // @todo. local storage
+    @Inject(IsMainApp) private isMainApp: boolean,
   ) {}
 
   @Effect()
@@ -117,6 +120,7 @@ export class AuthEffects {
     ofType(AuthActionTypes.SignInSuccess),
     tap(() => {
       this.navigateToStoredDestination();
+      window['dataLayerPush']('wchLogin', 'Sign in', 'success', 'click', null, null);
     })
   );
 
@@ -219,7 +223,7 @@ export class AuthEffects {
   @Effect()
   logout$ = this.actions$.pipe(
     ofType(AuthActionTypes.Logout),
-    switchMap(() => [new AuthClearToken(), new AccountReset()])
+    switchMap(() => [new AuthClearToken(), new AccountReset(), new AuthSignUpSuccessClear()])
   );
 
   @Effect({ dispatch: false })
@@ -232,7 +236,16 @@ export class AuthEffects {
   @Effect()
   getUid$ = this.actions$.pipe(
     ofType<AuthGetUid>(AuthActionTypes.GetUid),
-    mergeMap(() => this.authResource.getUid().pipe(
+    mergeMap(({ payload: { needSetCookie } }) => this.authResource.getUid().pipe(
+      tap(({ uid }) => {
+        if (needSetCookie) {
+          this.cookieService.put('userId', uid);
+        } else {
+          if (this.cookieService.get('userId') !== uid) {
+            this.cookieService.remove('userId');
+          }
+        }
+      }),
       map(({ uid }) => new AuthGetUidSuccess({ uid })),
       catchError((resp = {}) => {
         console.error('AuthGetUid', resp);
@@ -243,15 +256,22 @@ export class AuthEffects {
   );
 
   @Effect()
-  getUidWhenLoginOrLogout$ = this.actions$.pipe(
-    ofType<AuthSignInSuccess | AuthSignUpSuccess | AuthSetToken | AuthClearToken>(
+  getUidWhenLoginAndSignUp$ = this.actions$.pipe(
+    ofType<AuthSignInSuccess | AuthSignUpSuccess | AuthSetToken>(
       AuthActionTypes.SignInSuccess,
       AuthActionTypes.SignUpSuccess,
       AuthActionTypes.RefreshTokenSuccess,
       AuthActionTypes.SetToken,
+    ),
+    map(() => new AuthGetUid({ needSetCookie: true }))
+  );
+
+  @Effect()
+  getUidWhenLogout$ = this.actions$.pipe(
+    ofType<AuthClearToken>(
       AuthActionTypes.ClearToken
     ),
-    map(() => new AuthGetUid())
+    map(() => new AuthGetUid({ needSetCookie: false }))
   );
 
   @Effect()
@@ -307,6 +327,14 @@ export class AuthEffects {
   );
 
   @Effect({ dispatch: false })
+  saveTokenFromSet$ = this.actions$.pipe(
+    ofType<AuthSetToken>(
+      AuthActionTypes.SetToken,
+    ),
+    tap(({ payload: { token } }) => this.saveToken(token)),
+  );
+
+  @Effect({ dispatch: false })
   removeTokenCookie$ = this.actions$.pipe(
     ofType(AuthActionTypes.ClearToken),
     tap(() => this.removeToken())
@@ -343,26 +371,32 @@ export class AuthEffects {
   );
 
   @Effect()
-  init$: Observable<Action> = defer((): Observable<Action> => {
-    const token = this.cookieService.get(this.ACCESS_TOKEN);
-
-    if (token) {
-      const timeLeft = tokenTimeLeft(token);
-      const refreshTimeLeft = tokenRefreshTimeLeft(token);
-      if (timeLeft > TIME_10_MINUTES) {
-        return fromArray([new AuthSetToken({ token }), new AuthInit()]);
-
-      } else if (timeLeft > TIME_1_MINUTE || refreshTimeLeft > 0) {
-        return of(new AuthRefreshToken({ token, isInit: true }));
-
-      } else {
-        return fromArray([new AuthClearToken(), new AuthInit()]);
-      }
-    }
-
-    return fromArray([new AuthInit(), new AuthGetUid()]); // Init socket connection.
+  init$ = defer((): Observable<Action> => {
+    return of({type: ''});
   })
-    .pipe(delay(0));
+    .pipe(
+      delay(0),
+      withLatestFrom(this.store$.select(selectToken)),
+      switchMap(([action, storeToken]) => {
+        const token = this.cookieService.get(this.ACCESS_TOKEN);
+
+        if (token && (!storeToken || storeToken && storeToken === token)) {
+          const timeLeft = tokenTimeLeft(token);
+          const refreshTimeLeft = tokenRefreshTimeLeft(token);
+          if (timeLeft > TIME_10_MINUTES) {
+            return fromArray([new AuthSetToken({ token }), new AuthInit()]);
+
+          } else if (timeLeft > TIME_1_MINUTE || refreshTimeLeft > 0) {
+            return of(new AuthRefreshToken({ token, isInit: true }));
+
+          } else {
+            return fromArray([new AuthClearToken(), new AuthInit()]);
+          }
+        }
+
+        return fromArray([new AuthInit(), new AuthGetUid({ needSetCookie: false })]);
+      })
+    );
 
   private saveToken(token) {
     const tokenData = decodeToken(token);

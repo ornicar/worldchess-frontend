@@ -1,0 +1,87 @@
+
+@import "variables-new";
+@import "media-new";
+
+:host {
+  height: 100%;
+  overflow: hidden;
+  .bar {
+    position: relative;
+    display: flex;
+    font-size: 15px;
+    line-height: 20px;
+    padding-top: 19px;
+    padding-bottom: 10px;
+    @include birman-media {
+      padding-top: 9px;
+      padding-bottom: 9px;
+    }
+  }
+
+  .line {
+    &:hover {
+      -webkit-animation-play-state: paused;
+      -moz-animation-play-state: paused;
+      -o-animation-play-state: paused;
+      animation-play-state: paused;
+    }
+    animation: movement 135s linear infinite;
+    display: flex;
+  }
+
+  @keyframes movement {
+    0% { transform: translateY(0%); }
+    100% { transform: translateX(-50%) }
+  }
+}
+
+
+.kaspersky {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding: 8px 10px 0 10px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: #303030;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    width: 30px;
+    background: linear-gradient(270deg, #303030 25%, rgba(25, 25, 25, 0) 100%);
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1000px;
+    left: 100%;
+    background-color: #303030;
+  }
+
+  @include birman-media() {
+    display: none;
+  }
+}
+
+.kaspersky__text {
+  color: rgba(#fff, 0.4);
+  font: 300 12px/15px $gerbera-font;
+  margin-right: 8px;
+}
+
+.kaspersky__logo {
+  display: block;
+  opacity: 0.4;
+  width: 95px;
+}

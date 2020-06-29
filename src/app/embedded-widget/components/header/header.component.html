@@ -1,7 +1,5 @@
-<a target="_blank" [href]="backendUrl" class="container-select container-select--logo">
-  <svg class="icon-logo">
-    <use xlink:href="#fide-world-chess-lock-up"/>
-  </svg>
+<a target="_blank" [href]="applicationUrl" class="container-select container-select--logo">
+  <svg-logo-chess class="icon-logo"></svg-logo-chess>
 </a>
 
 <wc-header-select
@@ -48,12 +46,12 @@
   </ng-template>
   <ng-template #titleSelected let-tour>
     <div class="select-item">
-      Round {{ tour.tour_number }}
+      {{ getRoundTitle(tour) }}
     </div>
   </ng-template>
   <ng-template #option let-tour>
     <div class="select-item">
-      Round {{ tour.tour_number }}
+      {{ getRoundTitle(tour) }}
     </div>
   </ng-template>
 </wc-header-select>

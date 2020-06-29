@@ -1,62 +1,166 @@
-<wc-preloader *ngIf="loading$ | async"></wc-preloader>
-
-<form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!(loading$ | async)" class="register">
-  <a class="register__close" (click)="closePopup()"></a>
-  <div class="register__title">
-    Create a free account and join World Chess
-    <p *ngIf="product$ | async">
-      Already have an account? <span class="nobr"><a (click)="goToLogin()">Log in</a>!</span>
-    </p>
-  </div>
-  <div class="register__labels">
-    <label class="input-text">
-      <div class="input-text__wparrer">
-        <input
-          class="input-text__elem"
-          [class.input-text__elem--active]="!!form.controls['full_name'].value"
-          type="text"
-          formControlName="full_name"
-        />
-        <div class="input-text__placeholder">Name</div>
-      </div>
-      <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-        <div [hidden]="!errors?.full_name?.required">Full name is required.</div>
-        <div [hidden]="!errors?.full_name?.response">{{ errors?.full_name?.response }}</div>
-      </div>
-    </label>
-
-    <label class="input-text__input">
-      <div class="input-text__wparrer">
-        <input
-          class="input-text__elem"
-          [class.input-text__elem--active]="!!form.controls['email'].value"
-          type="email"
-          formControlName="email"
-        />
-        <div class="input-text__placeholder">Email</div>
-      </div>
-      <div *ngIf="formErrors$ | async as errors" class="input-text__error">
-        <div [hidden]="!errors?.email?.required">Email is required.</div>
-        <div [hidden]="!errors?.email?.email">Email is invalid.</div>
-        <div [hidden]="!errors?.email?.response">{{ errors?.email?.response }}</div>
-      </div>
-    </label>
-  </div>
-  <div class="register__footer">
-    <div class="register__footer-coll">
-      <div class="register__footer-text">
-        By creating your account, you agree to our
-        <a target="_blank" href="https://worldchess.com/assets/docs/terms-of-use.pdf">Terms and Conditions</a> &
-        <a target="_blank" href="https://worldchess.com/assets/docs/privacy-policy.pdf"
-          >Privacy Policy & Cookie Statement</a
-        >.
-      </div>
-    </div>
-
-    <div class="register__footer-coll">
-      <button class="register__btn" type="submit">
-        become a member
-      </button>
+<wc-base-popup>
+  <div class="popup-container__sign-in" slot-sign-in>
+    <div class="popup-container__sign-in-content">
+      <span>Have an account?</span>
+      <a (click)="goToLogin()">Sign in <svg-arrow-right class="icon"></svg-arrow-right></a>
     </div>
   </div>
-</form>
+  <div class="register__options register__options--padding-top">
+    <div class="register__options-col">
+      <div class="register__options-control register__options-control--label">
+        <div class="register__img" [class.hide-image]="showProFeatures">
+          <div class="register__img-wrapper">
+            <img src="../../../../../assets/img/image.jpg" alt="image.jpg">
+          </div>
+        </div>
+        <label class="toggle-label">
+          <input type="checkbox" [checked]="proSelected$ | async" (change)="onProSelectionChanged($event)">
+          <div class="toggle-label__btn"></div>
+          <span class="toggle-label__content">
+            <span>Club Package
+              <span class="toggle-label__price"
+              *ngIf="proProduct$ | async as proProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{ proProduct.amount / 100 | currency: 'EUR':'':'1.0'  }}<span style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+            </span>
+
+          </span>
+        </label>
+      </div>
+
+      <div class="register__options-control">
+        <div class="register__options-text" *ngIf="!showProFeatures">Live workshops with Grandmasters: master classes and lectures with top chess personalities every month. Ask questions and get advice on your training. All classes are taught in English.</div>
+        <div class="register__options-text" *ngIf="showProFeatures">
+          <ul>
+            <li>Live workshops with Grandmasters: master classes and lectures with top chess personalities every month. Ask questions and get advice on your training. All classes are taught in English.</li>
+            <li>World Chess Club Membership: participate in online club tournaments and championships (club members only) with exclusive prizes.</li>
+            <li>15% discount on all products at the official World Chess Shop.</li>
+            <li>Playing patterns and profile analysis (available November 1st).</li>
+          </ul>
+        </div>
+
+        <a (click)="toggleProFeatures()"
+          class="register__options-link">{{ showProFeatures ? 'Show less' : 'See all included features...' }}</a>
+      </div>
+    </div>
+    <div class="register__options-col">
+      <div class="register__options-control register__options-control--label" >
+        <div class="register__img" [class.hide-image]="showFideFeatures">
+          <div class="register__img-wrapper">
+            <img src="../../../../../assets/img/image-2.jpg" alt="image.jpg">
+          </div>
+        </div>
+        <label class="toggle-label">
+          <input type="checkbox" [checked]="fideSelected$ | async" (change)="onFideSelectionChanged($event)">
+          <div class="toggle-label__btn"></div>
+          <span class="toggle-label__content">
+            <span>FIDE Online Rating
+              <span class="toggle-label__price"
+                *ngIf="fideProduct$ | async as fideProduct">€<span style="font-size: 0.5em">&nbsp;</span>{{fideProduct.amount / 100 | currency: 'EUR':'':'1.0'}}<span style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+            </span>
+
+          </span>
+          <span class="logo-fide logo-fide--desctop">
+            <svg-logo-fide class="icon"></svg-logo-fide>
+          </span>
+        </label>
+      </div>
+      <div class="register__options-control">
+
+        <div class="register__options-text" *ngIf="!showFideFeatures">
+          <span>Play for&nbsp;FIDE Official Online Rating.<br class="mobile-none"> Become an&nbsp;Arena Grandmaster or&nbsp;receive other official titles</span>
+          <span class="logo-fide logo-fide--mobile">
+            <svg-logo-fide class="icon"></svg-logo-fide>
+          </span>
+        </div>
+        <div class="register__options-text" *ngIf="showFideFeatures">
+          <ul>
+            <li>Play for&nbsp;FIDE Official Online Rating.</li>
+            <li>Become an&nbsp;Arena Grandmaster or&nbsp;receive other official titles</li>
+            <li>Professional certified anti-cheating</li>
+            <li>Anti-fraud: official ratings on&nbsp;blockchain</li>
+            <li>Official rated online tournaments</li>
+            <li>National Championships online <a class="register__options-link" target="_blank" href="https://www.notion.so/List-of-National-Federations-that-are-part-of-the-FIDE-Online-Arena-6121c0c57026466284506a7daea58ca3">(list of Federations)</a></li>
+            <li>Compete for&nbsp;cash prizes</li>
+            <li>Access to&nbsp;FIDE Members-only online events</li>
+            <li>Complete games archive and PGN download</li>
+            <li>Tournaments Certificate download</li>
+          </ul>
+
+        </div>
+        <a (click)="toggleFideFeatures()"
+          class="register__options-link">{{ showFideFeatures ? 'Show less' : 'See all included features...' }}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="register__form-wrapper">
+    <div class="register__form-big-text">Enter email to use with your account</div>
+    <form class="register__form" [formGroup]="form" (ngSubmit)="form.submit()">
+      <div class="register__form-col">
+        <label class="register-input__input" [shake]="form.shake$">
+          <div class="register-input__wrapper">
+            <input
+              class="register-input__elem"
+              [class.register-input__elem--active]="!(form.controls['email'].empty$ | async)"
+              type="email"
+              formControlName="email"
+              paygateFormControl
+              (keydown.enter)="$event.currentTarget.blur(); form.submit()"
+              #emailControl="paygateFormControl"
+            />
+            <div class="register-input__placeholder">
+              <span class="register-input__placeholder-text">
+                  Email
+              </span>
+              <div *ngIf="form.controls['email'].error$ | async as error" class="register-input__error">
+                <div class="register-input__error-text register-input__error-text--email" *ngIf="error !== 'required'">
+                  <ng-container [ngSwitch]="error">
+                    <ng-container *ngSwitchCase="'email'">We cannot use this email address</ng-container>
+                    <ng-container *ngSwitchCase="'exists'">Already used with World Chess</ng-container>
+                    <ng-container *ngSwitchDefault>We cannot use this email address</ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </label>
+
+        <div class="register-form__submit">
+          <wc-btn-with-loading
+            [loading]="loading$ | async"
+            [disabled]="form.invalid$ | async"
+          >
+            Become a&nbsp;member
+          </wc-btn-with-loading>
+          <ng-container *ngIf="resultPrice$ | async as resultPrice; else freePrice">
+            <span class="register-form__submit-free"
+              *ngIf="resultPrice !== 0">€<span style="font-size: 0.5em">&nbsp;</span>{{ resultPrice / 100 | currency: 'EUR':'':'1.0' }}<span style="font-size: 0.5em">&nbsp;</span>/<span style="font-size: 0.5em">&nbsp;</span>year</span>
+          </ng-container>
+          <ng-template #freePrice><span class="register-form__submit-free">Free</span></ng-template>
+        </div>
+      </div>
+
+      <div class="register__form-col register__form-col--flex">
+
+        <div class="register-form__gift">
+          <!-- <button class="register__form-gift-btn" type="button">Gift membership</button>
+              <div class="register__form-gift-text">The person will receive a link to register for free</div> -->
+        </div>
+        <div class="register__form-privacy">
+          <div class="register__form-privacy-text">By creating your account and becoming a&nbsp;member, you agree
+            to&nbsp;our:</div>
+            <div class="register__form-privacy-link-wrapper">
+              <a class="register__form-privacy-link" target="_blank"
+                href="https://worldchess.com/assets/docs/terms-of-use.pdf">Terms and Conditions <svg-arrow-right
+                  class="icon"></svg-arrow-right></a>
+              <a class="register__form-privacy-link" target="_blank"
+                href="https://www.notion.so/FIDE-Online-Arena-Privacy-Policy-470e3c8fdc9148f49611e66df8a25448">Privacy Policy <svg-arrow-right class="icon">
+                </svg-arrow-right></a>
+            </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+</wc-base-popup>

@@ -1,0 +1,33 @@
+<div class="root">
+  <div class="pane-col">
+    <div class="row">
+      <div class="cell bg-red">
+        <wc-game-main-tournament-pane [tournament]="(topFiveTournaments$ | async)[0]"></wc-game-main-tournament-pane>
+      </div>
+      <div class="cell">
+        <wc-game-main-tournament-pane class="bg-green" [tournament]="(topFiveTournaments$ | async)[1]"></wc-game-main-tournament-pane>
+      </div>
+    </div>
+    <div class="row">
+      <div class="big-cell bg-orange">
+        <wc-game-main-tournament-pane [tournament]="(topFiveTournaments$ | async)[2]"></wc-game-main-tournament-pane>
+      </div>
+    </div>
+
+  </div>
+  <div class="pane-col">
+    <div class="row">
+      <div class="big-cell bg-orange">
+        <wc-game-main-tournament-pane [tournament]="(topFiveTournaments$| async)[3]"></wc-game-main-tournament-pane>
+      </div>
+    </div>
+    <div class="row">
+      <div class="cell">
+        <wc-game-main-tournament-pane class="bg-green" [tournament]="(topFiveTournaments$ | async)[4]"></wc-game-main-tournament-pane>
+      </div>
+      <div class="cell">
+        <wc-game-main-new-tournament></wc-game-main-new-tournament>
+      </div>
+    </div>
+  </div>
+</div>

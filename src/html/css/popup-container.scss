@@ -1,0 +1,123 @@
+@import 'variables-new';
+@import 'media-new';
+
+.popup-container__wrapper-scroll {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  flex: 1 0 auto;
+  @include phones() {
+    height: auto;
+    flex: 1 0 auto;
+  }
+}
+
+.popup-container__close {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 25px;
+  height: 25px;
+  z-index: z-index(base);
+  opacity: .5;
+
+  &:after,
+  &:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &:before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.popup-container__header {
+  display: flex;
+  align-items: flex-end;
+  padding-right: 16px;
+  flex: 0 0 auto;
+  @include phones() {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.popup-container__header-title {
+  font: 400 55px/63px $gerbera-font;
+  color: #fff;
+  position: relative;
+  left: -4px;
+  @include phones() {
+    font: 400 42px/45px $gerbera-font;
+  }
+
+  &--pro {
+    display: none;
+  }
+}
+
+.popup-container__sign-in {
+  display: flex;
+  justify-content: flex-end;
+  font: 300 18px/22px $gerbera-font;
+  color: #fff;
+  margin-left: auto;
+  padding-right: 25px;
+  padding-bottom: 7px;
+
+  a {
+    display: flex;
+    color: $brown-2;
+    fill: $brown-2;
+    
+    &:hover {
+      color: $brown-2-hover;
+      fill: $brown-2-hover;
+    }
+
+    .icon {
+      width: 6px;
+      height: 11px;
+      margin-left: 5px;
+    }
+  }
+  @include phones() {
+    margin-left: 0;
+    margin-top: 10px;
+    font: 300 22px/25px $gerbera-font;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+}
+
+.popup-container__sign-in-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  @include phones() {
+    margin-left: 0;
+    flex-direction: row;
+
+    span {
+      margin-right: 5px;
+    }
+  }
+}
+
+i {
+  font-size: .5em;
+}

@@ -1,9 +1,17 @@
+@import "variables";
+@import "media";
+
 .icon {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 170%;
   width: 16px;
   height: 16px;
+  @include height-650() {
+    background-size: 165%;
+    width: 15px;
+    height: 15px;
+  }
   &.wB {
     background-image:  url(/assets/images/chess/v3/wB.svg);
   }
@@ -42,9 +50,58 @@
   }
 }
 
+:host-context(.figure-theme-birman) {
+  .icon {
+    width: 9px;
+    height: 9px;
+
+    &.wB {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wB.svg);
+    }
+    &.bB {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/bB.svg);
+    }
+    &.wK {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wK.svg);
+    }
+    &.bK {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/bK.svg);
+    }
+    &.wN {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wN.svg);
+    }
+    &.bN {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/bN.svg);
+    }
+    &.wP {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wP.svg);
+    }
+    &.bP {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/bP.svg);
+    }
+    &.wQ {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wQ.svg);
+    }
+    &.bQ {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/bQ.svg);
+    }
+    &.wR {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/wR.svg);
+    }
+    &.bR {
+      background-image:  url(/assets/images/chess/birman-chesspieces-notation/bR.svg);
+    }
+  }
+}
+
 :host-context(wc-history-move) {
   .icon {
     width: 15px;
     height: 15px;
+
+    @include height-650() {
+      width: 14px;
+      height: 14px;
+    }
   }
 }

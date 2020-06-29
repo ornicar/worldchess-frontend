@@ -1,0 +1,258 @@
+<div class="settings  lang-{{accountService.getLanguage() | async }}" [hidden]="disabled$ | async" >
+  <div [ngSwitch]="submitButtonMode">
+    <div class="searching-mobile" *ngSwitchCase="SubmitButtonMode.SEARCHING">
+      <div class="searching-mobile__body">
+        <svg-preloader class="searching-mobile__loader"></svg-preloader>
+        <div class="searching-mobile__text">
+          {{'GAME.WAITING_OPPONENT' | translate}}
+        </div>
+      </div>
+      <div class="searching-mobile__button">
+        <wc-btn-with-loading class="btn-new--red-2" (click)="stopSearching($event)">
+          {{'BUTTONS.ENOUGHT' | translate}}
+        </wc-btn-with-loading>
+      </div>
+    </div>
+  </div>
+  <form class="settings__form"
+        [formGroup]="settingsForm"
+        wcHideScrollbar
+        [needPaddingRight]="true"
+        [wcForceHideVerticalScrollBar]="true"
+  >
+    <div class="settings__wrapper">
+      <div class="settings__head">
+        <div class="settings__title" *ngIf="(submitButtonMode !== SubmitButtonMode.SEARCHING)">
+          <span class="logo-fide-wrap">
+            <svg-logo-fide class="logo-fide"></svg-logo-fide><span class="lang-hidden">FIDE</span>
+          </span>
+          <span class="logo-no-wrap">
+            <svg-logo class="logo"></svg-logo>{{'GAME.OFFICIAL_WC_RATING' | translate}}
+          </span>
+          <span class="text-no-wrap lang-hidden">
+           {{'MESSAGES.ONLINE_GAMING' | translate}}
+          </span>
+          <a href="https://www.notion.so/worldchess/FIDE-Online-Arena-Beta-baa5a906c48f4c229e49101091c63617" target="_blank">(Beta)</a>
+        </div>
+
+        <div class="settings__title" *ngIf="submitButtonMode === SubmitButtonMode.SEARCHING">
+          <span>{{'GAME.WAITING_OPPONENT' | translate }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="submitButtonMode !== SubmitButtonMode.SEARCHING" class="settings__selector">
+        <gaming-selector [initialMode]="GamingSelectorMode.SingleGames"></gaming-selector>
+      </div>
+      <div class="settings__body">
+        <div class="settings__body-content">
+          <div class="settings__body-row" *ngIf="(getReplayNotification$ | async) && !(tournamentGameInProgressOrJustFinished$ | async)">
+            <div class="settings__message" [innerHtml]="getReplayNotification$ | async"></div>
+          </div>
+          <div class="settings__body-row" *ngIf="(notification$ | async) && !(tournamentGameInProgressOrJustFinished$ | async)" (click)="hideNotification()">
+            <div class="settings__message" [innerHtml]="notification$ | async"></div>
+          </div>
+          <ng-container *ngIf="!(isAuthorized$ | async)">
+            <div class="settings__body-row">
+              <div class="settings__text-title">
+                {{'MESSAGES.PLAY_RATED' | translate}}
+              </div>
+              <div class="settings__text">
+                {{'TEXT.COMPLETE_WITH_OTHER' | translate }}
+              </div>
+            </div>
+            <div class="settings__body-row">
+              <div class="settings__text-title">
+                {{'TEXT.AND_EVEN_FIDE_ID' | translate }}
+              </div>
+              <div class="settings__text">
+                {{'TEXT.GET_YOUR_FIDE_ID' | translate }}
+              </div>
+            </div>
+            <div class="settings__body-row settings__body-row--mb-9">
+              <div class="settings__text-title">
+                {{'TEXT.OR_JUST_PLAY' | translate }}
+              </div>
+            </div>
+          </ng-container>
+          <div *ngIf="!(getReplayNotification$ | async) && !(getRematchNotification$ | async)">
+            <div class="settings__body-row" *ngIf="(submitButtonMode !== SubmitButtonMode.CANCEL_INVITE)">
+              <wc-time-control-form formControlName="timeControl" [timeControls]="timeControls$ | async">
+              </wc-time-control-form>
+            </div>
+
+            <div class="settings__body-row" *ngIf="(submitButtonMode !== SubmitButtonMode.CANCEL_INVITE)">
+              <wc-game-rating-select-form formControlName="ratingRange" [onlineRatings]="onlineRatings$ | async">
+              </wc-game-rating-select-form>
+            </div>
+
+            <div class="settings__body-row settings__body-row--mb-10" *ngIf="(submitButtonMode !== SubmitButtonMode.CANCEL_INVITE)">
+              <wc-game-rating-mode-select-form formControlName="ratingMode">
+              </wc-game-rating-mode-select-form>
+            </div>
+          </div>
+
+          <!-- <div class="settings__body-row">
+          <div class="games-time">
+            <div class="games-time__title">
+              Play with a random opponent
+            </div>
+            <div class="games-time__edit">
+              3 min games by default
+              <span class="games-time__dot">·</span>
+              <div class="games-time__btn">
+                Change
+                <svg-arrow-down class="icon"></svg-arrow-down>
+              </div>
+            </div>
+          </div>
+        </div> -->
+          <div class="settings__body-row settings__body-row--max-width settings__body-row--mb-40"
+          [ngSwitch]="submitButtonMode">
+            <div class="games-time">
+              <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.FIND_OPPONENT">
+                <ng-container [ngSwitch]="settingsForm.value['ratingMode']">
+                  <ng-container *ngSwitchCase="GameRatingMode.UNRATED">
+                    {{'TEXT.PLAY_TO_PRACTICE_YOUR_SKILLS' | translate }}
+                  </ng-container>
+                  <ng-container *ngSwitchCase="GameRatingMode.RATED">
+                    {{'TEXT.THE_GAME_WILL_BE_RATED_1' | translate }} {{(accountRating$ | async)?.worldchess_rating ? (accountRating$ | async)?.worldchess_rating : 0}}. {{'TEXT.THE_GAME_WILL_BE_RATED_2' | translate }}
+                  </ng-container>
+                  <ng-container *ngSwitchCase="GameRatingMode.FIDERATED">
+                    {{'TEXT.THE_GAME_WILL_BE_FIDE' | translate }} {{(accountRating$ | async)?.fide_rating ? (accountRating$ | async)?.fide_rating : 0}}
+                  </ng-container>
+                </ng-container>
+              </div>
+              <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.CREATE_ACCOUNT">
+                {{'TEXT.OOPS_TO_PLAY_RATED_OR_FIDE' | translate }}
+              </div>
+              <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.UPGRADE_NOW">
+                {{'TEXT.OOPS_TO_PLAY_FIDE_RATED' | translate }}
+              </div>
+              <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.NEED_FIDE_ID_REGISTER">{{'TEXT.OOPS_FILL_FIDE_ID_REQUEST' | translate }}</div>
+              <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.NEED_FIDE_ID_APPROVE">{{'TEXT.OOPS_REVIEW_MEMBERSHIP' | translate }}</div>
+              <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.INVITE_FRIEND">
+                {{'TEXT.SENT_LINK_FRIEND' | translate }}
+              </div>
+              <div class="games-time__title" *ngSwitchCase="SubmitButtonMode.SEARCHING">
+                <ng-container [ngSwitch]="settingsForm.value['ratingMode']">
+                  <ng-container *ngSwitchCase="GameRatingMode.UNRATED">
+                    {{'TEXT.PLAY_TO_PRACTICE_YOUR_SKILLS' | translate }}
+                  </ng-container>
+                  <ng-container *ngSwitchCase="GameRatingMode.RATED">
+                    {{'TEXT.THE_GAME_WILL_BE_RATED_1' | translate }} {{(accountRating$ | async)?.worldchess_rating}}. {{'TEXT.THE_GAME_WILL_BE_RATED_2' | translate }}
+                  </ng-container>
+                  <ng-container *ngSwitchCase="GameRatingMode.FIDERATED">
+                    {{'TEXT.THE_GAME_WILL_BE_RATED_1' | translate }} {{(accountRating$ | async)?.fide_rating}}
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="settings__body-row settings__body-row--mb-40"
+               *ngIf="submitButtonMode === SubmitButtonMode.INVITE_FRIEND && inviteCode !== ''">
+            <div class="invite-link">
+              <input
+                class="invite-link__input"
+                type="text"
+                readonly
+                #fieldInviteURL
+                value="{{ gameURL }}/singlegames/invite/{{ inviteCode}}"
+                (click)="onCopyLink($event)"
+              >
+              <button class="invite-link__btn" (click)="onCopyLink($event)">
+                <svg-union class="icon"></svg-union>
+              </button>
+            </div>
+          </div>
+          <div class="settings__body-row" *ngIf="!(getReplayNotification$ | async) && !(getRematchNotification$ | async)">
+            <div class="buttons-in-line">
+              <div class="buttons-in-line__col" [ngSwitch]="submitButtonMode">
+                <wc-btn-with-loading class="btn-new--blue" *ngSwitchCase="SubmitButtonMode.FIND_OPPONENT"
+                  (click)="findOpponent($event)" [disabled]="playComputerIsSearching$ | async"
+                  [class.disabled]="playComputerIsSearching$ | async">
+                  {{'BUTTONS.FIND_OPPONENT' | translate}}...
+                </wc-btn-with-loading>
+                <wc-btn-with-loading class="btn-new--green" *ngSwitchCase="SubmitButtonMode.CREATE_ACCOUNT"
+                  (click)="createAccount($event)">
+                  {{'BUTTONS.CREATE_ACCOUNT' | translate}}...
+                </wc-btn-with-loading>
+                <wc-btn-with-loading class="btn-new--green" *ngSwitchCase="SubmitButtonMode.UPGRADE_NOW"
+                  (click)="updateAccount($event)">
+                  {{'BUTTONS.UPGRADE_NOW' | translate}}
+                </wc-btn-with-loading>
+                <wc-btn-with-loading class="btn-new--green" *ngSwitchCase="SubmitButtonMode.NEED_FIDE_ID_REGISTER"
+                  (click)="registerFideId($event)">
+                  {{'BUTTONS.FILL_FIDE_ID_REQUEST' | translate }}
+                </wc-btn-with-loading>
+                <wc-btn-with-loading class="btn-new--green disabled" *ngSwitchCase="SubmitButtonMode.NEED_FIDE_ID_APPROVE" [disabled]="true">
+                  {{'BUTTONS.REVIEW_MEMBERSHIP' | translate }}
+                </wc-btn-with-loading>
+                <wc-btn-with-loading class="btn-new--red-2" *ngSwitchCase="SubmitButtonMode.SEARCHING"
+                  (click)="stopSearching($event)">
+                  {{'BUTTONS.ENOUGHT' | translate }}
+                </wc-btn-with-loading>
+                <wc-btn-with-loading class="btn-new--red-2"
+                *ngSwitchCase="SubmitButtonMode.INVITE_FRIEND"
+                  (click)="stopSearching($event)">
+                  {{'BUTTONS.CANCEL' | translate}}
+                </wc-btn-with-loading>
+                <wc-btn-with-loading class="btn-new--red-2"
+                  *ngSwitchCase="SubmitButtonMode.CANCEL_INVITE" (click)="setCancelInvite($event)">
+                  {{'BUTTONS.CANCEL' | translate }}
+                </wc-btn-with-loading>
+              </div>
+              <div class="buttons-in-line__col">
+                <wc-btn-with-loading class="btn-new--spall btn-new--brown-border"
+                (click)="playComputer($event)"
+                  [class.disabled]="disabledSearch(submitButtonMode)"
+                  [disabled]="disabledSearch(submitButtonMode)">
+                  {{'BUTTONS.PLAY_COMPUTER' | translate }}
+                </wc-btn-with-loading>
+              </div>
+              <div class="buttons-in-line__col">
+              <wc-btn-with-loading class="btn-new--spall btn-new--brown-border"
+                  *ngIf="submitButtonMode !== SubmitButtonMode.UPGRADE_NOW"
+                  (click)="inviteFriend($event)"
+                  [class.disabled]="disabledInvited(submitButtonMode)"
+                  [disabled]="disabledInvited(submitButtonMode)">
+                  {{'BUTTONS.INVITE_FRIEND' | translate }}
+                </wc-btn-with-loading>
+              </div>
+              <!--<div class="buttons-in-line__col">
+                <wc-btn-with-loading class="btn-new--spall btn-new--brown-border">
+                  Invite a friend
+                </wc-btn-with-loading>
+              </div> -->
+            </div>
+          </div>
+          <div class="settings__body-row" *ngIf="(getReplayNotification$ | async)">
+            <div class="buttons-in-line">
+              <div class="buttons-in-line__col">
+                <wc-btn-with-loading class="btn-new--red-2" (click)="cancelRematch($event)">
+                  {{'BUTTONS.CANCEL' | translate }}
+                </wc-btn-with-loading>
+              </div>
+            </div>
+          </div>
+          <div class="settings__body-row" *ngIf="!(getIsReplay$ | async)">
+            <wc-player-queue></wc-player-queue>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings__footer">
+      <div class="settings__button-settings" *ngIf="!(gameReady$ | async)" >
+        <a href="javascript:void(0)" (click)="settings()" class="settings__button-settings-btn">
+          <div class="settings__button-settings-icon">
+            <svg-settings class="icon"></svg-settings>
+          </div>
+          <div class="settings__button-settings-text">
+            {{'SETTINGS.APPEARANCE' | translate }}
+          </div>
+        </a>
+      </div>
+      <wc-game-footer-turnaments></wc-game-footer-turnaments>
+    </div>
+  </form>
+</div>

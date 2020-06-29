@@ -1,0 +1,1542 @@
+@import "src/html/css/variables-new";
+@import "src/html/css/media-new";
+
+$colors: #FF6C58, #3C40C6, #FFDE32, #A2C91F;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.online-tournament-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  color: #fff;
+}
+
+.preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+}
+
+.online-tournament {
+  flex: 1 1 auto;
+  height: calc(100% - 220px);
+}
+
+.online-tournament__container {
+  padding: 15px 30px 20px;
+
+  @include birman-media {
+    padding: 15px 10px;
+  }
+}
+
+.online-tournament__footer {
+  padding: 20px 30px;
+  @include birman-media {
+    padding: 20px 10px;
+  }
+}
+
+.online-tournament__header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+
+  @include birman-media {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+}
+
+.online-tournament__title-main {
+  margin-bottom: 14px;
+}
+
+.online-tournament__title {
+  font: 300 30px/30px $gerbera-font;
+  color: #fff;
+  fill: #fff;
+
+  @include birman-media {
+    margin-bottom: 20px;
+  }
+
+
+  .icon-cup {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon-fide {
+    display: inline-block;
+    width: 44px;
+    height: 32px;
+    position: relative;
+    top: -1px;
+    margin: 0 2px 0 10px;
+  }
+}
+
+.online-tournament__subtitle {
+  position: relative;
+  top: -5px;
+  opacity: 0.4;
+  display: flex;
+  flex-wrap: wrap;
+
+  span {
+    white-space: nowrap;
+    margin-right: 8px;
+
+    &:last-child {margin-right: 0;}
+  }
+}
+
+.online-tournament__row {
+  display: flex;
+  margin-bottom: 25px;
+
+  &--reverse {
+    flex-direction: row-reverse;
+  }
+
+  @include birman-media {
+    margin-bottom: 26px;
+  }
+
+  &--mobile {
+    display: block;
+  }
+
+  &--mobile-open {
+    @include birman-media {
+
+      .statistic {
+        margin-bottom: 18px;
+      }
+
+      .statistic__head {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        max-height: 250px;
+      }
+
+      .statistic__head-title {
+        display: block;
+      }
+
+      .statistic__head-cell {
+        display: block;
+        width: 50%;
+        margin-bottom: 9px;
+        &:after {
+          content: none;
+        }
+      }
+
+      .statistic__head-cell--mobile {
+        display: none;
+      }
+
+      .online-tournament__text {
+        display: block;
+      }
+
+      .online-tournament__row-aside {
+        display: none;
+      }
+
+      .aside-img-big {
+        display: block;
+      }
+    }
+  }
+}
+
+.online-tournament__row-content {
+  flex: 1 1 auto;
+  width: calc(100% - 246px);
+
+  @include birman-media {
+    width: 100%;
+  }
+}
+
+.online-tournament__row-aside {
+  display: flex;
+  flex-direction: column;
+  width: 226px;
+  flex: 0 0 auto;
+  margin-left: 20px;
+
+  &--desctop {
+    @include birman-media {
+      position: absolute;
+      left: 100%;
+    }
+  }
+
+  &--mobile-open {
+    @include birman-media {
+      display: none;
+    }
+  }
+
+  @include birman-media {
+    width: 50px;
+  }
+}
+
+.online-tournament__btn-chat-hide {
+  display: inline-flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  color: $brown-2;
+  fill: $brown-2;
+  font: 300 15px/14px $gerbera-font;
+  margin-bottom: 18px;
+  margin-top: 10px;
+  &:hover {
+    color: #fff;
+    fill: #fff;
+  }
+
+  @include birman-media {
+    display: none;
+  }
+}
+
+.online-tournament__btn-chat-hide-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-right: 8px;
+}
+
+
+.search-container {
+  display: flex;
+  position: relative;
+  top: -4px;
+}
+
+.search-container__text {
+  max-width: 156px;
+  color: #fff;
+  font: 300 15px/20px $gerbera-font;
+  margin-right: 20px;
+}
+
+.search-container__time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  background-color: $blue-new;
+  font: 300 22px/22px $gerbera-font;
+  min-width: 150px;
+  padding: 0 20px;
+  height: 60px;
+  color: #fff;
+
+  span {
+    opacity: 0.4;
+  }
+
+  &:hover {
+    background-color: $blue-new-hover;
+  }
+
+  &--upgrade {
+    background: $green-new;
+    color: #000000;
+    &:hover {
+      background: $green-new-hover;
+      color: #000000;
+    }
+  }
+
+  &--leave {
+    background-color: $red-2-new;
+    color: #fff;
+    &:hover {
+      background-color: $red-2-new-hover;
+      color: #fff;
+    }
+  }
+
+  &--end {
+    background-color: $grey-dark-new;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: default;
+    &:hover {
+      background-color: $grey-dark-new;
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  &--disabled {
+    opacity: 0.33;
+    cursor: default;
+    &:hover {
+      background-color: $blue-new;
+      color: #fff;
+    }
+  }
+
+}
+
+.online-tournament__content-wrapper {
+  width: 100%;
+}
+
+.online-tournament__text {
+  color: #fff;
+  font: 300 18px/24px $gerbera-font;
+
+  a {
+    color: rgba($brown-2, 1);
+    &:hover {
+      color: rgba($brown-2-hover, 1);
+    }
+
+    &.desctop-hidden {
+      display: none;
+
+      @include birman-media {
+        display: inline;
+      }
+    }
+  }
+
+  @include birman-media {
+    display: none;
+  }
+}
+
+
+
+.online-tournament__text-mobile {
+  color: #fff;
+  font: 300 18px/24px $gerbera-font;
+
+  a {
+    color: rgba($brown-2, 1);
+    &:hover {
+      color: rgba($brown-2-hover, 1);
+    }
+  }
+}
+
+.statistic__head {
+  display: flex;
+
+  @include birman-media {
+    display: block;
+  }
+}
+
+.statistic__head-title,
+.statistic__head-text {
+  font: 300 15px/20px $gerbera-font;
+}
+
+.statistic__head-title {
+  color: #fff;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.statistic__head-text {
+  color: rgba(#fff, 0.4);
+}
+
+.statistic__head-cell {
+  padding-right: 18px;
+
+  @include birman-media {
+    display: inline-flex;
+    padding-right: 3px;
+
+    &:after {
+      content: ',';
+      color: rgba(#fff, 0.4);
+    }
+  }
+
+  &:last-child {
+    padding-right: 0;
+
+    @include birman-media {
+      &:after {
+        content: none;
+      }
+    }
+  }
+
+  &--logo {
+    padding-right: 10px;
+    @include birman-media {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    display: none;
+
+    @include birman-media {
+      display: inline-flex;
+    }
+  }
+}
+
+.statistic {
+  margin-bottom: 25px;
+}
+
+.statistic__logo {
+  display: block;
+  width: 36px;
+  height: 41px;
+  fill: #fff;
+}
+
+.statistic__head-link {
+  display: flex;
+  align-items: center;
+  color: rgba($brown-2, 1);
+  fill: rgba($brown-2, 1);
+  &:hover {
+    color: rgba($brown-2-hover, 1);
+    fill: rgba($brown-2-hover, 1);
+  }
+
+  .icon-arrow-down {
+    position: relative;
+    top: 2px;
+    width: 12px;
+    height: 6px;
+    margin-left: 5px;
+  }
+}
+
+.aside-img {
+  display: flex;
+  justify-content: flex-end;
+
+  .aside-img__picture {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 125px;
+    height: 125px;
+
+    @include birman-media {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+.aside-img-big {
+  display: none;
+  width: 220px;
+  height: 220px;
+  margin-bottom: 10px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.slider-photos {
+  position: relative;
+  width: 100%;
+  min-height: 185px;
+
+  @include birman-media {
+    min-height: 135px;
+  }
+}
+
+.slider-photos__list {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  padding-right: 90px;
+  padding-bottom: 71px;
+
+  @include birman-media {
+    padding-right: 50px;
+  }
+}
+
+.slider-photos__counter {
+  position: absolute;
+  bottom: 30px;
+  right: 0;
+  text-align: right;
+  font: 300 15px/20px $gerbera-font;
+  color: #fff;
+}
+
+.slider-photos__counter-countries {
+  opacity: 0.4;
+}
+
+.slider-photos__elem {
+  flex: 1 1 auto;
+  position: relative;
+  height: 110px;
+  width: 110px;
+  max-width: 110px;
+
+  @include birman-media {
+    width: 60px;
+    height: 60px;
+    max-width: 60px;
+  }
+
+  &:hover {
+    z-index: z-index(base);
+  }
+
+  &:last-child {
+    .slider-photos__text, .slider-photos__result {
+      @include birman-media {
+        display: block !important;
+      }
+    }
+  }
+}
+
+@for $i from 1 through 3 {
+  .slider-photos__elem:nth-last-child(#{$i}) {
+    .slider-photos__text, .slider-photos__result {
+      display: block;
+
+      @include birman-media {
+        display: none;
+      }
+    }
+  }
+}
+
+@for $i from 1 through 17 {
+  .slider-photos__elem:nth-last-child(1n + #{$i}) {
+    margin-right: #{(30 - (5 * $i)) / 1000 * 100%};
+  }
+}
+
+.slider-photos__photo {
+  position: absolute;
+  top: 0;
+  left: -2px;
+  width: 110px;
+  height: 110px;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 7px 0 14px #000000;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  @include birman-media {
+    width: 60px;
+    height: 60px;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.slider-photos__initials {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $red-3-new;
+  transform: rotate(-15deg);
+  font-weight: 300;
+  font-size: 50px;
+  font: 300 50px/50px $gerbera-font;
+  letter-spacing: 0.1em;
+  color: #000000;
+
+  @include birman-media {
+    font: 300 30px/30px $gerbera-font;
+  }
+}
+
+@for $i from 1 through length($colors) {
+  .slider-photos__elem:nth-child(#{length($colors)}n+#{$i}) .slider-photos__initials {
+      background: lighten(nth($colors, $i), 20%);
+  }
+}
+
+.slider-photos__text {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  font: 300 15px/20px $gerbera-font;
+  white-space: nowrap;
+  width: 100%;
+  color: $brown-2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  a,
+  span {
+    display: block;
+    overflow: hidden;
+    width: calc(100% + 20px);
+    text-overflow: ellipsis;
+    color: rgba(#fff, 0.4);
+
+    @include birman-media {
+      width: calc(100% + 10px);
+    }
+  }
+
+  a {
+    color: $brown-2;
+    &:hover {
+      color:$brown-2-hover;
+    }
+  }
+
+
+  span {
+    color: rgba(#fff, 0.4);
+  }
+
+  @include birman-media {
+    display: none;
+  }
+}
+
+.slider-photos__result {
+  display: none;
+  color: rgba(#fff, 0.4);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 26px);
+  font: 300 15px/20px $gerbera-font;
+}
+
+
+.mega-title {
+  padding: 0 0 26px;
+}
+
+.mega-title__text {
+  position: relative;
+  left: -12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 652px;
+  width: 100%;
+  height: 74px;
+  background-color: $violet;
+  font: 300 55px/60px $gerbera-font;
+  color: #fff;
+  transform: rotate(-4deg);
+  padding-bottom: 8px;
+
+  @include birman-media {
+    font: 300 25px/35px $gerbera-font;
+  }
+}
+
+.online-tournament-table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.online-tournament-table {
+  border-collapse: collapse;
+  margin-bottom: 40px;
+}
+
+.online-tournament-table__cell {
+  text-align: start;
+  color: #fff;
+  font: 300 15px/26px $gerbera-font;
+  padding-right: 13px;
+  white-space: nowrap;
+}
+
+.online-tournament-table__thead {
+  .online-tournament-table__cell {
+    border-bottom: 1px solid rgba(#fff, 0.1);
+    color: rgba(#fff, 0.4);
+    font: 300 15px/24px $gerbera-font;
+  }
+}
+
+.online-tournament-table__tbody {
+  .online-tournament-table__row{
+     &:first-child {
+      .online-tournament-table__cell {
+        padding-top: 6px;
+      }
+     }
+  }
+}
+
+.online-tournament__search-container {
+  @include birman-media {
+    margin-left: auto;
+  }
+}
+
+.list-questions__elem {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.list-questions__title {
+  color: #fff;
+  font: 300 22px/30px $gerbera-font;
+  margin-bottom: 8px;
+}
+
+.list-questions__text {
+  opacity: 0.4;
+  color: #fff;
+  font: 300 15px/20px $gerbera-font;
+
+  p {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.online-tournament-boards {
+  display: flex;
+  flex-flow: row nowrap;
+  overflow-x: auto;
+
+  &__board {
+    flex: 0 1 auto;
+    margin-right: 20px;
+    width: 50%;
+    margin-bottom: 20px;
+    min-width: 164px;
+
+    @include birman-media {
+      margin-right: 10px;
+    }
+  }
+}
+
+.online-tournament-rounds {
+  color: #fff;
+  fill: #fff;
+}
+
+.online-tournament-rounds__list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.online-tournament-rounds__elem {
+  display: flex;
+  position: relative;
+  width: 226px;
+  margin-bottom: 20px;
+  padding-right: 40px;
+  cursor: pointer;
+
+ &.active,
+ &:hover {
+  .online-tournament-rounds__order {
+    border: 1px solid rgba(#fff, 1);
+    color: rgba(#fff, 1);
+
+    &:after {
+      color: rgba(#fff, 1);
+    }
+  }
+  .online-tournament-rounds__drop-widget {
+    top: -5px;
+  }
+ }
+
+}
+
+.online-tournament-rounds__elem-wrapper {
+  display: flex;
+}
+
+.online-tournament-rounds__drop-widget {
+  position: absolute;
+  top: -5000px;
+  left: 0;
+  width: 100%;
+  background-color: $grey-dark-new;
+  border-radius: 4px;
+  padding: 2px;
+  z-index: z-index(base);
+  box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.6);
+
+  &--players {
+    left: 54px;
+    width: 164px;
+  }
+
+  ::ng-deep {
+
+    .player {
+      padding: 4px 9px;
+      height: auto;
+    }
+
+    .player__photo,
+    .player__time,
+    .player__position {
+      display: none;
+    }
+
+    .player__name {
+      font: 300 15px/20px $gerbera-font;
+      color: $brown-2;
+    }
+
+    .player__count-wrapper {
+      font: 300 15px/20px $gerbera-font;
+      color: rgba(#fff, 0.4);
+    }
+  }
+}
+
+.online-tournament-rounds__order {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 32px;
+  margin-right: 2px;
+  border: 1px solid rgba(#fff, 0.4);
+  border-radius: 3px;
+  font: 300 28px/28px $gerbera-font;
+  padding: 1px 4px;
+  text-align: end;
+  color: rgba(#fff, 0.4);
+
+  &:after {
+    content: '#';
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -5px;
+    left: -5px;
+    width: 10px;
+    height: 10px;
+    padding: 3px;
+    background-color: #000;
+    color: rgba(#fff, 0.4);
+    font: 300 14px/20px $gerbera-font;
+  }
+}
+
+.online-tournament-rounds__players {
+  flex: 1 1 auto;
+}
+
+.online-tournament-rounds__player {
+  display: flex;
+}
+
+.online-tournament-rounds__name {
+  flex: 1 1 auto;
+  display: block;
+  padding: 3px 3px 3px 5px;
+  margin: 0 5px 0 4px;
+  position: relative;
+  top: -3px;
+  font: 300 14px/11px $gerbera-font;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 104px;
+  height: 20px;
+  border-radius: 4px;
+
+  &.active {
+    background-color: #2A2A2A;
+  }
+
+  &--bottom {
+    top: auto;
+    bottom: 4px;
+  }
+}
+
+.online-tournament-rounds__result {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 30px;
+  position: relative;
+  top: -7px;
+  flex: 0 0 auto;
+  text-align: end;
+  font: 300 14px/15px $gerbera-font;
+
+  &--zero {
+    color: rgba(#fff, 0.4);
+  }
+
+  &--half {
+    position: relative;
+    top: 0;
+    width: 10px;
+    height: 11px;
+    font: 300 7px/7px $gerbera-font;
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 12px;
+      height: 1px;
+      background-color: #fff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-50deg);
+    }
+
+    span {
+      &:first-child {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      &:last-child {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+
+  &--bottom {
+    top: auto;
+    bottom: 5px;
+  }
+}
+
+.online-tournament-rounds__move {
+  display: flex;
+  align-items: flex-end;
+  font: 300 12px/12px $gerbera-font;
+}
+
+
+
+.online-tournament-rounds__move-icon {
+  display: block;
+  width: 9px;
+  height: 9px;
+  fill: #fff;
+  margin-right: 3px;
+
+  ::ng-deep {
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+
+.round-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+
+  @include birman-media {
+    flex-direction: column;
+    align-items: stretch
+  }
+}
+
+.round-switch__title {
+  color: #fff;
+  font: 300 22px/30px $gerbera-font;
+
+  @include birman-media {
+    margin-bottom: 13px;
+  }
+}
+
+.round-switch__buttons {
+  display: flex;
+  align-items: center;
+
+  @include birman-media {
+    justify-content: flex-end;
+  }
+}
+
+.round-switch__button {
+  display: flex;
+  align-items: center;
+  color: $brown-2;
+  stroke: $brown-2;
+  height: 25px;
+  font: 300 15px/20px $gerbera-font;
+  margin-left: 13px;
+  position: relative;
+  top: 2px;
+
+  &:hover {
+    color: #fff;
+    stroke: #fff;
+  }
+
+  &--disabled {
+    opacity: 0.33;
+    cursor: default;
+
+    &:hover {
+      color: $brown-2;
+      stroke: $brown-2;
+    }
+  }
+
+  .icon {
+    display: block;
+    width: 20px;
+    height: 25px;
+
+    ::ng-deep {
+      svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &--next {
+    .icon {
+      margin-left: 5px;
+    }
+  }
+
+  &--multiboard {
+    margin-right: auto;
+    margin-left: 0;
+    stroke: none;
+    fill: $brown-2;
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+    }
+
+    &:hover {
+      stroke: none;
+      fill: $brown-2-hover;
+    }
+  }
+}
+
+
+.online-tournament__chat-desktop {
+  display: block;
+  @include birman-media {
+    display: none;
+  }
+}
+
+.online-tournament__chat-mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}
+
+.online-tournament__chat-btn {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 8px;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: $blue-new;
+  z-index: z-index(base);
+  @include birman-media {
+    display: flex;
+  }
+}
+
+.online-tournament__chat-btn-icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  fill: #fff;
+}
+
+
+.tournament-text {
+  ::ng-deep {
+    h1 {
+      color: #fff;
+      font: 300 22px/30px $gerbera-font;
+      word-wrap: break-word;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font: 300 16px/20px $gerbera-font;
+      color: rgba(#fff, 0.4);
+      word-wrap: break-word;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.leave {
+  display: flex;
+  justify-content: start;
+  position: relative;
+  height: 31px;
+  width: 150px;
+  border: 1px solid rgba(#FFF, 0.1);
+}
+
+.leave__button {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  font: 300 12px/20px $gerbera-font;
+  color: $red-2-new;
+  fill: $red-2-new;
+  cursor: pointer;
+
+  &:hover {
+    color: $red-2-new-hover;
+    fill: $red-2-new-hover;
+  }
+}
+
+.leave__text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 0px;
+    position: relative;
+    top: 1px;
+    left: 0px;
+    transform: rotate(90deg);
+
+    &:after {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 5px;
+      background-color: #000;
+      position: absolute;
+      right: 5px;
+      top: 0px;
+    }
+  }
+  &.hidden {
+    opacity: 0 !important;
+  }
+}
+
+.leave__hold {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.leave__hold-text {
+  position: relative;
+}
+
+.leave__hold-progress {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(#fff, 0.1);
+}
+
+.certificate {
+  display: block;
+  width: 100%;
+  max-width: 716px;
+  padding-right: 20px;
+  margin-bottom: 41px;
+}
+
+.certificate__title {
+  font: 300 22px/30px $gerbera-font;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.certificate__img {
+  position: relative;
+  left: 6px;
+  width: 100%;
+  transform: rotate(-3deg);
+  margin-bottom: 20px;
+
+  &>img {
+    width: 100%;
+  }
+}
+
+.certificate__content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 116px;
+  color: #000;
+
+  @include birman-media {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15%;
+  }
+
+}
+
+.certificate__head {
+  display: flex;
+  font: 300 14px/20px $cofo-sans-font;
+  justify-content: center;
+  align-items: center;
+
+  @include birman-media {
+    font-size: 1.9vw;
+  }
+}
+
+.certificate__fide-logo {
+  position: relative;
+  top: -1px;
+  flex: 0 0 auto;
+  width: 21px;
+  fill: #000;
+  margin-right: 5px;
+
+  @include birman-media {
+    width: 2.1vw;
+  }
+
+  ::ng-deep {
+    svg {
+      display: block;
+    }
+  }
+}
+
+.certificate__logo {
+  position: relative;
+  top: -1px;
+  flex: 0 0 auto;
+  width: 16px;
+  fill: #000;
+  margin: 0 5px;
+
+  @include birman-media {
+    width: 2vw;
+  }
+
+  ::ng-deep {
+    svg {
+      display: block;
+    }
+  }
+}
+
+.certificate__sub-title {
+  text-align: center;
+  margin-bottom: 28px;
+  font: 300 15px/13px $gerbera-font;
+
+    @include birman-media {
+      font-size: 2vw;
+      margin-bottom: 1vw;
+      line-height: 2.1vw;
+    }
+}
+
+.certificate__sertifies {
+  text-align: center;
+  font: 300 12px/13px $gerbera-font;
+  margin-bottom: 16px;
+
+  @include birman-media {
+    font-size: 1.9vw;
+    margin-bottom: 2vw;
+    line-height: 2vw;
+  }
+}
+
+.certificate__name {
+  font: 300 42px/18px $herr-von-muellerhoff;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  margin-bottom: 13px;
+  height: 19px;
+
+  @include birman-media {
+    font-size: 5vw;
+    line-height: 2vw;
+    margin-bottom: 1vw;
+    height: auto;
+  }
+}
+
+.certificate__text {
+  font: 300 15px/19px $gerbera-font;
+  text-align: center;
+  margin-bottom: 16px;
+
+  @include birman-media {
+    font-size: 2vw;
+    line-height: 2.2vw;
+    margin-bottom: 1vw;
+  }
+}
+
+.certificate__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.certificate__list {
+  width: calc(100% /3);
+  flex: 1;
+  font: 300 11px/13px $gerbera-font;
+
+  @include birman-media {
+    font-size: 1.2vw;
+    line-height: 1.3vw;
+  }
+
+  span {
+    color: #999;
+  }
+}
+
+.certificate__qr-code {
+  width: calc(100% /3);
+  flex: 1;
+  text-align: center;
+}
+
+.certificate__qr-code-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-bottom: 5px;
+
+  @include birman-media {
+    width: 2.5vw;
+    height: 2.5vw;
+    margin-bottom: 1vw;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.certificate__qr-code-text {
+  font: 300 5px/7px $gerbera-font;
+
+  @include birman-media {
+    font-size: 0.6vw;
+    line-height: 0.7vw;
+  }
+}
+
+.certificate__signature {
+  width: calc(100% /3);
+  flex: 1;
+  text-align: right;
+}
+
+.certificate__signature-text {
+  font: 300 11px/13px $gerbera-font;
+
+  @include birman-media {
+    font-size: 1vw;
+    line-height: 1.1vw;
+  }
+}
+
+.certificate__signature-field {
+  text-align: right;
+
+  img {
+    position: relative;
+    right: -10px;
+    top: 6px;
+    width: 125px;
+    height: 31px;
+
+    @include birman-media {
+      width: 16vw;
+      height: auto;
+    }
+  }
+}
+
+.certificate__buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.certificate__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(#fff, 0.4);
+  fill: #fff;
+  font: 300 14px/20px $gerbera-font;
+
+  &:hover {
+    color: $brown-2;
+    fill: $brown-2;
+  }
+}
+
+.certificate__btn-icon {
+  height: 25px;
+  width: 21px;
+  margin-bottom: 5px;
+}
+
+.return-lobby {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: z-index(sticky);
+}
+
+
+
+
+.tournament__text {
+  margin-bottom: 35px;
+  ::ng-deep {
+    h3 {
+      font: 300 22px/30px $gerbera-font;
+      margin-bottom: 7px;
+      margin-top: -18px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    p {
+      font: 300 14px/20px $gerbera-font;
+      color: rgba(#fff, 0.4);
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.half-value {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 2px;
+  font: 900 8px/8px $gerbera-font;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 12px;
+    height: 1px;
+    background-color: rgba(#fff, 0.4);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+  }
+
+  span {
+    &:first-child {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &:last-child {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}

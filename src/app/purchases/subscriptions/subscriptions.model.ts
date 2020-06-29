@@ -8,6 +8,12 @@ export enum SubscriptionStatusEnum {
   UNPAID = 'unpaid'
 }
 
+export enum PlanType {
+  BASIC = 1,
+  PRO = 2,
+  PREMIUM = 3,
+}
+
 export interface ISubscription {
   stripe_id: string;
   plan: IPlan;

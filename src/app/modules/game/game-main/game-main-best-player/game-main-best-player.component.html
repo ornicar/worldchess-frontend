@@ -1,0 +1,27 @@
+<div class="root lang-{{accountService.getLanguage() | async }}">
+  <div class="root__content">
+    <div class="header">
+      <svg-logo-fide-mini class="logo"></svg-logo-fide-mini>
+      <span class="title">{{ 'OTHER.BEST_TODAY' | translate}}</span>
+    </div>
+    <div class="profile-info">
+      <div class="avatar desctop">
+        <img class="avatar__img" [src]="(avatar$ | async)"/>
+      </div>
+      <div class="full-name"><span>{{fullName$ | async}}</span></div>
+      <div class="age-and-country"><span>{{age$ | async | age}} {{ 'TIME.YEARS' | translate}}</span>, <span>{{country$ | async | country_code | async}}</span></div>
+    </div>
+    <div>
+      <table class="table">
+        <tr class="table-row"><td class="table-title-column">{{ 'GAME.RAPID' | translate}}</td><td class="table-value-column">{{worldchess_rapid$ | async}}</td></tr>
+        <tr class="table-row"><td class="table-title-column">{{ 'GAME.BLITZ' | translate}}</td><td class="table-value-column">{{worldchess_blitz$ | async}}</td></tr>
+        <tr class="table-row"><td class="table-title-column">{{ 'GAME.BULLET' | translate}}</td><td class="table-value-column">{{worldchess_bullet$ | async}}</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="root__avatar mobile">
+    <div class="avatar">
+      <img class="avatar__img" [src]="(avatar$ | async)"/>
+    </div>
+  </div>
+</div>

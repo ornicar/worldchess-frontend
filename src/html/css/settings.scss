@@ -1,14 +1,16 @@
 html {
-    font-size: 16px;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
 
-    @include tablets {
-        font-size: 14px;
-    }
+  @include tablets {
+      font-size: 14px;
+  }
 }
 
 .wc-tournament {
   line-height: 1.42em;
-  font-weight: normal;
+  font-weight: 400;
 
   h1,
   h2,

@@ -1,11 +1,11 @@
-@import '../html/css/variables.scss';
-@import '../html/css/media.scss';
+@import 'variables';
+@import 'media';
 
 :host {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #dca4ff;
+  background-color: $purple-new;
 
   wc-subscription-menu {
     flex: 0 0 auto;

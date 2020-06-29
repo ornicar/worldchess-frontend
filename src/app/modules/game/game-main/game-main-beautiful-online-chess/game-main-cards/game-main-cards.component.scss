@@ -1,0 +1,114 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  width: 100%;
+}
+
+.cards {
+  padding: 30px 5px;
+  flex: 1 1 auto;
+
+  @include birman-media {
+    padding: 30px 10px;
+  }
+}
+
+.cards__list {
+  display: none;
+  position: relative;
+  height: 340px;
+  margin-bottom: 20px;
+  margin: 0 50px 20px;
+
+  @include birman-media {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 20px;
+  }
+  
+  &--lang-ru {
+    display: none;
+  }
+}
+
+.cards__elem {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 160px;
+}
+
+.cards__elem--1 {
+  left: 0;
+  height: 300px;
+}
+
+.cards__elem--2 {
+  left: 14%;
+  height: 310px;
+  @include birman-media {
+    left: 8%;
+  }
+}
+
+.cards__elem--3 {
+  left: 50%;
+  height: 340px;
+  transform: translate(-50%, -50%);
+}
+
+.cards__elem--4 {
+  right: 14%;
+  height: 310px;
+  @include birman-media {
+    right: 8%;
+
+  }
+}
+
+.cards__elem--5 {
+  right: 0;
+  height: 300px;
+}
+
+.cards__text {
+  font: 300 30px/38px $gerbera-font;
+  text-align: center;
+}
+
+.desktop {
+  @include birman-media {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @include birman-media {
+    display: block;
+  }
+}
+
+
+/*--------------локализация-------------*/
+
+.lang-en {
+  .cards__list--lang-en {
+    display: block;
+  }
+
+  .cards__list--lang-ru {
+    display: none;
+  }
+}
+
+.lang-ru {
+  .cards__list--lang-en {
+    display: none;
+  }
+
+  .cards__list--lang-ru {
+    display: block;
+  }
+}

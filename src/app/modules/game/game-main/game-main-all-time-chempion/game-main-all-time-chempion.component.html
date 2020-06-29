@@ -1,0 +1,61 @@
+<div class="root lang-{{accountService.getLanguage() | async }}">
+    <div class="header">
+        <div class="title">
+          {{ 'TOURNAMENTS.ALL_TIME' | translate}}
+        </div>
+    </div>
+  <div class="body">
+    <div class="avatar">
+      <img class="avatar__img" [src]="avatar$ | async"/>
+    </div>
+    <div class="player-info">
+        <div class="player-name">{{(profile$ | async).full_name}}</div>
+      <div class="player-details"><span *ngIf="showBirthDate$ | async">{{(profile$ | async).birth_date | age}} {{ 'TIME.YEARS' | translate}}, {{(profile$ | async).country | country_code | async}}</span></div>
+    </div>
+    <div class="stat">
+
+      <div class="col">
+          <div class="item">
+              <div class="item-title">{{ 'GAME.RAPID' | translate }}</div>
+              <div class="item-spaces"></div>
+              <div class="item-value">{{(player$ |async).worldchess_rapid}}</div>
+          </div>
+        <div class="item">
+          <div class="item-title">{{ 'GAME.BLITZ' | translate }}</div>
+          <div class="item-spaces"></div>
+          <div class="item-value">{{(player$ |async).worldchess_blitz}}</div>
+        </div>
+        <div class="item">
+          <div class="item-title">{{ 'GAME.BULLET' | translate }}</div>
+          <div class="item-spaces"></div>
+          <div class="item-value">{{(player$ |async).worldchess_bullet}}</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="item">
+          <div class="item-title">{{ 'MESSAGES.GAMES' | translate }} <span class="desctop"> {{ 'MESSAGES.PLAYED' | translate }}</span></div>
+          <div class="item-spaces"></div>
+          <div class="item-value-stat">{{(stat$ |async).total}}</div>
+        </div>
+        <div class="item">
+          <div class="item-title">{{ 'GAME.WINS' | translate }}</div>
+          <div class="item-spaces"></div>
+          <div class="item-value-percentage">{{(stat$ |async).wins_percentage | number:'1.0-0'}}%</div>
+          <div class="item-value-stat">{{(stat$ |async).wins}}</div>
+        </div>
+        <div class="item">
+          <div class="item-title">{{ 'GAME.DRAW' | translate }}</div>
+          <div class="item-spaces"></div>
+          <div class="item-value-percentage">{{(stat$ |async).draws_percentage | number:'1.0-0'}}%</div>
+          <div class="item-value-stat">{{(stat$ |async).draws}}</div>
+        </div>
+        <div class="item">
+          <div class="item-title">{{ 'GAME.LOSES' | translate }}</div>
+          <div class="item-spaces"></div>
+          <div class="item-value-percentage">{{(stat$ |async).defeats_percentage | number:'1.0-0'}}%</div>
+          <div class="item-value-stat">{{(stat$ |async).defeats}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

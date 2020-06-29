@@ -1,10 +1,12 @@
-@import '../../../../../../../html/css/variables';
-@import '../../../../../../../html/css/media';
+@import 'variables';
+@import 'media';
 
 :host {
   display: block;
   height: 70px;
   position: relative;
+  width: calc(100% - 80px);
+
 }
 
 .line {
@@ -20,6 +22,7 @@
   height: 70px;
   margin-top: -70px;
   position: relative;
+  max-width: 100%;
 }
 
 .back-to-live {

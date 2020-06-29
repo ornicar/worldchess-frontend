@@ -1,0 +1,121 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  .root {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    :hover {
+      cursor: pointer;
+    }
+  }
+  .title {
+    font: 300 15px/20px $gerbera-font;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 20px;
+  }
+  .image {
+    flex:1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .time {
+    position: absolute;
+    top: 4px;
+    left: 10px;
+    font: 300 15px/20px $gerbera-font;
+    color: #000;
+    font-feature-settings: "tnum" 1;
+  }
+  .info {
+    height: 68px;
+    color: #000;
+    font: 300 15px/20px $gerbera-font;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:2px;
+    padding-bottom: 5px;
+    background-color: $brown-2;
+    .details {
+      color:#000;
+      font: 300 15px/20px $gerbera-font;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      opacity: 0.5;
+      height: 20px;
+      display: flex;
+      .details__icon {
+        position: relative;
+        top: 2px;
+        width: 18px;
+        height: 16px;
+        margin-right: 2px;
+        fill: #000;
+
+        .icon {
+          display: block;
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+      .details__text {
+        margin-right: 8px;
+      }
+
+
+      .tournament-card__trace {
+        display: none;
+      }
+    }
+  }
+}
+
+
+.pie {
+  position: relative;
+  top: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #000;
+  color: $gray-bg-new;
+  border: 1px solid #000;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.pie__bg {
+  display: block;
+  position: absolute;
+  margin-left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left;
+  background: $brown-2;
+}
+
+.pie__bg-half-black {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: $brown-2;
+}
+
+.pie__bg-half-white {
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background:#000;
+}

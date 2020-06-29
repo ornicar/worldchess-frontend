@@ -35,7 +35,7 @@ export class PartnersListComponent implements OnInit, OnDestroy {
     touch: true,
     loop: true,
     interval: { timing: 15000 },
-    animation: 'lazy'
+    // animation: 'lazy'
   };
 
   constructor(private partnersService: PartnersService, private cd: ChangeDetectorRef) {

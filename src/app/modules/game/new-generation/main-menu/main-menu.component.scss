@@ -1,0 +1,364 @@
+@import 'variables-new';
+@import 'media-new';
+
+:host {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #252525;
+    padding: 0 20px;
+    height: 40px;
+    flex: 0 0 auto;
+    z-index: z-index(modal);
+    transition: 0.3s;
+    position: relative;
+
+    @include birman-media  {
+        height: 69px;
+        background-color: #000;
+        padding: 0 10px;
+    }
+}
+
+.menu-new {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    max-width: calc(100% - 250px);
+    height: 100%;
+
+    @include birman-media  {
+        max-width: calc(100% - 35px);
+    }
+}
+
+.menu-new-list-wrapper {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    &:after,
+    &:before {
+        content: '';
+        position: absolute;
+        display: none;
+        top: 0;
+        bottom: 0;
+        width: 20px;
+        left: 100%;
+        width: 50px;
+        box-shadow: 0px 0px 30px 10px rgba(#000,1);
+        z-index: z-index(base);
+
+        @include birman-media {
+            display: block;
+        }
+    }
+
+    &:before {
+        left: auto;
+        right: 100%;
+    }
+}
+
+.menu-new-list {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0 -12px;
+    flex: 1 0 auto;
+    height: 100%;
+
+    @include birman-media  {
+        overflow-x: auto;
+        overflow-y: hidden;
+        margin: 0 -8px;
+        height: 69px;
+    }
+
+}
+
+.menu-new-list__elem {
+    height: 100%;
+    min-height: 40px;
+}
+
+.menu-new-list__link {
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #fff;
+    font: 300 14px/19px $gerbera-font;
+    padding: 0 12px 1px;
+    white-space: nowrap;
+    height: 100%;
+    min-height: 40px;
+
+    @include birman-media  {
+        padding: 0px 8px 1px;
+    }
+
+    .link-external {
+        position: relative;
+        top: -1px;
+        fill: #fff;
+        width: 12px;
+        height: 12px;
+        margin-left: 4px;
+    
+        ::ng-deep {
+            svg {
+                display: block;
+            }
+        }
+  }
+
+
+    &:hover {
+      color: $brown-2;
+    }
+
+    &:hover > .link-external {
+        fill: $brown-2;
+    }
+
+    &--active {
+        cursor: default;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #fff;
+            margin: 0 12px;
+
+            @include birman-media  {
+                margin: 0px 8px;
+            }
+        }
+
+        &:hover {
+            color: #fff;
+
+        }
+    }
+}
+
+.logo {
+    display: block;
+    position: relative;
+    top: -1px;
+    width: 24px;
+    height: 26px;
+    margin-right: 17px;
+    flex: 0 0 auto;
+    @include birman-media  {
+        width: 50px;
+        height: 54px;
+    }
+}
+
+.logo__link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.logo__svg {
+    display: block;
+    fill: #fff;
+    width: 100%;
+    height: 100%;
+}
+
+.menu-aside {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: #fff;
+    font: 300 15px/20px $gerbera-font;
+    flex: 0 0 auto;
+    margin-left: 20px;
+
+    @include birman-media  {
+        margin-left: 10px;
+    }
+}
+
+.menu-new__btn {
+    position: relative;
+    color: $brown-2;
+    font: 300 15px/20px $gerbera-font;
+    padding: 4px 9px 6px;
+    height: 32px;
+    border-radius: 3px;
+    border: 1px solid rgba(180, 150, 110, 0.5);
+    background-color: transparent;
+    cursor: pointer;
+
+    @include birman-media  {
+        display: none;
+    }
+
+    &:hover {
+        color: #fff;
+        background-color: $brown-2;
+        border-color: $brown-2;
+    }
+}
+
+.menu-new__login {
+    position: relative;
+    top: -1px;
+    display: flex;
+    margin-left: 15px;
+
+    @include birman-media  {
+        margin-left: 0px;
+    }
+
+    span {
+        @include birman-media  {
+            display: none;
+        }
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        color: $brown-2;
+        fill: $brown-2;
+        margin-left: 6px;
+
+        @include birman-media  {
+            margin-left: 0px;
+        }
+
+        &:hover {
+            color: $brown-2-hover;
+            fill: $brown-2-hover;
+        }
+    }
+}
+
+.menu-new__login-icon {
+    display: block;
+    width: 16px;
+    height: 20px;
+    margin-left: 6px;
+
+    @include birman-media  {
+        margin-left: 0px;
+    }
+
+    svg {
+        width: 16px;
+        height: 20px;
+    }
+}
+
+.menu-user {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &:hover {
+        .menu-user__drop {
+            top: calc(100% + 40px);
+        }
+    }
+}
+
+.menu-user__drop {
+    position: absolute;
+    top: -1000px;
+    right: 20px;
+    left: auto;
+    display: flex;
+    width: 140px;
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 6px;
+    border-top-right-radius: 0;
+    background-color: #fff;
+    padding: 12px 20px;
+    background-image: url('./../../../../../assets/images/auth-popup/background.svg');
+
+    &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        right: 0;
+        top: -23px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 0 23px 23px;
+        border-color: transparent transparent #fff transparent;
+    }
+
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: calc(100% + 20px);
+        height: 40px;
+        bottom: 100%;
+        left: 0;
+    }
+}
+
+.menu-user__drop-link {
+    font: 300 15px/22px $gerbera-font;
+    color: #000;
+    margin-bottom: 10px;
+
+    &--violet {
+        color: #8d73ff;
+    }
+}
+
+.menu-user__drop-row {
+    position: relative;
+    margin-bottom: 24px;
+
+    &:last-child {
+        margin-bottom: 0;
+
+        .menu-user__drop-link {
+            margin-bottom: 0;
+        }
+    }
+}
+
+
+.menu-user__img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 6px;
+
+    @include birman-media  {
+        margin-left: 0;
+    }
+}
+
+.menu-user__name {
+    display: none;
+    color: #fff;
+    font: 300 15px/20px $gerbera-font;
+
+    @include birman-media  {
+        display: none;
+    }
+}

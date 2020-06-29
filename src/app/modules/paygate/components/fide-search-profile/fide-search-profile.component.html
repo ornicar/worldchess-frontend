@@ -1,0 +1,107 @@
+<div class="register">
+  <div class="register__head">
+    <div class="register__title" [innerHTML]="title"></div>
+    <div class="register__step" *ngIf="maxSteps$ | async as maxSteps">
+      <svg-arrow-left class="icon" (click)="history.back()"></svg-arrow-left>
+      <svg-arrow-left-bold class="icon icon--mobile" (click)="history.back()"></svg-arrow-left-bold>5<span
+        style="font-size:0.5em">&nbsp;</span>/<span style="font-size:0.5em">&nbsp;</span>{{ maxSteps }}
+    </div>
+  </div>
+  <ng-container *ngIf="searchResults && searchResults.length">
+    <div class="search-results-container">
+      <div class="search-result-wrapper" wcHideScrollbar>
+        <div class="search-result">
+          <div class="search-result__head">
+            <div class="search-result__row search-result__row--head">
+              <div class="search-result__col">
+                Is this you?
+              </div>
+              <div class="search-result__col">
+                Player
+              </div>
+              <div class="search-result__col">
+                IDcode
+              </div>
+              <div class="search-result__col">
+                Federation
+              </div>
+              <div class="search-result__col">
+                Title
+              </div>
+              <div class="search-result__col">
+                Rating
+              </div>
+              <div class="search-result__col">
+                Born
+              </div>
+              <div class="search-result__col">
+                Gender
+              </div>
+            </div>
+          </div>
+          <div class="search-result__body">
+            <div class="search-result__row" *ngFor="let result of searchResults">
+              <div class="search-result__col">
+                <button class="btn-new btn-new--transparent"
+                        type="submit"
+                        (click)="bindProfile(result)">
+                    It’s me
+                </button>
+              </div>
+              <div class="search-result__col">
+                <div class="search-result__user">
+                  <div class="search-result__user-photo">
+                    <div class="search-result__user-img" [style.background-image]="
+                                'url(' + result.avatar + ')'
+                              " *ngIf="result.avatar"></div>
+                    <div class="search-result__user-no-photo" *ngIf="!result.avatar">
+                      No photo
+                    </div>
+                  </div>
+                  <div class="search-result__user-name">
+                    {{result.full_name}}
+                  </div>
+                </div>
+              </div>
+              <div class="search-result__col">
+                {{result.fide_id}}
+              </div>
+              <div class="search-result__col">
+                {{getFederationTitle(result.federation)}}
+              </div>
+              <div class="search-result__col">
+                {{result.rank}}
+              </div>
+              <div class="search-result__col">
+                <ul class="search-result__list">
+                  <li>S {{result.rating ? result.rating : '-'}}</li>
+                  <li>R {{result.rapid_rating ? result.rapid_rating : '-'}}</li>
+                  <li>B {{result.blitz_rating ? result.blitz_rating : '-'}}</li>
+                </ul>
+              </div>
+              <div class="search-result__col">
+                {{result.birth_year}}
+              </div>
+              <div class="search-result__col">
+                {{result.is_male ? 'Male' : 'Female'}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </ng-container>
+  <div class="register__footer">
+    <div class="register__footer-coll">
+      <div>
+        <div class="not-you-title" *ngIf="searchResults && searchResults.length">Not you?</div>
+        <wc-btn-with-loading (click)="goToCreateProfile()">
+          Create a new profile
+        </wc-btn-with-loading>
+      </div>
+    </div>
+  </div>
+</div>

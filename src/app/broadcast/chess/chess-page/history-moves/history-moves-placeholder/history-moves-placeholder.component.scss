@@ -1,5 +1,5 @@
-@import '../../../../../../html/css/variables';
-@import '../../../../../../html/css/media';
+@import 'variables';
+@import 'media';
 
 // @todo remove duplicates.
 .history-moves {
@@ -63,6 +63,15 @@
   width: 20px;
   height: 38px;
   font: 400 10px/15px $gerbera-font;
+
+  @include height-650() {
+    height: 43px;
+    font: 300 9px/14px $gerbera-font;
+  }
+
+  @include phones() {
+    height: 43px;
+  }
 
   .my-game & {
     color: #fff;

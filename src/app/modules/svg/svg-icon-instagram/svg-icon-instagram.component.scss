@@ -1,0 +1,11 @@
+.aost0 {
+  display: none;
+  fill: #fff
+}
+
+:host-context(.icon_profile) {
+  svg {
+    position: relative;
+    top: -2px;
+  }
+}

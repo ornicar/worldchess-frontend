@@ -1,0 +1,8 @@
+<div class="main-page-component-holder_root">
+  <div *ngIf="!item" class="main-page-component-holder_empty">
+      <div class="main-page-component-holder_empty-indicator"></div>
+  </div>
+  <div [hidden]="!item" class="main-page-component-holder_target-container" >
+      <ng-template target_component></ng-template>
+  </div>
+</div>

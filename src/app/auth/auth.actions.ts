@@ -5,9 +5,10 @@ import {
   INewPasswordCredential,
   IPasswordResetCredential,
   ISignInCredential,
-  ISignUpCredential
+  ISignUpCredential,
+  TwitterOAuthCredentials,
 } from './auth.model';
-import { ISimpleSignUpCredentials, TwitterOAuthCredentials } from '../user-access/dto/response/tokens';
+
 
 export enum AuthActionTypes {
   Init = '[Auth] After read cookie and init token',
@@ -20,6 +21,7 @@ export enum AuthActionTypes {
   SignInClearError = '[Auth] Sign in clear error',
   SignUp = '[Auth] Sign up request',
   SignUpSuccess = '[Auth] Sign up success',
+  SignUpSuccessClear = '[Auth] Sign up success clear',
   SignUpError = '[Auth] Sign up error',
   SignUpClearError = '[Auth] Sign up clear error',
   Activate = '[Auth] Activate request',
@@ -34,6 +36,7 @@ export enum AuthActionTypes {
   NewPasswordSuccess = '[Auth] New password success',
   NewPasswordError = '[Auth] New password error',
   NewPasswordClear = '[Auth] New password clear state',
+  SetSocketReconnectingFlag = '[Auth] Set token reconnecting flag',
   Logout = '[Auth] Logout',
   GetUid = '[Auth] Get UID',
   GetUidSuccess = '[Auth] Get UID success',
@@ -105,6 +108,12 @@ export class AuthSignUpSuccess implements Action {
   readonly type = AuthActionTypes.SignUpSuccess;
 
   constructor(public payload: { token: string, redirect?: boolean | string }) {}
+}
+
+export class AuthSignUpSuccessClear implements Action {
+  readonly type = AuthActionTypes.SignUpSuccessClear;
+
+  constructor() {}
 }
 
 export class AuthSignUpError implements Action {
@@ -200,7 +209,13 @@ export class AuthLogout implements Action {
 export class AuthGetUid implements Action {
   readonly type = AuthActionTypes.GetUid;
 
-  constructor() {}
+  constructor(public payload: {needSetCookie: boolean}) {}
+}
+
+export class AuthSetSocketReconnectingFlag implements Action {
+  readonly type = AuthActionTypes.SetSocketReconnectingFlag;
+
+  constructor(public payload: {flag: boolean}) {}
 }
 
 export class AuthGetUidSuccess implements Action {
@@ -268,6 +283,7 @@ export type AuthActions =
   | AuthSignInClearError
   | AuthSignUp
   | AuthSignUpSuccess
+  | AuthSignUpSuccessClear
   | AuthSignUpError
   | AuthSignUpClearError
   | AuthActivate
@@ -286,6 +302,7 @@ export type AuthActions =
   | AuthGetUid
   | AuthGetUidSuccess
   | AuthGetUidError
+  | AuthSetSocketReconnectingFlag
   | AuthRefreshToken
   | AuthRefreshCurrentToken
   | AuthRefreshTokenSuccess

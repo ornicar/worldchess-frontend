@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChessBoardAreaModule } from '../broadcast/chess/chess-page/chess-board-area/chess-board-area.module';
 import { ChessPageModule } from '../broadcast/chess/chess-page/chess-page.module';
 import { HeaderModule } from '../broadcast/components/header/header.module';
-import { CoreModule } from '../broadcast/core/core.module';
 import { BoardResolveGuard } from '../broadcast/guards/board-resolve.guard';
 import { FideTournamentResolveGuard } from '../broadcast/guards/fide-tournament-resolve-guard.service';
 import { SharedModule } from '../shared/shared.module';
@@ -17,6 +16,7 @@ import { WidgetGameContainerComponent } from './containers/widget-game-container
 import { WidgetTournamentContainerComponent } from './containers/widget-tournament-container.component';
 import { WidgetConfigGuard } from './widget-config-guard.service';
 import { ChessNavigationModule } from '@app/broadcast/chess/chess-page/chess-board-area/chess-navigation/chess-navigation.module';
+import { SvgModule } from '@app/modules/svg/svg.module';
 
 const routes: Routes = [
   {
@@ -40,7 +40,14 @@ const routes: Routes = [
             resolve: {
               board: BoardResolveGuard
             },
-            component: WidgetGameContainerComponent
+            component: WidgetGameContainerComponent,
+          },
+          {
+            path: ':tour/:boardSlug',
+            resolve: {
+              board: BoardResolveGuard,
+            },
+            component: WidgetGameContainerComponent,
           }
         ]
       }
@@ -56,7 +63,7 @@ const routes: Routes = [
     WidgetPageComponent,
     HeaderComponent,
     ChessPageComponent,
-    LivestreamContainerComponent,
+    LivestreamContainerComponent
   ],
   providers: [
     WidgetConfigGuard
@@ -68,8 +75,8 @@ const routes: Routes = [
     ChessBoardAreaModule,
     ChessPageModule,
     SharedModule,
-    CoreModule,
     ChessNavigationModule,
+    SvgModule
   ]
 })
 export class EmbeddedWidgetModule {

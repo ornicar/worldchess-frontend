@@ -2,38 +2,8 @@
 @import 'media';
 
 .register {
-    display: flex;
-    flex-direction: column;
-    position: relative;
     height: 100%;
     padding: 25px;
-    background-color: #525252;
-}
-
-.register__close {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    width: 19px;
-    height: 19px;
-    cursor: pointer;
-
-    &:after,
-    &:before {
-        content: '';
-        display: block;
-        width: 25px;
-        height: 1px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(45deg);
-        background-color: #999;
-    }
-
-    &:before {
-        transform: translate(-50%, -50%) rotate(-45deg);
-    }
 }
 
 .register__title {
@@ -46,76 +16,34 @@
         color: #999;
     }
 
-    @include laptop() {
-        font: 300 29px/29px $gerbera-font;
-        height: auto;
-    }
-
-    @include tablets() {
-        font: 300 29px/29px $gerbera-font;
-        height: auto;
-    }
-}
-
-.register__labels {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-
-    @include tablets() {
-        margin: 0 auto;
-    }
-
     @include phones() {
-        margin: 0 auto;
-        padding: 0 50px;
-    }
-
-    @include phones-small() {
-        padding: 0;
+        font: 300 29px/29px $gerbera-font;
+        height: auto;
     }
 }
 
 .register__footer {
     height: 160px;
     display: flex;
-
-    @include tablets() {
-        flex-direction: column;
-        height: auto;
-    }
+    flex-direction: column;
 }
 
 .register__footer-coll {
     display: flex;
     align-items: flex-end;
+    justify-content: flex-start;
     flex: 1;
     padding: 0 5px;
 
-    @include tablets() {
-        padding: 0 0 25px;
-    }
-
     @include phones() {
-        width: calc(100% / 3);
-        padding: 0 50px 25px;
         width: 100%;
-    }
-
-    @include phones-small() {
-        padding: 0 0 25px;
+        flex-direction: row;
     }
 
     &:last-child {
+        justify-content: flex-end;
         @include tablets() {
             justify-content: center;
-            padding: 0;
-        }
-
-        @include phones() {
-            padding: 0;
         }
     }
 }
@@ -169,6 +97,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    max-width: 436px;
     width: 100%;
     height: 60px;
     padding: 14px 25px;
@@ -183,16 +112,19 @@
     }
 
     &--premium {
-        background-color: #dca4ff;
+        background-color: $purple-new;
     }
 
     @include tablets() {
-        width: 246px;
+        max-width: 291px;
     }
 
-    @include phones-small() {
-        width: 100%;
-        font: 300 18px/18px $gerbera-font;
+    @include ipad() {
+        max-width: 100%;
+    }
+
+    @include phones() {
+        max-width: 100%;
     }
 }
 

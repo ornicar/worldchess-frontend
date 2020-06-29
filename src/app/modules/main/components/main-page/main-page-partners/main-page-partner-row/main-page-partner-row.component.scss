@@ -1,0 +1,39 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  };
+  .root {
+    height: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+  }
+  .card-row {
+    position: relative;
+    width: 277px;
+    flex: 0 0 auto;
+  }
+
+  .card-host-wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    padding: 0 10px 15px;
+    @include birman-media {
+      padding: 0 0px 15px;
+    }
+  }
+}
+
+

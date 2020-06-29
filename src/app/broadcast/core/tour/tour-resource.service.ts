@@ -1,10 +1,11 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {environment} from '../../../../environments/environment';
-import {IDefaultEntities} from '../models/default-entities';
-import {ITour, ITourWithDefaults} from './tour.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ITour, ITourWithDefaults } from './tour.model';
+
+import { IDefaultEntities } from '../models/default-entities';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TourResourceService {
@@ -27,9 +28,16 @@ export class TourResourceService {
     return this.http.get<ITour[]>(`${environment.endpoint}/tours/`);
   }
 
-  getByTournament(id: number) {
+  getByTournament(id: number): Observable<ITour[]> {
     const params = new HttpParams().set('tournament', id.toString());
 
-    return this.http.get<ITour[]>(`${environment.endpoint}/tours/`, { params });
+    return this.http.get<ITour[]>(`${environment.endpoint}/tours/`, { params })
+      .pipe(
+        map(i => i.sort( (a, b) => {
+          if (a.tour_number < b.tour_number) { return -1; }
+          if (a.tour_number > b.tour_number) { return 1; }
+          return 0;
+        }))
+      );
   }
 }

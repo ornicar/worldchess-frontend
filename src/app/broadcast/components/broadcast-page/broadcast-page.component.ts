@@ -1,18 +1,15 @@
 import { Component, HostBinding, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
-import { selectIsAuthorized } from '../../../auth/auth.reducer';
-import { Plan } from '../../../paygate/dto/plan';
+import { BehaviorSubject } from 'rxjs';
+import { pluck } from 'rxjs/operators';
+import { selectIsAuthorized } from '@app/auth/auth.reducer';
 import * as fromRoot from '../../../reducers/index';
-import { OnChangesInputObservable, OnChangesObservable } from '../../../shared/decorators/observable-input';
-import { SubscriptionHelper, Subscriptions } from '../../../shared/helpers/subscription.helper';
-import { GameOpenPremiumModal } from '../../chess/chess-page/game/game.actions';
+import { OnChangesInputObservable, OnChangesObservable } from '@app/shared/decorators/observable-input';
+import { SubscriptionHelper, Subscriptions } from '@app/shared/helpers/subscription.helper';
 import {
   selectChatInfoModalIsOpen,
   selectEmbeddedWidgetModalIsOpen,
-  selectPremiumModalIsOpen
 } from '../../chess/chess-page/game/game.reducer';
 import { IBoard } from '../../core/board/board.model';
 import { GetCountries } from '../../core/country/country.actions';
@@ -28,6 +25,7 @@ import { TournamentLoadService } from '../../core/tournament/tournament-load.ser
 import { ClearSelectedTournament, SetSelectedTournament } from '../../core/tournament/tournament.actions';
 import { Tournament } from '../../core/tournament/tournament.model';
 import { HeaderModelType, ISelectedModel } from '../header/header.component';
+import { ScreenStateService } from '@app/shared/screen/screen-state.service';
 
 @Component({
   selector: 'wc-broadcast-page',
@@ -63,10 +61,6 @@ export class BroadcastPageComponent implements OnInit, OnChanges, OnDestroy {
 
   @HostBinding('class') componentClass = 'wc-tournament wrapper';
 
-  premiumModalIsOpen$ = this.store$.pipe(
-    select(selectPremiumModalIsOpen)
-  );
-
   embeddedWidgetModalIsOpen$ = this.store$.pipe(
     select(selectEmbeddedWidgetModalIsOpen)
   );
@@ -79,9 +73,6 @@ export class BroadcastPageComponent implements OnInit, OnChanges, OnDestroy {
     select(selectIsAuthorized)
   );
 
-  selectedPlan: Plan;
-  checkoutShowed = false;
-
   constructor(
     private router: Router,
     private store$: Store<fromRoot.State>,
@@ -89,7 +80,8 @@ export class BroadcastPageComponent implements OnInit, OnChanges, OnDestroy {
     private eventLoad: EventLoadService,
     private tournamentLoad: TournamentLoadService,
     private tourLoad: TourLoadService,
-    private matchLoad: MatchLoadService
+    private matchLoad: MatchLoadService,
+    private screenState: ScreenStateService,
   ) {
   }
 
@@ -227,21 +219,11 @@ export class BroadcastPageComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (routerCommands.length) {
+      this.screenState.slideLeftBack();
       this.router.navigate(routerCommands);
     } else {
       console.error('Can not navigate.');
     }
-  }
-
-  hideCheckout() {
-    // @todo.
-    this.selectedPlan = null;
-    this.checkoutShowed = false;
-  }
-
-  showCheckout(plan: Plan) {
-    this.selectedPlan = plan;
-    this.checkoutShowed = true;
   }
 
   ngOnDestroy() {

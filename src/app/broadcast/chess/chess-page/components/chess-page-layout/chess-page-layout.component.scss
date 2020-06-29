@@ -1,10 +1,11 @@
 /* autoprefixer grid: autoplace */
-@import '../../../../../../html/css/variables';
-@import '../../../../../../html/css/media';
-@import '../../../../../../scss/settings';
+@import 'variables';
+@import 'media';
+@import 'settings';
 
 :host {
-  display: block;
+  display: flex;
+  flex: 1;
 }
 
 // @todo add STYLE FOR IE.
@@ -13,11 +14,18 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 316px max-content;
   grid-template-rows: max-content max-content 1fr max-content;
-  grid-template-areas: "title secondary aside" "main secondary aside" "main history aside" "predictions history aside";
+  grid-template-areas: "title secondary aside" "main secondary aside" "main history aside" "predictions predictions aside";
   transition: background-color 0.38s ease-in;
   width: 100%;
   top: 0;
   left: 0;
+  flex: 1;
+
+  @include height-650() {
+    //grid-template-rows: max-content max-content 1fr minmax(39px, max-content);
+    grid-template-columns: minmax(0, 1fr) 316px max-content;
+    grid-template-areas: "title secondary aside" "main secondary aside" "main history aside" "predictions predictions aside";
+  }
 
   @include phones() {
     display: grid;
@@ -58,6 +66,10 @@
     z-index: z-index(base, 6);
     position: relative;
     height: 178px;
+
+    @include height-650() {
+      height: 160px;
+    }
 
     @include phones() {
       box-shadow: none;
@@ -103,5 +115,11 @@
       height: auto;
       z-index: z-index(base, 4);
     }
+  }
+}
+
+:host-context(wc-chess-pages) {
+  .chess-layout__board {
+   background-color: $black-bg;
   }
 }

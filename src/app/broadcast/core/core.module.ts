@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
+import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 import {BoardLoadService} from './board/board-load.service';
@@ -33,13 +33,9 @@ import {TourEffects} from './tour/tour.effects';
 import * as fromTour from './tour/tour.reducer';
 import {TournamentLoadService} from './tournament/tournament-load.service';
 import {TournamentResourceService} from './tournament/tournament-resource.service';
-import {TournamentStateComponent} from './tournament/tournament-state/tournament-state.component';
 import {TournamentEffects} from './tournament/tournament.effects';
 import * as fromTournament from './tournament/tournament.reducer';
 import * as fromNotification from './boardNotification/board-notification.reducer';
-import * as fromPlayerRating from './playerRating/player-rating.reducer';
-import {PlayerRatingEffects} from './playerRating/player-rating.effects';
-import {PlayerRatingResourceService} from './playerRating/player-rating-resource.service';
 import {SharedModule} from '../../shared/shared.module';
 import {TournamentPartnersService} from './tournament/tournament-partners.service';
 import {TournamentWidgetsService} from './tournament/tournament-widgets.service';
@@ -59,7 +55,6 @@ import {TournamentWidgetsService} from './tournament/tournament-widgets.service'
     StoreModule.forFeature('match', fromMatch.reducer),
     StoreModule.forFeature('board', fromBoard.reducer),
     StoreModule.forFeature('board-notification', fromNotification.reducer),
-    StoreModule.forFeature('player-rating', fromPlayerRating.reducer),
     EffectsModule.forFeature([
       EventEffects,
       CountryEffects,
@@ -69,15 +64,8 @@ import {TournamentWidgetsService} from './tournament/tournament-widgets.service'
       TourEffects,
       MatchEffects,
       BoardEffects,
-      PlayerRatingEffects,
     ])
   ],
-  declarations: [
-    TournamentStateComponent
-  ],
-  exports: [
-    TournamentStateComponent
-  ]
 })
 export class CoreModule {
   static forRoot() {
@@ -98,7 +86,6 @@ export class CoreModule {
         MatchLoadService,
         BoardResourceService,
         BoardLoadService,
-        PlayerRatingResourceService,
         TournamentPartnersService,
         TournamentWidgetsService,
         {
@@ -108,5 +95,11 @@ export class CoreModule {
         }
       ],
     };
+  }
+
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    if (parentModule) {
+      throw Error('CoreModule is already loaded.');
+    }
   }
 }

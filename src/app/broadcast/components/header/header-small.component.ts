@@ -46,6 +46,8 @@ export class HeaderSmallComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   enableTournamentDropdown = true;
 
+  @Input() compact = false;
+
   // hide when event not selected.
   events$ = this.selectedEvent$.pipe(
     switchMap(event => event

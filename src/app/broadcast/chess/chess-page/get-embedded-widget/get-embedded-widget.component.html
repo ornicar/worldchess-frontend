@@ -2,9 +2,7 @@
   <div class="get-embedded-widget__title">
     Embedding options
   </div>
-
   <div class="get-embedded-widget__close" (click)="closeModal()"></div>
-
   <div class="get-embedded-widget__content">
     <div class="get-embedded-widget__row">
       <div class="get-embedded-widget__sub-title">
@@ -19,7 +17,7 @@
             (ngModelChange)="changeTour($event)"
             [disabled]="wholeTournament"
           >
-            <option *ngFor="let tour of tours$ | async" [ngValue]="tour"> Round {{ tour.tour_number }} </option>
+            <option *ngFor="let tour of tours$ | async" [ngValue]="tour">{{ getRoundTitle(tour) }} </option>
           </select>
 
           <select
@@ -36,9 +34,7 @@
         <label class="checkbox">
           <input class="checkbox__input" type="checkbox" [(ngModel)]="wholeTournament" />
           <div class="checkbox__btn">
-            <svg class="icon">
-              <use xlink:href="#check"></use>
-            </svg>
+            <svg-check class="icon"></svg-check>
           </div>
           whole <br />
           tournament
@@ -118,9 +114,9 @@
         </div>
         <div class="get-embedded-widget__fields get-embedded-widget__fields--column">
           <textarea #iframeCodeEl cols="20" rows="5" class="iframe-code" [ngModel]="iframeCode" readonly></textarea>
-
-          <button class="btn-copy" (click)="copyToClipboard()">Copy</button>
+          <button class="btn-copy" (click)="copyToClipboard($event)">Copy</button>
         </div>
+        <div class="get-embedded-widget__sub-title-message" [class.show]="showCopied$ | async">Copied</div>
       </div>
     </div>
   </div>

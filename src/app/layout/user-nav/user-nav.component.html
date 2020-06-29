@@ -14,9 +14,11 @@
               <!-- <a class="auth-popup__link-black" href="#">Status</a> -->
               <a class="auth-popup__link-black" routerLink="/account/membership">Membership</a>
               <a class="auth-popup__link-black" routerLink="/account/profile">Profile</a>
-              <a class="auth-popup__link-violet" routerLink="/account/events" *ngIf="(founderApproved$ | async)"
-                >Tournaments</a
+              <a class="auth-popup__link-black"
+                 [href]="paygateService.crossAppLink(true, '/mygames') | async"
               >
+                My games
+              </a>
             </div>
             <!-- <div *ngIf="isDevMode" class="auth-popup-col">
                 <button class="auth-popup__btn-blue">FIDE ID</button>

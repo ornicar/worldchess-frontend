@@ -1,0 +1,286 @@
+@import "variables-new";
+@import "media-new";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  background: $grey-dark-new;
+  border-radius: 3px;
+  flex: 1 0 auto;
+
+  .root {
+    padding: 3px 0 20px;
+    height: 100%;
+    overflow: hidden;
+
+    @include birman-media {
+      height: 240px;
+      padding: 11px 0 23px;
+    }
+  }
+
+  .online-champions-title {
+    font: 300 30px/38px $gerbera-font;
+    margin-bottom: 87px;
+
+    @include birman-media {
+      margin-bottom: 15px;
+    }
+  }
+
+  .fide-icon {
+    width: 21px;
+    fill: #FFFFFF;
+
+    ::ng-deep {
+      svg {
+        display: block;
+      }
+    }
+  }
+  .fide-columm {
+    width: 22px;
+    display: flex;
+    align-items: center;
+  }
+  .online-champions {
+    display: block;
+    width:100%;
+    height: 100%;
+    color: #FFFFFF;
+    overflow: hidden;
+    border-collapse: collapse;
+    font: 300 15px/23px $gerbera-font;
+    font-feature-settings: "tnum" 1;
+
+    thead {
+      display: block;
+      tr {
+        display: flex;
+        td {
+          display: flex;
+          opacity: 0.4;
+          align-items: flex-end;
+          padding-bottom: 10px;
+          @include birman-media {
+            padding-bottom: 12px;
+          }
+        }
+
+        td:last-child {
+          padding-right: 10px;
+        }
+
+        td:first-child {
+          padding-left: 10px;
+        }
+      }
+    }
+
+    tbody {
+      display: block;
+      max-height: calc(100% - 38px);
+      overflow-y: auto;
+      tr {
+        display: flex;
+        height: 40px;
+        // &:hover{
+        //   background-color: rgba(#fff, 0.1);
+        //   cursor: pointer;
+        // }
+        td {
+          display: flex;
+          font: 300 15px/22px $gerbera-font;
+          align-items: center;
+
+          &:first-child {
+            padding: 3px 0px 3px 10px;
+          }
+
+          &:last-child {
+            padding: 3px 10px 3px 0px;
+          }
+        }
+      }
+    }
+
+    .avatar__icon {
+      position: relative;
+      top: 1px;
+      width: 26px;
+      height: 26px;
+      overflow: hidden;
+      border-radius: 50%;
+      margin-right: 4px;
+      flex: 0 0 auto;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .avatar {
+      width: 42px;
+      flex: 0 0 auto;
+      img {
+        width: 26px;
+        height: 26px;
+        border-radius: 13px;
+      }
+    }
+  }
+
+  .online-champions__title {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 5px;
+    @include birman-media {
+      padding-left: 10px;
+    }
+  }
+
+  .online-champions__icon {
+    width: 30px;
+    flex: 0 0 auto;
+
+    @include birman-media {
+      width: 28px;
+    }
+  }
+
+  .online-champions__rapid {
+    width: 54px;
+    flex: 0 0 auto;
+    @include birman-media {
+      width: 46px;
+    }
+  }
+
+  .online-champions__bullet {
+    width: 53px;
+    flex: 0 0 auto;
+    @include birman-media {
+      width: 47px;
+    }
+  }
+
+  .online-champions__blitz {
+    width: 49px;
+    flex: 0 0 auto;
+    @include birman-media {
+      width: 42px;
+    }
+  }
+
+  .online-champions__country {
+    width: 43px;
+    flex: 0 0 auto;
+
+    &--letter-spacing {
+      letter-spacing: 0.1em;
+    }
+
+    @include birman-media {
+      display: none;
+    }
+  }
+
+  .online-champions__age {
+    width: 40px;
+    text-align: right;
+    flex: 0 0 auto;
+
+    @include birman-media {
+      display: none;
+    }
+  }
+
+  .online-champions__footer {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(25, 25, 25, 0.9) 0%, #191919 38.54%);
+
+    @include birman-media {
+      display: flex;
+    }
+  }
+
+  .online-champions__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 32px;
+    border: 1px solid  $brown-2;
+    border-radius: 3px;
+    font: 300 15px/20px $gerbera-font;
+    background-color: transparent;
+    color: $brown-2;
+
+    &:hover {
+      background-color: $brown-2-hover;
+      border: 1px solid $brown-2-hover;
+      color: #fff;
+    }
+  }
+
+  .desctop {
+    @include birman-media {
+      display: none !important;
+    }
+  }
+}
+
+
+:host-context(.main-page__cell) {
+
+  .root {
+      flex: 1 0 auto;
+      padding: 20px;
+      height: 600px;
+      padding-bottom: 0;
+      background-color: #000;
+
+      @include birman-media {
+        height: 420px;
+        padding: 20px 10px;
+      }
+    }
+
+    .online-champions {
+      height: calc(100% - 60px)
+    }
+
+    .online-champions-title {
+      display: block;
+    }
+
+    .online-champions__title {
+      padding-left: 0 !important;
+      padding-bottom: 2px !important;
+    }
+
+    tbody.online-champions__body {
+      max-height: calc(100% - 125px);
+      @include birman-media {
+        max-height: calc(100% - 110px);
+      }
+    }
+
+    .avatar {
+      padding: 3px 0px 3px 0px !important;
+      width: 37px !important;
+    }
+}

@@ -1,0 +1,32 @@
+<ul class="rounds-timeline__list">
+  <li
+    *ngFor="let interval of intervals; index as index"
+    class="rounds-timeline__elem"
+    [class.rounds-timeline__elem--break]="interval.type === RoundIntervalType.BREAK"
+    [class.rounds-timeline__elem--first-tour]="index === 1 && timeLineIntervalIndex < 1
+                                                && (getTournament$ | async)?.status !== TournamentStatus.COMPLETED"
+    [class.rounds-timeline__elem--backlight]="interval.type === RoundIntervalType.ROUND && index === timeLineIntervalIndex"
+  >
+    <div *ngIf="interval.type === RoundIntervalType.ROUND" class="rounds-timeline__round">
+      <div class="rounds-timeline__round-left"
+      [class.rounds-timeline__round-left-dashed]="interval.hide_time && index !== 1 && (getTournament$ | async)?.status !== TournamentStatus.COMPLETED"
+      ></div>
+      <div class="rounds-timeline__round-right"
+           [class.rounds-timeline__round-right-dashed]="index >= timeLineIntervalIndex && (getTournament$ | async)?.status !== TournamentStatus.COMPLETED"></div>
+      <div class="rounds-timeline__round-name">
+        <span>{{'MESSAGES.ROUND' | translate }}</span> {{ interval.tour_number }}</div>
+    </div>
+
+    <div
+      *ngIf="index === timeLineIntervalIndex && (getTournament$ | async)?.status !== TournamentStatus.COMPLETED"
+      class="rounds-timeline__line" [style.left.%]="timeLinePosition">
+      <div class="rounds-timeline__line-time">{{ timeLineTime }}</div>
+    </div>
+
+    <div *ngIf="interval.type === RoundIntervalType.ROUND && !interval.hide_time && timeLineIntervalIndex > index
+      || index === 1 && !timeLineIntervalIndex"
+         class="rounds-timeline__round-time-start">
+      {{ moment(interval.datetime.lower).format('HH:mm') }}
+    </div>
+  </li>
+</ul>

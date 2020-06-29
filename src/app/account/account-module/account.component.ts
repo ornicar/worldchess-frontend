@@ -1,8 +1,10 @@
-import { Component, isDevMode } from '@angular/core';
+import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { selectProfile } from '../../auth/auth.reducer';
-import * as forRoot from '../../reducers';
-import { selectCanUserCreateEvent } from '../account-store/account.reducer';
+import * as fromRoot from '../../reducers';
+import { selectCanUserCreateEvent, selectMyAccountRating } from '../account-store/account.reducer';
+import { Observable } from 'rxjs';
+import { IAccountRating } from '@app/account/account-store/account.model';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -12,18 +14,27 @@ import { selectCanUserCreateEvent } from '../account-store/account.reducer';
 })
 export class AccountComponent {
 
-  profile$ = this.store.pipe(
-    select(selectProfile)
-  );
-
-  ableToCreateEvent$ = this.store.pipe(
+  ableToCreateEvent$ = this.store$.pipe(
     select(selectCanUserCreateEvent)
   );
 
-  constructor(private store: Store<forRoot.State>) {
-  }
+  rating$: Observable<IAccountRating> = this.store$.pipe(select(selectMyAccountRating));
+  rating: number;
+  isFide = false;
 
-  get isDevMode(): boolean {
-    return isDevMode();
+  constructor(private store$: Store<fromRoot.State>) {
+    this.rating$.subscribe((r) => {
+      if (!r) return;
+      if (r.fide_rating) {
+        if (r.worldchess_rating > r.fide_rating) {
+          this.rating = r.worldchess_rating;
+        } else {
+          this.rating = r.fide_rating;
+          this.isFide = true;
+        }
+      } else {
+        this.rating = r.worldchess_rating;
+      }
+    });
   }
 }

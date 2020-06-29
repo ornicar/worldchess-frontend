@@ -17,10 +17,7 @@
   </ng-template>
 </wc-tournament-list-title>
 <wc-main-broadcast-list (onBuyBroadcast)="onBuyBroadcast($event)" [isNoneFide]="true"></wc-main-broadcast-list>
-<wc-paygate-embedded></wc-paygate-embedded>
 <wc-own-event-button></wc-own-event-button>
-<app-news-group [isNewsPage]="false"></app-news-group>
-<app-rating></app-rating>
-<wc-purchases-banner></wc-purchases-banner>
-<!--<wc-mates-popup></wc-mates-popup>-->
+<div #newsContainer></div>
+<div #ratingsContainer></div>
 <app-footer></app-footer>

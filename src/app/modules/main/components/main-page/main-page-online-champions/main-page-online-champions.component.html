@@ -1,0 +1,33 @@
+<div class="root">
+  <div class="online-champions-title">Online champions</div>
+  <table class="online-champions">
+    <thead class="online-champions__head">
+    <tr>
+      <td class="online-champions__title" style="position: relative; top: 1px;">Player</td>
+      <td class="online-champions__rapid">Rapid</td>
+      <td class="online-champions__blitz">Blitz</td>
+      <td class="online-champions__bullet">Bullet</td>
+      <td class="online-champions__country desctop">From</td>
+      <td class="online-champions__age desctop">Age</td>
+    </tr>
+    </thead>
+    <tbody class="online-champions__body" wcHideScrollbar>
+    <tr *ngFor="let item of data">
+      <td class="avatar desctop">
+        <div class="avatar__icon">
+          <img [src]="item.profile && item.profile.avatar && item.profile.avatar.full || ''"/>
+        </div>
+      </td>
+      <td class="online-champions__title">{{item.profile && item.profile.full_name}}</td>
+      <td class="online-champions__rapid">{{item.worldchess_rapid}}</td>
+      <td class="online-champions__blitz">{{item.worldchess_blitz}}</td>
+      <td class="online-champions__bullet">{{item.worldchess_bullet}}</td>
+      <td class="online-champions__country online-champions__country--letter-spacing desctop">{{(item.profile && item.profile.country) | country_code | async}}</td>
+      <td class="online-champions__age desctop">{{(item.profile && item.profile.birth_date) | age}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="online-champions__footer">
+    <a href="#" class="online-champions__button">View the Top 10</a>
+  </div>
+</div>

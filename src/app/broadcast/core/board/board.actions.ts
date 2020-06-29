@@ -1,6 +1,6 @@
-import {Update} from '@ngrx/entity';
-import {Action} from '@ngrx/store';
-import {IBoard} from './board.model';
+import { Update } from '@ngrx/entity';
+import { Action } from '@ngrx/store';
+import { IBoard } from './board.model';
 
 export enum BoardActionTypes {
   GetBoards = '[Board] Get all boards',

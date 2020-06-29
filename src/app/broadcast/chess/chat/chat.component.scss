@@ -113,16 +113,17 @@
     flex-direction: column;
     flex: 1 0 auto;
     height: 1px;
+    overflow: hidden;
 
     &:after {
       content: '';
       display: block;
       position: absolute;
-      top: 0;
+      top: -50px;
       left: 0;
       right: 0;
-      height: 57px;
-      background: linear-gradient(360deg, rgba(210, 210, 210, 0.0001) 0%, #D2D2D2 100%);
+      height: 50px;
+      box-shadow: 0 0 50px rgba(210, 210, 210, 1);
     }
   }
 
@@ -251,6 +252,15 @@
       background-color: $purple;
     }
 
+    @include phones {
+      &:hover {
+        background-color: #fff;
+      }
+      &:active {
+        background-color: $purple;
+      }
+    }
+
     &:after,
     &:before {
       content: '';
@@ -278,6 +288,15 @@
 
     &:hover {
       background-color: $purple;
+    }
+
+    @include phones {
+      &:hover {
+        background-color: #fff;
+      }
+      &:active {
+        background-color: $purple;
+      }
     }
   }
 }

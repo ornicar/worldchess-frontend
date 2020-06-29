@@ -23,7 +23,7 @@ export class MovesNavigationChartComponent implements OnChanges, AfterViewChecke
   @Input() scores: number[] = [];
   @Input() isWhiteMode = false;
 
-  @ViewChild('chart', { read: ElementRef }) chart: ElementRef;
+  @ViewChild('chart', { read: ElementRef, static: true }) chart: ElementRef;
 
   readonly maxScore = 4;
 

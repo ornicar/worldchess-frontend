@@ -1,5 +1,6 @@
 import {DOCUMENT} from '@angular/common';
 import {
+  AfterViewChecked,
   AfterViewInit,
   ChangeDetectorRef,
   Directive,
@@ -8,9 +9,14 @@ import {
   Inject,
   Injectable,
   Input,
-  Renderer2
+  Renderer2,
 } from '@angular/core';
-import {AfterViewChecked} from '@angular/core/src/metadata/lifecycle_hooks';
+
+enum BrowserType {
+  Chrome,
+  MobileChrome,
+  OtherDesktop
+}
 
 @Injectable()
 export class HideScrollbarService {
@@ -50,12 +56,30 @@ export class HideScrollbarService {
     this.renderer.setStyle(inner, 'width', '100%');
     this.renderer.appendChild(outer, inner);
 
-    const widthWithScroll = inner.offsetWidth;
+    const widthWithScroll = inner.clientWidth;
 
     // remove divs
     this.renderer.removeChild(this.document.body, outer);
 
-    return widthNoScroll - widthWithScroll;
+    const ua = navigator.userAgent;
+
+    let browserType = BrowserType.OtherDesktop;
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
+      browserType = BrowserType.MobileChrome;
+    } else if (/Chrome/i.test(ua)) {
+      browserType = BrowserType.Chrome;
+    }
+
+    let result = 0;
+
+    if (browserType === BrowserType.MobileChrome) {
+      result = 6;
+    } else {
+      result = widthNoScroll - widthWithScroll;
+    }
+
+    return result;
   }
 }
 
@@ -70,9 +94,11 @@ export class HideScrollbarDirective implements AfterViewInit, AfterViewChecked {
   @Input('wcHideScrollbarType')
   wcHideScrollbarType: 'vertical' | 'horizontal' | 'both' = 'vertical';
 
-
   @Input('wcForceHideVerticalScrollBar')
   wcForceHideVerticalScrollBar = false;
+
+  @Input('needPaddingRight')
+  needPaddingRight = false;
 
   constructor(
     private elementRef: ElementRef,
@@ -86,13 +112,16 @@ export class HideScrollbarDirective implements AfterViewInit, AfterViewChecked {
 
   @HostBinding('style.margin-right.px')
   get verticalScrollbarWidth() {
+    if (this.needPaddingRight) {
+      this.elementRef.nativeElement.style.paddingRight = this.hideScrollbarService.scrollbarWidth + 'px';
+    }
     return (this.wcForceHideVerticalScrollBar || this.hideVerticalScrollbar)
-      ? -this.hideScrollbarService.scrollbarWidth : null;
+      ? -this.hideScrollbarService.scrollbarWidth : 0;
   }
 
   @HostBinding('style.margin-bottom.px')
   get horizontalScrollbarWidth() {
-    return this.hideHorizontalScrollbar ? -this.hideScrollbarService.scrollbarWidth : null;
+    return this.hideHorizontalScrollbar ? -this.hideScrollbarService.scrollbarWidth : 0;
   }
 
   private checkScroll() {

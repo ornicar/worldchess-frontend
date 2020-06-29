@@ -1,5 +1,17 @@
 <mat-form-field>
-  <input matInput [matDatepicker]="dpicker" [placeholder]="label" [formControl]="control">
-  <mat-datepicker-toggle matSuffix [for]="dpicker"></mat-datepicker-toggle>
+  <input matInput
+         [matDatepicker]="dpicker"
+         [placeholder]="label"
+         [disableControl]="disabled"
+         [class.disabled]="disabled"
+         [formControl]="control">
+  <mat-datepicker-toggle matSuffix [for]="dpicker" *ngIf="!disabled">
+  </mat-datepicker-toggle>
   <mat-datepicker #dpicker></mat-datepicker>
+  <mat-icon
+    *ngIf="disabled"
+    matSuffix
+    class="custom-icon"
+    svgIcon="lock">
+  </mat-icon>
 </mat-form-field>

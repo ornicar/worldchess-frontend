@@ -20,10 +20,8 @@ COPY ./src /app/src
 
 COPY ./config /app/config
 
+COPY ./server.ts /app/server.ts
+
 RUN npm run build
 
-FROM alpine:3.7 as release
-
-COPY --from=builder /app/dist /app
-
-ENTRYPOINT /bin/sh -c "while true; do sleep 100; done"
+RUN npx tsc server.ts --lib dom,es2017,es2015

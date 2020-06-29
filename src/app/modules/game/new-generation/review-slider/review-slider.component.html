@@ -1,0 +1,27 @@
+<!-- <p>review-slider works!</p> -->
+
+<div class="review">
+  <div class="review__center">
+    <div class="review__slider-wrapper">
+      <div class="review__slider" #container>
+        <div class="review__dot" [style.left.%]="position$ | async" (mousedown)="startDrag($event)"></div>
+      </div>
+    </div>
+
+
+    <div class="review__buttons">
+      <div class="review__button-arrows">
+        <a class="review__button-arrow" href="javascript:void(0)" (click)="prev()">
+          <svg-arrow-left class="icon"></svg-arrow-left>
+        </a>
+        <a class="review__button-arrow review__button-arrow--right" href="javascript:void(0)" (click)="next()">
+          <svg-arrow-left class="icon"></svg-arrow-left>
+        </a>
+      </div>
+      <a class="review__button-close" href="javascript:void(0)" (click)="exit()">
+        <svg-close class="icon"></svg-close>
+      </a>
+    </div>
+
+  </div>
+</div>

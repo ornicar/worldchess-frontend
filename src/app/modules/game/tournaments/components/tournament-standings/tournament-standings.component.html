@@ -1,0 +1,69 @@
+<div class="standings-table-title">
+  {{'OTHER.CURRENT_STANDINGS' | translate }}
+</div>
+<div class="standings-table-content" [class.standings-table-content--shadow]="tableShadow$ | async">
+  <div class="standings-table-wrapper" #tableWrapper wcHideScrollbar>
+    <table class="standings-table" #tableContent>
+      <thead class="standings-table__thead">
+        <tr class="standings-table__row">
+          <td class="standings-table__cell standings-table__cell--empty"></td>
+          <td class="standings-table__cell standings-table__cell--number"></td>
+          <td class="standings-table__cell standings-table__cell--points">{{'OTHER.POINTS' | translate }}</td>
+          <td class="standings-table__cell standings-table__cell--players">{{'OTHER.PLAYERS' | translate }}</td>
+          <td class="standings-table__cell standings-table__cell--rating">{{'PROFILE.RATING' | translate }}</td>
+          <td class="standings-table__cell standings-table__cell--age">{{'PROFILE.AGE' | translate }}</td>
+          <td class="standings-table__cell standings-table__cell--from">{{'PROFILE.FROM' | translate }}</td>
+          <td class="standings-table__cell standings-table__cell--games">{{'MESSAGES.GAMES' | translate }}</td>
+          <td class="standings-table__cell standings-table__cell--empty"></td>
+        </tr>
+      </thead>
+      <tbody class="standings-table__tbody">
+        <tr class="standings-table__row" *ngFor="let standing of (getStandings$ | async); let i = index" [ngClass]="(standing?.player_uid === (account$ | async)?.uid) ? 'own-player' : ''">
+          <td class="standings-table__cell standings-table__cell--empty"></td>
+          <td class="standings-table__cell">{{i + 1}}
+          </td>
+          <td class="standings-table__cell">
+            {{tournamentService.getFullValue(standing.points)}}
+            <div class="half-value" *ngIf="tournamentService.haveHalfValue(standing.points)"><span>1</span><span>2</span></div>
+            <span *ngIf='i==0'> {{'OTHER.PTS' | translate }}</span>
+          </td>
+          <td class="standings-table__cell">
+            <div class="standings-table__player">
+              <div class="standings-table__avatar" *ngIf="standing?.avatar">
+                <img [src]="standing?.avatar">
+              </div>
+              <div class="standings-table__cell--name">
+                {{standing.full_name ? standing.full_name : 'Anonymous' }}
+              </div>
+            </div>
+          </td>
+          <td class="standings-table__cell standings-table__cell--rating">{{standing.rating}}</td>
+          <td class="standings-table__cell">
+            <ng-container *ngIf="standing.age">
+              {{standing.age}} {{ 'TEXT.AGE' | translate }}
+            </ng-container>
+            <ng-container *ngIf="!standing.age">
+              —
+            </ng-container>
+          </td>
+          <td class="standings-table__cell standings-table__cell--country">
+            <ng-container *ngIf="standing.nationality_id">
+              {{getCountryCode(standing.nationality_id) | async}}
+            </ng-container>
+            <ng-container *ngIf="!standing.nationality_id">
+              —
+            </ng-container>
+          </td>
+          <td class="standings-table__cell">
+            <span class="point-label" *ngFor="let point of standing.points_per_board"
+            [class.point-label--opacity]="tournamentService.getFullValue(+point.points) === 0">
+              {{tournamentService.getFullValue(+point.points)}}
+              <div class="half-value" *ngIf="tournamentService.haveHalfValue(+point.points)"><span>1</span><span>2</span></div>
+            </span>
+          </td>
+          <td class="standings-table__cell standings-table__cell--empty"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

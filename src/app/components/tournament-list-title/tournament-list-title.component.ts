@@ -7,5 +7,5 @@ import { Component, ChangeDetectionStrategy, TemplateRef, ContentChild } from '@
    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TournamentListTitleComponent {
-  @ContentChild('title', { read: TemplateRef }) title: TemplateRef<HTMLElement>;
+  @ContentChild('title', { read: TemplateRef, static: true }) title: TemplateRef<HTMLElement>;
 }
